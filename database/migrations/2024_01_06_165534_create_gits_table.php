@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('gits', function (Blueprint $table) {
             $table->id();
+
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('api_token');
+
             $table->timestamps();
         });
     }
