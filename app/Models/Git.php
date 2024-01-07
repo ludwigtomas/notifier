@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Git extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'api_token',
+    ];
 }
