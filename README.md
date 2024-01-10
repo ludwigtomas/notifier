@@ -15,32 +15,20 @@ catch updates pushed into Gitlab and depending on this, send email to "client".
 
 ## Project setup
 
+1. [x] Download project form Gitlab
 ```sh
 git clone https://gitlab.com/bubak1/portfolio/the-notifier.git
 ```
 
+
+2. [x] Open folder
 ```sh
 cd Notifier
 ```
 
-1. [ ] You have to create .env file for server configuration
+3. [x] Copy .env.example file and create .env file
 ```sh
 cp .env.example .env
 ```
 
 - open .env file
-
-- [x] Completed task
-- [~] Inapplicable task
-- [ ] Incomplete task
-  - [x] Sub-task 1
-  - [~] Sub-task 2
-  - [ ] Sub-task 3
-
-1. [x] Completed task
-1. [~] Inapplicable task
-1. [ ] Incomplete task
-   1. [x] Sub-task 1
-   1. [~] Sub-task 2
-   1. [ ] Sub-task 3
-
