@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Git extends Model
 {
@@ -13,5 +15,14 @@ class Git extends Model
         'name',
         'slug',
         'api_token',
+
+        'username',
+        'user_id',
+        'avatar_url'
     ];
+
+    public function repositories(): HasMany
+    {
+        return $this->hasMany(Repository::class);
+    }
 }
