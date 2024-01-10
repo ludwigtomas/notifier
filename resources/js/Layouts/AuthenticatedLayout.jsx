@@ -5,7 +5,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 
-export default function Authenticated({ user, children }) {
+export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -67,8 +67,10 @@ export default function Authenticated({ user, children }) {
                                 </NavLink>
 
                                 <NavLink
-                                    href={route('repositories.index')}
-                                    active={route().current('repositories.index')}
+                                    href={route("repositories.index")}
+                                    active={route().current(
+                                        "repositories.index"
+                                    )}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -242,7 +244,9 @@ export default function Authenticated({ user, children }) {
 
             {header && (
                 <header className="bg-zinc-900 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        {header}
+                    </div>
                 </header>
             )}
 
