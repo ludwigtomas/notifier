@@ -18,8 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GitSeeder::class,
             AdminSeeder::class,
-            ClientSeeder::class,
             RepositorySeeder::class,
+            ClientSeeder::class,
+            ClientRepositorySeeder::class,
         ]);
     }
 }
