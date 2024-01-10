@@ -8,8 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Dashboard({ auth }) {
     const { data, setData, post, processing, errors } = useForm({
-        first_name: "",
-        last_name: "",
+        name: "",
         email: "",
         phone: "",
         ico: "",
