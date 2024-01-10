@@ -6,6 +6,15 @@ The Notifier
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
 catch updates pushed into Gitlab and depending on this, send email to "client". 
 
+
+## Requirements
+-   PHP 8.3
+-   Git
+-   Composer
+-   MySQL
+-   Npm
+-   Node
+
 ## Frameworks
 -   Laravel 10.x
 -   InertiaJS
@@ -57,4 +66,34 @@ MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
+```
+
+## Start project
+
+```sh
+composer install
+```
+
+```sh
+npm install
+```
+
+```sh
+php artisan key:generate
+```
+
+```sh
+php artisan storage:link
+```
+
+```sh
+php artisan migrate --seed
+```
+
+```sh
+php artisan serve
+```
+
+```sh
+php run dev
 ```
