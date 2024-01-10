@@ -15,7 +15,6 @@ class Client extends Model
         'email',
         'phone',
         'ico',
-        'api_token',
     ];
 
 }

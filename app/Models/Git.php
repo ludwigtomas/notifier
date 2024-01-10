@@ -12,13 +12,13 @@ class Git extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'slug',
+        'name',      //
+        'slug',      // automatically generated
         'api_token',
 
         'username',
-        'user_id',
-        'avatar_url'
+        'user_id',   // api
+        'avatar_url' // api
     ];
 
     public function repositories(): HasMany

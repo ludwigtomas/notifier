@@ -19,8 +19,6 @@ class Repository extends Model
         'name',
         'slug',
         'description',
-        'git_id',
-        'user_id',
     ];
 
     public function git(): BelongsTo

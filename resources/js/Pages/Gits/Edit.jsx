@@ -1,8 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+import InputError from "@/Components/InputError";
 
-export default function Dashboard({ auth, git: initialGit }) {
+export default function Edit({ auth, git: initialGit }) {
     const [git, setGit] = useState({ name: initialGit.name });
     const [newName, setNewName] = useState("");
 

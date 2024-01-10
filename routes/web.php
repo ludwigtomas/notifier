@@ -20,7 +20,7 @@ use App\Http\Controllers\RepositoryController;
 | contains the "web" middleware group. Now create something great!
 |
 */
- 
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -30,38 +30,41 @@ Route::get('/', function () {
     ]);
 });
 
-route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-    route::get('/', [DashboardController::class, 'index'])->name('index');
-});
+route::middleware('auth:sanctum')->group(function () {
+    route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+        route::get('/', [DashboardController::class, 'index'])->name('index');
+    });
 
-route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
-    route::get('/', [GitController::class, 'index'])->name('index');
-    route::get('/create', [GitController::class, 'create'])->name('create');
-    route::post('/', [GitController::class, 'store'])->name('store');
-    route::get('/{git}', [GitController::class, 'show'])->name('show');
-    route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
-    route::put('/{git}', [GitController::class, 'update'])->name('update');
-    route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
-});
+    route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
+        route::get('/', [GitController::class, 'index'])->name('index');
+        route::get('/create', [GitController::class, 'create'])->name('create');
+        route::post('/', [GitController::class, 'store'])->name('store');
+        route::get('/{git}', [GitController::class, 'show'])->name('show');
+        route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
+        route::put('/{git}', [GitController::class, 'update'])->name('update');
+        route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+    });
 
-route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
-    route::get('/', [RepositoryController::class, 'index'])->name('index');
-    route::get('/create', [RepositoryController::class, 'create'])->name('create');
-    route::post('/', [RepositoryController::class, 'store'])->name('store');
-    route::get('/{project}', [RepositoryController::class, 'show'])->name('show');
-    route::get('/{project}/edit', [RepositoryController::class, 'edit'])->name('edit');
-    route::put('/{project}', [RepositoryController::class, 'update'])->name('update');
-    route::delete('/{project}', [RepositoryController::class, 'destroy'])->name('destroy');
-});
+    route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
+        route::get('/', [RepositoryController::class, 'index'])->name('index');
+        route::get('/create', [RepositoryController::class, 'create'])->name('create');
+        route::post('/', [RepositoryController::class, 'store'])->name('store');
+        route::get('/{project}', [RepositoryController::class, 'show'])->name('show');
+        route::get('/{project}/edit', [RepositoryController::class, 'edit'])->name('edit');
+        route::put('/{project}', [RepositoryController::class, 'update'])->name('update');
+        route::delete('/{project}', [RepositoryController::class, 'destroy'])->name('destroy');
+    });
 
-route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
-    route::get('/', [ClientController::class, 'index'])->name('index');
-    route::get('/create', [ClientController::class, 'create'])->name('create');
-    route::post('/', [ClientController::class, 'store'])->name('store');
-    route::get('/{client}', [ClientController::class, 'show'])->name('show');
-    route::get('/{client}/edit', [ClientController::class, 'edit'])->name('edit');
-    route::put('/{client}', [ClientController::class, 'update'])->name('update');
-    route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+    route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
+        route::get('/', [ClientController::class, 'index'])->name('index');
+        route::get('/create', [ClientController::class, 'create'])->name('create');
+        route::post('/', [ClientController::class, 'store'])->name('store');
+        route::get('/{client}', [ClientController::class, 'show'])->name('show');
+        route::get('/{client}/edit', [ClientController::class, 'edit'])->name('edit');
+        route::put('/{client}', [ClientController::class, 'update'])->name('update');
+        route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+    });
+
 });
 
 

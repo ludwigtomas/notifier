@@ -6,7 +6,7 @@ import {
     EyeIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Dashboard({ auth, gits }) {
+export default function Index({ auth, gits }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,7 +21,20 @@ export default function Dashboard({ auth, gits }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-300">Přidané gity</div>
+                        <div className="flex justify-between p-5">
+                            <div className="p-6 text-gray-300">
+                                Přidané gity
+                            </div>
+
+                            <div>
+                                <Link
+                                    class="bg-zinc-800 text-gray-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 slower-animation"
+                                    href={route("gits.create")}
+                                >
+                                    Vytvořit
+                                </Link>
+                            </div>
+                        </div>
 
                         {/* variable gits */}
                         <div className="p-6 flex flex-col divide-y divide-zinc-800 ">
