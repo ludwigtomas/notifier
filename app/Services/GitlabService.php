@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Git;
+use App\Models\Repository;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client as GuzzleClient;
@@ -29,7 +30,6 @@ class GitLabService
 
             // call downloadAvatar() method
             self::downloadAvatar($gitlab);
-
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -50,7 +50,6 @@ class GitLabService
             $path = "avatars/" . $gitlab->username . ".png";
             Storage::deleteDirectory('path');
             Storage::put($path, $body);
-
         } catch (\Throwable $th) {
             Log::error($th->getMessage() . 'download avatar error', ['gitlab' => $gitlab]);
         }
@@ -65,24 +64,37 @@ class GitLabService
         try {
             $response = $client->request('GET', 'groups/64297613/projects?order_by=updated_at&sort=desc', [
                 'headers' => [
-                    'Authorization' => 'Bearer '. $gitlab->api_token,
+                    'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
             ]);
 
-            $body = json_decode($response->getBody()->getContents());
+            $repositories = json_decode($response->getBody()->getContents());
 
-            foreach ($body as $repository) {
-                $gitlab->repositories()->create([
-                    'id' => $repository->id,
-                    'name' => $repository->name,
-                    'slug' => Str::slug($repository->name),
-                    'repository_url' => $repository->web_url,
+            foreach ($repositories as $repository_api) {
 
-                    'updated_at' => $repository->last_activity_at,
-                    'created_at' => $repository->created_at,
-                ]);
+                $repository = Repository::where('id', $repository_api->id)->first();
+
+                if ($repository) {
+                    $repository->update([
+                        'name' => $repository_api->name,
+                        'slug' => Str::slug($repository_api->name),
+                        'repository_url' => $repository_api->web_url,
+
+                        'updated_at' => $repository_api->last_activity_at,
+                        'created_at' => $repository_api->created_at,
+                    ]);
+                } else {
+                    $gitlab->repositories()->create([
+                        'id' => $repository_api->id,
+                        'name' => $repository_api->name,
+                        'slug' => Str::slug($repository_api->name),
+                        'repository_url' => $repository_api->web_url,
+
+                        'updated_at' => $repository_api->last_activity_at,
+                        'created_at' => $repository_api->created_at,
+                    ]);
+                }
             }
-
         } catch (\Throwable $th) {
             throw $th;
         }

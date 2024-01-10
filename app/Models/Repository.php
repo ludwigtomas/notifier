@@ -7,16 +7,16 @@ use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Repository extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'repository_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'id',    // api
-        'client_id',        // relationship
         'git_id',           // relationship
 
         'name',             // api
@@ -33,8 +33,8 @@ class Repository extends Model
         return $this->belongsTo(Git::class);
     }
 
-    public function client(): BelongsTo
+    public function client(): BelongsToMany
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsToMany(Client::class);
     }
 }

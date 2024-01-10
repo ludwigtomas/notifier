@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Seeders\GitSeeder;
 use Illuminate\Database\Seeder;
-use Database\Seeders\ProjectSeeder;
+use Database\Seeders\GitSeeder;
+use Database\Seeders\AdminSeeder;
+use Database\Seeders\ClientSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GitSeeder::class,
             AdminSeeder::class,
+            ClientSeeder::class,
+            RepositorySeeder::class,
         ]);
     }
 }

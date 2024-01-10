@@ -18,9 +18,9 @@ return new class extends Migration
                 ->primary()
                 ->unique();
 
-            $table->foreignIdFor(Client::class)
-                ->nullable()
-                ->cascadeOnDelete();
+            // $table->foreignIdFor(Client::class)
+            //     ->nullable()
+            //     ->cascadeOnDelete();
 
 
             // $table->foreignId('client_id')
