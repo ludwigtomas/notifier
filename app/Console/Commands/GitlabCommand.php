@@ -27,9 +27,7 @@ class GitlabCommand extends Command
      */
     public function handle()
     {
-        $gitlab = Git::where('slug', 'gitlab')->first();
-
-        // $gitlab = GitLabService::getUserID();
+        $gitlab = Git::whereSlug('gitlab')->first();
 
         $gitlab = GitLabService::getRepositories($gitlab);
 

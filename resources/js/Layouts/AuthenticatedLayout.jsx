@@ -24,7 +24,7 @@ export default function Authenticated({ user, header, children }) {
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route("dashboard.index")}
-                                    active={route().current("dashboard.index")}
+                                    active={route().current("dashboard.*")}
                                     className="gap-4"
                                 >
                                     <svg
@@ -46,7 +46,7 @@ export default function Authenticated({ user, header, children }) {
 
                                 <NavLink
                                     href={route("gits.index")}
-                                    active={route().current("gits.index")}
+                                    active={route().current("gits.*")}
                                     className="gap-4"
                                 >
                                     <svg
@@ -68,9 +68,8 @@ export default function Authenticated({ user, header, children }) {
 
                                 <NavLink
                                     href={route("repositories.index")}
-                                    active={route().current(
-                                        "repositories.index"
-                                    )}
+                                    active={route().current("repositories.*")}
+                                    className="gap-4"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +85,12 @@ export default function Authenticated({ user, header, children }) {
                                             d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
                                         />
                                     </svg>
-                                    Projects
+                                    Respositories
                                 </NavLink>
 
                                 <NavLink
                                     href={route("clients.index")}
-                                    active={route().current("clients.index")}
+                                    active={route().current("clients.*")}
                                     className="gap-4"
                                 >
                                     <svg

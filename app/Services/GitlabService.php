@@ -28,7 +28,7 @@ class GitLabService
             ]);
 
             // call downloadAvatar() method
-            self::downloadAvatar();
+            self::downloadAvatar($gitlab);
 
         } catch (\Throwable $th) {
             throw $th;
@@ -73,8 +73,13 @@ class GitLabService
 
             foreach ($body as $repository) {
                 $gitlab->repositories()->create([
+                    'id' => $repository->id,
                     'name' => $repository->name,
                     'slug' => Str::slug($repository->name),
+                    'repository_url' => $repository->web_url,
+
+                    'updated_at' => $repository->last_activity_at,
+                    'created_at' => $repository->created_at,
                 ]);
             }
 

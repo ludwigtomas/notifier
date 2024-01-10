@@ -6,6 +6,7 @@ use Inertia\Response;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\ClientResource;
 use App\Http\Requests\StoreClientRequest;
 
 class ClientController extends Controller
@@ -13,7 +14,7 @@ class ClientController extends Controller
     public function index(): Response
     {
         return inertia('Clients/Index', [
-            'clients' => Client::all()
+            'clients' => ClientResource::collection(Client::all()),
         ]);
     }
 
