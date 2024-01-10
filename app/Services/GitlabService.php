@@ -30,6 +30,7 @@ class GitLabService
 
             // call downloadAvatar() method
             self::downloadAvatar();
+            
         } catch (\Throwable $th) {
             throw $th;
         }

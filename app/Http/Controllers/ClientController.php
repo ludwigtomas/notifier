@@ -14,6 +14,11 @@ class ClientController extends Controller
         return inertia('Clients/Index');
     }
 
+    public function create(): Response
+    {
+        return inertia('Clients/Create');
+    }
+
     public function store(StoreClientRequest $request): RedirectResponse
     {
         dD($request->all());
