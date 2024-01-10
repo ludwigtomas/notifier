@@ -14,7 +14,7 @@ class ClientSeeder extends Seeder
     public function run(): void
     {
         Client::create([
-            'name' => 'Jiří Ludwig', // Zde je spojení first_name a last_name do pole name
+            'name' => 'Jiří Ludwig', 
             'email' => 'drevoludwig@gmail.com',
             'phone' => '+420 777 092 381',
         ]);

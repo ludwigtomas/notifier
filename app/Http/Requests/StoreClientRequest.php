@@ -22,8 +22,7 @@ class StoreClientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name'  => ['required', 'string', 'max:255'],
+            'name'       => ['required', 'string', 'max:255'],
             'email'      => ['required', 'email', 'max:255', 'unique:clients,email'],
             'phone'      => ['required', 'string', 'max:255'],
             'ico'        => ['required', 'integer', 'unique:clients,ico'],
@@ -33,11 +32,10 @@ class StoreClientRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'first_name.required' => 'Zadajte krstné meno',
-            'last_name.required'  => 'Zadajte priezvisko',
-            'email.required'      => 'Zadajte email',
-            'phone.required'      => 'Zadajte telefónne číslo',
-            'ico.required'        => 'Zadajte IČO',
+            'name.required'   =>    'Zadajte krstné meno',
+            'email.required'  =>    'Zadajte email',
+            'phone.required'  =>    'Zadajte telefónne číslo',
+            'ico.required'    =>    'Zadajte IČO',
         ];
     }
 }
