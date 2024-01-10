@@ -67,6 +67,36 @@ MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
+#### `APP_NAME (required - string)`
+- name of project 
+
+
+#### `APP_ENV (required - local, production)`
+- local for local development
+- production for production build
+
+
+#### `APP_DEBUG (required - true, false)`
+- true for local development
+- false for production
+
+
+#### `APP_URL (required - localhost, domain url)`
+- local development -> localhost / 127.0.0.1
+- production -> domain url (for example: `APP_URL=https://ludwigtomas.cz/`)
+
+
+#### `LOG_CHANNEL (required - stack, daily)`
+- stack - create laravel.log and all logs are logged here
+- daily - creates laravel.log depending on date (`laravel-2023-12-14.log`, `laravel-2023-12-15.log`, `laravel-2023-12-16.log`)
+
+
+#### `DB_CONNECTION (required - mysql)`
+#### `DB_HOST (required)`
+#### `DB_PORT (required)`
+#### `DB_DATABASE (required)`
+#### `DB_USERNAME (required)`
+#### `DB_PASSWORD (required)`
 
 ## Start project
 

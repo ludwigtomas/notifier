@@ -20,7 +20,7 @@ use App\Http\Controllers\RepositoryController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+ 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
