@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, clients }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -17,6 +17,20 @@ export default function Dashboard({ auth }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+                            <div>
+                                {clients.map((client) => {
+                                    return (
+                                        <div
+                                            key={client.id}
+                                            className="flex gap-10"
+                                        >
+                                            <h1>{client.first_name}</h1>
+                                            <p>{client.email}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+
                             <Link href={route("clients.create")}>
                                 Přidat uživatele
                             </Link>
