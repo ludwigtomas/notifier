@@ -24,14 +24,22 @@ export default function Dashboard({ auth, gits }) {
                         <div className="p-6 text-gray-300">Přidané gity</div>
 
                         {/* variable gits */}
-                        <div className="p-6 flex flex-col divide-y divide-zinc-800">
+                        <div className="p-6 flex flex-col divide-y divide-zinc-800 ">
                             {gits.map((git) => (
-                                <div className="flex items-center justify-between py-2">
+                                <div
+                                    key={git.id}
+                                    className="flex items-center justify-between py-2"
+                                >
                                     <div>
                                         <img
                                             className="w-10 h-10 rounded-lg"
-                                            src={"/storage/avatars/" + git.username + ".png"}
+                                            src={
+                                                "/storage/avatars/" +
+                                                git.username +
+                                                ".png"
+                                            }
                                             alt={git.name}
+                                            key={git.id}
                                         />
                                     </div>
 
