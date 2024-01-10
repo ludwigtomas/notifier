@@ -8,6 +8,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,14 +44,14 @@ route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
     route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
 });
 
-route::group(['prefix' => '/dashboard/projects', 'as' => 'projects.'], function () {
-    route::get('/', [ProjectController::class, 'index'])->name('index');
-    route::get('/create', [ProjectController::class, 'create'])->name('create');
-    route::post('/', [ProjectController::class, 'store'])->name('store');
-    route::get('/{project}', [ProjectController::class, 'show'])->name('show');
-    route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('edit');
-    route::put('/{project}', [ProjectController::class, 'update'])->name('update');
-    route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
+route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
+    route::get('/', [RepositoryController::class, 'index'])->name('index');
+    route::get('/create', [RepositoryController::class, 'create'])->name('create');
+    route::post('/', [RepositoryController::class, 'store'])->name('store');
+    route::get('/{project}', [RepositoryController::class, 'show'])->name('show');
+    route::get('/{project}/edit', [RepositoryController::class, 'edit'])->name('edit');
+    route::put('/{project}', [RepositoryController::class, 'update'])->name('update');
+    route::delete('/{project}', [RepositoryController::class, 'destroy'])->name('destroy');
 });
 
 route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {

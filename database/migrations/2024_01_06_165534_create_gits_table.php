@@ -16,7 +16,11 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('api_token');
+            $table->string('api_token')->nullable();
+
+            $table->string('username')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('avatar_url')->nullable();
 
             $table->timestamps();
         });

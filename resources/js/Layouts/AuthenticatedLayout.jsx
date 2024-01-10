@@ -10,12 +10,18 @@ export default function Authenticated({ user, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 flex ">
-            <nav className="bg-zinc-900 border-b border-zinc-600 max-w-[400px]">
+        <div className="min-h-screen bg-zinc-800">
+            <nav className="bg-zinc-900 border-b border-stone-600">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-start h-16">
-                        <div className="flex mt-[130px]">
-                            <div className="hidden  sm:-my-px sm:ms-10 sm:flex  flex-col gap-11 items-start ">
+                    <div className="flex justify-between h-16">
+                        <div className="flex">
+                            <div className="shrink-0 flex items-center">
+                                <Link href="/">
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-sky-500" />
+                                </Link>
+                            </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route("dashboard.index")}
                                     active={route().current("dashboard.index")}
@@ -61,9 +67,8 @@ export default function Authenticated({ user, children }) {
                                 </NavLink>
 
                                 <NavLink
-                                    href={route("projects.index")}
-                                    active={route().current("projects.index")}
-                                    className="gap-4"
+                                    href={route('repositories.index')}
+                                    active={route().current('repositories.index')}
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -234,6 +239,12 @@ export default function Authenticated({ user, children }) {
                     </div>
                 </div>
             </nav>
+
+            {header && (
+                <header className="bg-zinc-900 shadow">
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                </header>
+            )}
 
             <main>{children}</main>
         </div>
