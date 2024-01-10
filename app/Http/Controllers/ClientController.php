@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreClientRequest;
-use Illuminate\Http\RedirectResponse;
 use Inertia\Response;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\StoreClientRequest;
 
 class ClientController extends Controller
 {
     public function index(): Response
     {
-        return inertia('Clients/Index');
+        return inertia('Clients/Index', [
+            'clients' => Client::all()
+        ]);
     }
 
     public function create(): Response
@@ -21,6 +24,15 @@ class ClientController extends Controller
 
     public function store(StoreClientRequest $request): RedirectResponse
     {
-        dD($request->all());
+        $client = Client::create($request->validated());
+
+        return to_route('clients.edit', $client->id);
+    }
+
+    public function edit(Client $client): Response
+    {
+        return inertia('Clients/Edit', [
+            'client' => $client
+        ]);
     }
 }

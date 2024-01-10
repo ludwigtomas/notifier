@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Git;
 use App\Services\GitLabService;
 use Illuminate\Console\Command;
 
@@ -26,7 +27,11 @@ class GitlabCommand extends Command
      */
     public function handle()
     {
-        $gitlab = GitLabService::getUserID();
+        $gitlab = Git::where('slug', 'gitlab')->first();
+
+        // $gitlab = GitLabService::getUserID();
+
+        $gitlab = GitLabService::getRepositories($gitlab);
 
         $this->info($gitlab);
     }

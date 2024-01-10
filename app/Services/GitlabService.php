@@ -3,16 +3,15 @@
 namespace App\Services;
 
 use App\Models\Git;
-use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Facades\Storage;
 
 class GitLabService
 {
-    public static function getUserID(): void
+    public static function getUserID($gitlab): void
     {
-        $gitlab = Git::where('slug', 'gitlab')->first();
-
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
         ]);
@@ -30,15 +29,14 @@ class GitLabService
 
             // call downloadAvatar() method
             self::downloadAvatar();
-            
+
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public static function downloadAvatar()
+    public static function downloadAvatar($gitlab)
     {
-        $gitlab = Git::where('slug', 'gitlab')->first();
 
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
@@ -58,8 +56,31 @@ class GitLabService
         }
     }
 
-    public static function getRepositories()
+    public static function getRepositories($gitlab)
     {
+        $client = new GuzzleClient([
+            "base_uri" => "https://gitlab.com/api/v4/",
+        ]);
+
+        try {
+            $response = $client->request('GET', 'groups/64297613/projects?order_by=updated_at&sort=desc', [
+                'headers' => [
+                    'Authorization' => 'Bearer '. $gitlab->api_token,
+                ],
+            ]);
+
+            $body = json_decode($response->getBody()->getContents());
+
+            foreach ($body as $repository) {
+                $gitlab->repositories()->create([
+                    'name' => $repository->name,
+                    'slug' => Str::slug($repository->name),
+                ]);
+            }
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public static function getCommitsCount()

@@ -13,12 +13,13 @@ class Repository extends Model
     use HasFactory;
 
     protected $fillable = [
-        'client_id',
-        'git_id',
+        'repository_id',    // api
+        'client_id',        // relationship
+        'git_id',           // relationship
 
-        'name',
-        'slug',
-        'description',
+        'name',             // api
+        'slug',             // automatically generated
+        'description',      // manually added
     ];
 
     public function git(): BelongsTo
