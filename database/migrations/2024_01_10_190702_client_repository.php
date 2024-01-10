@@ -20,8 +20,6 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->string('client_email');
-
             $table->primary(['client_id', 'repository_id']);
         });
     }

@@ -16,6 +16,5 @@ class ClientRepository extends Model
     protected $fillable = [
         'client_id',
         'repository_id',
-        'client_email',
     ];
 }

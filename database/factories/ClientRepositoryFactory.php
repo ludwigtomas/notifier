@@ -21,7 +21,6 @@ class ClientRepositoryFactory extends Factory
         return [
             'client_id' => Client::all()->random()->id,
             'repository_id' => Repository::all()->random()->id,
-            'client_email' => fake()->email,
         ];
     }
 }
