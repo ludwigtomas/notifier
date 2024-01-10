@@ -37,7 +37,7 @@ export default function Dashboard({ auth, clients }) {
 
                                                         <th
                                                             scope="col"
-                                                            class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                                                            class="px-[59px] py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                                                         >
                                                             <button class="flex items-center gap-x-2">
                                                                 <span>
@@ -55,13 +55,6 @@ export default function Dashboard({ auth, clients }) {
                                                                     Phone
                                                                 </span>
                                                             </button>
-                                                        </th>
-
-                                                        <th
-                                                            scope="col"
-                                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                                                        >
-                                                            Email address
                                                         </th>
 
                                                         <th
@@ -98,20 +91,22 @@ export default function Dashboard({ auth, clients }) {
                                                                 </div>
                                                             </td>
                                                             <td class="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                                <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                                    <h2 class="text-sm font-normal text-emerald-500">
-                                                                        {
-                                                                            client.email
-                                                                        }
+                                                                <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2  dark:bg-gray-800">
+                                                                    <h2 class="text-sm font-normal ">
+                                                                        <a
+                                                                            href={`mailto:${client.email}`}
+                                                                        >
+                                                                            {
+                                                                                client.email
+                                                                            }
+                                                                        </a>
                                                                     </h2>
                                                                 </div>
                                                             </td>
                                                             <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                                 {client.phone}
                                                             </td>
-                                                            <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                                authurmelo@example.com
-                                                            </td>
+
                                                             <td class="px-4 py-4 text-sm whitespace-nowrap">
                                                                 <div class="flex items-center gap-x-2">
                                                                     <p class="px-3 py-1 text-xs text-indigo-500 rounded-full dark:bg-gray-800 bg-indigo-100/60">
