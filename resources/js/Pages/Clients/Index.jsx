@@ -90,7 +90,7 @@ export default function Dashboard({ auth, clients }) {
                                                                         <div>
                                                                             <h2 class="font-medium text-gray-800 dark:text-white ">
                                                                                 {
-                                                                                    client.first_name
+                                                                                    client.name
                                                                                 }
                                                                             </h2>
                                                                         </div>
