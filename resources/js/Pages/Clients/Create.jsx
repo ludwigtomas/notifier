@@ -36,6 +36,7 @@ export default function Dashboard({ auth, repositories }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+
                             <form
                                 onSubmit={submit}
                                 className="grid grid-cols-12"
@@ -58,6 +59,7 @@ export default function Dashboard({ auth, repositories }) {
                                                 setData("name", e.target.value)
                                             }
                                         />
+
                                         <InputError
                                             message={errors.name}
                                             htmlFor="name"
@@ -81,6 +83,11 @@ export default function Dashboard({ auth, repositories }) {
                                                 setData("email", e.target.value)
                                             }
                                         />
+
+                                        <InputError
+                                            message={errors.email}
+                                            htmlFor="email"
+                                        />
                                     </div>
 
                                     <div>
@@ -100,6 +107,7 @@ export default function Dashboard({ auth, repositories }) {
                                                 setData("phone", e.target.value)
                                             }
                                         />
+
                                         <InputError
                                             message={errors.phone}
                                             htmlFor="phone"
@@ -107,7 +115,10 @@ export default function Dashboard({ auth, repositories }) {
                                     </div>
 
                                     <div>
-                                        <InputLabel htmlFor="ico" value="ico" />
+                                        <InputLabel
+                                            htmlFor="ico"
+                                            value="ico"
+                                        />
 
                                         <TextInput
                                             id="ico"
@@ -120,6 +131,7 @@ export default function Dashboard({ auth, repositories }) {
                                                 setData("ico", e.target.value)
                                             }
                                         />
+
                                         <InputError
                                             message={errors.ico}
                                             htmlFor="ico"

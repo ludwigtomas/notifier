@@ -1,22 +1,252 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+    XMarkIcon,
+    ChevronRightIcon,
+    PhotoIcon,
+    UserCircleIcon,
+} from "@heroicons/react/24/outline";
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
+import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Dashboard({ auth, clients }) {
+export default function Edit({auth, client, repositories }) {
+
+    const { data, setData, put, processing, errors} = useForm({
+        name: client.name ?? '',
+        email: client.email ?? '',
+        phone: client.phone ?? '',
+        ico: client.ico ?? '',
+        repositories: [...client.relationships.repositories.map((repository) => repository.id)],
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        put(route('clients.update', client.id));
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
+                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("dashboard.index")}
+                    >
+                        Dashboard
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("clients.index")}
+                    >
+                        Klienti
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500"
+                        href={route("clients.edit", client.id)}
+                    >
+                        {client.name}
+                    </Link>
+                </header>
             }
         >
             <Head title="Dashboard" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900"></div>
+                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-xl">
+                        <form
+                            onSubmit={submit}
+                            className="p-5 mt-6 grid grid-cols-12 gap-x-10"
+                        >
+                            <div className="col-span-8">
+                                <div>
+                                    <InputLabel
+                                        className="text-zinc-400"
+                                        htmlFor="name"
+                                        value="Name"
+                                    />
+
+                                    <TextInput
+                                        id="name"
+                                        className="mt-1 block w-full"
+                                        value={data.name}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        isFocused
+                                    />
+
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.name}
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="email"
+                                        value="email"
+                                    />
+
+                                    <TextInput
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        value={data.email}
+                                        autoComplete="email"
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.email}
+                                        htmlFor="email"
+                                    />
+                                </div>
+
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="phone"
+                                        value="phone"
+                                    />
+
+                                    <TextInput
+                                        id="phone"
+                                        type="text"
+                                        name="phone"
+                                        value={data.phone}
+                                        autoComplete="phone"
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.phone}
+                                        htmlFor="phone"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="ico"
+                                        value="ico"
+                                    />
+
+                                    <TextInput
+                                        id="ico"
+                                        type="text"
+                                        name="ico"
+                                        value={data.ico}
+                                        autoComplete="given-name"
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("ico", e.target.value)
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.ico}
+                                        htmlFor="ico"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-span-4">
+                                <InputLabel
+                                    className="text-zinc-400"
+                                    htmlFor="repositories"
+                                    value="repositories"
+                                />
+
+                                {data.repositories.map((repository) => (
+                                    <div
+                                        className="text-white"
+                                        key={repository}
+                                    >
+                                        {repository}
+                                    </div>
+                                ))}
+
+                                {repositories.map((repository) => (
+                                    <div
+                                        className="flex items-center gap-x-2 text-white"
+                                        key={repository.id}
+                                    >
+
+                                        <input
+                                            type="checkbox"
+                                            value={repository.id ?? null}
+                                            onChange={(e) => {
+                                                const repositoryId = e.target.value;
+
+                                                console.log(e.target.checked)
+
+                                                console.log(repositoryId)
+
+                                                if (e.target.checked) {
+                                                    setData("repositories", [ ...data.repositories, repositoryId,]
+                                                    );
+                                                } else {
+                                                    setData("repositories", data.repositories.filter((id) => id !== repositoryId)
+                                                    );
+                                                }
+                                            }}
+                                            checked={data.repositories.includes(repository.id)}
+                                        />
+
+                                        { repository.id }
+
+                                        {/* <input
+                                            type="checkbox"
+                                            value={repository.id}
+                                            onChange={(e) => {
+                                                const repositoryId = e.target.value;
+
+                                                if (e.target.checked) {
+                                                    setData("repositories", [ ...data.repositories, repositoryId,]
+                                                    );
+                                                } else {
+                                                    setData("repositories", data.repositories.filter((id) => id !== repositoryId)
+                                                    );
+                                                }
+                                            }}
+                                        /> */}
+                                    </div>
+                                ))}
+
+                            </div>
+
+                            <div className="">
+
+                                <PrimaryButton
+                                    disabled={processing}
+                                    type="submit"
+                                >
+                                    Save
+                                </PrimaryButton>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

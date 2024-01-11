@@ -1,11 +1,21 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
 export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            header={
+                <header className="flex items-center justify-start flex-row space-x-4 text-sky-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight"
+                        href={route('dashboard.index')}
+                    >
+                        Dashboard
+                    </Link>
+
+                </header>
+            }
         >
             <Head title="Dashboard" />
 

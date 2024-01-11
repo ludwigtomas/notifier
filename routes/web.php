@@ -37,7 +37,6 @@ route::middleware('auth:sanctum')->group(function () {
 
     route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
         route::get('/', [GitController::class, 'index'])->name('index');
-        route::get('/create', [GitController::class, 'create'])->name('create');
         route::post('/', [GitController::class, 'store'])->name('store');
         route::get('/{git}', [GitController::class, 'show'])->name('show');
         route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');

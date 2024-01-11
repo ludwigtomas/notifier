@@ -4,6 +4,7 @@ import {
     PencilSquareIcon,
     TrashIcon,
     EyeIcon,
+    ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Index({ auth, gits }) {
@@ -11,9 +12,26 @@ export default function Index({ auth, gits }) {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-400 leading-tight">
-                    Dashboard
-                </h2>
+                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route('dashboard.index')}
+                    >
+                        Dashboard
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5"/>
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500"
+                        href={route('gits.index')}
+                    >
+                        Gits
+                    </Link>
+
+                </header>
             }
         >
             <Head title="Dashboard" />
@@ -24,15 +42,6 @@ export default function Index({ auth, gits }) {
                         <div className="flex justify-between p-5">
                             <div className="p-6 text-gray-300">
                                 Přidané gity
-                            </div>
-
-                            <div>
-                                <Link
-                                    class="bg-zinc-800 text-gray-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 slower-animation"
-                                    href={route("gits.create")}
-                                >
-                                    Vytvořit
-                                </Link>
                             </div>
                         </div>
 

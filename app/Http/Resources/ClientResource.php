@@ -29,6 +29,8 @@ class ClientResource extends JsonResource
 
 
             'relationships' => [
+                'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),
+                'repositories_count' => $this->repositories_count ?? 0,
             ],
         ];
     }

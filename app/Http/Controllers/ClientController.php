@@ -15,8 +15,14 @@ class ClientController extends Controller
 {
     public function index(): Response
     {
+        $clients = Client::query()
+        ->with('repositories')
+        ->withCount('repositories')
+        ->orderBy('name')
+        ->get();
+
         return inertia('Clients/Index', [
-            'clients' => ClientResource::collection(Client::all()),
+            'clients' => ClientResource::collection($clients),
         ]);
     }
 
@@ -43,9 +49,27 @@ class ClientController extends Controller
 
     public function edit(Client $client): Response
     {
+        $client->load('repositories');
+
         return inertia('Clients/Edit', [
             'client' => new ClientResource($client),
             'repositories' => RepositoryResource::collection(Repository::all()),
         ]);
+    }
+
+    public function update(Request $request, Client $client): RedirectResponse
+    {
+        dD($request->all());
+
+        // $client->update([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'phone' => $request->phone,
+        //     'ico' => $request->ico,
+        // ]);
+
+        // $client->repositories()->sync($request->repositories);
+
+        // return to_route('clients.edit', $client->id);
     }
 }

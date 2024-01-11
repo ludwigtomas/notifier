@@ -4,6 +4,9 @@ import {
     PencilSquareIcon,
     TrashIcon,
     EyeIcon,
+    PlusIcon,
+    XMarkIcon,
+    ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Dashboard({ auth, clients }) {
@@ -11,9 +14,26 @@ export default function Dashboard({ auth, clients }) {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
+                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route('dashboard.index')}
+                    >
+                        Dashboard
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5"/>
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500"
+                        href={route('clients.index')}
+                    >
+                        Klienti
+                    </Link>
+
+                </header>
             }
         >
             <Head title="Dashboard" />
@@ -22,13 +42,13 @@ export default function Dashboard({ auth, clients }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="flex justify-between p-5">
-                            <div className=" text-gray-300">
+                            <div className=" text-zinc-300">
                                 Přidaní klienti
                             </div>
 
                             <div>
                                 <Link
-                                    class="bg-zinc-800 text-gray-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 slower-animation"
+                                    className="bg-zinc-800 text-zinc-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 faster-animation"
                                     href={route("clients.create")}
                                 >
                                     Vytvořit
@@ -37,106 +57,117 @@ export default function Dashboard({ auth, clients }) {
                         </div>
 
                         <div className="p-6 flex flex-col divide-y divide-zinc-800 ">
-                            <table class="min-w-full divide-y divide-gray-700">
-                                <thead class="bg-gray-800">
+                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                <thead className="bg-zinc-950">
                                     <tr>
                                         <th
                                             scope="col"
-                                            class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            <div class="flex items-center gap-x-3">
-                                                <span>Name</span>
-                                            </div>
+                                            Klient
                                         </th>
 
                                         <th
                                             scope="col"
-                                            class="px-[59px] py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
+                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            <button class="flex items-center gap-x-2">
-                                                <span>Email</span>
-                                            </button>
+                                            Email
                                         </th>
 
                                         <th
                                             scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            <button class="flex items-center gap-x-2">
-                                                <span>Phone</span>
-                                            </button>
+                                            Telefon
                                         </th>
 
                                         <th
                                             scope="col"
-                                            class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            Teams
+                                            Počet repositářů
                                         </th>
 
                                         <th
                                             scope="col"
-                                            class="relative py-3.5 px-4"
+                                            className="relative py-3.5 px-4"
                                         >
-                                            <span class="sr-only">Edit</span>
+                                            <span className="sr-only">Edit</span>
                                         </th>
                                     </tr>
                                 </thead>
-                                {clients.map((client) => (
-                                    <tbody class="divide-y divide-gray-700 bg-gray-900">
-                                        <tr>
-                                            <td class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
-                                                <div class="inline-flex items-center gap-x-3">
-                                                    <div class="flex items-center gap-x-2">
-                                                        <div>
-                                                            <h2 class="font-medium text-white ">
-                                                                {client.name}
-                                                            </h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                    {clients.map((client) => (
+                                        <tr
+                                            key={client.id}
+                                            className="group hover:bg-zinc-900"
+                                        >
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium text-zinc-400">
+                                                    {client.name}
+                                                </span>
                                             </td>
-                                            <td class="px-12 py-4 text-sm font-medium text-gray-500 whitespace-nowrap">
-                                                <div class="inline-flex items-center px-3 py-1 rounded-full gap-x-2 bg-gray-800">
-                                                    <h2 class="text-sm font-normal">
-                                                        <a
-                                                            href={`mailto:${client.email}`}
-                                                        >
-                                                            {client.email}
-                                                        </a>
-                                                    </h2>
-                                                </div>
+                                            <td className="px-12 py-4 text-sm font-medium text-zinc-400">
+                                                {client.email
+                                                    ? (
+                                                        <span>
+                                                             <a href={'mailto:'+ client.email}>
+                                                                {client.email}
+                                                            </a>
+                                                        </span>
+                                                    )
+                                                    : (
+                                                        <span>
+                                                            <XMarkIcon className="w-6 h-6 text-red-500"/>
+                                                        </span>
+                                                    )
+                                                }
                                             </td>
-                                            <td class="px-4 py-4 text-sm text-gray-300 whitespace-nowrap">
+
+                                            <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
                                                 {client.phone}
                                             </td>
 
-                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div class="flex items-center gap-x-2">
-                                                    <p class="px-3 py-1 text-xs text-indigo-500 rounded-full bg-gray-800">
-                                                        Design
-                                                    </p>
-                                                    <p class="px-3 py-1 text-xs text-blue-500 rounded-full bg-gray-800">
-                                                        Product
-                                                    </p>
-                                                    <p class="px-3 py-1 text-xs text-pink-500 rounded-full bg-gray-800">
-                                                        Marketing
-                                                    </p>
+                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div className="flex items-center gap-x-2 ">
+                                                    {client.relationships.repositories.slice(0,2).map((repository) => (
+                                                        <p
+                                                            key={repository.id}
+                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-800 faster-animation"
+                                                        >
+                                                            {repository.name}
+                                                        </p>
+                                                    ))}
+
+                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-700 group-hover:bg-zinc-800 faster-animation">
+                                                        { client.relationships.repositories_count > 2
+                                                            ? (
+                                                                <span>
+                                                                    + {client.relationships.repositories_count - 2}
+                                                                </span>
+                                                            )
+                                                            : (
+                                                                <span>
+                                                                    <XMarkIcon className="w-6 h-6 text-zinc-900 group-hover:text-zinc-600 faster-animation"/>
+                                                                </span>
+                                                            )
+                                                        }
+                                                    </span>
                                                 </div>
                                             </td>
 
-                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div class="flex items-center gap-x-6">
+                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div className="flex items-center space-x-2">
                                                     <Link
-                                                        href={route("gits.edit", client.id)}
-                                                        className="bg-green-100 p-1 rounded-lg hover:bg-green-200 slower-animation"
+                                                        href={route("clients.edit", client.id)}
+                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                     >
                                                         <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                                     </Link>
 
                                                     <Link
                                                         href={route("clients.show",client.id)}
-                                                        className="bg-sky-100 p-1 rounded-lg hover:bg-sky-200 slower-animation"
+                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                     >
                                                         <EyeIcon className="w-6 h-6 text-sky-500" />
                                                     </Link>
@@ -146,15 +177,15 @@ export default function Dashboard({ auth, clients }) {
                                                         method="delete"
                                                         preserveScroll
                                                         href={route("clients.destroy", client.id)}
-                                                        className="bg-red-100 p-1 rounded-lg hover:bg-red-200 slower-animation"
+                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                     >
                                                         <TrashIcon className="w-6 h-6 text-red-500" />
                                                     </Link>
                                                 </div>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                ))}
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                     </div>

@@ -7,4 +7,8 @@
     .slower-animation {
         @apply duration-300 ease-linear transition-all;
     }
+
+    .faster-animation {
+        @apply duration-100 ease-linear transition-all;
+    }
 }
