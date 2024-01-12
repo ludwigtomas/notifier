@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
 use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\RepositoryResource;
 use App\Models\Repository;
 
@@ -57,19 +58,17 @@ class ClientController extends Controller
         ]);
     }
 
-    public function update(Request $request, Client $client): RedirectResponse
+    public function update(UpdateClientRequest $request, Client $client): RedirectResponse
     {
-        dD($request->all());
+        $client->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'ico' => $request->ico,
+        ]);
 
-        // $client->update([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'phone' => $request->phone,
-        //     'ico' => $request->ico,
-        // ]);
+        $client->repositories()->sync($request->repositories);
 
-        // $client->repositories()->sync($request->repositories);
-
-        // return to_route('clients.edit', $client->id);
+        return to_route('clients.edit', $client->id);
     }
 }

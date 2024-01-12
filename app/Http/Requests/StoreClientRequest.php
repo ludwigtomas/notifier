@@ -24,9 +24,9 @@ class StoreClientRequest extends FormRequest
         return [
             'name'           => ['required', 'string', 'max:255'],
             'email'          => ['required', 'email', 'max:255', 'unique:clients,email'],
-            'phone'          => ['required', 'string', 'max:255'],
+            'phone'          => ['nullable', 'string', 'max:255'],
             'ico'            => ['nullable', 'integer', 'unique:clients,ico'],
-            'repositories'   => ['required', 'array'],
+            'repositories'   => ['nullable', 'array'],
             'repositories.*' => ['integer', 'exists:repositories,id'],
         ];
     }
@@ -34,14 +34,14 @@ class StoreClientRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required'         => 'Zadajte název',
-            'email.required'        => 'Zadajte email',
-            'phone.required'        => 'Zadajte telefonní číslo',
+            'name.required'          => 'Zadajte název',
+            'email.required'         => 'Zadajte email',
+            'phone.required'         => 'Zadajte telefonní číslo',
 
-            'repositories.required' => 'Vyberte aspoň jeden repozitář',
-            'repositories.array'    => 'Vyberte aspoň jeden repozitář',
+            'repositories.required'  => 'Vyberte aspoň jeden repozitář',
+            'repositories.array'     => 'Vyberte aspoň jeden repozitář',
             'repositories.*.integer' => 'Vyberte aspoň jeden repozitář',
-            'repositories.*.exists' => 'Vyberte aspoň jeden repozitář',
+            'repositories.*.exists'  => 'Vyberte aspoň jeden repozitář',
         ];
     }
 }

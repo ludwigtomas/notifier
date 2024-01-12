@@ -56,7 +56,7 @@ export default function Dashboard({ auth, clients }) {
                             </div>
                         </div>
 
-                        <div className="p-6 flex flex-col divide-y divide-zinc-800 ">
+                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                                 <thead className="bg-zinc-950">
                                     <tr>
@@ -96,11 +96,11 @@ export default function Dashboard({ auth, clients }) {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                <tbody className="divide-y divide-zinc-700 bg-zinc-900">
                                     {clients.map((client) => (
                                         <tr
                                             key={client.id}
-                                            className="group hover:bg-zinc-900"
+                                            className="group hover:bg-zinc-800"
                                         >
                                             <td className="px-4 py-4 ">
                                                 <span className="text-sm font-medium text-zinc-400">
@@ -108,24 +108,11 @@ export default function Dashboard({ auth, clients }) {
                                                 </span>
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium text-zinc-400">
-                                                {client.email
-                                                    ? (
-                                                        <span>
-                                                             <a href={'mailto:'+ client.email}>
-                                                                {client.email}
-                                                            </a>
-                                                        </span>
-                                                    )
-                                                    : (
-                                                        <span>
-                                                            <XMarkIcon className="w-6 h-6 text-red-500"/>
-                                                        </span>
-                                                    )
-                                                }
+                                                {client.email ?? <XMarkIcon className="w-6 h-6 text-red-500"/>}
                                             </td>
 
                                             <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
-                                                {client.phone}
+                                                {client.phone ?? <XMarkIcon className="w-6 h-6 text-red-500"/>}
                                             </td>
 
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -133,13 +120,13 @@ export default function Dashboard({ auth, clients }) {
                                                     {client.relationships.repositories.slice(0,2).map((repository) => (
                                                         <p
                                                             key={repository.id}
-                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-800 faster-animation"
+                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
                                                         >
                                                             {repository.name}
                                                         </p>
                                                     ))}
 
-                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-700 group-hover:bg-zinc-800 faster-animation">
+                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
                                                         { client.relationships.repositories_count > 2
                                                             ? (
                                                                 <span>
@@ -148,7 +135,7 @@ export default function Dashboard({ auth, clients }) {
                                                             )
                                                             : (
                                                                 <span>
-                                                                    <XMarkIcon className="w-6 h-6 text-zinc-900 group-hover:text-zinc-600 faster-animation"/>
+                                                                    <XMarkIcon className="w-6 h-6 text-zinc-600 group-hover:text-zinc-900 faster-animation"/>
                                                                 </span>
                                                             )
                                                         }
@@ -160,14 +147,14 @@ export default function Dashboard({ auth, clients }) {
                                                 <div className="flex items-center space-x-2">
                                                     <Link
                                                         href={route("clients.edit", client.id)}
-                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                     >
                                                         <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                                     </Link>
 
                                                     <Link
                                                         href={route("clients.show",client.id)}
-                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                     >
                                                         <EyeIcon className="w-6 h-6 text-sky-500" />
                                                     </Link>
@@ -177,7 +164,7 @@ export default function Dashboard({ auth, clients }) {
                                                         method="delete"
                                                         preserveScroll
                                                         href={route("clients.destroy", client.id)}
-                                                        className="bg-zinc-900 group-hover:bg-zinc-800 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                     >
                                                         <TrashIcon className="w-6 h-6 text-red-500" />
                                                     </Link>

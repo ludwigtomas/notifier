@@ -14,10 +14,11 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useState } from 'react';
 
-export default function Edit({auth, client, repositories }) {
+export default function Edit({ auth, client, repositories }) {
 
-    const { data, setData, put, processing, errors} = useForm({
+    const { data, setData, put, processing, errors } = useForm({
         name: client.name ?? '',
         email: client.email ?? '',
         phone: client.phone ?? '',
@@ -25,10 +26,18 @@ export default function Edit({auth, client, repositories }) {
         repositories: [...client.relationships.repositories.map((repository) => repository.id)],
     });
 
+    // define new variable
+    const [test, setTest] = useState(false);
+
     const submit = (e) => {
         e.preventDefault();
 
-        put(route('clients.update', client.id));
+        put(route('clients.update', client.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                alert('Klient byl úspěšně upraven.');
+            },
+        });
     };
 
     return (
@@ -179,15 +188,6 @@ export default function Edit({auth, client, repositories }) {
                                     value="repositories"
                                 />
 
-                                {data.repositories.map((repository) => (
-                                    <div
-                                        className="text-white"
-                                        key={repository}
-                                    >
-                                        {repository}
-                                    </div>
-                                ))}
-
                                 {repositories.map((repository) => (
                                     <div
                                         className="flex items-center gap-x-2 text-white"
@@ -199,39 +199,17 @@ export default function Edit({auth, client, repositories }) {
                                             value={repository.id ?? null}
                                             onChange={(e) => {
                                                 const repositoryId = e.target.value;
-
-                                                console.log(e.target.checked)
-
-                                                console.log(repositoryId)
-
                                                 if (e.target.checked) {
-                                                    setData("repositories", [ ...data.repositories, repositoryId,]
+                                                    setData("repositories", [...data.repositories, Number(repositoryId)]
                                                     );
                                                 } else {
-                                                    setData("repositories", data.repositories.filter((id) => id !== repositoryId)
+                                                    setData("repositories", data.repositories.filter((id) => id !== Number(repositoryId))
                                                     );
                                                 }
                                             }}
                                             checked={data.repositories.includes(repository.id)}
                                         />
-
-                                        { repository.id }
-
-                                        {/* <input
-                                            type="checkbox"
-                                            value={repository.id}
-                                            onChange={(e) => {
-                                                const repositoryId = e.target.value;
-
-                                                if (e.target.checked) {
-                                                    setData("repositories", [ ...data.repositories, repositoryId,]
-                                                    );
-                                                } else {
-                                                    setData("repositories", data.repositories.filter((id) => id !== repositoryId)
-                                                    );
-                                                }
-                                            }}
-                                        /> */}
+                                        {repository.name}
                                     </div>
                                 ))}
 
