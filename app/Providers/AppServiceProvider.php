@@ -21,8 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::shouldBeStrict(! app()->isProduction());
+        Model::shouldBeStrict(!app()->isProduction());
 
         JsonResource::withoutWrapping();
+
+        if (config('app.env') === 'production') {
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 }
