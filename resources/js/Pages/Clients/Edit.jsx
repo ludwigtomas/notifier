@@ -190,7 +190,7 @@ export default function Edit({ auth, client, repositories }) {
 
                                 {repositories.map((repository) => (
                                     <div
-                                        className="flex items-center gap-x-2 text-white"
+                                        className="flex justify-between gap-x-2 text-white"
                                         key={repository.id}
                                     >
 
@@ -209,7 +209,17 @@ export default function Edit({ auth, client, repositories }) {
                                             }}
                                             checked={data.repositories.includes(repository.id)}
                                         />
-                                        {repository.name}
+
+                                        <h2 className="w-10/12">
+                                            {repository.name}
+                                        </h2>
+
+
+                                        <div>
+                                            <Link href={route('repositories.show', repository.id)}>
+                                                <EyeIcon className="w-5 h-5" />
+                                            </Link>
+                                        </div>
                                     </div>
                                 ))}
 

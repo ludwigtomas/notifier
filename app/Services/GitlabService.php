@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Git;
 use App\Models\Repository;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client as GuzzleClient;
@@ -80,8 +81,8 @@ class GitLabService
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'updated_at' => $repository_api->last_activity_at,
-                        'created_at' => $repository_api->created_at,
+                        'last_activity_at' => Carbon::parse($repository_api->last_activity_at),
+                        'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 } else {
                     $gitlab->repositories()->create([
@@ -90,8 +91,8 @@ class GitLabService
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'updated_at' => $repository_api->last_activity_at,
-                        'created_at' => $repository_api->created_at,
+                        'last_activity_at' => Carbon::parse($repository_api->last_activity_at),
+                        'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 }
             }

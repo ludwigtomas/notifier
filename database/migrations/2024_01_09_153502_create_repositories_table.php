@@ -18,24 +18,18 @@ return new class extends Migration
                 ->primary()
                 ->unique();
 
-            // $table->foreignIdFor(Client::class)
-            //     ->nullable()
-            //     ->cascadeOnDelete();
-
-
-            // $table->foreignId('client_id')
-            //     ->nullable()
-            //     ->constrained('clients')
-            //     ->cascadeOnDelete();
-
             $table->foreignIdFor(Git::class)
                 ->constrained()
                 ->cascadeOnDelete();
 
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('repository_url');
+            $table->string('website_url')->nullable();
+            $table->string('repository_url')->nullable();
             $table->longText('description')->nullable();
+
+            $table->dateTime('last_activity_at')->nullable();
+            $table->dateTime('repository_created_at')->nullable();
 
             $table->timestamps();
         });

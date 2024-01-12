@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\ClientRepository;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ClientRepositorySeeder extends Seeder
+class TemplateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        ClientRepository::factory(5)->create();
+        //
     }
 }

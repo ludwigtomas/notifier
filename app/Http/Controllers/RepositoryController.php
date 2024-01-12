@@ -2,17 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RepositoryResource;
 use Inertia\Response;
 use App\Models\Repository;
 use Illuminate\Http\Request;
+use App\Http\Resources\RepositoryResource;
 
 class RepositoryController extends Controller
 {
     public function index(): Response
     {
+        $repositories = Repository::query()
+            ->with('clients')
+            ->withCount('clients')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         return inertia('Repositories/Index', [
-            'repositories' => RepositoryResource::collection(Repository::all()),
+            'repositories' => RepositoryResource::collection($repositories),
+        ]);
+    }
+
+    public function show(Repository $repository): Response
+    {
+        $repository->load('clients')
+            ->loadCount('clients');
+
+        return inertia('Repositories/Show', [
+            'repository' => new RepositoryResource($repository),
         ]);
     }
 

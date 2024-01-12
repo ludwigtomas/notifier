@@ -16,16 +16,20 @@ class Repository extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id',    // api
-        'git_id',           // relationship
+        'id',                     // api
+        'git_id',                 // relationship
 
-        'name',             // api
-        'slug',             // automatically generated
-        'repository_url',   // api
-        'description',      // manually added
+        'name',                   // api
+        'slug',                   // automatically generated
+        'website_url',            // manually added
+        'repository_url',         // api
+        'description',            // manually added
 
-        'updated_at',       // api
-        'created_at',       // api
+        'last_activity_at',       // api
+        'repository_created_at',  // api
+
+        'updated_at',             // api
+        'created_at',             // api
     ];
 
     public function git(): BelongsTo
@@ -33,7 +37,7 @@ class Repository extends Model
         return $this->belongsTo(Git::class);
     }
 
-    public function client(): BelongsToMany
+    public function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class);
     }

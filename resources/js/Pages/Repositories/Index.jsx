@@ -1,8 +1,14 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
+    PencilSquareIcon,
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+    XMarkIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+
 export default function Index({ auth, repositories }) {
     return (
         <AuthenticatedLayout
@@ -26,7 +32,6 @@ export default function Index({ auth, repositories }) {
                     >
                         Repozitáře
                     </Link>
-
                 </header>
             }
         >
@@ -34,27 +39,159 @@ export default function Index({ auth, repositories }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <div className="max-w-lg">
+                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="flex justify-between p-5">
+                            <div className=" text-zinc-300">
+                                Přidaní klienti
+                            </div>
+
+                            <div>
+                                <Link
+                                    className="bg-zinc-800 text-zinc-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 faster-animation"
+                                    href={route("clients.create")}
+                                >
+                                    Vytvořit
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
+                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                <thead className="bg-zinc-950">
+                                    <tr>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            URL
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Repozitář
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Počet klientů
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Updated_at
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="relative py-3.5 px-4"
+                                        >
+                                            <span className="sr-only">Edit</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody className="divide-y divide-zinc-700 bg-zinc-900">
                                 {repositories.map((repository) => {
                                     return (
-                                        <div
+                                        <tr
                                             key={repository.id}
-                                            className="grid grid-cols-2 gap-10"
+                                            className="group hover:bg-zinc-800"
                                         >
-                                            <h1>{repository.name}</h1>
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium text-zinc-400">
+                                                    {repository.repository_url
+                                                        ? (
+                                                            <a
+                                                                className="text-sky-500 hover:text-sky-400"
+                                                                href={repository.repository_url}
+                                                                target="_blank"
+                                                                rel="noreferrer noopener"
+                                                            >
+                                                                Odkaz
+                                                            </a>
+                                                        )
+                                                        : "N/A"
+                                                    }
 
-                                            <Link
-                                                className="text-sm text-red-500"
-                                                href={route("repositories.edit", repository.id)}
-                                            >
-                                                Edit
-                                            </Link>
-                                        </div>
+                                                </span>
+                                            </td>
+
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium text-zinc-400">
+                                                    {repository.name}
+                                                </span>
+                                            </td>
+
+                                            <td className="px-4 py-4 ">
+                                                {/* <span className="text-sm font-medium text-zinc-400">
+                                                    {repository.relationships.clients_count}
+                                                </span> */}
+                                                 <div className="flex items-center gap-x-2 ">
+                                                    {repository.relationships.clients.slice(0,2).map((client) => (
+                                                        <p
+                                                            key={client.id}
+                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
+                                                        >
+                                                            {client.name}
+                                                        </p>
+                                                    ))}
+
+                                                    { repository.relationships.clients_count > 2 && (
+                                                        <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
+                                                            + {repository.relationships.clients_count - 2}
+                                                        </span>
+                                                        )
+                                                    }
+                                                </div>
+                                            </td>
+
+
+                                            <td className="px-4 py-4">
+                                                <span className="text-sm font-medium text-zinc-400">
+                                                    { repository.updated_at_human }
+                                                </span>
+                                            </td>
+
+                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                <div className="flex items-center space-x-2">
+                                                    <Link
+                                                        href={route("repositories.edit", repository.id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                    >
+                                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                    </Link>
+
+                                                    <Link
+                                                        href={route("repositories.show",repository.id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                    >
+                                                        <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                    </Link>
+
+                                                    <Link
+                                                        as="button"
+                                                        method="delete"
+                                                        preserveScroll
+                                                        href={route("repositories.destroy", repository.id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                    >
+                                                        <TrashIcon className="w-6 h-6 text-red-500" />
+                                                    </Link>
+                                                </div>
+                                            </td>
+
+                                        </tr>
                                     );
                                 })}
-                            </div>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

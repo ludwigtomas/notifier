@@ -1,12 +1,11 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RepositoryController;
 
@@ -20,16 +19,6 @@ use App\Http\Controllers\RepositoryController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
 route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         route::get('/', [DashboardController::class, 'index'])->name('index');
@@ -48,10 +37,10 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [RepositoryController::class, 'index'])->name('index');
         route::get('/create', [RepositoryController::class, 'create'])->name('create');
         route::post('/', [RepositoryController::class, 'store'])->name('store');
-        route::get('/{project}', [RepositoryController::class, 'show'])->name('show');
-        route::get('/{project}/edit', [RepositoryController::class, 'edit'])->name('edit');
-        route::put('/{project}', [RepositoryController::class, 'update'])->name('update');
-        route::delete('/{project}', [RepositoryController::class, 'destroy'])->name('destroy');
+        route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
+        route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
+        route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
+        route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
     });
 
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
@@ -59,9 +48,29 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/create', [ClientController::class, 'create'])->name('create');
         route::post('/', [ClientController::class, 'store'])->name('store');
         route::get('/{client}', [ClientController::class, 'show'])->name('show');
-        route::get('/{client}/edit', [ClientController::class, 'edit'])->name('edit');
+        route::get('/{client:id}/edit', [ClientController::class, 'edit'])->name('edit');
         route::put('/{client}', [ClientController::class, 'update'])->name('update');
         route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+    });
+
+    route::group(['prefix' => '/dashboard/backups', 'as' => 'backups.'], function () {
+        route::get('/', [BackupController::class, 'index'])->name('index');
+        route::get('/create', [BackupController::class, 'create'])->name('create');
+        route::post('/', [BackupController::class, 'store'])->name('store');
+        route::get('/{backup}', [BackupController::class, 'show'])->name('show');
+        route::get('/{backup}/edit', [BackupController::class, 'edit'])->name('edit');
+        route::put('/{backup}', [BackupController::class, 'update'])->name('update');
+        route::delete('/{backup}', [BackupController::class, 'destroy'])->name('destroy');
+    });
+
+    route::group(['prefix' => '/dashboard/templates', 'as' => 'templates.'], function () {
+        route::get('/', [TemplateController::class, 'index'])->name('index');
+        route::get('/create', [TemplateController::class, 'create'])->name('create');
+        route::post('/', [TemplateController::class, 'store'])->name('store');
+        route::get('/{template}', [TemplateController::class, 'show'])->name('show');
+        route::get('/{template}/edit', [TemplateController::class, 'edit'])->name('edit');
+        route::put('/{template}', [TemplateController::class, 'update'])->name('update');
+        route::delete('/{template}', [TemplateController::class, 'destroy'])->name('destroy');
     });
 });
 
