@@ -13,12 +13,14 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
-        $file = $request->all();
+        dd($request->file('file')->get());
 
-        return response()->json([
-            'message' => 'Database uploaded successfully',
-            'file' => $file,
-        ], 201);
+        // $file = $request->all();
+
+        // return response()->json([
+        //     'message' => 'Database uploaded successfully',
+        //     'file' => $file,
+        // ], 201);
         // try {
         //     $file = $request->all();
 
