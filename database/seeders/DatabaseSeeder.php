@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             GitSeeder::class,
             AdminSeeder::class,
             RepositorySeeder::class,
-            RepositoryDatabaseSeeder::class,
+            // RepositoryDatabaseSeeder::class,
             ClientSeeder::class,
             ClientRepositorySeeder::class,
         ]);
