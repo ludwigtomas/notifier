@@ -16,6 +16,8 @@ class RepositoryDatabaseController extends Controller
         try {
             $file = $request->file('file');
 
+            dd($file);
+
             if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
                 return response()->json([
                     'message' => 'Database already exists',
