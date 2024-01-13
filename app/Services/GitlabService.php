@@ -37,7 +37,6 @@ class GitLabService
 
     public static function downloadAvatar($gitlab)
     {
-
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
         ]);

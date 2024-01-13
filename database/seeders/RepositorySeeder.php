@@ -20,6 +20,9 @@ class RepositorySeeder extends Seeder
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 
+        GitLabService::getUserID($gitlab);
+        GitLabService::downloadAvatar($gitlab);
+
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
         ]);

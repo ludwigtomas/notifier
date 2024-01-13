@@ -21,8 +21,8 @@ class RepositoryDatabaseFactory extends Factory
             'repository_id' => Repository::all()->random()->id,
             'name' => fake()->name(),
             'size' => fake()->numberBetween(1, 100000),
-            'created_at' => fake()->dateTime(),
-            'updated_at' => fake()->dateTime(),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 }

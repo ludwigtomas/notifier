@@ -55,11 +55,7 @@ export default function Index({ auth, gits }) {
                                     <div>
                                         <img
                                             className="w-10 h-10 rounded-lg"
-                                            src={
-                                                "/storage/avatars/" +
-                                                git.username +
-                                                ".png"
-                                            }
+                                            src={"/storage/avatars/" + git.username + ".png"}
                                             alt={git.name}
                                             key={git.id}
                                         />
