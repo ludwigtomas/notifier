@@ -13,14 +13,8 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
-        $file = $request->file('file');
-
-        return $file;
-
         try {
             $file = $request->file('file');
-
-            dD($request->all());
 
             if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
                 return response()->json([
