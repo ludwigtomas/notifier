@@ -18,6 +18,12 @@ class RepositoryDatabaseController extends Controller
 
         // Kontrola, zda byl soubor úspěšně nahrán
         if ($backupFile->isValid()) {
+
+            $repository->database_backups()->create([
+                'name' => $backupFile->getClientOriginalName(),
+                'size' => $backupFile->getSize() / 1000,
+            ]);
+
             // Přesunutí souboru do umístění podle vašich potřeb
             $path = $backupFile->storeAs('backup', 'backup-2024-12-01');
 
