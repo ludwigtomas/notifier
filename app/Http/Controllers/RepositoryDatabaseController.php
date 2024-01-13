@@ -13,7 +13,6 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
-        dd($request->file('file'));
         try {
             $file = $request->file('file');
 
