@@ -13,49 +13,32 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
-        return $repository;
-        // return response()->json([
-        //     'message' => 'Database uploaded successfully',
-        //     'file' => $request->file('file')->get(),
-        // ], 201);
+        try {
+            $file = $request->file('file');
 
-        // $file = $request->all();
+            if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
+                return response()->json([
+                    'message' => 'Database already exists',
+                    'error' => 'tesssssssst',
+                ], 409);
+            }
 
-        // return response()->json([
-        //     'message' => 'Database uploaded successfully',
-        //     'file' => $file,
-        // ], 201);
-        // try {
-        //     $file = $request->all();
+            $repository->database_backups()->create([
+                'name' => $file->getClientOriginalName(),
+                'size' => $file->getSize() / 1000,
+            ]);
 
-        //     return response()->json([
-        //         'message' => 'Database uploaded successfully',
-        //         'file' => $file,
-        //     ], 201);
+            $file->storeAs($repository->slug . '/databases', $file->getClientOriginalName());
 
-        //     if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
-        //         return response()->json([
-        //             'message' => 'Database already exists',
-        //             'error' => 'Database already exists',
-        //         ], 409);
-        //     }
-
-        //     $repository->database_backups()->create([
-        //         'name' => $file->getClientOriginalName(),
-        //         'size' => $file->getSize() / 1000,
-        //     ]);
-
-        //     $file->storeAs($repository->slug . '/databases', $file->getClientOriginalName());
-
-        //     return response()->json([
-        //         'message' => 'Database uploaded successfully'
-        //     ], 201);
-        // } catch (\Throwable $th) {
-        //     return response()->json([
-        //         'message' => 'Database upload failed',
-        //         'error' => $th->getMessage(),
-        //     ], 500);
-        // }
+            return response()->json([
+                'message' => 'Database uploaded successfully'
+            ], 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Database upload failed',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     public function destroy(RepositoryDatabase $repository_database): RedirectResponse
