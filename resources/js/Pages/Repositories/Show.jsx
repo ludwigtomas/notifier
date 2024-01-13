@@ -11,6 +11,7 @@ import {
     CalendarDaysIcon,
     UserIcon,
     UsersIcon,
+    ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from 'react';
 
@@ -247,6 +248,13 @@ export default function Show({ auth, repository }) {
                                     >
                                         Vytvořeno
                                     </th>
+
+                                    <th
+                                        scope="col"
+                                        className="relative py-3.5 px-4"
+                                    >
+                                        <span className="sr-only">Edit</span>
+                                    </th>
                                 </tr>
                             </thead>
 
@@ -278,6 +286,28 @@ export default function Show({ auth, repository }) {
                                             <span className="text-sm font-medium text-zinc-400">
                                                 {backup.created_at_human}
                                             </span>
+                                        </td>
+
+                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                            <div className="flex items-center space-x-2">
+                                                <a
+                                                    download
+                                                    href={'/storage/' + repository.slug + '/databases/' + backup.name}
+                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                >
+                                                    <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />
+                                                </a>
+
+                                                <Link
+                                                    as="button"
+                                                    method="delete"
+                                                    preserveScroll
+                                                    href={route("backups.destroy", backup.id)}
+                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                >
+                                                    <TrashIcon className="w-6 h-6 text-red-500" />
+                                                </Link>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}

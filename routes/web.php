@@ -55,12 +55,8 @@ route::middleware('auth:sanctum')->group(function () {
 
     route::group(['prefix' => '/dashboard/backups', 'as' => 'backups.'], function () {
         route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
-        route::get('/create', [RepositoryDatabaseController::class, 'create'])->name('create');
-        // route::post('/', [RepositoryDatabaseController::class, 'store'])->name('store');
-        route::get('/{backup}', [RepositoryDatabaseController::class, 'show'])->name('show');
-        route::get('/{backup}/edit', [RepositoryDatabaseController::class, 'edit'])->name('edit');
-        route::put('/{backup}', [RepositoryDatabaseController::class, 'update'])->name('update');
-        route::delete('/{backup}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+        route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+        //* STORE REQUEST is in api.php
     });
 
     route::group(['prefix' => '/dashboard/templates', 'as' => 'templates.'], function () {
