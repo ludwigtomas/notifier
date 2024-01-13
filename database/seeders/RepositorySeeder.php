@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use App\Models\Git;
 use App\Models\Repository;
 use Illuminate\Support\Str;
-use App\Services\GitLabService;
+use App\Services\GitlabService;
 use Illuminate\Database\Seeder;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,8 +20,8 @@ class RepositorySeeder extends Seeder
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 
-        GitLabService::getUserID($gitlab);
-        GitLabService::downloadAvatar($gitlab);
+        GitlabService::getUserID($gitlab);
+        GitlabService::downloadAvatar($gitlab);
 
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
@@ -60,6 +60,6 @@ class RepositorySeeder extends Seeder
                 ]);
             }
         }
-        // GitLabService::getRepositories($gitlab);
+        // GitlabService::getRepositories($gitlab);
     }
 }
