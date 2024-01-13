@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Git;
-use App\Models\Repository;
 use Carbon\Carbon;
+use App\Models\Repository;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client as GuzzleClient;
