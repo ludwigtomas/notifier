@@ -176,7 +176,23 @@ export default function Show({ auth, repository }) {
                             </div>
                         </div>
 
-                        <div className="grid border-4 border-dotted border-zinc-800 rounded-xl bg-zinc-900">
+                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
+
+                            <div class="flex justify-center overflow-hidden">
+                                <div
+                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
+                                >
+                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+
+                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Databáze
+                                    </span>
+
+                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                </div>
+                            </div>
+
+
                             <UsersIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
 
                             <div className="text-center space-x-4">
@@ -191,7 +207,22 @@ export default function Show({ auth, repository }) {
                             </div>
                         </div>
 
-                        <div className="grid border-4 border-dotted border-zinc-800 rounded-xl bg-zinc-900">
+                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
+
+                            <div class="flex justify-center overflow-hidden">
+                                <div
+                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
+                                >
+                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+
+                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Databáze
+                                    </span>
+
+                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                </div>
+                            </div>
+
                             <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
 
                             <div className="text-center space-x-4">
