@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Git;
 use App\Models\Client;
+use App\Models\RepositoryDatabase;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -40,5 +42,10 @@ class Repository extends Model
     public function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class);
+    }
+
+    public function database_backups(): HasMany
+    {
+        return $this->hasMany(RepositoryDatabase::class)->orderBy('created_at', 'desc');
     }
 }

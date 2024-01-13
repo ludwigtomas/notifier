@@ -13,7 +13,7 @@ class RepositoryController extends Controller
     {
         $repositories = Repository::query()
             ->with('clients')
-            ->withCount('clients')
+            ->withCount('clients', 'database_backups')
             ->orderBy('updated_at', 'desc')
             ->get();
 
@@ -24,7 +24,7 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository): Response
     {
-        $repository->load('clients')
+        $repository->load('clients', 'database_backups')
             ->loadCount('clients');
 
         return inertia('Repositories/Show', [

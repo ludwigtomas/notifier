@@ -2,12 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
-use App\Http\Controllers\BackupController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\RepositoryDatabaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,13 +54,13 @@ route::middleware('auth:sanctum')->group(function () {
     });
 
     route::group(['prefix' => '/dashboard/backups', 'as' => 'backups.'], function () {
-        route::get('/', [BackupController::class, 'index'])->name('index');
-        route::get('/create', [BackupController::class, 'create'])->name('create');
-        route::post('/', [BackupController::class, 'store'])->name('store');
-        route::get('/{backup}', [BackupController::class, 'show'])->name('show');
-        route::get('/{backup}/edit', [BackupController::class, 'edit'])->name('edit');
-        route::put('/{backup}', [BackupController::class, 'update'])->name('update');
-        route::delete('/{backup}', [BackupController::class, 'destroy'])->name('destroy');
+        route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
+        route::get('/create', [RepositoryDatabaseController::class, 'create'])->name('create');
+        // route::post('/', [RepositoryDatabaseController::class, 'store'])->name('store');
+        route::get('/{backup}', [RepositoryDatabaseController::class, 'show'])->name('show');
+        route::get('/{backup}/edit', [RepositoryDatabaseController::class, 'edit'])->name('edit');
+        route::put('/{backup}', [RepositoryDatabaseController::class, 'update'])->name('update');
+        route::delete('/{backup}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
     });
 
     route::group(['prefix' => '/dashboard/templates', 'as' => 'templates.'], function () {

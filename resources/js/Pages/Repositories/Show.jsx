@@ -12,8 +12,16 @@ import {
     UserIcon,
     UsersIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from 'react';
+
+
+// variable const selected_category
+
 
 export default function Show({ auth, repository }) {
+
+    const [open, setOpen] = useState(false);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -60,7 +68,7 @@ export default function Show({ auth, repository }) {
                             Zobrazit
                         </Link>
 
-                        <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6">
+                        <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
                             <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-4 grid gap-y-2 ">
                                 <Link
                                     href={route("repositories.create")}
@@ -108,20 +116,20 @@ export default function Show({ auth, repository }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-4 gap-x-8 p-2 h-64">
+                    <div className="grid grid-cols-3 gap-x-8 h-64">
                         <div className="grid rounded-xl overflow-hidden bg-zinc-900">
 
-                            <div class="flex justify-center overflow-hidden">
+                            <div className="flex justify-center overflow-hidden">
                                 <div
-                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
+                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
                                 >
-                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
                                         Databáze
                                     </span>
 
-                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
                                 </div>
                             </div>
 
@@ -129,7 +137,7 @@ export default function Show({ auth, repository }) {
 
                             <div className="text-center space-x-4">
                                 <span className="text-gray-200 font-bold text-xl">
-                                    0
+                                    { repository.relationships.database_backups.length }
                                 </span>
 
                                 <span className="text-gray-400 text-xs">
@@ -141,17 +149,17 @@ export default function Show({ auth, repository }) {
 
                         <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
 
-                            <div class="flex justify-center overflow-hidden">
+                            <div className="flex justify-center overflow-hidden">
                                 <div
-                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
+                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
                                 >
-                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
-                                        Databáze
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Poslední commit
                                     </span>
 
-                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
                                 </div>
                             </div>
 
@@ -178,17 +186,17 @@ export default function Show({ auth, repository }) {
 
                         <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
 
-                            <div class="flex justify-center overflow-hidden">
+                            <div className="flex justify-center overflow-hidden">
                                 <div
-                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
+                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
                                 >
-                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
-                                        Databáze
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Klienti
                                     </span>
 
-                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
                                 </div>
                             </div>
 
@@ -206,37 +214,78 @@ export default function Show({ auth, repository }) {
 
                             </div>
                         </div>
-
-                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
-
-                            <div class="flex justify-center overflow-hidden">
-                                <div
-                                    class="relative w-72 bg-zinc-800 h-8 flex items-center justify-center"
-                                >
-                                    <span class="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
-
-                                    <span class="text-zinc-100 text-xl font-bold tracking-wider">
-                                        Databáze
-                                    </span>
-
-                                    <span class="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
-                                </div>
-                            </div>
-
-                            <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
-
-                            <div className="text-center space-x-4">
-                                <span className="text-gray-200 font-bold text-xl">
-                                    0
-                                </span>
-
-                                <span className="text-gray-400 text-xs">
-                                    Databáze
-                                </span>
-
-                            </div>
-                        </div>
                     </div>
+
+                    <div className="mt-10 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
+                        <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                            <thead className="bg-zinc-950">
+                                <tr>
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                    >
+                                        Repozitář
+                                    </th>
+
+                                    <th
+                                        scope="col"
+                                        className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                    >
+                                        Název
+                                    </th>
+
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                    >
+                                        Velikost
+                                    </th>
+
+                                    <th
+                                        scope="col"
+                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                    >
+                                        Vytvořeno
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+                                {repository.relationships.database_backups.map((backup) => (
+                                    <tr
+                                        key={backup.id}
+                                        className="group hover:bg-zinc-800"
+                                    >
+                                        <td className="px-4 py-4 ">
+                                            <span className="text-sm font-medium text-zinc-400">
+                                                {repository.name}
+                                            </span>
+                                        </td>
+
+                                        <td className="px-4 py-4 ">
+                                            <span className="text-sm font-medium text-zinc-400">
+                                                {backup.name}
+                                            </span>
+                                        </td>
+
+                                        <td className="px-4 py-4 ">
+                                            <span className="text-sm font-medium text-zinc-400">
+                                                {backup.size} KB
+                                            </span>
+                                        </td>
+
+                                        <td className="px-4 py-4 ">
+                                            <span className="text-sm font-medium text-zinc-400">
+                                                {backup.created_at_human}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))}
+
+                            </tbody>
+                        </table>
+                    </div>
+
 
                 </div>
             </div>

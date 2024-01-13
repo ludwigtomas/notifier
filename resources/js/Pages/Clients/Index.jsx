@@ -96,6 +96,7 @@ export default function Dashboard({ auth, clients }) {
                                         </th>
                                     </tr>
                                 </thead>
+                                
                                 <tbody className="divide-y divide-zinc-700 bg-zinc-900">
                                     {clients.map((client) => (
                                         <tr

@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\RepositoryDatabaseResource;
 
 class RepositoryResource extends JsonResource
 {
@@ -41,6 +42,9 @@ class RepositoryResource extends JsonResource
 
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'clients_count' => $this->clients_count ?? 0,
+
+                'database_backups' => RepositoryDatabaseResource::collection($this->whenLoaded('database_backups')),
+                'database_backups_count' => $this->database_backups_count ?? 0,
             ],
         ];
     }

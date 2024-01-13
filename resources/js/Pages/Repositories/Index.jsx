@@ -82,6 +82,13 @@ export default function Index({ auth, repositories }) {
 
                                         <th
                                             scope="col"
+                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Počet databází
+                                        </th>
+
+                                        <th
+                                            scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             Updated_at
@@ -151,6 +158,11 @@ export default function Index({ auth, repositories }) {
                                                 </div>
                                             </td>
 
+                                            <td className="px-4 py-4 ">
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    {repository.relationships.database_backups_count}
+                                                </span>
+                                            </td>
 
                                             <td className="px-4 py-4">
                                                 <span className="text-sm font-medium text-zinc-400">
