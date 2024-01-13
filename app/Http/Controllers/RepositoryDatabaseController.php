@@ -15,6 +15,11 @@ class RepositoryDatabaseController extends Controller
     {
         dd($request->file('file')->get());
 
+        return response()->json([
+            'message' => 'Database uploaded successfully',
+            'file' => $request->file('file')->get(),
+        ], 201);
+
         // $file = $request->all();
 
         // return response()->json([
