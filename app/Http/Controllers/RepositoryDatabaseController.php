@@ -13,31 +13,46 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
-        try {
-            $file = $request->file('file');
+        // Získání souboru z požadavku
+        $backupFile = $request->file('backup_file');
 
-            if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
-                return response()->json([
-                    'message' => 'Database already exists',
-                ], 409);
-            }
+        // Kontrola, zda byl soubor úspěšně nahrán
+        if ($backupFile->isValid()) {
+            // Přesunutí souboru do umístění podle vašich potřeb
+            $path = $backupFile->storeAs('backup', 'backup-2024-12-01');
 
-            $repository->database_backups()->create([
-                'name' => $file->getClientOriginalName(),
-                'size' => $file->getSize() / 1000,
-            ]);
-
-            $file->storeAs($repository->slug . '/databases', $file->getClientOriginalName());
-
-            return response()->json([
-                'message' => 'Database uploaded successfully'
-            ], 201);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Database upload failed',
-                'error' => $th->getMessage(),
-            ], 500);
+            // Zde můžete dále zpracovávat cestu nebo provádět další akce
+            return response()->json(['message' => 'Soubor byl úspěšně nahrán.']);
+        } else {
+            // Soubor nebyl nahrán úspěšně
+            return response()->json(['error' => 'Chyba při nahrávání souboru.'], 400);
         }
+
+        // try {
+        //     $file = $request->file('file');
+
+        //     if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
+        //         return response()->json([
+        //             'message' => 'Database already exists',
+        //         ], 409);
+        //     }
+
+        //     $repository->database_backups()->create([
+        //         'name' => $file->getClientOriginalName(),
+        //         'size' => $file->getSize() / 1000,
+        //     ]);
+
+        //     $file->storeAs($repository->slug . '/databases', $file->getClientOriginalName());
+
+        //     return response()->json([
+        //         'message' => 'Database uploaded successfully'
+        //     ], 201);
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'message' => 'Database upload failed',
+        //         'error' => $th->getMessage(),
+        //     ], 500);
+        // }
     }
 
     public function destroy(RepositoryDatabase $repository_database): RedirectResponse
