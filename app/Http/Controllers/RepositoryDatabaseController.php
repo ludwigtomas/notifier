@@ -28,7 +28,7 @@ class RepositoryDatabaseController extends Controller
                 'size' => $file->getSize() / 1000,
             ]);
 
-            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('M')  . '/' . $file->getClientOriginalName();
+            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m')  . '/' . $file->getClientOriginalName();
 
             Storage::putFileAs($path, $file, $file->getClientOriginalName());
 
