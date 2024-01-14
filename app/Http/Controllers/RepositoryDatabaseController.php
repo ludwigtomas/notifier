@@ -13,6 +13,14 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository)
     {
+        $file = $request->file('backup_file');
+
+        if($file->isValid()){
+            dd($file);
+        } else {
+            dd('invalid');
+        }
+
         try {
             $file = $request->file('backup_file');
 
