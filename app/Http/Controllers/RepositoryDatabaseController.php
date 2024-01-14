@@ -16,7 +16,7 @@ class RepositoryDatabaseController extends Controller
         $file = $request->file('backup_file');
 
         if($file->isValid()){
-            dd($file);
+            dd('file is allright');
         } else {
             dd('invalid');
         }
