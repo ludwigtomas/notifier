@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDatabaseRequest;
 use App\Models\Repository;
 use App\Models\RepositoryDatabase;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +28,9 @@ class RepositoryDatabaseController extends Controller
                 'size' => $file->getSize() / 1000,
             ]);
 
-            $file->storeAs($repository->slug . '/databases', $file->getClientOriginalName());
+            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('M')  . '/' . $file->getClientOriginalName();
+
+            Storage::putFileAs($path, $file, $file->getClientOriginalName());
 
             return response()->json([
                 'message' => 'Database uploaded successfully'
