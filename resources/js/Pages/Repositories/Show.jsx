@@ -334,7 +334,7 @@ export default function Show({ auth, repository }) {
                                             <div className="flex items-center space-x-2">
                                                 <a
                                                     download
-                                                    href={'/storage/' + repository.slug + '/databases/' + backup.name}
+                                                    href={'/storage/' + backup.path +'/'+backup.name}
                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                 >
                                                     <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />

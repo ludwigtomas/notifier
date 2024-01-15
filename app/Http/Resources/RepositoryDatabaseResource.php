@@ -17,9 +17,9 @@ class RepositoryDatabaseResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'repository_id' => $this->repository_id,
             'name' => $this->name,
             'size' => $this->size,
+            'path' => $this->path,
 
             'created_at' => $this->created_at,
             'created_at_human' => $this->created_at->diffForHumans(),
