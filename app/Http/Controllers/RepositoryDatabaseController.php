@@ -12,33 +12,50 @@ use Illuminate\Support\Facades\Storage;
 
 class RepositoryDatabaseController extends Controller
 {
+    // private function checkPassword(Request $request, Repository $repository): bool
+    // {
+    //     return $request->password && $request->password === $repository->database_verification_code
+    //         ? true
+    //         : false;
+    // }
+
     public function store(Request $request, Repository $repository)
     {
         try {
+            if (!$request->password || $request->password !== $repository->database_verification_code) {
+                return response()->json([
+                    'type' => 'failed',
+                    'message' => 'Invalid password',
+                ], 401);
+            }
+
             $file = $request->file('backup_file');
 
             if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
                 return response()->json([
-                    'message' => 'Database already exists',
+                    'type' => 'failed',
+                    'message' => 'Database with this name already exists',
                 ], 409);
             }
 
-            $repository->database_backups()->create([
-                'name' => $file->getClientOriginalName(),
+            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m');
+
+            $database_backup = $repository->database_backups()->create([
+                'name' => Carbon::now()->format('Y-m-d') . '.sql' ,
                 'size' => $file->getSize() / 1000,
+                'path' => $path,
             ]);
 
-            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m')  . '/' . $file->getClientOriginalName();
-
-            Storage::putFileAs($path, $file, $file->getClientOriginalName());
+            Storage::putFileAs($path, $file, $database_backup->name);
 
             return response()->json([
-                'message' => 'Database uploaded successfully'
+                'type' => 'success',
+                'message' => 'Database backup uploaded successfully',
             ], 201);
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Database upload failed',
-                'error' => $th->getMessage(),
+                'type' => 'failed',
+                'message' => $th->getMessage(),
             ], 500);
         }
     }

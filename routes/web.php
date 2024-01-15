@@ -19,6 +19,11 @@ use App\Http\Controllers\RepositoryDatabaseController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+route::get('/', function () {
+    return inertia('Welcome');
+});
+
 route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         route::get('/', [DashboardController::class, 'index'])->name('index');

@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->integer('size');
+            $table->string('path');
 
             $table->timestamps();
         });

@@ -18,20 +18,21 @@ class Repository extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id',                     // api
-        'git_id',                 // relationship
+        'id',                          // api
+        'git_id',                      // relationship
 
-        'name',                   // api
-        'slug',                   // automatically generated
-        'website_url',            // manually added
-        'repository_url',         // api
-        'description',            // manually added
+        'name',                        // api
+        'slug',                        // automatically generated
+        'website_url',                 // manually added
+        'repository_url',              // api
+        'description',                 // manually added
 
-        'last_activity_at',       // api
-        'repository_created_at',  // api
+        'database_verification_code',  // Observer
+        'last_activity_at',            // api
+        'repository_created_at',       // api
 
-        'updated_at',             // api
-        'created_at',             // api
+        'updated_at',                  // api
+        'created_at',                  // api
     ];
 
     public function git(): BelongsTo

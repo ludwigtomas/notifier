@@ -14,9 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('repositories', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')
-                ->primary()
-                ->unique();
+            $table->id();
 
             $table->foreignIdFor(Git::class)
                 ->constrained()
@@ -28,6 +26,7 @@ return new class extends Migration
             $table->string('repository_url')->nullable();
             $table->longText('description')->nullable();
 
+            $table->uuid('database_verification_code')->unique();
             $table->dateTime('last_activity_at')->nullable();
             $table->dateTime('repository_created_at')->nullable();
 

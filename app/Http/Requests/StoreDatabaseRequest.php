@@ -22,7 +22,8 @@ class StoreDatabaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'mimes:sql', 'max:10000']
+            'file' => ['required', 'file', 'mimes:sql', 'max:100000'],
+            'password' => ['required', 'string', 'exists:repositories,database_verification_code'],
         ];
     }
 }

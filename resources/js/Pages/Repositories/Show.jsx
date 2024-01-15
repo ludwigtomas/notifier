@@ -12,8 +12,11 @@ import {
     UserIcon,
     UsersIcon,
     ArrowDownTrayIcon,
+    ShieldCheckIcon,
+    CodeBracketIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from 'react';
+import { motion } from "framer-motion"
 
 
 // variable const selected_category
@@ -116,106 +119,145 @@ export default function Show({ auth, repository }) {
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-3 gap-x-8 h-64">
-                        <div className="grid rounded-xl overflow-hidden bg-zinc-900">
+                <div className="container mx-auto sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-4 gap-x-8 h-64">
 
-                            <div className="flex justify-center overflow-hidden">
-                                <div
-                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
-                                >
-                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+                            <div className="grid rounded-xl overflow-hidden bg-zinc-900">
+                                <div className="flex justify-center overflow-hidden">
+                                    <div
+                                        className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
+                                    >
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Kód
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    </div>
+                                </div>
+
+                                <ShieldCheckIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
+
+                                <div className="text-center space-x-4">
+                                    <span className="text-gray-200 font-bold text-xs">
+                                        { repository.database_verification_code }
+                                    </span>
+
+                                    <motion.button
+                                        whileHover={{ scale: 1.1 }}
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => {
+                                            navigator.clipboard.writeText(repository.database_verification_code)
+                                        }}
+                                        className="bg-zinc-800 text-white p-2"
+                                    >
+                                        <CodeBracketIcon className="w-6 h-6"/>
+                                    </motion.button>
+                                </div>
+                            </div>
+
+                            <div className="grid rounded-xl overflow-hidden bg-zinc-900">
+
+                                <div className="flex justify-center overflow-hidden">
+                                    <div
+                                        className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
+                                    >
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Databáze
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    </div>
+                                </div>
+
+                                <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
+
+                                <div className="text-center space-x-4">
+                                    <span className="text-gray-200 font-bold text-xl">
+                                        { repository.relationships.database_backups.length }
+                                    </span>
+
+                                    <span className="text-gray-400 text-xs">
                                         Databáze
                                     </span>
 
-                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
                                 </div>
                             </div>
 
-                            <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
+                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
 
-                            <div className="text-center space-x-4">
-                                <span className="text-gray-200 font-bold text-xl">
-                                    { repository.relationships.database_backups.length }
-                                </span>
+                                <div className="flex justify-center overflow-hidden">
+                                    <div
+                                        className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
+                                    >
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                <span className="text-gray-400 text-xs">
-                                    Databáze
-                                </span>
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Poslední commit
+                                        </span>
 
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    </div>
+                                </div>
+
+                                <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
+
+                                <div className="text-center space-x-4">
+
+                                    <div className="text-gray-500 text-xs">
+                                        {repository.last_activity_at}
+                                    </div>
+
+                                    <div className="text-gray-200 mt-2">
+                                        <h2 className="font-bold text-2xl">
+                                            {repository.last_activity_at_human}
+                                        </h2>
+
+                                        <h3 className="text-gray-400 text-xs">
+                                            Nejnovější commit
+                                        </h3>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
+                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
 
-                            <div className="flex justify-center overflow-hidden">
-                                <div
-                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
-                                >
-                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
+                                <div className="flex justify-center overflow-hidden">
+                                    <div
+                                        className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
+                                    >
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
 
-                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                        Poslední commit
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Klienti
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
+                                    </div>
+                                </div>
+
+
+                                <UsersIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
+
+                                <div className="text-center space-x-4">
+                                    <span className="text-gray-200 font-bold text-xl">
+                                        {repository.relationships.clients_count}
                                     </span>
 
-                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
-                                </div>
-                            </div>
-
-                            <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
-
-                            <div className="text-center space-x-4">
-
-                                <div className="text-gray-500 text-xs">
-                                    {repository.last_activity_at}
-                                </div>
-
-                                <div className="text-gray-200 mt-2">
-                                    <h2 className="font-bold text-2xl">
-                                        {repository.last_activity_at_human}
-                                    </h2>
-
-                                    <h3 className="text-gray-400 text-xs">
-                                        Nejnovější commit
-                                    </h3>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
-
-                            <div className="flex justify-center overflow-hidden">
-                                <div
-                                    className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
-                                >
-                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]"/>
-
-                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                        Klienti
+                                    <span className="text-gray-400 text-xs">
+                                        klienti
                                     </span>
 
-                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]"/>
                                 </div>
                             </div>
-
-
-                            <UsersIcon className="w-14 h-28 stroke-1 m-auto text-sky-500"/>
-
-                            <div className="text-center space-x-4">
-                                <span className="text-gray-200 font-bold text-xl">
-                                    {repository.relationships.clients_count}
-                                </span>
-
-                                <span className="text-gray-400 text-xs">
-                                    klienti
-                                </span>
-
-                            </div>
-                        </div>
                     </div>
+                </div>
+
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
                     <div className="mt-10 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
                         <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
