@@ -4,6 +4,7 @@ import {
     PencilSquareIcon,
     TrashIcon,
     EyeIcon,
+    EyeSlashIcon,
     PlusIcon,
     XMarkIcon,
     ChevronRightIcon,
@@ -14,11 +15,12 @@ import {
     ArrowDownTrayIcon,
     ShieldCheckIcon,
     CodeBracketIcon,
+    ClipboardIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
-export default function Show({ auth, repository }) {
+export default function Show({ auth, repository, database_verification_code }) {
     const [showCode, setShowCode] = useState(false);
     const codeRef = useRef(null);
 
@@ -164,20 +166,33 @@ export default function Show({ auth, repository }) {
                             <ShieldCheckIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
                             <div className="text-center space-x-4">
-                                <span className="text-gray-200 font-bold text-xs">
+                                <span
+                                    className="text-gray-200 font-bold text-xs"
+                                    ref={codeRef}
+                                >
                                     {showCode === true
                                         ? repository.database_verification_code
                                         : "***************************************"}
                                 </span>
-
                                 <motion.button
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
-                                    onMouseDown={toggleShowCode}
+                                    onClick={toggleShowCode}
+                                    className="bg-zinc-800 text-white p-2"
+                                >
+                                    {showCode === true ? (
+                                        <EyeIcon className="w-6 h-6" />
+                                    ) : (
+                                        <EyeSlashIcon className="w-6 h-6" />
+                                    )}
+                                </motion.button>
+                                <motion.button
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
                                     onClick={handleCopyToClipboard}
                                     className="bg-zinc-800 text-white p-2"
                                 >
-                                    <CodeBracketIcon className="w-6 h-6" />
+                                    <ClipboardIcon className="w-6 h-6" />
                                 </motion.button>
                             </div>
                         </div>
