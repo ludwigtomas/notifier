@@ -22,9 +22,14 @@ class DatabaseSeeder extends Seeder
             GitSeeder::class,
             AdminSeeder::class,
             RepositorySeeder::class,
-            RepositoryDatabaseSeeder::class,
             ClientSeeder::class,
-            ClientRepositorySeeder::class,
         ]);
+
+        if (app()->isLocal()) {
+            $this->call([
+                RepositoryDatabaseSeeder::class,
+                ClientRepositorySeeder::class,
+            ]);
+        }
     }
 }
