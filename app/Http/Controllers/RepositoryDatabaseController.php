@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDatabaseRequest;
-use App\Models\Repository;
-use App\Models\RepositoryDatabase;
 use Carbon\Carbon;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Repository;
 use Illuminate\Http\Request;
+use App\Models\RepositoryDatabase;
+use App\Jobs\RepositoryDatabaseJob;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreDatabaseRequest;
 
 class RepositoryDatabaseController extends Controller
 {
-    // private function checkPassword(Request $request, Repository $repository): bool
-    // {
-    //     return $request->password && $request->password === $repository->database_verification_code
-    //         ? true
-    //         : false;
-    // }
+    private function sendMail(Repository $repository, string $status, string $message): void
+    {
+        RepositoryDatabaseJob::dispatch($repository, $status, $message);
+    }
 
     public function store(Request $request, Repository $repository)
     {
         try {
             if (!$request->password || $request->password !== $repository->database_verification_code) {
+
+                $this->sendMail($repository, 'failed', 'Invalid password');
+
                 return response()->json([
                     'type' => 'failed',
                     'message' => 'Invalid password',
@@ -31,28 +33,50 @@ class RepositoryDatabaseController extends Controller
 
             $file = $request->file('backup_file');
 
-            if ($repository->database_backups()->where('name', $file->getClientOriginalName())->exists()) {
+            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m');
+
+            $all_files = Storage::allFiles($path);
+
+            $backup_name = Carbon::now()->format('Y-m-d') . '.sql';
+
+            if (in_array($path . '/' . $backup_name, $all_files)) {
+
+                $this->sendMail($repository, 'failed', 'Database backup "FILE" already exists');
+
                 return response()->json([
                     'type' => 'failed',
-                    'message' => 'Database with this name already exists',
+                    'message' => 'Database backup "FILE" already exists',
                 ], 409);
             }
 
-            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m');
+            if ($repository->database_backups()->where('name', $backup_name)->exists()) {
+
+                $this->sendMail($repository, 'failed', 'Database backup "DATABASE" already exists');
+
+                return response()->json([
+                    'type' => 'failed',
+                    'message' => 'Database backup "DATABASE" already exists',
+                ], 409);
+            }
 
             $database_backup = $repository->database_backups()->create([
-                'name' => Carbon::now()->format('Y-m-d') . '.sql' ,
+                'name' => $backup_name,
                 'size' => $file->getSize() / 1000,
                 'path' => $path,
             ]);
 
             Storage::putFileAs($path, $file, $database_backup->name);
 
+            $this->sendMail($repository, 'success', 'Database backup uploaded successfully');
+
             return response()->json([
                 'type' => 'success',
                 'message' => 'Database backup uploaded successfully',
             ], 201);
         } catch (\Throwable $th) {
+
+            $this->sendMail($repository, 'failed', $th->getMessage());
+
             return response()->json([
                 'type' => 'failed',
                 'message' => $th->getMessage(),
