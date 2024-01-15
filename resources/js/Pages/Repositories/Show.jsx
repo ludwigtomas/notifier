@@ -15,15 +15,38 @@ import {
     ShieldCheckIcon,
     CodeBracketIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function Show({ auth, repository }) {
     const [showCode, setShowCode] = useState(false);
+    const codeRef = useRef(null);
 
     function toggleShowCode() {
         setShowCode(!showCode);
     }
+
+    const handleCopyToClipboard = () => {
+        const codeElement = codeRef.current;
+
+        if (codeElement) {
+            const range = document.createRange();
+            const selection = window.getSelection();
+
+            range.selectNodeContents(codeElement);
+
+            // Check if the selected text contains the actual key
+            if (range.toString().includes(database_verification_code)) {
+                alert("Cannot copy sensitive information!");
+            } else {
+                selection.removeAllRanges();
+                selection.addRange(range);
+                document.execCommand("copy");
+                selection.removeAllRanges();
+                alert("Code copied to clipboard!");
+            }
+        }
+    };
 
     return (
         <AuthenticatedLayout
@@ -151,6 +174,7 @@ export default function Show({ auth, repository }) {
                                     whileHover={{ scale: 1.1 }}
                                     whileTap={{ scale: 0.9 }}
                                     onMouseDown={toggleShowCode}
+                                    onClick={handleCopyToClipboard}
                                     className="bg-zinc-800 text-white p-2"
                                 >
                                     <CodeBracketIcon className="w-6 h-6" />
