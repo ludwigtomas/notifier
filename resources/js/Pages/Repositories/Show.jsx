@@ -119,10 +119,10 @@ export default function Show({ auth, repository }) {
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="container mx-auto sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-4 gap-x-8 h-64">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-12 gap-x-8 h-64">
 
-                            <div className="grid rounded-xl overflow-hidden bg-zinc-900">
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
                                 <div className="flex justify-center overflow-hidden">
                                     <div
                                         className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center"
@@ -157,7 +157,7 @@ export default function Show({ auth, repository }) {
                                 </div>
                             </div>
 
-                            <div className="grid rounded-xl overflow-hidden bg-zinc-900">
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
 
                                 <div className="flex justify-center overflow-hidden">
                                     <div
@@ -187,7 +187,7 @@ export default function Show({ auth, repository }) {
                                 </div>
                             </div>
 
-                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
 
                                 <div className="flex justify-center overflow-hidden">
                                     <div
@@ -224,7 +224,7 @@ export default function Show({ auth, repository }) {
                                 </div>
                             </div>
 
-                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-2">
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
 
                                 <div className="flex justify-center overflow-hidden">
                                     <div
