@@ -64,7 +64,7 @@ class RepositoryDatabaseController extends Controller
     {
         $repository_database->delete();
 
-        Storage::delete($repository_database->repository->slug . '/databases/' . $repository_database->name . '.sql');
+        Storage::delete($repository_database->path . '/' . $repository_database->name);
 
         return back();
     }
