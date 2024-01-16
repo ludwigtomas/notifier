@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Exception;
 use App\Models\Repository;
 use Illuminate\Bus\Queueable;
 use App\Mail\DatabaseRepositoryMail;
@@ -24,9 +25,6 @@ class RepositoryDatabaseJob implements ShouldQueue
         protected string $status,
         protected string $message,
     ) {
-        $this->repository = $repository;
-        $this->status = $status;
-        $this->message = $message;
     }
 
     /**
@@ -39,5 +37,17 @@ class RepositoryDatabaseJob implements ShouldQueue
             $this->status,
             $this->message,
         ));
+    }
+
+
+    /**
+     * Tags
+     */
+    public function tags(): array
+    {
+        return [
+            'database',
+            'repository:' . $this->repository->id,
+        ];
     }
 }
