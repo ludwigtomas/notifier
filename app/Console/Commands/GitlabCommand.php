@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Git;
-use App\Services\GitLabService;
+use App\Services\GitlabService;
 use Illuminate\Console\Command;
 
 class GitlabCommand extends Command
@@ -29,7 +29,7 @@ class GitlabCommand extends Command
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 
-        $gitlab = GitLabService::getRepositories($gitlab);
+        $gitlab = GitlabService::getRepositories($gitlab);
 
         $this->info($gitlab);
     }
