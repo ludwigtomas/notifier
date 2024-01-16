@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Facades\Storage;
 
-class GitlabService
+class GitLabService
 {
     public static function getUserID($gitlab): void
     {
