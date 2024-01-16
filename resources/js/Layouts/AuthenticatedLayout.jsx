@@ -11,6 +11,7 @@ import {
     UsersIcon,
     CircleStackIcon,
     TableCellsIcon,
+    CogIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
@@ -125,6 +126,7 @@ export default function Authenticated({ user, header, children }) {
                                         >
                                             Profile
                                         </Dropdown.Link>
+
                                         <Dropdown.Link
                                             href={route("logout")}
                                             method="post"
@@ -132,6 +134,37 @@ export default function Authenticated({ user, header, children }) {
                                         >
                                             Log Out
                                         </Dropdown.Link>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
+
+                            <div className="ms-3 relative ">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <span className="inline-flex rounded-md">
+                                            <button
+                                                type="button"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-none text-[20px]  hover:text-sky-500 focus:outline-none transition ease-in-out duration-150"
+                                            >
+                                                <CogIcon className="w-8 h-8"/>
+                                            </button>
+                                        </span>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content>
+                                        <a
+                                            className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                            href={route("horizon.index")}
+                                        >
+                                            Horizon
+                                        </a>
+
+                                        <a
+                                            className="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                            href={route("log-viewer.index")}
+                                        >
+                                            Log Viewer
+                                        </a>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
