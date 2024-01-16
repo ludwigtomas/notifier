@@ -40,20 +40,6 @@ export default function Index({ auth, repositories }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="flex justify-between p-5">
-                            <div className=" text-zinc-300">
-                                Přidaní klienti
-                            </div>
-
-                            <div>
-                                <Link
-                                    className="bg-zinc-800 text-zinc-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 faster-animation"
-                                    href={route("clients.create")}
-                                >
-                                    Vytvořit
-                                </Link>
-                            </div>
-                        </div>
 
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
@@ -91,7 +77,7 @@ export default function Index({ auth, repositories }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            Updated_at
+                                            last_commit_at
                                         </th>
 
                                         <th
@@ -166,7 +152,7 @@ export default function Index({ auth, repositories }) {
 
                                             <td className="px-4 py-4">
                                                 <span className="text-sm font-medium text-zinc-400">
-                                                    { repository.updated_at_human }
+                                                    { repository.last_commit_at_human }
                                                 </span>
                                             </td>
 

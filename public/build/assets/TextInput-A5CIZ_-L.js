@@ -1,0 +1,1 @@
+import{r as s,j as f}from"./app-tfmcN1I-.js";const i=s.forwardRef(function({type:e="text",className:o="",isFocused:n=!1,...u},t){const r=t||s.useRef();return s.useEffect(()=>{n&&r.current.focus()},[]),f.jsx("input",{...u,type:e,className:"border-zinc-700 focus:border-sky-500 focus:ring-sky-500 rounded-md shadow-sm "+o,ref:r})});export{i as T};

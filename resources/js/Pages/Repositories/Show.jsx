@@ -14,7 +14,6 @@ import {
     UsersIcon,
     ArrowDownTrayIcon,
     ShieldCheckIcon,
-    CodeBracketIcon,
     ClipboardIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useRef } from "react";
@@ -26,7 +25,7 @@ export default function Show({ auth, repository, database_verification_code }) {
     const [showCode, setShowCode] = useState(false);
     const codeRef = useRef(null);
     const [showClients, setShowClients] = useState(false);
-    const [showDatabase, setShowDatabase] = useState(false);
+    const [showDatabase, setShowDatabase] = useState(true);
 
     // Function to toggle the database_verification_code
     function toggleShowCode() {
@@ -128,10 +127,7 @@ export default function Show({ auth, repository, database_verification_code }) {
                                     </Link>
 
                                     <Link
-                                        href={route(
-                                            "repositories.edit",
-                                            repository.id
-                                        )}
+                                        href={route("repositories.edit", repository.id)}
                                         className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
                                     >
                                         <span className="text-gray-200">
@@ -145,10 +141,7 @@ export default function Show({ auth, repository, database_verification_code }) {
                                         as="button"
                                         method="delete"
                                         preserveScroll
-                                        href={route(
-                                            "repositories.destroy",
-                                            repository.id
-                                        )}
+                                        href={route( "repositories.destroy", repository.id)}
                                         className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
                                     >
                                         <span className="text-gray-200">
@@ -183,44 +176,53 @@ export default function Show({ auth, repository, database_verification_code }) {
 
                                 <ShieldCheckIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
-                                <div className="text-center space-x-4">
+                                <div className="flex flex-col items-center ">
                                     <span
                                         className="text-gray-200 font-bold text-xs"
                                         ref={codeRef}
                                     >
-                                        {showCode === true
+                                        {showCode
                                             ? repository.database_verification_code
-                                            : "***************************************"}
+                                            : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx "}
                                     </span>
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={toggleShowCode}
-                                        className="bg-zinc-800 text-white p-2"
-                                    >
-                                        {showCode === true ? (
-                                            <EyeIcon className="w-6 h-6" />
-                                        ) : (
-                                            <EyeSlashIcon className="w-6 h-6" />
-                                        )}
-                                    </motion.button>
-                                    <motion.button
-                                        whileHover={{ scale: 1.1 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        onClick={handleCopyToClipboard}
-                                        className="bg-zinc-800 text-white p-2"
-                                    >
-                                        <ClipboardIcon className="w-6 h-6" />
-                                    </motion.button>
+
+                                    <div className="space-x-2 mt-2">
+                                        <motion.button
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                            onClick={toggleShowCode}
+                                            className="bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
+                                        >
+                                            { showCode ? (
+                                                <EyeIcon className="w-6 h-6" />
+                                            ) : (
+                                                <EyeSlashIcon className="w-6 h-6" />
+                                            )}
+                                        </motion.button>
+
+                                        <motion.button
+                                            whileHover={{ scale: 1.1 }}
+                                            whileTap={{ scale: 0.9 }}
+                                            onClick={
+                                                showCode ? handleCopyToClipboard : null
+                                            }
+                                            className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
+                                                showCode ? '' : ' cursor-not-allowed'
+                                            )}
+                                        >
+                                            <ClipboardIcon className="w-6 h-6" />
+                                        </motion.button>
+                                    </div>
                                 </div>
                             </div>
 
                             <div
-                                className={`col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 ${
-                                    showDatabase
-                                        ? "border-2 border-sky-500"
-                                        : ""
-                                }`}
+                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
+                                    (showDatabase
+                                        ? 'border-sky-500'
+                                        : 'border-transparent cursor-pointer'
+                                    )
+                                }
                                 onClick={handleDatabaseToggle}
                             >
                                 <div className="flex justify-center overflow-hidden">
@@ -239,10 +241,7 @@ export default function Show({ auth, repository, database_verification_code }) {
 
                                 <div className="text-center space-x-4">
                                     <span className="text-gray-200 font-bold text-xl">
-                                        {
-                                            repository.relationships
-                                                .database_backups.length
-                                        }
+                                        { repository.relationships.database_backups.length}
                                     </span>
 
                                     <span className="text-gray-400 text-xs">
@@ -268,12 +267,12 @@ export default function Show({ auth, repository, database_verification_code }) {
 
                                 <div className="text-center space-x-4">
                                     <div className="text-gray-500 text-xs">
-                                        {repository.last_activity_at}
+                                        {repository.last_commit_at}
                                     </div>
 
                                     <div className="text-gray-200 mt-2">
                                         <h2 className="font-bold text-2xl">
-                                            {repository.last_activity_at_human}
+                                            {repository.last_commit_at_human}
                                         </h2>
 
                                         <h3 className="text-gray-400 text-xs">
@@ -284,10 +283,13 @@ export default function Show({ auth, repository, database_verification_code }) {
                             </div>
 
                             <div
-                                className={`col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 ${
-                                    showClients ? "border-2 border-sky-500" : ""
-                                }`}
                                 onClick={handleClientsToggle}
+                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
+                                    (showClients
+                                        ? 'border-sky-500'
+                                        : 'border-transparent cursor-pointer'
+                                    )
+                                }
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">

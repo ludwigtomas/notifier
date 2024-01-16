@@ -14,7 +14,7 @@ class RepositoryController extends Controller
         $repositories = Repository::query()
             ->with('clients')
             ->withCount('clients', 'database_backups')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('last_commit_at', 'desc')
             ->get();
 
         return inertia('Repositories/Index', [

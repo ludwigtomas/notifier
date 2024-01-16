@@ -20,8 +20,8 @@ class RepositorySeeder extends Seeder
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 
-        GitlabService::getUserID($gitlab);
-        GitlabService::downloadAvatar($gitlab);
+        // GitlabService::getUserID($gitlab);
+        // GitlabService::downloadAvatar($gitlab);
         GitlabService::getRepositories($gitlab);
     }
 }

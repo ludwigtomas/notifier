@@ -28,7 +28,7 @@ class Repository extends Model
         'description',                 // manually added
 
         'database_verification_code',  // Observer
-        'last_activity_at',            // api
+        'last_commit_at',            // api
         'repository_created_at',       // api
 
         'updated_at',                  // api

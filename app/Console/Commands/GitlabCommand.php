@@ -13,7 +13,7 @@ class GitlabCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'work-gitlab';
+    protected $signature = 'gitlab:repositories';
 
     /**
      * The console command description.

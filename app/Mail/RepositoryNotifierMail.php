@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DatabaseRepositoryMail extends Mailable
+class RepositoryNotifierMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,12 +19,7 @@ class DatabaseRepositoryMail extends Mailable
      */
     public function __construct(
         protected Repository $repository,
-        protected string $status,
-        protected string $message,
     ) {
-        $this->repository = $repository;
-        $this->status = $status;
-        $this->message = $message;
     }
 
     /**
@@ -34,7 +29,7 @@ class DatabaseRepositoryMail extends Mailable
     {
         return new Envelope(
             from: 'info@rollerdetails.cz',
-            subject: 'Notifier - ' . '(' . $this->repository->name . ')' . ' - ' . strtoupper($this->status),
+            subject: 'Notifier - aktualizace webu' . ' - ' . '(' . $this->repository->name . ')',
         );
     }
 
@@ -44,11 +39,9 @@ class DatabaseRepositoryMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.repository_database.template',
+            markdown: 'mail.repository_notifier.template',
             with: [
                 'repository' => $this->repository,
-                'status' => $this->status,
-                'message' => $this->message,
             ],
         );
     }

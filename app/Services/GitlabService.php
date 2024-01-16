@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\RepositoryNotifierJob;
 use Carbon\Carbon;
 use App\Models\Repository;
 use Illuminate\Support\Str;
@@ -74,12 +75,15 @@ class GitlabService
                 $repository = Repository::where('id', $repository_api->id)->first();
 
                 if ($repository) {
+
+                    $repository->last_commit_at < Carbon::parse($repository_api->last_activity_at) ? self::sendNotificationToClient($repository) : null;
+
                     $repository->update([
                         'name' => $repository_api->name,
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'last_activity_at' => Carbon::parse($repository_api->last_activity_at),
+                        'last_commit_at' => Carbon::parse($repository_api->last_activity_at),
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 } else {
@@ -89,7 +93,7 @@ class GitlabService
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'last_activity_at' => Carbon::parse($repository_api->last_activity_at),
+                        'last_commit_at' => Carbon::parse($repository_api->last_activity_at),
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 }
@@ -99,8 +103,16 @@ class GitlabService
         }
     }
 
+
+
     public static function getCommitsCount()
     {
         return 10;
+    }
+
+
+    private static function sendNotificationToClient($repository)
+    {
+        RepositoryNotifierJob::dispatch($repository);
     }
 }

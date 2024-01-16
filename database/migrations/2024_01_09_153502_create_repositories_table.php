@@ -27,7 +27,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
 
             $table->uuid('database_verification_code')->unique();
-            $table->dateTime('last_activity_at')->nullable();
+            $table->dateTime('last_commit_at')->nullable();
             $table->dateTime('repository_created_at')->nullable();
 
             $table->timestamps();
