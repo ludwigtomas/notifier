@@ -39,7 +39,7 @@ class RepositoryNotifierMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.repository_notifier.template',
+            markdown: 'mail.repositories.repository_notifier',
             with: [
                 'repository' => $this->repository,
             ],

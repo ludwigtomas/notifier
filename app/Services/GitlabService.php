@@ -103,14 +103,6 @@ class GitlabService
         }
     }
 
-
-
-    public static function getCommitsCount()
-    {
-        return 10;
-    }
-
-
     private static function sendNotificationToClient($repository)
     {
         RepositoryNotifierJob::dispatch($repository);

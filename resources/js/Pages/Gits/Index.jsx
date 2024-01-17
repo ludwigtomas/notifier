@@ -66,7 +66,7 @@ export default function Index({ auth, gits }) {
                                     </div>
 
                                     <div className="flex space-x-2">
-                                        <Link
+                                        {/* <Link
                                             href={route("gits.edit", git.id)}
                                             className="bg-green-100 p-1 rounded-lg hover:bg-green-200 slower-animation"
                                         >
@@ -80,7 +80,7 @@ export default function Index({ auth, gits }) {
                                             <EyeIcon className="w-6 h-6 text-sky-500" />
                                         </Link>
 
-                                        <Link
+                                       <Link
                                             as="button"
                                             method="delete"
                                             preserveScroll
@@ -88,7 +88,7 @@ export default function Index({ auth, gits }) {
                                             className="bg-red-100 p-1 rounded-lg hover:bg-red-200 slower-animation"
                                         >
                                             <TrashIcon className="w-6 h-6 text-red-500" />
-                                        </Link>
+                                        </Link> */}
                                     </div>
                                 </div>
                             ))}

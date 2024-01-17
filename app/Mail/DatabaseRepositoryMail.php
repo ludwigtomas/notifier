@@ -44,7 +44,7 @@ class DatabaseRepositoryMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.repository_database.template',
+            markdown: 'mail.repositories.repository_database',
             with: [
                 'repository' => $this->repository,
                 'status' => $this->status,
