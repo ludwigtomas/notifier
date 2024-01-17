@@ -39,4 +39,7 @@ deploy-job:      # This job runs in the deploy stage.
   environment: production
   script:
     - echo "Deploying application..."
+    - cd /var/www/html
+    - ls
+    - composer i
     - echo "Application successfully deployed."
