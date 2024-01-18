@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Inertia\Response;
 use App\Models\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\RepositoryResource;
 
 class RepositoryController extends Controller
@@ -37,5 +39,14 @@ class RepositoryController extends Controller
         return inertia('Repositories/Edit', [
             'repository' => new RepositoryResource($repository),
         ]);
+    }
+
+    public function destroy(Repository $repository): RedirectResponse
+    {
+        Storage::deleteDirectory($repository->slug);
+
+        $repository->delete();
+
+        return back();
     }
 }
