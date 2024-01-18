@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import {
     PencilSquareIcon,
     TrashIcon,
@@ -8,8 +8,40 @@ import {
     XMarkIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import Modal from "@/Components/Modal";
+import DangerButton from "@/Components/DangerButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { useState } from 'react';
 
 export default function Index({ auth, repositories }) {
+
+    const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
+    const [selectedRepository, setSelectedRepository] = useState(null);
+
+    // catch repository into variable
+    const toggleModal = (repository) => {
+        setSelectedRepository(repository);
+
+        setToggleDeleteModal(true);
+    };
+
+    const closeModal = () => {
+        setToggleDeleteModal(false);
+    };
+
+
+    const deleteRepository = () => {
+        let url = route('repositories.destroy', selectedRepository.id);
+
+        router.delete(url, {
+            preserveScroll: true,
+            onSuccess: () =>{
+                closeModal()
+            },
+        })
+
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -172,7 +204,15 @@ export default function Index({ auth, repositories }) {
                                                         <EyeIcon className="w-6 h-6 text-sky-500" />
                                                     </Link>
 
-                                                    <Link
+                                                    <button
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        onClick={() => toggleModal(repository)}
+                                                    >
+                                                        <TrashIcon className="w-6 h-6 text-red-500" />
+                                                    </button>
+
+
+                                                    {/* <Link
                                                         as="button"
                                                         method="delete"
                                                         preserveScroll
@@ -180,20 +220,44 @@ export default function Index({ auth, repositories }) {
                                                         className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                     >
                                                         <TrashIcon className="w-6 h-6 text-red-500" />
-                                                    </Link>
+                                                    </Link> */}
                                                 </div>
                                             </td>
 
                                         </tr>
                                     );
                                 })}
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <Modal
+                show={toggleDeleteModal}
+                onClose={closeModal}
+                className="p-10"
+            >
+                {selectedRepository && (
+                        <>
+                            <DangerButton
+                                onClick={deleteRepository}
+                            >
+                                {selectedRepository.name}
+                            </DangerButton>
+
+                            <SecondaryButton
+                                onClick={closeModal}
+                            >
+                                Zavřít
+                            </SecondaryButton>
+                        </>
+                    )
+                }
+            </Modal>
+
+
         </AuthenticatedLayout>
     );
 }
