@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Client;
 use App\Models\Repository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -19,6 +20,7 @@ class RepositoryNotifierMail extends Mailable
      */
     public function __construct(
         protected Repository $repository,
+        protected Client $client,
     ) {
     }
 
@@ -42,6 +44,7 @@ class RepositoryNotifierMail extends Mailable
             markdown: 'mail.repositories.repository_notifier',
             with: [
                 'repository' => $this->repository,
+                'client' => $this->client,
             ],
         );
     }

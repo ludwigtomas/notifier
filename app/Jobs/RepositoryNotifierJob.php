@@ -36,6 +36,7 @@ class RepositoryNotifierJob implements ShouldQueue
         foreach ($clients as $client) {
             Mail::to($client->email)->send(new RepositoryNotifierMail(
                 $this->repository,
+                $client,
             ));
         }
 
