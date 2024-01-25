@@ -23,8 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Gate::define('viewPulse', function (User $user) {
-        //     return $user->isAdmin();
-        // });
+        Gate::define('viewPulse', fn (User $user) => in_array($user->email, [
+            'admin@admin.com',
+        ]));
     }
 }
