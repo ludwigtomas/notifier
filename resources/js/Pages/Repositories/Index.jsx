@@ -39,7 +39,6 @@ export default function Index({ auth, repositories }) {
                 closeModal()
             },
         })
-
     }
 
     return (
