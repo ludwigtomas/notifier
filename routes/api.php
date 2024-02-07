@@ -19,5 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 route::post('/repository/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
