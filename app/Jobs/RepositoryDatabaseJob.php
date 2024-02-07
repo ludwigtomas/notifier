@@ -32,7 +32,7 @@ class RepositoryDatabaseJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to('info@ludwigtomas.cz')->send(new DatabaseRepositoryMail(
+        Mail::to('info@rollerdetails.cz')->send(new DatabaseRepositoryMail(
             $this->repository,
             $this->status,
             $this->message,
