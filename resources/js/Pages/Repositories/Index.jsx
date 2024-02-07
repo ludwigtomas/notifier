@@ -88,7 +88,21 @@ export default function Index({ auth, repositories }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
+                                            ID
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
                                             Repozitář
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Slug
                                         </th>
 
                                         <th
@@ -149,9 +163,22 @@ export default function Index({ auth, repositories }) {
 
                                             <td className="px-4 py-4 ">
                                                 <span className="text-sm font-medium text-zinc-400">
+                                                    {repository.id}
+                                                </span>
+                                            </td>
+
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium text-zinc-400">
                                                     {repository.name}
                                                 </span>
                                             </td>
+
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium text-zinc-400">
+                                                    {repository.slug}
+                                                </span>
+                                            </td>
+
 
                                             <td className="px-4 py-4 ">
                                                 {/* <span className="text-sm font-medium text-zinc-400">
