@@ -26,14 +26,14 @@ route::get('/test', function () {
 
     $repository = App\Models\Repository::all()->first();
 
-    $test = Mail::to('info@ludwigtomas.cz')->send(new DatabaseRepositoryMail(
+    $test = Mail::to('info@rollerdetails.cz')->send(new DatabaseRepositoryMail(
         $repository,
         'failded',
         'awdawdd',
     ));
 
     // get result from $test
-    
+
 });
 
 route::get('/', function () {
