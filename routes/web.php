@@ -21,7 +21,7 @@ use App\Http\Controllers\RepositoryDatabaseController;
 */
 
 route::get('/', function () {
-    return inertia('Welcome');
+    return to_route('login');
 });
 
 route::middleware('auth:sanctum')->group(function () {
