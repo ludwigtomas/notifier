@@ -8,6 +8,8 @@ use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
+use App\Mail\DatabaseRepositoryMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,20 @@ use App\Http\Controllers\RepositoryDatabaseController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+route::get('/test', function () {
+
+    $repository = App\Models\Repository::all()->first();
+
+    $test = Mail::to('info@ludwigtomas.cz')->send(new DatabaseRepositoryMail(
+        $repository,
+        'failded',
+        'awdawdd',
+    ));
+
+    // get result from $test
+    
+});
 
 route::get('/', function () {
     return to_route('login');

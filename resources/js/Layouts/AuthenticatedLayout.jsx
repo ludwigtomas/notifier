@@ -26,7 +26,7 @@ export default function Authenticated({ user, header, children }) {
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-sky-800" />
+                                    <ApplicationLogo className="bg-zinc-200 w-12 h-12 p-1.5 rounded-xl" />
                                 </Link>
                             </div>
 
