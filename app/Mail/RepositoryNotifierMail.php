@@ -30,7 +30,7 @@ class RepositoryNotifierMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'info@rollerdetails.cz',
+            from: env('MAIL_FROM_ADDRESS'),
             subject: 'Notifier - aktualizace webu' . ' - ' . '(' . $this->repository->name . ')',
         );
     }

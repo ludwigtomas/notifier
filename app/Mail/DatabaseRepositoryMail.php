@@ -33,7 +33,7 @@ class DatabaseRepositoryMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: 'info@rollerdetails.cz',
+            from: env('MAIL_FROM_ADDRESS'),
             subject: 'Notifier - ' . '(' . $this->repository->name . ')' . ' - ' . strtoupper($this->status),
         );
     }
