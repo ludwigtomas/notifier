@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'path' => env('PULSE_PATH', 'pulse'),
+    'path' => env('PULSE_PATH', 'dashboard/pulse'),
 
     /*
     |--------------------------------------------------------------------------
@@ -118,6 +118,7 @@ return [
 
     'middleware' => [
         'web',
+        'auth:sanctum',
         Authorize::class,
     ],
 
