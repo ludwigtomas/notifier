@@ -118,7 +118,6 @@ return [
 
     'middleware' => [
         'web',
-        'auth:sanctum',
         Authorize::class,
     ],
 
