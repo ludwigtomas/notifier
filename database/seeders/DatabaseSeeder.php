@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 
         if (app()->isLocal()) {
             $this->call([
-                // RepositoryDatabaseSeeder::class,
+                RepositoryDatabaseSeeder::class,
                 ClientRepositorySeeder::class,
             ]);
         }

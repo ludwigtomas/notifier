@@ -15,22 +15,21 @@ export default function Index({ auth, gits }) {
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
                     <Link
                         className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
-                        href={route('dashboard.index')}
+                        href={route("dashboard.index")}
                     >
                         Dashboard
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5"/>
+                        <ChevronRightIcon className="w-5 h-5" />
                     </span>
 
                     <Link
                         className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route('gits.index')}
+                        href={route("gits.index")}
                     >
                         Gits
                     </Link>
-
                 </header>
             }
         >
@@ -41,7 +40,6 @@ export default function Index({ auth, gits }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                                 <thead className="bg-zinc-950">
@@ -85,7 +83,9 @@ export default function Index({ auth, gits }) {
                                             scope="col"
                                             className="relative py-3.5 px-4"
                                         >
-                                            <span className="sr-only">Edit</span>
+                                            <span className="sr-only">
+                                                Edit
+                                            </span>
                                         </th>
                                     </tr>
                                 </thead>
@@ -121,10 +121,10 @@ export default function Index({ auth, gits }) {
                                                     </span>
                                                 </td>
 
-
-
-                                                <td className="px-4 py-4">
-                                                    {git.repositories_count}
+                                                <td className="px-4 py-4 flex justify-center ">
+                                                    <div className="bg-green-100 py-1 px-2 rounded-lg ">
+                                                        {git.relationships.repositories_count}
+                                                    </div>
                                                 </td>
 
                                                 <td className="px-4 py-4">
@@ -158,7 +158,6 @@ export default function Index({ auth, gits }) {
                                         );
                                     })}
                                 </tbody>
-
                             </table>
                         </div>
                     </div>

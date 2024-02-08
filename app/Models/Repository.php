@@ -23,12 +23,12 @@ class Repository extends Model
 
         'name',                        // api
         'slug',                        // automatically generated
-        'website_url',                 // manually added
+        'website_url',                 //! manually added
         'repository_url',              // api
-        'description',                 // manually added
+        'description',                 //! manually added
 
         'database_verification_code',  // Observer
-        'last_commit_at',            // api
+        'last_commit_at',              // api
         'repository_created_at',       // api
 
         'updated_at',                  // api

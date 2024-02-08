@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateRepositoryRequest;
 use Inertia\Response;
 use App\Models\Repository;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +19,7 @@ class RepositoryController extends Controller
             ->with('clients')
             ->withCount('clients', 'database_backups')
             ->orderBy('last_commit_at', 'desc')
-            ->get();
+            ->paginate(10);
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryResource::collection($repositories),
@@ -41,10 +43,23 @@ class RepositoryController extends Controller
         ]);
     }
 
-    public function update(Request $request, Repository $repository): RedirectResponse
+    public function update(UpdateRepositoryRequest $request, Repository $repository): RedirectResponse
     {
-        dd($request->all());
+        $repository->update([
+            'id' => $request->id,
 
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'website_url' => $request->website_url,
+            'repository_url' => $request->repository_url,
+            'description' => $request->description,
+
+            'database_verification_code' => $request->database_verification_code,
+            'last_commit_at' => $request->last_commit_at,
+            'repository_created_at' => $request->repository_created_at,
+        ]);
+
+        return to_route('repositories.edit', $repository->id);
     }
 
     public function destroy(Repository $repository): RedirectResponse

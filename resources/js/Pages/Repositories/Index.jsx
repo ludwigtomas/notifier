@@ -11,7 +11,10 @@ import {
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import Pagination from "@/Components/Pagination";
+
 import { useState } from 'react';
+
 
 export default function Index({ auth, repositories }) {
 
@@ -136,7 +139,7 @@ export default function Index({ auth, repositories }) {
                                 </thead>
 
                                 <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                {repositories.map((repository) => {
+                                {repositories.data.map((repository) => {
                                     return (
                                         <tr
                                             key={repository.id}
@@ -257,6 +260,10 @@ export default function Index({ auth, repositories }) {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                    <div>
+                        <Pagination class="mt-6" links={repositories.meta} />
                     </div>
                 </div>
             </div>

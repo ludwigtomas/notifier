@@ -14,6 +14,20 @@ class GitResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'api_token' => $this->api_token,
+
+            'username' => $this->username,
+            'user_id' => $this->user_id,
+            'avatar_url' => $this->avatar_url,
+
+            'relationships' => [
+                'repositories_count' => $this->repositories_count,
+            ],
+
+        ];
     }
 }

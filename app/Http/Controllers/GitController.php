@@ -17,7 +17,7 @@ class GitController extends Controller
             ->get();
 
         return inertia('Gits/Index', [
-            'gits' => GitResource::collection(Git::all()),
+            'gits' => GitResource::collection($gits),
         ]);
     }
 

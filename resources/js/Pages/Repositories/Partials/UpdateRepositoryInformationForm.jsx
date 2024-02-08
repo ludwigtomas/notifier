@@ -8,6 +8,7 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 export default function UpdateRepositoryInformationForm({repository, className = "" }) {
 
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+        id: repository.id,
         name: repository.name,
         slug: repository.slug,
         website_url: repository.website_url,
@@ -23,6 +24,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
     });
 
     const submit = (e) => {
+
         e.preventDefault();
 
         put(route('repositories.update', repository.id));
@@ -42,6 +44,28 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
             <form onSubmit={submit} className="mt-6 grid grid-cols-12 gap-5">
                 <div className="col-span-7 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                    <div>
+                        <InputLabel
+                            isRequired={true}
+                            htmlFor="id"
+                            value="ID"
+                        />
+
+                        <TextInput
+                            id="id"
+                            className="mt-1 block w-full cursor-not-allowed bg-zinc-800"
+                            disabled
+                            placeholder="52740614"
+                            value={repository.id}
+                            onChange={(e) => setData('id', e.target.value)}
+                        />
+
+                        <InputError
+                            className="mt-2"
+                            message={errors.id}
+                        />
+                    </div>
+
                     <div>
                         <InputLabel
                             isRequired={true}
@@ -74,7 +98,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             className="mt-1 block w-full cursor-not-allowed bg-zinc-800"
                             disabled
                             placeholder="ludwig-tomas"
-                            value={data.slug}
+                            value={repository.slug}
                             onChange={(e) => setData('slug', e.target.value)}
                         />
 
@@ -149,19 +173,19 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
                 <div className="col-span-5 space-y-5 ">
                     <div className="border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                        <div class="grid grid-cols-3 ">
+                        <div className="grid grid-cols-3 ">
                             <div className="flex flex-col items-center justify-center space-y-2">
                                 <div>
                                     <ClockIcon className="w-7 h-7 text-sky-500" />
                                 </div>
 
                                 <div className="text-center">
-                                    <p class="text-white">
+                                    <p className="text-white">
                                         Vytvořeno
                                     </p>
 
-                                    <p class="flex items-start -mx-2">
-                                        <span class="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                    <p className="flex items-start -mx-2">
+                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
                                             {repository.created_at_human}
                                         </span>
                                     </p>
@@ -174,12 +198,12 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                 </div>
 
                                 <div className="text-center">
-                                    <p class="text-white">
+                                    <p className="text-white">
                                         Aktualizováno
                                     </p>
 
-                                    <p class="flex items-start -mx-2">
-                                        <span class="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                    <p className="flex items-start -mx-2">
+                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
                                             {repository.updated_at_human}
                                         </span>
                                     </p>
@@ -192,12 +216,12 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                 </div>
 
                                 <div className="text-center">
-                                    <p class="text-white">
+                                    <p className="text-white">
                                         Repoziář vytvořen
                                     </p>
 
-                                    <p class="flex items-start -mx-2">
-                                        <span class="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                    <p className="flex items-start -mx-2">
+                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
                                             {repository.repository_created_at_human}
                                         </span>
                                     </p>
@@ -235,7 +259,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                     <div>
                         <PrimaryButton
                             className="w-full"
-                            processing={processing}
+                            disabled={processing}
                         >
                             Update repository
                         </PrimaryButton>
