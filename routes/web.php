@@ -22,20 +22,6 @@ use Illuminate\Support\Facades\Mail;
 |
 */
 
-route::get('/test', function () {
-
-    $repository = App\Models\Repository::all()->first();
-
-    $test = Mail::to('info@ludwigtomas.cz')->send(new DatabaseRepositoryMail(
-        $repository,
-        'failded',
-        'awdawdd',
-    ));
-
-    // get result from $test
-
-});
-
 route::get('/', function () {
     return to_route('login');
 });

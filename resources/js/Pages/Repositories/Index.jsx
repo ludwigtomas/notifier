@@ -70,7 +70,7 @@ export default function Index({ auth, repositories }) {
 
             {/* TABLE */}
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
 
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">

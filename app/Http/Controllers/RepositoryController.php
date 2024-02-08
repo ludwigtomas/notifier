@@ -41,6 +41,12 @@ class RepositoryController extends Controller
         ]);
     }
 
+    public function update(Request $request, Repository $repository): RedirectResponse
+    {
+        dd($request->all());
+
+    }
+
     public function destroy(Repository $repository): RedirectResponse
     {
         Storage::deleteDirectory($repository->slug);
