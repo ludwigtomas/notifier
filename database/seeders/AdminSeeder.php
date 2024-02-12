@@ -13,12 +13,14 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'email_verified_at' => now(),
-            'password' => bcrypt('secret123'),
-        ]);
+        if (app()->isLocal()) {
+            User::create([
+                'name' => 'Admin',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('secret123'),
+            ]);
+        }
 
         if (app()->isProduction()) {
             User::create([
