@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryClientDetachController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
 use App\Mail\DatabaseRepositoryMail;
@@ -49,6 +50,8 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
     });
+
+    route::delete('/repository/{repository}/client/{client}/detach', RepositoryClientDetachController::class)->name('repository.clients.detach');
 
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
         route::get('/', [ClientController::class, 'index'])->name('index');

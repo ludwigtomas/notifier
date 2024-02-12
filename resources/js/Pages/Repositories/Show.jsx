@@ -6,22 +6,19 @@ import {
     EyeIcon,
     EyeSlashIcon,
     PlusIcon,
-    XMarkIcon,
     ChevronRightIcon,
     CircleStackIcon,
     CalendarDaysIcon,
-    UserIcon,
     UsersIcon,
-    ArrowDownTrayIcon,
     ShieldCheckIcon,
     ClipboardIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import RepositoryClientsTable from "./Partials/RepositoryClientsTable";
-import RepositoryDatabaseTable from "./Partials/RepositoryDatabaseTable";
+import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
+import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
 
-export default function Show({ auth, repository, database_verification_code }) {
+export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
     const codeRef = useRef(null);
     const [showClients, setShowClients] = useState(false);
@@ -156,11 +153,50 @@ export default function Show({ auth, repository, database_verification_code }) {
                     </header>
                 }
             >
-                <Head title="Dashboard" />
+                <Head title={repository.name + ' repozitář'} />
 
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="grid grid-cols-12 gap-x-8 h-64">
+
+                            {/* Last commit */}
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
+                                <div className="flex justify-center overflow-hidden">
+                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Poslední commit
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                    </div>
+                                </div>
+
+                                <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                                <div className="text-center space-x-4">
+                                    <div className="text-gray-500 text-xs">
+                                        {new Date(repository.last_commit_at).toLocaleDateString("cs-CZ", {
+                                            day: "2-digit",
+                                            month: "2-digit",
+                                            year: "numeric",
+                                        })}
+                                    </div>
+
+                                    <div className="text-gray-200 mt-2">
+                                        <h2 className="font-bold text-2xl">
+                                            {repository.last_commit_at_human}
+                                        </h2>
+
+                                        <h3 className="text-gray-400 text-xs">
+                                            Nejnovější commit
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Code */}
                             <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -216,6 +252,7 @@ export default function Show({ auth, repository, database_verification_code }) {
                                 </div>
                             </div>
 
+                            {/* Database */}
                             <div
                                 className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
                                     (showDatabase
@@ -241,7 +278,7 @@ export default function Show({ auth, repository, database_verification_code }) {
 
                                 <div className="text-center space-x-4">
                                     <span className="text-gray-200 font-bold text-xl">
-                                        { repository.relationships.database_backups.length}
+                                        { repository.relationships.database_backups_count}
                                     </span>
 
                                     <span className="text-gray-400 text-xs">
@@ -250,38 +287,7 @@ export default function Show({ auth, repository, database_verification_code }) {
                                 </div>
                             </div>
 
-                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
-
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Poslední commit
-                                        </span>
-
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="text-center space-x-4">
-                                    <div className="text-gray-500 text-xs">
-                                        {repository.last_commit_at}
-                                    </div>
-
-                                    <div className="text-gray-200 mt-2">
-                                        <h2 className="font-bold text-2xl">
-                                            {repository.last_commit_at_human}
-                                        </h2>
-
-                                        <h3 className="text-gray-400 text-xs">
-                                            Nejnovější commit
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {/* Clients */}
                             <div
                                 onClick={handleClientsToggle}
                                 className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
@@ -318,12 +324,13 @@ export default function Show({ auth, repository, database_verification_code }) {
                         </div>
                     </div>
                 </div>
-                {showDatabase === true ? (
+                {/* {showDatabase === true ? (
                     <RepositoryDatabaseTable repository={repository} />
                 ) : null}
+
                 {showClients === true ? (
                     <RepositoryClientsTable repository={repository} />
-                ) : null}
+                ) : null} */}
             </AuthenticatedLayout>
         </section>
     );

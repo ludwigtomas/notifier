@@ -5,7 +5,7 @@ export default function Pagination({ links }) {
     function getClassName(active) {
         return active
             ? "px-4 py-3 text-sm leading-4 text-sky-500 rounded bg-zinc-900 ring-2 ring-sky-500"
-            : "px-4 py-3 text-sm leading-4 text-gray-400 rounded bg-zinc-900 ring-2 ring ring-zinc-700";
+            : "px-4 py-3 text-sm leading-4 text-gray-400 rounded bg-zinc-900 ring-2 ring ring-zinc-700 hover:text-sky-500 hover:ring-sky-500";
     }
 
     return (
@@ -13,16 +13,18 @@ export default function Pagination({ links }) {
             <div className="flex flex-wrap mt-8 space-x-2">
                 {links.links.map((link, key) =>
                     link.url === null ? (
-                        <div className="px-4 py-3 text-sm leading-4 text-gray-500 border rounded">
-                            {link.label}
-                        </div>
+                        <div
+                            key={key}
+                            className="px-4 py-3 text-sm leading-4 text-gray-300 ring-2 ring-zinc-900 bg-zinc-700 rounded cursor-not-allowed"
+                            dangerouslySetInnerHTML={{__html: link.label}}
+                        />
                     ) : (
                         <Link
+                            key={key}
                             className={getClassName(link.active)}
                             href={link.url}
-                        >
-                            {link.label}
-                        </Link>
+                            dangerouslySetInnerHTML={{ __html: link.label }}
+                        />
                     )
                 )}
             </div>

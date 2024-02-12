@@ -28,18 +28,23 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository): Response
     {
-        $repository->load('clients', 'database_backups')
-            ->loadCount('clients');
+        $repository->loadCount('clients', 'database_backups');
+
+        $database_backups = $repository->database_backups()->paginate(20);
+
+        $clients = $repository->clients()->paginate(20);
 
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
+            'database_backups' => $database_backups,
+            'clients' => $clients,
         ]);
     }
 
     public function edit(Repository $repository): Response
     {
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository),
+            'repository' => new RepositoryResource($repository->load('clients')),
         ]);
     }
 

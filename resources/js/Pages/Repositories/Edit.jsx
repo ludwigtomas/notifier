@@ -7,11 +7,13 @@ import {
     XMarkIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import UpdateRepositoryInformationForm from "@/Pages/repositories/Partials/UpdateRepositoryInformationForm";
+import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
+import UpdateRepositoryClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryClientsForm";
+
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 
-export default function Dashboard({ auth, repository }) {
+export default function Edit({ auth, repository }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -108,7 +110,12 @@ export default function Dashboard({ auth, repository }) {
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
                         <UpdateRepositoryInformationForm
                             repository={repository}
-                            className=""
+                        />
+                    </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateRepositoryClientsForm
+                            repository={repository}
                         />
                     </div>
                 </div>
