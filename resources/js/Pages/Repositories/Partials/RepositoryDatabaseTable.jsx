@@ -1,7 +1,8 @@
 import { TrashIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { Head, Link } from "@inertiajs/react";
 
-export default function RepositoryDatabaseTable({ repository }) {
+export default function RepositoryDatabaseTable({ repository, database_backups }) {
+    console.log(database_backups)
     return (
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="mt-10 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
@@ -43,8 +44,10 @@ export default function RepositoryDatabaseTable({ repository }) {
                     </thead>
 
                     <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                        {repository.relationships.database_backups.map(
+                        {database_backups.data.map(
+                            
                             (backup) => (
+                                
                                 <tr
                                     key={backup.id}
                                     className="group hover:bg-zinc-800"

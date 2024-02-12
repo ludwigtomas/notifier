@@ -17,10 +17,13 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
 import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
+import Pagination from "@/Components/Pagination";
 
 export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
     const codeRef = useRef(null);
+
+    console.log(database_backups);
     const [showClients, setShowClients] = useState(false);
     const [showDatabase, setShowDatabase] = useState(true);
 
@@ -43,7 +46,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
     // Function to copy the code to clipboard
     const handleCopyToClipboard = () => {
         const codeElement = codeRef.current;
-
+       
         if (codeElement) {
             const range = document.createRange();
             const selection = window.getSelection();
@@ -51,14 +54,13 @@ export default function Show({ auth, repository, database_backups, clients }) {
             range.selectNodeContents(codeElement);
 
             // Check if the selected text contains the actual key
-            if (range.toString().includes(database_verification_code)) {
+            if (range.toString().includes(codeElement.current)) {
                 alert("Cannot copy sensitive information!");
             } else {
                 selection.removeAllRanges();
                 selection.addRange(range);
                 document.execCommand("copy");
                 selection.removeAllRanges();
-                alert("Code copied to clipboard!");
             }
         }
     };
@@ -214,13 +216,16 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <div className="flex flex-col items-center ">
                                     <span
-                                        className="text-gray-200 font-bold text-xs"
+                                        className="text-gray-200 font-bold text-[8px] text-center"
                                         ref={codeRef}
+                                        
                                     >
                                         {showCode
-                                            ? repository.database_verification_code
+                                            ? `BACKUP_CODE="${repository.database_verification_code} BACKUP_URL="https://notifier.ludwigtomas.cz/api/repository/${repository.slug}"`
                                             : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx "}
                                     </span>
+
+                                   
 
                                     <div className="space-x-2 mt-2">
                                         <motion.button
@@ -323,6 +328,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
                         </div>
                     </div>
+                    <Pagination links={database_backups.meta} />
                 </div>
                 {/* {showDatabase === true ? (
                     <RepositoryDatabaseTable repository={repository} />
