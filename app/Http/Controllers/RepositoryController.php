@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\DatabaseBackupResource;
 use Inertia\Response;
 use App\Models\Repository;
 use Illuminate\Support\Str;
@@ -32,12 +34,13 @@ class RepositoryController extends Controller
 
         $database_backups = $repository->database_backups()->paginate(20);
 
+
         $clients = $repository->clients()->paginate(20);
 
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
-            'database_backups' => $database_backups,
-            'clients' => $clients,
+            'database_backups' =>  DatabaseBackupResource::collection($database_backups),
+            'clients' => ClientResource::collection($clients),
         ]);
     }
 
