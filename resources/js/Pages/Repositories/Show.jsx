@@ -54,13 +54,14 @@ export default function Show({ auth, repository, database_backups, clients }) {
             range.selectNodeContents(codeElement);
 
             // Check if the selected text contains the actual key
-            if (range.toString().includes(codeElement.current)) {
-                alert("Cannot copy sensitive information!");
+            if (range.toString().includes(codeElement.current)  ) {
+                console.log('CANNOT COPY SENSITIVE INFORMATION')
             } else {
                 selection.removeAllRanges();
                 selection.addRange(range);
                 document.execCommand("copy");
                 selection.removeAllRanges();
+                console.log('Code copied')
             }
         }
     };
@@ -218,10 +219,12 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                     <span
                                         className="text-gray-200 font-bold text-[8px] text-center"
                                         ref={codeRef}
+                                        style={{whiteSpace: 'pre-line'}}
                                         
                                     >
-                                        {showCode
-                                            ? `BACKUP_CODE="${repository.database_verification_code} BACKUP_URL="https://notifier.ludwigtomas.cz/api/repository/${repository.slug}"`
+                                        {showCode === true
+                                            ? `BACKUP_CODE="${repository.database_verification_code}" 
+                                               BACKUP_URL="https://notifier.ludwigtomas.cz/api/repository/${repository.slug}"`
                                             : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx "}
                                     </span>
 
@@ -245,10 +248,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                             whileHover={{ scale: 1.1 }}
                                             whileTap={{ scale: 0.9 }}
                                             onClick={
-                                                showCode ? handleCopyToClipboard : null
+                                                showCode ?  handleCopyToClipboard : null
                                             }
                                             className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
-                                                showCode ? '' : ' cursor-not-allowed'
+                                                showCode === false ? ' cursor-not-allowed' : ''
                                             )}
                                         >
                                             <ClipboardIcon className="w-6 h-6" />
