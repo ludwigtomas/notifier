@@ -147,7 +147,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                         <div className="grid grid-cols-12 gap-x-8 ">
 
                             <div className="col-span-12 mb-20 flex justify-center items-center">
-                                <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-6/12 rounded-xl overflow-hidden">
+                                <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
 
                                     <div className="flex justify-between items-center">
                                         <div id="header-buttons" className="p-2 flex space-x-2">
