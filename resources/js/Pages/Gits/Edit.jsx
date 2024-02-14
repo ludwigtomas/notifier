@@ -17,7 +17,6 @@ export default function Edit({ auth, git: initialGit }) {
         event.preventDefault();
 
         if (!newName) return null;
-        console.log(git.name);
         setGit({ ...git, name: newName });
         setNewName("");
     };

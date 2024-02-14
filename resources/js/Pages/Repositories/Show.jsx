@@ -21,49 +21,33 @@ import Pagination from "@/Components/Pagination";
 
 export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
-    const codeRef = useRef(null);
-
-    console.log(database_backups);
-    const [showClients, setShowClients] = useState(false);
-    const [showDatabase, setShowDatabase] = useState(true);
+    const [showRelationship, setShowRelationship] = useState(false);
 
     // Function to toggle the database_verification_code
     function toggleShowCode() {
         setShowCode(!showCode);
     }
 
-    // Function to toggle the Client table
-    function handleClientsToggle() {
-        setShowClients(true);
-        setShowDatabase(false);
+    const handleShowRepositoryRelation = (relation) => {
+        return () => {
+            setShowRelationship(relation);
+        }
     }
-    // Function to toggle the Database table
-    function handleDatabaseToggle() {
-        setShowDatabase(true);
-        setShowClients(false);
-    }
+
+
 
     // Function to copy the code to clipboard
     const handleCopyToClipboard = () => {
-        const codeElement = codeRef.current;
-       
-        if (codeElement) {
-            const range = document.createRange();
-            const selection = window.getSelection();
-
-            range.selectNodeContents(codeElement);
-
-            // Check if the selected text contains the actual key
-            if (range.toString().includes(codeElement.current)  ) {
-                console.log('CANNOT COPY SENSITIVE INFORMATION')
-            } else {
-                selection.removeAllRanges();
-                selection.addRange(range);
-                document.execCommand("copy");
-                selection.removeAllRanges();
-                console.log('Code copied')
-            }
+        if(!showCode){
+            alert('Nelze zkopírovat skrytý kód')
         }
+
+        let backup_code = repository.database_verification_code;
+        let backup_url = 'https://notifier.ludwigtomas.cz/api/repository/' + repository.slug;
+
+        let env_code = 'BACKUP_CODE=' + backup_code + '\n' + 'BACKUP_URL=' + backup_url
+
+        navigator.clipboard.writeText(env_code);
     };
 
     return (
@@ -160,10 +144,106 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-12 gap-x-8 h-64">
+                        <div className="grid grid-cols-12 gap-x-8 ">
+
+                            <div className="col-span-12 mb-20 flex justify-center items-center">
+                                <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-6/12 rounded-xl overflow-hidden">
+
+                                    <div className="flex justify-between items-center">
+                                        <div id="header-buttons" className="p-2 flex space-x-2">
+                                            <div className="space-x-2">
+                                                <motion.button
+                                                    whileHover={{ scale: 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                    onClick={toggleShowCode}
+                                                    className="bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
+                                                >
+                                                    { showCode ? (
+                                                        <EyeIcon className="w-6 h-6" />
+                                                    ) : (
+                                                        <EyeSlashIcon className="w-6 h-6" />
+                                                    )}
+                                                </motion.button>
+
+                                                <motion.button
+                                                    whileHover={{ scale: 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                    onClick={
+                                                        showCode ?  handleCopyToClipboard : null
+                                                    }
+                                                    className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
+                                                        showCode === false ? ' cursor-not-allowed' : ''
+                                                    )}
+                                                >
+                                                    <ClipboardIcon className="w-6 h-6" />
+                                                </motion.button>
+                                            </div>
+                                        </div>
+
+                                        <div id="header-buttons" className="p-4 flex space-x-2">
+                                            <div className="rounded-full w-3 h-3 bg-red-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-green-500"></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full flex items-center justify-center">
+                                        <div className="bg-stone-800 rounded-lg w-full">
+                                            <div id="code-area" className="p-5 space-y-3">
+                                                <div className="text-base">
+                                                    <span className="text-yellow-300">
+                                                    BACKUP_CODE
+                                                    </span>
+
+                                                    <span className="text-green-400">
+                                                        =
+                                                    </span>
+
+                                                    <span className="text-blue-400">"</span>
+
+                                                    <span className="text-purple-400">
+                                                        { showCode ?
+                                                            (
+                                                                repository.database_verification_code
+                                                            ) : (
+                                                                'xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx'
+                                                            )
+                                                        }
+                                                    </span>
+
+                                                    <span className="text-blue-400">"</span>
+                                                </div>
+
+                                                <div className="text-base">
+                                                    <span className="text-yellow-300">
+                                                        BACKUP_URL
+                                                    </span>
+                                                    <span className="text-green-400">
+                                                        =
+                                                    </span>
+                                                    <span className="text-blue-400">"</span>
+
+
+                                                    <span className="text-purple-400">
+                                                        { showCode ?
+                                                            (
+                                                                'https://notifier.ludwigtomas.cz/api/repository/' + repository.slug
+                                                            ) : (
+                                                                'https://notifier.ludwigtomas.cz/api/repository/xxxxx-xxxxx'
+                                                            )
+                                                        }
+                                                    </span>
+
+                                                    <span className="text-blue-400">"</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                             {/* Last commit */}
-                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
+                            <div className="col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
                                         <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
@@ -199,76 +279,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 </div>
                             </div>
 
-                            {/* Code */}
-                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900">
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
-
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Kód
-                                        </span>
-
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <ShieldCheckIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="flex flex-col items-center ">
-                                    <span
-                                        className="text-gray-200 font-bold text-[8px] text-center"
-                                        ref={codeRef}
-                                        style={{whiteSpace: 'pre-line'}}
-                                        
-                                    >
-                                        {showCode === true
-                                            ? `BACKUP_CODE="${repository.database_verification_code}" 
-                                               BACKUP_URL="https://notifier.ludwigtomas.cz/api/repository/${repository.slug}"`
-                                            : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx "}
-                                    </span>
-
-                                   
-
-                                    <div className="space-x-2 mt-2">
-                                        <motion.button
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            onClick={toggleShowCode}
-                                            className="bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
-                                        >
-                                            { showCode ? (
-                                                <EyeIcon className="w-6 h-6" />
-                                            ) : (
-                                                <EyeSlashIcon className="w-6 h-6" />
-                                            )}
-                                        </motion.button>
-
-                                        <motion.button
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            onClick={
-                                                showCode ?  handleCopyToClipboard : null
-                                            }
-                                            className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
-                                                showCode === false ? ' cursor-not-allowed' : ''
-                                            )}
-                                        >
-                                            <ClipboardIcon className="w-6 h-6" />
-                                        </motion.button>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Database */}
                             <div
-                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
-                                    (showDatabase
-                                        ? 'border-sky-500'
-                                        : 'border-transparent cursor-pointer'
-                                    )
-                                }
-                                onClick={handleDatabaseToggle}
+                                onClick={handleShowRepositoryRelation('databases')}
+                                className='col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500'
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -297,13 +311,8 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                             {/* Clients */}
                             <div
-                                onClick={handleClientsToggle}
-                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 border-2 hover:border-sky-500 ' +
-                                    (showClients
-                                        ? 'border-sky-500'
-                                        : 'border-transparent cursor-pointer'
-                                    )
-                                }
+                                onClick={handleShowRepositoryRelation('clients')}
+                                className='col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500'
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -330,16 +339,32 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <Pagination links={database_backups.meta} />
-                </div>
-                {/* {showDatabase === true ? (
-                    <RepositoryDatabaseTable repository={repository} />
-                ) : null}
 
-                {showClients === true ? (
-                    <RepositoryClientsTable repository={repository} />
-                ) : null} */}
+                        { showRelationship === 'databases' ?
+                            (
+                                <RepositoryDatabaseTable repository={repository} database_backups={database_backups} />
+                            ) : null
+                        }
+
+                        { showRelationship === 'clients' ?
+                            (
+                                <RepositoryClientsTable/>
+                            ) : null
+                        }
+
+                        {/* { repository_relation.current === 'databases' ? (
+                            <RepositoryDatabaseTable repository={repository} />
+                        ) : null}
+
+                        { repository_relation.current === 'clients' ? (
+                            <RepositoryClientsTable repository={repository} />
+                        ) : null
+
+                        } */}
+
+                        <Pagination links={database_backups.meta} />
+                    </div>
+                </div>
             </AuthenticatedLayout>
         </section>
     );
