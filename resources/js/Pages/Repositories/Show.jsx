@@ -21,7 +21,7 @@ import Pagination from "@/Components/Pagination";
 
 export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
-    const [showRelationship, setShowRelationship] = useState(false);
+    const [showRelationship, setShowRelationship] = useState('databases');
 
     // Function to toggle the database_verification_code
     function toggleShowCode() {
@@ -33,8 +33,6 @@ export default function Show({ auth, repository, database_backups, clients }) {
             setShowRelationship(relation);
         }
     }
-
-
 
     // Function to copy the code to clipboard
     const handleCopyToClipboard = () => {
@@ -351,8 +349,8 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 <RepositoryClientsTable/>
                             ) : null
                         }
-
-                        {/* { repository_relation.current === 'databases' ? (
+{/*
+                        { repository_relation.current === 'databases' ? (
                             <RepositoryDatabaseTable repository={repository} />
                         ) : null}
 

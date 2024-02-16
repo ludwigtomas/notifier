@@ -71,4 +71,11 @@ class ClientController extends Controller
 
         return to_route('clients.edit', $client->id);
     }
+
+    public function destroy(Client $client): RedirectResponse
+    {
+        $client->delete();
+
+        return to_route('clients.index');
+    }
 }

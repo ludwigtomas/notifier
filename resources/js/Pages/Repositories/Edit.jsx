@@ -108,15 +108,11 @@ export default function Edit({ auth, repository }) {
             <div className="py-12">
                 <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryInformationForm
-                            repository={repository}
-                        />
+                        <UpdateRepositoryInformationForm repository={repository}/>
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryClientsForm
-                            repository={repository}
-                        />
+                        <UpdateRepositoryClientsForm repository={repository}/>
                     </div>
                 </div>
             </div>

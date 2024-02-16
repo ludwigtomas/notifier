@@ -14,6 +14,17 @@ class DatabaseBackupResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'size' => $this->size,
+            'path' => $this->path,
+
+            'created_at' => $this->created_at,
+            'created_at_human' => $this->created_at->diffForHumans(),
+
+            'updated_at' => $this->updated_at,
+            'updated_at_human' => $this->updated_at->diffForHumans(),
+        ];
     }
 }

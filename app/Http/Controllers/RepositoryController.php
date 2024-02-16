@@ -51,8 +51,10 @@ class RepositoryController extends Controller
         ]);
     }
 
-    public function update(UpdateRepositoryRequest $request, Repository $repository): RedirectResponse
+    public function update(Request $request, Repository $repository): RedirectResponse
     {
+        dD($request->website_url);
+
         $repository->update([
             'id' => $request->id,
 

@@ -18,17 +18,16 @@ class RepositoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+
             'name'  => $this->name,
             'slug' => $this->slug,
+            'website_url' => $this->website_url,
             'repository_url' => $this->repository_url,
             'description' => $this->description,
 
-
             'database_verification_code' => $this->database_verification_code,
-
             'last_commit_at' => $this->last_commit_at,
             'last_commit_at_human' => Carbon::parse($this->last_commit_at)->diffForHumans(),
-
             'repository_created_at' => $this->repository_created_at,
             'repository_created_at_human' => Carbon::parse($this->repository_created_at)->diffForHumans(),
 
@@ -37,7 +36,6 @@ class RepositoryResource extends JsonResource
 
             'updated_at' => $this->updated_at,
             'updated_at_human' => Carbon::parse($this->updated_at)->diffForHumans(),
-
 
             'relationships' => [
                 'git' => new GitResource($this->whenLoaded('git')),

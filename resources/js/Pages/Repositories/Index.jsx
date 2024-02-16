@@ -7,6 +7,7 @@ import {
     PlusIcon,
     XMarkIcon,
     ChevronRightIcon,
+    LinkIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -84,7 +85,14 @@ export default function Index({ auth, repositories }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            URL
+                                            Gitlab
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Web
                                         </th>
 
                                         <th
@@ -145,23 +153,49 @@ export default function Index({ auth, repositories }) {
                                             key={repository.id}
                                             className="group hover:bg-zinc-800"
                                         >
-                                            <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
+                                            <td className="px-4 py-4">
+                                                <div className="flex items-center justify-center">
                                                     {repository.repository_url
                                                         ? (
                                                             <a
-                                                                className="text-sky-500 hover:text-sky-400"
+                                                                className="group bg-green-950 p-2 rounded-xl"
                                                                 href={repository.repository_url}
                                                                 target="_blank"
                                                                 rel="noreferrer noopener"
                                                             >
-                                                                Odkaz
+                                                                <LinkIcon className="text-green-500 group-hover:text-green-400 w-6 h-6 slower-animation"/>
                                                             </a>
                                                         )
-                                                        : "N/A"
-                                                    }
 
-                                                </span>
+                                                        : (
+                                                            <div className="bg-red-950 p-2 rounded-xl">
+                                                                <LinkIcon className="text-red-500 w-6 h-6"/>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
+                                            </td>
+
+                                            <td className="px-4 py-4 ">
+                                                <div className="flex items-center justify-center">
+                                                    {repository.website_url
+                                                        ? (
+                                                            <a
+                                                                className="bg-green-950 p-2 rounded-xl"
+                                                                href={repository.repository_url}
+                                                                target="_blank"
+                                                                rel="noreferrer noopener"
+                                                            >
+                                                                <LinkIcon className="text-green-500 group-hover:text-green-400 w-6 h-6 slower-animation"/>
+                                                            </a>
+                                                        )
+                                                        : (
+                                                            <div className="bg-red-950 p-2 rounded-xl">
+                                                                <LinkIcon className="text-red-500 w-6 h-6"/>
+                                                            </div>
+                                                        )
+                                                    }
+                                                </div>
                                             </td>
 
                                             <td className="px-4 py-4 ">
