@@ -94,13 +94,6 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                         <th
                             scope="col"
-                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                        >
-                            Repozitář
-                        </th>
-
-                        <th
-                            scope="col"
                             className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
                         >
                             Název
@@ -111,6 +104,13 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                         >
                             Velikost
+                        </th>
+
+                        <th
+                            scope="col"
+                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                        >
+                            Cesta
                         </th>
 
                         <th
@@ -149,12 +149,6 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                                 <td className="px-4 py-4 ">
                                     <span className="text-sm font-medium text-zinc-400">
-                                        {repository.name}
-                                    </span>
-                                </td>
-
-                                <td className="px-4 py-4 ">
-                                    <span className="text-sm font-medium text-zinc-400">
                                         {backup.name}
                                     </span>
                                 </td>
@@ -167,7 +161,13 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                                 <td className="px-4 py-4 ">
                                     <span className="text-sm font-medium text-zinc-400">
-                                        {backup.created_at_human}
+                                        {backup.size} KB
+                                    </span>
+                                </td>
+
+                                <td className="px-4 py-4 ">
+                                    <span className="text-sm font-medium text-zinc-400">
+                                        {backup.path}
                                     </span>
                                 </td>
 
