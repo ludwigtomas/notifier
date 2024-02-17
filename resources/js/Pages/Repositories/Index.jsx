@@ -129,7 +129,7 @@ export default function Index({ auth, repositories }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            last_commit_at
+                                            Nejnovější commit
                                         </th>
 
                                         <th
@@ -266,20 +266,14 @@ export default function Index({ auth, repositories }) {
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
                                                         <Link
-                                                            href={route(
-                                                                "repositories.edit",
-                                                                repository.id
-                                                            )}
+                                                            href={route("repositories.edit", repository.id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
                                                             <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                                         </Link>
 
                                                         <Link
-                                                            href={route(
-                                                                "repositories.show",
-                                                                repository.id
-                                                            )}
+                                                            href={route("repositories.show", repository.id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                         >
                                                             <EyeIcon className="w-6 h-6 text-sky-500" />
@@ -287,57 +281,15 @@ export default function Index({ auth, repositories }) {
 
                                                         <button
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                            onClick={() =>
-                                                                toggleModal(
-                                                                    repository
-                                                                )
-                                                            }
+                                                            onClick={() => toggleModal(repository)}
                                                         >
                                                             <TrashIcon className="w-6 h-6 text-red-500" />
                                                         </button>
-
-                                            <td className="px-4 py-4">
-                                                <span className="text-sm font-medium text-zinc-400">
-                                                    { repository.last_commit_at_human }
-                                                </span>
-                                            </td>
-
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center space-x-2">
-                                                    <Link
-                                                        href={route("repositories.edit", repository.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                    >
-                                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
-                                                    </Link>
-
-                                                    <Link
-                                                        href={route("repositories.show",repository.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                    >
-                                                        <EyeIcon className="w-6 h-6 text-sky-500" />
-                                                    </Link>
-
-                                                    <button
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                        onClick={() => toggleModal(repository)}
-                                                    >
-                                                        <TrashIcon className="w-6 h-6 text-red-500" />
-                                                    </button>
-
-
-                                                    {/* <Link
-                                                        as="button"
-                                                        method="delete"
-                                                        preserveScroll
-                                                        href={route("repositories.destroy", repository.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                    >
-                                                        <TrashIcon className="w-6 h-6 text-red-500" />
-                                                    </Link> */}
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
