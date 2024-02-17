@@ -63,9 +63,12 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
     });
 
-    route::group(['prefix' => '/dashboard/backups', 'as' => 'backups.'], function () {
+    route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
         route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
         route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+
+        route::delete('/bulk', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
+        route::get('/bulk', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
         //* STORE REQUEST is in api.php
     });
 

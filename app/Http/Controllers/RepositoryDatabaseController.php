@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use ZipArchive;
 use Carbon\Carbon;
 use App\Models\Repository;
 use Illuminate\Http\Request;
@@ -91,5 +92,28 @@ class RepositoryDatabaseController extends Controller
         Storage::delete($repository_database->path . '/' . $repository_database->name);
 
         return back();
+    }
+
+    public function bulkDownload(Request $request)
+    {
+
+        $zip = new ZipArchive;
+
+        $file_name = now()->format('Y-m-d') . '.zip';
+
+        $database_ids= $request->databases;
+
+        // $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
+
+        foreach ($database_ids as $id) {
+            $database = RepositoryDatabase::find($id);
+
+            $zip->addFile(storage_path('app/' . $database->path . '/' . $database->name), $database->name);
+        }
+
+        $zip->close();
+
+        return response()->download(storage_path('app/' . $file_name))->deleteFileAfterSend(true);
+
     }
 }

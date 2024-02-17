@@ -18,7 +18,8 @@ return new class extends Migration
 
             $table->foreignIdFor(Git::class)
                 ->constrained()
-                ->cascadeOnDelete();
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->string('name');
             $table->string('slug')->unique();
@@ -29,6 +30,8 @@ return new class extends Migration
             $table->uuid('database_verification_code')->unique();
             $table->dateTime('last_commit_at')->nullable();
             $table->dateTime('repository_created_at')->nullable();
+
+            $table->softDeletes();
 
             $table->timestamps();
         });

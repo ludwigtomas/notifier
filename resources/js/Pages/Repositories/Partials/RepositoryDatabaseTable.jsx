@@ -51,7 +51,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                                         <Dropdown.Link
                                             className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                                            href={route("profile.edit")}
+                                            href={route("databases.bulk.download", {databases: selectedDatabases})}
                                         >
                                             <span className="mr-2">
                                                 <ArrowDownTrayIcon className="w-6 h-6" />
@@ -60,16 +60,17 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                             Stáhnout
                                         </Dropdown.Link>
 
-                                        <Dropdown.Link
-                                            className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500"
+                                        <button
+                                            className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
                                             href={route("profile.edit")}
+                                            onClick={() => setSelectedDatabases([])}
                                         >
                                             <span className="mr-2">
                                                 <BackspaceIcon className="w-6 h-6" />
                                             </span>
 
                                             Odznačit vše
-                                        </Dropdown.Link>
+                                        </button>
 
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -184,10 +185,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                             as="button"
                                             method="delete"
                                             preserveScroll
-                                            href={route(
-                                                "backups.destroy",
-                                                backup.id
-                                            )}
+                                            href={route("databases.destroy", backup.id)}
                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                         >
                                             <TrashIcon className="w-6 h-6 text-red-500" />

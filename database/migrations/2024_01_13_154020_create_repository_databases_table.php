@@ -16,11 +16,15 @@ return new class extends Migration
             $table->id();
 
             $table->foreignIdFor(Repository::class)
-                ->constrained();
+                ->constrained()
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
 
             $table->string('name');
             $table->integer('size');
             $table->string('path');
+
+            $table->softDeletes();
 
             $table->timestamps();
         });

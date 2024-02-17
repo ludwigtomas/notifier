@@ -8,6 +8,7 @@ import {
     XMarkIcon,
     ChevronRightIcon,
     LinkIcon,
+    ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -33,15 +34,12 @@ export default function Index({ auth, repositories }) {
         setToggleDeleteModal(false);
     };
 
-
     const deleteRepository = () => {
         let url = route('repositories.destroy', selectedRepository.id);
 
         router.delete(url, {
             preserveScroll: true,
-            onSuccess: () =>{
-                closeModal()
-            },
+            onSuccess: () => closeModal(),
         })
     }
 
@@ -275,7 +273,6 @@ export default function Index({ auth, repositories }) {
                                                         <TrashIcon className="w-6 h-6 text-red-500" />
                                                     </button>
 
-
                                                     {/* <Link
                                                         as="button"
                                                         method="delete"
@@ -303,15 +300,26 @@ export default function Index({ auth, repositories }) {
             </div>
 
             <Modal
+                maxWidth="md"
                 show={toggleDeleteModal}
                 onClose={closeModal}
                 className="p-10"
             >
                 {selectedRepository && (
-                        <>
-                            <DangerButton
-                                onClick={deleteRepository}
-                            >
+                    <form
+                        className="p-4 flex flex-col space-y-4"
+                        onSubmit={deleteRepository}
+                    >
+                        <h2 className="text-2xl font-medium text-gray-800 text-center">
+                            {selectedRepository.name}
+                        </h2>
+
+                        <p className="mt-1 text-sm text-gray-600">
+                            Chystáš se smazat repozitář společně se všemi databázemi a klienty. Tato akce je nevratná.
+                        </p>
+
+                        <div className="flex justify-center space-x-4">
+                            <DangerButton type="submit">
                                 {selectedRepository.name}
                             </DangerButton>
 
@@ -320,9 +328,9 @@ export default function Index({ auth, repositories }) {
                             >
                                 Zavřít
                             </SecondaryButton>
-                        </>
-                    )
-                }
+                        </div>
+                    </form>
+                )}
             </Modal>
 
 
