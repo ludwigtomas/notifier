@@ -75,6 +75,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                             <a
                                                 className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                                 href={route("databases.bulk.download", {databases: selectedDatabases})}
+                                                download={true}
                                             >
                                                 <span className="mr-2">
                                                     <ArrowDownTrayIcon className="w-6 h-6" />
