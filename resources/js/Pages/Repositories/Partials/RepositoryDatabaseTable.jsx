@@ -72,7 +72,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                                 Smazat
                                             </Dropdown.Link>
 
-                                            <Dropdown.Link
+                                            <a
                                                 className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                                 href={route("databases.bulk.download", {databases: selectedDatabases})}
                                             >
@@ -81,7 +81,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                                 </span>
 
                                                 Stáhnout
-                                            </Dropdown.Link>
+                                            </a>
 
                                             <button
                                                 className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
@@ -183,7 +183,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                                     <td className="px-4 py-4 ">
                                         <span className="text-sm font-medium text-zinc-400">
-                                            {database.path} KB
+                                            {database.path}
                                         </span>
                                     </td>
 

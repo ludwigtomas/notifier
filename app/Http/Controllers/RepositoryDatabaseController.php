@@ -11,6 +11,7 @@ use App\Jobs\RepositoryDatabaseJob;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDatabaseRequest;
+use Illuminate\Support\Facades\File;
 
 class RepositoryDatabaseController extends Controller
 {
@@ -85,7 +86,7 @@ class RepositoryDatabaseController extends Controller
         }
     }
 
-    public function destroy(RepositoryDatabase $repository_database): RedirectResponse
+    public function destroy(RepositoryDatabase $repository_database)
     {
         $repository_database->delete();
 
@@ -99,33 +100,18 @@ class RepositoryDatabaseController extends Controller
         $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 
         $zip = new ZipArchive;
+        $zipFileName = 'sample.zip';
 
-        $file_name = now()->format('Y-m-d') . '.zip';
+        if ($zip->open(public_path($zipFileName), ZipArchive::CREATE) === TRUE) {
+            foreach ($databases as $file) {
+                $zip->addFile(storage_path('app/'. $file->path . '/'. $file->name), $file->name);
+            }
 
-        $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
+            $zip->close();
 
-
-        foreach ($databases as $database) {
-            dd(storage_path('app/' . $database->path . '/' . $database->name));
-            $zip->addFile(storage_path('app/' . $database->path . '/' . $database->name), $database->name);
+            return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+        } else {
+            return "Failed to create the zip file.";
         }
-
-
-        // $file_name = now()->format('Y-m-d') . '.zip';
-
-        // $database_ids= $request->databases;
-
-        // // $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
-
-        // foreach ($database_ids as $id) {
-        //     $database = RepositoryDatabase::find($id);
-
-        //     $zip->addFile(storage_path('app/' . $database->path . '/' . $database->name), $database->name);
-        // }
-
-        // $zip->close();
-
-        // return response()->download(storage_path('app/' . $file_name))->deleteFileAfterSend(true);
-
     }
 }
