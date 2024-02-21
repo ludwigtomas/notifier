@@ -1,10 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {
-    PencilSquareIcon,
     TrashIcon,
     EyeIcon,
     PlusIcon,
-    XMarkIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
@@ -13,7 +11,7 @@ import UpdateRepositoryClientsForm from "@/Pages/Repositories/Partials/UpdateRep
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 
-export default function Edit({ auth, repository }) {
+export default function Edit({ auth, repository, clients }) {
     return (
         <AuthenticatedLayout
             user={auth.user}

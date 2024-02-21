@@ -166,11 +166,9 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                 <motion.button
                                                     whileHover={{ scale: 1.1 }}
                                                     whileTap={{ scale: 0.9 }}
-                                                    onClick={
-                                                        showCode ?  handleCopyToClipboard : null
-                                                    }
+                                                    onClick={ showCode ?  handleCopyToClipboard : null}
                                                     className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
-                                                        showCode === false ? ' cursor-not-allowed' : ''
+                                                        showCode === false && ' cursor-not-allowed'
                                                     )}
                                                 >
                                                     <ClipboardIcon className="w-6 h-6" />
@@ -280,7 +278,8 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             {/* Database */}
                             <div
                                 onClick={handleShowRepositoryRelation('databases')}
-                                className='col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500'
+                                className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
+                                    (showRelationship === 'databases' && ' border-sky-500')}
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -310,7 +309,8 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             {/* Clients */}
                             <div
                                 onClick={handleShowRepositoryRelation('clients')}
-                                className='col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500'
+                                className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
+                                    (showRelationship === 'clients' && ' border-sky-500' )}
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -338,29 +338,13 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
                         </div>
 
-                        { showRelationship === 'databases' ?
-                            (
+                        { showRelationship === 'databases' ? (
                                 <RepositoryDatabaseTable repository={repository} database_backups={database_backups} />
-                            ) : null
-                        }
-
-                        { showRelationship === 'clients' ?
-                            (
+                            ): showRelationship === 'clients' ? (
                                 <RepositoryClientsTable/>
                             ) : null
                         }
-{/*
-                        { repository_relation.current === 'databases' ? (
-                            <RepositoryDatabaseTable repository={repository} />
-                        ) : null}
 
-                        { repository_relation.current === 'clients' ? (
-                            <RepositoryClientsTable repository={repository} />
-                        ) : null
-
-                        } */}
-
-                        <Pagination links={database_backups.meta} />
                     </div>
                 </div>
             </AuthenticatedLayout>

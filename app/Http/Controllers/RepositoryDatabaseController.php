@@ -96,24 +96,36 @@ class RepositoryDatabaseController extends Controller
 
     public function bulkDownload(Request $request)
     {
+        $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 
         $zip = new ZipArchive;
 
         $file_name = now()->format('Y-m-d') . '.zip';
 
-        $database_ids= $request->databases;
+        $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
 
-        // $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
 
-        foreach ($database_ids as $id) {
-            $database = RepositoryDatabase::find($id);
-
+        foreach ($databases as $database) {
+            dd(storage_path('app/' . $database->path . '/' . $database->name));
             $zip->addFile(storage_path('app/' . $database->path . '/' . $database->name), $database->name);
         }
 
-        $zip->close();
 
-        return response()->download(storage_path('app/' . $file_name))->deleteFileAfterSend(true);
+        // $file_name = now()->format('Y-m-d') . '.zip';
+
+        // $database_ids= $request->databases;
+
+        // // $zip->open(storage_path('app/' . $file_name), ZipArchive::CREATE);
+
+        // foreach ($database_ids as $id) {
+        //     $database = RepositoryDatabase::find($id);
+
+        //     $zip->addFile(storage_path('app/' . $database->path . '/' . $database->name), $database->name);
+        // }
+
+        // $zip->close();
+
+        // return response()->download(storage_path('app/' . $file_name))->deleteFileAfterSend(true);
 
     }
 }

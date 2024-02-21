@@ -1,16 +1,17 @@
 <?php
 
+use App\Mail\DatabaseRepositoryMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RepositoryClientDetachController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
-use App\Mail\DatabaseRepositoryMail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\RepositoryClientDetachController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,5 +89,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+route::get('/test', [TestController::class, 'index']);
+
 
 require __DIR__ . '/auth.php';

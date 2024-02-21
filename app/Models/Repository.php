@@ -19,8 +19,9 @@ class Repository extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id',                          // api
+        'id',                          // repositories_id api
         'git_id',                      // relationship
+        'analytics_property_id',       //! manually added
 
         'name',                        // api
         'slug',                        // automatically generated

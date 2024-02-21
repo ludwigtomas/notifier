@@ -5,22 +5,14 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { ClockIcon } from "@heroicons/react/24/outline";
 
+
 export default function UpdateRepositoryInformationForm({repository, className = "" }) {
 
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
-        id: repository.id,
-        name: repository.name,
-        slug: repository.slug,
-        website_url: repository.website_url,
-        repository_url: repository.repository_url,
-        description: repository.description,
-
-        database_verification_code: repository.database_verification_code,
-        last_commit_at: repository.last_commit_at,
-        repository_created_at: repository.repository_created_at,
-
-        updated_at: repository.updated_at,
-        created_at: repository.created_at,
+        analytics_property_id: repository.analytics_property_id ?? '',
+        website_url: repository.website_url ?? '',
+        repository_url: repository.repository_url ?? '',
+        last_commit_at: repository.last_commit_at ?? '',
     });
 
     const submit = (e) => {
@@ -28,6 +20,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
         e.preventDefault();
 
         put(route('repositories.update', repository.id));
+
     };
 
     return (
@@ -42,90 +35,26 @@ export default function UpdateRepositoryInformationForm({repository, className =
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 grid grid-cols-12 gap-5">
+            <form onSubmit={submit} className="mt-6 grid grid-cols-12 gap-5 items-start">
                 <div className="col-span-7 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
-                            isRequired={true}
-                            htmlFor="id"
-                            value="ID"
+                            htmlFor="analytics_property_id"
+                            value="Google Analytics"
                         />
 
                         <TextInput
-                            id="id"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-800"
-                            disabled
-                            placeholder="52740614"
-                            value={repository.id}
-                            onChange={(e) => setData('id', e.target.value)}
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.id}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            isRequired={true}
-                            htmlFor="name"
-                            value="Name"
-                        />
-
-                        <TextInput
-                            id="name"
+                            type="number"
+                            id="analytics_property_id"
                             className="mt-1 block w-full"
-                            placeholder="Ludwig Tomas"
-                            value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            placeholder="google analytics"
+                            value={data.analytics_property_id}
+                            onChange={(e) => setData('analytics_property_id', e.target.value)}
                         />
 
                         <InputError
                             className="mt-2"
-                            message={errors.name}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            htmlFor="slug"
-                            value="slug"
-                        />
-
-                        <TextInput
-                            id="slug"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-800"
-                            disabled
-                            placeholder="ludwig-tomas"
-                            value={repository.slug}
-                            onChange={(e) => setData('slug', e.target.value)}
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.slug}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            htmlFor="database_verification_code"
-                            value="database_verification_code"
-                        />
-
-                        <TextInput
-                            id="database_verification_code"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-800"
-                            disabled
-                            placeholder="ac8185c8-01cb-4e30-9639-870000000000"
-                            value={data.database_verification_code}
-                            onChange={(e) => setData('database_verification_code', e.target.value)}
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.database_verification_code}
+                            message={errors.analytics_property_id}
                         />
                     </div>
 
@@ -136,6 +65,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                         />
 
                         <TextInput
+                            type="url"
                             id="website_url"
                             className="mt-1 block w-full"
                             placeholder="https://ludwigtomas.cz/"
@@ -151,12 +81,12 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
                     <div>
                         <InputLabel
-                            isRequired={true}
                             htmlFor="repository_url"
                             value="repository_url"
                         />
 
                         <TextInput
+                            type="url"
                             id="repository_url"
                             className="mt-1 block w-full"
                             placeholder="https://gitlab.com/bubak1/portfolio/the-notifier"
@@ -168,6 +98,28 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             className="mt-2"
                             message={errors.repository_url}
                         />
+                    </div>
+
+                    <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                        <div>
+                            <InputLabel
+                                htmlFor="last_commit_at"
+                                value="Nejnovější commit"
+                            />
+
+                            <input
+                                type="datetime-local"
+                                id="last_commit_at"
+                                className="mt-1 block w-full"
+                                value={data.last_commit_at}
+                                onChange={(e) => setData('last_commit_at', e.target.value)}
+                            />
+
+                            <InputError
+                                className="mt-2"
+                                message={errors.last_commit_at}
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -231,28 +183,73 @@ export default function UpdateRepositoryInformationForm({repository, className =
                         </div>
                     </div>
 
-                    <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                        <div>
-                            <InputLabel
-                                htmlFor="last_commit_at"
-                                value="last_commit_at"
-                            />
+                    <div className="border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                        <div className="grid grid-cols-1 gap-y-4">
 
-                            <input
-                                type="datetime-local"
-                                id="last_commit_at"
-                                className="mt-1 block w-full"
-                                value={data.last_commit_at}
-                                onChange={(e) => setData('last_commit_at', e.target.value)}
-                            />
+                            <div>
+                                <InputLabel
+                                    htmlFor="id"
+                                    value="ID repozitáře"
+                                />
 
-                            <InputError
-                                className="mt-2"
-                                message={errors.last_commit_at}
-                            />
+                                <TextInput
+                                    id="id"
+                                    className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
+                                    disabled
+                                    placeholder="52740614"
+                                    value={repository.id}
+                                />
+                            </div>
+
+                            <div>
+                                <InputLabel
+                                    disabled
+                                    htmlFor="name"
+                                    value="Název"
+                                />
+
+                                <TextInput
+                                    id="name"
+                                    className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
+                                    disabled
+                                    placeholder="Ludwig Tomas"
+                                    value={repository.name}
+                                />
+                            </div>
+
+
+                            <div>
+                                <InputLabel
+                                    htmlFor="slug"
+                                    value="slug"
+                                />
+
+                                <TextInput
+                                    id="slug"
+                                    className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
+                                    disabled
+                                    placeholder="ludwig-tomas"
+                                    value={repository.slug}
+                                />
+                            </div>
+
+                            <div>
+                                <InputLabel
+                                    htmlFor="database_verification_code"
+                                    value="database_verification_code"
+                                />
+
+                                <TextInput
+                                    id="database_verification_code"
+                                    className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
+                                    disabled
+                                    placeholder="ac8185c8-01cb-4e30-9639-870000000000"
+                                    value={repository.database_verification_code}
+                                />
+                            </div>
+
                         </div>
                     </div>
-
                 </div>
 
                 <div className="col-span-12 flex items-center space-x-4">
@@ -261,9 +258,15 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             className="w-full"
                             disabled={processing}
                         >
-                            Update repository
+                            Update
                         </PrimaryButton>
                     </div>
+
+                    {recentlySuccessful && (
+                        <p className="text-green-500">
+                            Repository information has been updated!
+                        </p>
+                    )}
 
                     <div>
                         <Link
@@ -275,7 +278,6 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             </span>
                         </Link>
                     </div>
-
                 </div>
             </form>
         </section>

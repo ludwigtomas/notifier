@@ -23,6 +23,7 @@ export default function Pagination({ links }) {
                             key={key}
                             className={getClassName(link.active)}
                             href={link.url}
+                            preserveScroll
                             dangerouslySetInnerHTML={{ __html: link.label }}
                         />
                     )

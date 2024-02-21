@@ -5,6 +5,7 @@ import {
     TrashIcon,
     EyeIcon,
     PlusIcon,
+    CheckIcon,
     XMarkIcon,
     ChevronRightIcon,
     LinkIcon,
@@ -12,14 +13,17 @@ import {
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
+import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
+import debounce from 'lodash/debounce';
 
 import { useState } from "react";
 
-export default function Index({ auth, repositories }) {
+export default function Index({ auth, repositories, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
     const [selectedRepository, setSelectedRepository] = useState(null);
+    const [search, setSearch] = useState(filters.search || "");
 
     // catch repository into variable
     const toggleModal = (repository) => {
@@ -40,6 +44,15 @@ export default function Index({ auth, repositories }) {
             onSuccess: () => closeModal(),
         })
     }
+
+    const debouncedSearch = debounce((value) => {
+        router.get(route('repositories.index'), {
+            search: value
+        }, {
+            preserveScroll: true,
+            preserveState: true,
+        })
+    }, 100);
 
     return (
         <AuthenticatedLayout
@@ -71,6 +84,22 @@ export default function Index({ auth, repositories }) {
             {/* TABLE */}
             <div className="py-12">
                 <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8">
+
+                    <div className="mb-2">
+                        <TextInput
+                            label="Hledat"
+                            name="search"
+                            placeholder="Hledat repozitář"
+                            type="text"
+                            className="w-72"
+                            value={search}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                debouncedSearch(e.target.value);
+                            }}
+                        />
+                    </div>
+
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
@@ -80,21 +109,28 @@ export default function Index({ auth, repositories }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
+                                            ID
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
+                                        >
                                             Gitlab
                                         </th>
 
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
                                         >
                                             Web
                                         </th>
 
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
                                         >
-                                            ID
+                                            Analytics
                                         </th>
 
                                         <th
@@ -150,6 +186,12 @@ export default function Index({ auth, repositories }) {
                                                 key={repository.id}
                                                 className="group hover:bg-zinc-800"
                                             >
+                                                <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium text-zinc-400">
+                                                        {repository.id}
+                                                    </span>
+                                                </td>
+
                                                 <td className="px-4 py-4">
                                                     <div className="flex items-center justify-center">
                                                         {repository.repository_url ? (
@@ -161,11 +203,11 @@ export default function Index({ auth, repositories }) {
                                                                 target="_blank"
                                                                 rel="noreferrer noopener"
                                                             >
-                                                                <LinkIcon className="text-green-500 group-hover:text-green-400 w-6 h-6 slower-animation" />
+                                                                <LinkIcon className="text-green-500 w-6 h-6" />
                                                             </a>
                                                         ) : (
                                                             <div className="bg-red-950 p-2 rounded-xl">
-                                                                <LinkIcon className="text-red-500 w-6 h-6" />
+                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
                                                             </div>
                                                         )}
                                                     </div>
@@ -176,26 +218,27 @@ export default function Index({ auth, repositories }) {
                                                         {repository.website_url ? (
                                                             <a
                                                                 className="bg-green-950 p-2 rounded-xl"
-                                                                href={
-                                                                    repository.repository_url
-                                                                }
+                                                                href={repository.repository_url}
                                                                 target="_blank"
-                                                                rel="noreferrer noopener"
                                                             >
-                                                                <LinkIcon className="text-green-500 group-hover:text-green-400 w-6 h-6 slower-animation" />
+                                                                <LinkIcon className="text-green-500 w-6 h-6" />
                                                             </a>
                                                         ) : (
                                                             <div className="bg-red-950 p-2 rounded-xl">
-                                                                <LinkIcon className="text-red-500 w-6 h-6" />
+                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
                                                             </div>
                                                         )}
                                                     </div>
                                                 </td>
 
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400">
-                                                        {repository.id}
-                                                    </span>
+                                                <td className="px-4 py-4">
+                                                    <div className="flex items-center justify-center">
+                                                        <div className={'p-2 rounded-xl ' + (
+                                                            repository.analytics_property_id ? 'bg-green-950' : 'bg-red-950'
+                                                        )}>
+                                                            {repository.analytics_property_id ? <CheckIcon className="w-6 h-6 text-green-500"/> : <XMarkIcon className="text-red-500 w-6 h-6" />}
+                                                        </div>
+                                                    </div>
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
@@ -219,27 +262,17 @@ export default function Index({ auth, repositories }) {
                                                             .slice(0, 2)
                                                             .map((client) => (
                                                                 <p
-                                                                    key={
-                                                                        client.id
-                                                                    }
+                                                                    key={client.id}
                                                                     className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
                                                                 >
-                                                                    {
-                                                                        client.name
-                                                                    }
+                                                                    { client.name}
                                                                 </p>
                                                             ))}
 
-                                                        {repository
-                                                            .relationships
-                                                            .clients_count >
-                                                            2 && (
+                                                        {repository.relationships.clients_count > 2 && (
                                                             <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
                                                                 +{" "}
-                                                                {repository
-                                                                    .relationships
-                                                                    .clients_count -
-                                                                    2}
+                                                                {repository.relationships.clients_count - 2}
                                                             </span>
                                                         )}
                                                     </div>
@@ -247,19 +280,13 @@ export default function Index({ auth, repositories }) {
 
                                                 <td className="px-4 py-4 ">
                                                     <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .database_backups_count
-                                                        }
+                                                        { repository.relationships.database_backups_count}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4">
                                                     <span className="text-sm font-medium text-zinc-400">
-                                                        {
-                                                            repository.last_commit_at_human
-                                                        }
+                                                        { repository.last_commit_at_human}
                                                     </span>
                                                 </td>
 
@@ -322,6 +349,8 @@ export default function Index({ auth, repositories }) {
 
                         <div className="flex justify-center space-x-4">
                             <DangerButton type="submit">
+                                <TrashIcon className="w-6 h-6 mr-2"/>
+
                                 {selectedRepository.name}
                             </DangerButton>
 

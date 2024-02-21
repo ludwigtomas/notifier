@@ -22,16 +22,11 @@ class UpdateRepositoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer', 'unique:repositories,id,' . $this->id],
-
-            'name' => ['required', 'string', 'max:255', 'unique:repositories,name,' . $this->id],
+            'analytics_property_id' => ['nullable', 'integer', 'unique:repositories,analytics_property_id,' . $this->repository->id],
             'website_url' => ['nullable', 'url'],
             'repository_url' => ['nullable', 'url'],
-            'description' => ['nullable', 'string'],
-
-            'database_verification_code' => ['required', 'string'],
             'last_commit_at' => ['nullable', 'date'],
-            'repository_created_at' => ['nullable', 'date'],
+            'description' => ['nullable', 'string'],
         ];
     }
 }
