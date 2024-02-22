@@ -53,5 +53,11 @@ class ClientSeeder extends Seeder
             'email' => 'info@rahomadigital.cz',
             'phone' => '+420 607 247 034',
         ]);
+
+        Client::create([
+            'name' => 'Mayhem',
+            'email' => 'tkasparek01@gmail.com',
+            'phone' => '+420 607 247 034',
+        ]);
     }
 }

@@ -31,7 +31,7 @@ class AdminSeeder extends Seeder
             ]);
 
             User::create([
-                'name' => 'Ludwig Tomas',
+                'name' => 'Mayhem',
                 'email' => 'tkasparek01@gmail.com',
                 'email_verified_at' => now(),
                 'password' => bcrypt('mayhem123321*'),
