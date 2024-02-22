@@ -11,7 +11,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
     const [selectedDatabases, setSelectedDatabases] = useState([]);
     const [selectedDatabase, setSelectedDatabase] = useState(null);
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
-
+    const [toggleBulkDeleteModal, setToggleBulkDeleteModal] = useState(false);
 
     const toggleModal = (database) => {
         setSelectedDatabase(database);
@@ -21,6 +21,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
     const closeModal = () => {
         setToggleDeleteModal(false)
+        setToggleBulkDeleteModal(false)
     }
 
     const deleteRepository = () => {
@@ -29,6 +30,18 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
         router.delete(url, {
             preserveScroll: true,
             onSuccess: () => closeModal(),
+        })
+    }
+
+    const bulkDeleteRepositories = () => {
+        let url = route("databases.bulk.destroy", {databases: selectedDatabases});
+
+        router.delete(url, {
+            preserveScroll: true,
+            onSuccess: () => {
+                closeModal();
+                setSelectedDatabases([]);
+            }
         })
     }
 
@@ -61,23 +74,22 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                         </Dropdown.Trigger>
 
                                         <Dropdown.Content>
-                                            <Dropdown.Link
-                                                className="border-l-4 border-transparent hover:border-red-500 hover:text-red-500"
-                                                href={route("profile.edit")}
+                                            <button
+                                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-red-500 hover:text-red-500"
+                                                onClick={() => setToggleBulkDeleteModal(true)}
                                             >
                                                 <span className="mr-2">
                                                     <TrashIcon className="w-6 h-6" />
                                                 </span>
 
                                                 Smazat
-                                            </Dropdown.Link>
+                                            </button>
 
                                             <a
-                                                className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                                 href={route("databases.bulk.download", {databases: selectedDatabases})}
-                                                download={true}
                                             >
-                                                <span className="mr-2">
+                                                <span className="mr-2 ">
                                                     <ArrowDownTrayIcon className="w-6 h-6" />
                                                 </span>
 
@@ -264,6 +276,46 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                         </div>
                     </div>
                 )}
+            </Modal>
+
+            <Modal
+                maxWidth="md"
+                show={toggleBulkDeleteModal}
+                onClose={closeModal}
+                className="p-10"
+            >
+                    <div className="p-4 flex flex-col space-y-4">
+                        <h2 className="text-2xl font-medium text-gray-800 text-center">
+                            Hodláš se smazat vybrané databáze
+                        </h2>
+
+                        <div className="my-4 space-y-1 text-center">
+                            <p className="text-sm text-gray-600">
+                                Chystáš se smazat vybrané databáze. Tato akce je nevratná.
+                            </p>
+
+                            <p className="text-sm text-gray-600">
+                                Celkem se smaže <span className="font-bold text-lg mx-1">{selectedDatabases.length}</span> databází
+                            </p>
+                        </div>
+
+                        <div className="flex justify-center space-x-4">
+                            <DangerButton
+                                type="submit"
+                                onClick={bulkDeleteRepositories}
+                            >
+                                <TrashIcon className="w-6 h-6 mr-2"/>
+
+                                Hodit do koše
+                            </DangerButton>
+
+                            <SecondaryButton
+                                onClick={closeModal}
+                            >
+                                Zavřít
+                            </SecondaryButton>
+                        </div>
+                    </div>
             </Modal>
         </>
     );

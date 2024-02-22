@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Client;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,6 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('client_repository', function (Blueprint $table) {
+            $table->primary(['client_id', 'repository_id']);
+
             $table->foreignId('client_id')
                 ->constrained()
                 ->cascadeOnDelete();
@@ -20,7 +23,9 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->primary(['client_id', 'repository_id']);
+            $table->string('client_email')->nullable();
+
+            $table->unique(['client_id', 'repository_id']);
         });
     }
 

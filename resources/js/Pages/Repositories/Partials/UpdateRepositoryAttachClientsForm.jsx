@@ -1,38 +1,44 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { UserIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { Link, useForm, usePage } from '@inertiajs/react';
+import {
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+    ChevronRightIcon,
+    UserIcon,
+} from "@heroicons/react/24/outline";
 
-export default function Show({ repository, className = "" }) {
+export default function Show({ clients, repository, className = "" }) {
 
-    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, put, processing, errors } = useForm({
+        clients: []
     });
 
 
-    const detachSubmit = (e) => {
-
+    const attachClientSubmit = (e) => {
         e.preventDefault();
 
-        put(route('repository.clients.detach', repository.id));
-    };
+        put(route('repository.clients.attach', repository.id));
+
+    }
 
     return (
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-100">
-                    Attached Clients
+                    Unattached Clients
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">
-                    Here you can see all clients attached to this repository.
+                    Here you can see all unattached clients to this repository.
                 </p>
             </header>
 
-            <form onSubmit={detachSubmit} className="mt-6 grid grid-cols-12 gap-5">
-
-                {repository.relationships.clients.map((client) => {
+            <form onSubmit={attachClientSubmit} className="mt-6 grid grid-cols-12 gap-5">
+                {clients.map((client) => {
                     return (
                         <div className="col-span-12 sm:col-span-6 lg:col-span-4" key={client.id}>
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
@@ -55,20 +61,20 @@ export default function Show({ repository, className = "" }) {
                                 <div>
                                     <Link
                                         as="button"
-                                        method="DELETE"
+                                        method="POST"
                                         preserveScroll
-                                        className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                        href={route('repository.clients.detach', {repository: repository.id, client: client.id})}
+                                        preserveState
+                                        className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
+                                        href={route('repository.clients.attach', {repository: repository.id, client: client.id})}
                                     >
-                                        <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                        <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                     );
-
-                })}
-
+                }
+                )}
 
             </form>
         </section>

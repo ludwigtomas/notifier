@@ -98,25 +98,14 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
                                 <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-4 grid gap-y-2 ">
                                     <Link
-                                        href={route("repositories.create")}
-                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-green-500"
-                                    >
-                                        <span className="text-gray-200">
-                                            Vytvořit
-                                        </span>
-
-                                        <PlusIcon className="w-6 h-6 text-green-500" />
-                                    </Link>
-
-                                    <Link
                                         href={route("repositories.edit", repository.id)}
-                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
+                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-green-500"
                                     >
                                         <span className="text-gray-200">
                                             Editovat
                                         </span>
 
-                                        <PencilSquareIcon className="w-6 h-6 text-sky-500" />
+                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                     </Link>
 
                                     <Link
@@ -279,7 +268,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div
                                 onClick={handleShowRepositoryRelation('databases')}
                                 className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'databases' && ' border-sky-500')}
+                                    (showRelationship === 'databases' ? ' border-sky-500' : ' border-transparent')}
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -310,7 +299,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div
                                 onClick={handleShowRepositoryRelation('clients')}
                                 className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'clients' && ' border-sky-500' )}
+                                    (showRelationship === 'clients' ? ' border-sky-500' : ' border-transparent' )}
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">

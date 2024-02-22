@@ -103,7 +103,7 @@ export default function Index({ auth, repositories, filters }) {
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                <thead className="bg-zinc-950">
+                                <thead className="bg-zinc-950 text-nowrap">
                                     <tr>
                                         <th
                                             scope="col"
@@ -254,20 +254,15 @@ export default function Index({ auth, repositories, filters }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    {/* <span className="text-sm font-medium text-zinc-400">
-                                                    {repository.relationships.clients_count}
-                                                </span> */}
-                                                    <div className="flex items-center gap-x-2 ">
-                                                        {repository.relationships.clients
-                                                            .slice(0, 2)
-                                                            .map((client) => (
-                                                                <p
-                                                                    key={client.id}
-                                                                    className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
-                                                                >
-                                                                    { client.name}
-                                                                </p>
-                                                            ))}
+                                                    <div className="flex items-center gap-x-2 text-nowrap ">
+                                                        {repository.relationships.clients.slice(0, 2).map((client) => (
+                                                            <p
+                                                                key={client.id}
+                                                                className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
+                                                            >
+                                                                { client.name}
+                                                            </p>
+                                                        ))}
 
                                                         {repository.relationships.clients_count > 2 && (
                                                             <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
@@ -278,7 +273,7 @@ export default function Index({ auth, repositories, filters }) {
                                                     </div>
                                                 </td>
 
-                                                <td className="px-4 py-4 ">
+                                                <td className="px-4 py-4 text-center ">
                                                     <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                         { repository.relationships.database_backups_count}
                                                     </span>

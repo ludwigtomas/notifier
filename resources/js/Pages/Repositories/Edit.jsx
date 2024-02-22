@@ -4,14 +4,18 @@ import {
     EyeIcon,
     PlusIcon,
     ChevronRightIcon,
+    UserIcon,
+    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
-import UpdateRepositoryClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryClientsForm";
+import UpdateRepositoryDetachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryDetachClientsForm";
+import UpdateRepositoryAttachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryAttachClientsForm";
 
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
 
 export default function Edit({ auth, repository, clients }) {
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -61,17 +65,6 @@ export default function Edit({ auth, repository, clients }) {
                         <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6">
                             <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-4 grid gap-y-2 ">
                                 <Link
-                                    href={route("repositories.create")}
-                                    className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-green-500"
-                                >
-                                    <span className="text-gray-200">
-                                        Vytvořit
-                                    </span>
-
-                                    <PlusIcon className="w-6 h-6 text-green-500" />
-                                </Link>
-
-                                <Link
                                     href={route("repositories.show", repository.id)}
                                     className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
                                 >
@@ -110,7 +103,11 @@ export default function Edit({ auth, repository, clients }) {
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryClientsForm repository={repository}/>
+                        <UpdateRepositoryDetachClientsForm repository={repository}/>
+                    </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateRepositoryAttachClientsForm repository={repository} clients={clients}/>
                     </div>
                 </div>
             </div>

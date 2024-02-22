@@ -8,10 +8,10 @@ use App\Models\Repository;
 use Illuminate\Http\Request;
 use App\Models\RepositoryDatabase;
 use App\Jobs\RepositoryDatabaseJob;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDatabaseRequest;
-use Illuminate\Support\Facades\File;
 
 class RepositoryDatabaseController extends Controller
 {
@@ -99,19 +99,41 @@ class RepositoryDatabaseController extends Controller
     {
         $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 
-        $zip = new ZipArchive;
-        $zipFileName = 'sample.zip';
+        $file_name = explode('/', $databases[0]->path)[0] . '.zip';
+        $file_path = storage_path('app/' . $file_name);
+        $password = 'test';
 
-        if ($zip->open(public_path($zipFileName), ZipArchive::CREATE) === TRUE) {
+        $zip = new ZipArchive();
+
+        $zip_file = $zip->open($file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+        if ($zip_file === TRUE) {
+
+            // $zip->setPassword($password); (:  for some reason this doesn't work  :)
+
             foreach ($databases as $file) {
-                $zip->addFile(storage_path('app/'. $file->path . '/'. $file->name), $file->name);
+                $zip->addFile(storage_path('app/' . $file->path . '/' . $file->name), $file->name);
+
+                $zip->setEncryptionName($file->name, ZipArchive::EM_AES_256, $password);
             }
 
             $zip->close();
 
-            return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+            // Nyní odešlete soubor ke stažení
+            return response()->download($file_path)->deleteFileAfterSend(true);
         } else {
             return "Failed to create the zip file.";
+        }
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
+
+        foreach ($databases as $database) {
+            File::delete(storage_path('app/' . $database->path . '/' . $database->name));
+
+            $database->delete();
         }
     }
 }

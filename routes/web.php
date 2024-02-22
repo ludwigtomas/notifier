@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryClientAttachController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
 use App\Http\Controllers\RepositoryClientDetachController;
@@ -44,7 +46,6 @@ route::middleware('auth:sanctum')->group(function () {
 
     route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
         route::get('/', [RepositoryController::class, 'index'])->name('index');
-        route::get('/create', [RepositoryController::class, 'create'])->name('create');
         route::post('/', [RepositoryController::class, 'store'])->name('store');
         route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
         route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
@@ -52,7 +53,9 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
     });
 
-    route::delete('/repository/{repository}/client/{client}/detach', RepositoryClientDetachController::class)->name('repository.clients.detach');
+    route::delete('/repository/{repository}/client/{client}/detach', [ClientRepositoryController::class, 'detach'])->name('repository.clients.detach');
+    route::post('/repository/{repository}/client/{client}/attach',  [ClientRepositoryController::class, 'attach'])->name('repository.clients.attach');
+    route::patch('/repository/{repository}/client/{client}/update',  [ClientRepositoryController::class, 'update'])->name('repository.clients.update');
 
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
         route::get('/', [ClientController::class, 'index'])->name('index');
@@ -68,7 +71,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
         route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
 
-        route::delete('/bulk', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
+        route::delete('/bulk/destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
         route::get('/bulk', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
         //* STORE REQUEST is in api.php
     });

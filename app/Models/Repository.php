@@ -16,25 +16,23 @@ class Repository extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $primaryKey = 'id';
-
     protected $fillable = [
-        'id',                          // repositories_id api
-        'git_id',                      // relationship
+        'id',                          // automatically - repositories_id api
+        'git_id',                      // automatically - relationship
         'analytics_property_id',       //! manually added
 
-        'name',                        // api
-        'slug',                        // automatically generated
+        'name',                        // automatically - api
+        'slug',                        // automatically - generated
         'website_url',                 //! manually added
-        'repository_url',              // api
+        'repository_url',              // automatically - api
         'description',                 //! manually added
 
-        'database_verification_code',  // Observer
-        'last_commit_at',              // api
-        'repository_created_at',       // api
+        'database_verification_code',  // automatically - Observer
+        'last_commit_at',              // automatically - api
+        'repository_created_at',       // automatically - api
 
-        'updated_at',                  // api
-        'created_at',                  // api
+        'updated_at',                  // automatically - api
+        'created_at',                  // automatically - api
     ];
 
     public function git(): BelongsTo
@@ -44,7 +42,7 @@ class Repository extends Model
 
     public function clients(): BelongsToMany
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class)->withPivot('client_email');
     }
 
     public function database_backups(): HasMany
