@@ -1,7 +1,5 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import {
     UserIcon,
@@ -19,9 +17,7 @@ export default function Show({ repository, className = "" }) {
         client_email: "",
     });
 
-
     const detachSubmit = (e) => {
-
         e.preventDefault();
 
         delete(route('repository.clients.detach', repository.id));
@@ -30,7 +26,13 @@ export default function Show({ repository, className = "" }) {
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('repository.clients.update', [repository.id, selectedClient]));
+        patch(route('repository.clients.update', [repository.id, selectedClient]), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setSelectedClient(null);
+                setData("client_email", "");
+            },
+        });
     }
 
     return (
@@ -48,7 +50,10 @@ export default function Show({ repository, className = "" }) {
             <form onSubmit={detachSubmit} className="mt-6 grid grid-cols-12 gap-5">
                 {repository.relationships.clients.map((client) => {
                     return (
-                        <div className="col-span-12 sm:col-span-6 lg:col-span-4" key={client.id}>
+                        <div
+                            className="col-span-12 sm:col-span-6 lg:col-span-4"
+                            key={client.id}
+                        >
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
                                 <div className="flex items-center space-x-4">
                                     <div className="flex items-center justify-center w-12 h-12 bg-zinc-700 rounded-lg">
@@ -65,24 +70,26 @@ export default function Show({ repository, className = "" }) {
                                         </p>
 
                                         {selectedClient === client.id ? (
-                                            <TextInput
-                                                id="client_email"
-                                                type="text"
-                                                className="mt-1 bg-white"
-                                                value={data.client_email}
-                                                onChange={(e) => setData("client_email", e.target.value)}
-                                                errors={errors.client_email}
-                                            />
+                                            <>
+                                                <TextInput
+                                                    id="client_email"
+                                                    type="email"
+                                                    className="mt-1 block w-full"
+                                                    value={data.client_email}
+                                                    onChange={(e) => setData("client_email", e.target.value)}
+                                                    isFocused
+                                                    required
+                                                />
+                                            </>
                                         ) : (
                                             <TextInput
                                                 id="client_email"
                                                 type="text"
                                                 disabled
-                                                value={client.client_email}
-                                                className="mt-1 block w-full cursor-not-allowed bg-zinc-700/40 border-zinc-800"
+                                                value={client.client_email ?? "undefined"}
+                                                className="mt-1 block w-full cursor-not-allowed bg-zinc-700/40 border-zinc-800 !text-gray-400"
                                             />
-                                        )
-                                        }
+                                        )}
                                     </div>
                                 </div>
 
@@ -109,7 +116,10 @@ export default function Show({ repository, className = "" }) {
                                             <>
                                                 <button
                                                     type="button"
-                                                    onClick={() => setSelectedClient(client.id)}
+                                                    onClick={() => {
+                                                        setSelectedClient(client.id);
+                                                        setData("client_email", client.client_email ?? "");
+                                                    }}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
                                                 >
                                                     <PencilSquareIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>

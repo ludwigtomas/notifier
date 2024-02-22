@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateClientRepositoryRequest;
 use App\Models\Client;
 use App\Models\Repository;
 use Illuminate\Http\Request;
