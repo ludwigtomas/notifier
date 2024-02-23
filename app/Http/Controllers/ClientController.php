@@ -17,10 +17,10 @@ class ClientController extends Controller
     public function index(): Response
     {
         $clients = Client::query()
-        ->with('repositories')
-        ->withCount('repositories')
-        ->orderBy('name')
-        ->get();
+            ->with('repositories')
+            ->withCount('repositories')
+            ->orderBy('name')
+            ->get();
 
         return inertia('Clients/Index', [
             'clients' => ClientResource::collection($clients),
@@ -37,10 +37,10 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request): RedirectResponse
     {
         $client = Client::create([
-            'name' => $request->name,
+            'name'  => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'ico' => $request->ico,
+            'ico'   => $request->ico,
         ]);
 
         $client->repositories()->sync($request->repositories);
@@ -52,19 +52,23 @@ class ClientController extends Controller
     {
         $client->load('repositories');
 
+        $repositories = Repository::query()
+            ->whereNotIn('id', $client->repositories->pluck('id'))
+            ->get();
+
         return inertia('Clients/Edit', [
             'client' => new ClientResource($client),
-            'repositories' => RepositoryResource::collection(Repository::all()),
+            'repositories' => RepositoryResource::collection($repositories),
         ]);
     }
 
     public function update(UpdateClientRequest $request, Client $client): RedirectResponse
     {
         $client->update([
-            'name' => $request->name,
+            'name'  => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'ico' => $request->ico,
+            'ico'   => $request->ico,
         ]);
 
         $client->repositories()->sync($request->repositories);

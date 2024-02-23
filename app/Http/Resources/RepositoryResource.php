@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Resources\VPSResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RepositoryDatabaseResource;
 
@@ -38,6 +39,8 @@ class RepositoryResource extends JsonResource
             'updated_at' => $this->updated_at,
             'updated_at_human' => Carbon::parse($this->updated_at)->diffForHumans(),
 
+            'client_email' => $this->pivot->client_email ?? null,
+
             'relationships' => [
                 'git' => new GitResource($this->whenLoaded('git')),
 
@@ -46,6 +49,8 @@ class RepositoryResource extends JsonResource
 
                 'database_backups' => RepositoryDatabaseResource::collection($this->whenLoaded('database_backups')),
                 'database_backups_count' => $this->database_backups_count ?? 0,
+
+                'vps' => new VPSResource($this->whenLoaded('vps')),
             ],
         ];
     }

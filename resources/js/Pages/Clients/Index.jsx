@@ -41,21 +41,6 @@ export default function Dashboard({ auth, clients }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="flex justify-between p-5">
-                            <div className=" text-zinc-300">
-                                Přidaní klienti
-                            </div>
-
-                            <div>
-                                <Link
-                                    className="bg-zinc-800 text-zinc-200 text-md uppercase px-3 py-2 rounded-lg hover:bg-zinc-700 faster-animation"
-                                    href={route("clients.create")}
-                                >
-                                    Vytvořit
-                                </Link>
-                            </div>
-                        </div>
-
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                                 <thead className="bg-zinc-950">
@@ -96,7 +81,7 @@ export default function Dashboard({ auth, clients }) {
                                         </th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody className="divide-y divide-zinc-700 bg-zinc-900">
                                     {clients.map((client) => (
                                         <tr
@@ -179,6 +164,16 @@ export default function Dashboard({ auth, clients }) {
                     </div>
                 </div>
             </div>
+
+            <div className="fixed bottom-5 right-5 flex">
+                <Link
+                    href={route('clients.create')}
+                    className="bg-green-500 p-2 rounded-full hover:bg-green-600 faster-animation"
+                >
+                    <PlusIcon className="w-8 h-8 text-white" />
+                </Link>
+            </div>
+
         </AuthenticatedLayout>
     );
 }

@@ -10,21 +10,21 @@ use Illuminate\Http\RedirectResponse;
 
 class ClientRepositoryController extends Controller
 {
-    public function detach(Repository $repository, Client $client): RedirectResponse
+    public function detach(Client $client, Repository $repository): RedirectResponse
     {
         $repository->clients()->detach($client);
 
         return back();
     }
 
-    public function attach(Repository $repository, Client $client): RedirectResponse
+    public function attach(Client $client, Repository $repository): RedirectResponse
     {
         $repository->clients()->attach($client);
 
         return back();
     }
 
-    public function update(Request $request, Repository $repository, Client $client): RedirectResponse
+    public function update(Client $client, Repository $repository, Request $request): RedirectResponse
     {
         $repository->clients()->updateExistingPivot($client, [
             'client_email' => $request->client_email,

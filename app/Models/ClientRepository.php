@@ -12,8 +12,6 @@ class ClientRepository extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = ['client_id', 'repository_id'];
-
     protected $table = 'client_repository';
 
     public $timestamps = false;
@@ -22,6 +20,10 @@ class ClientRepository extends Model
         'client_id',
         'repository_id',
         'client_email',
+
+        'is_update_interested',           // automatically - depends on commit to Git
+        'is_monthly_overview_interested', // automatically - monthly overview
+        'is_database_backup_interested',  // automatically - database backup (daily)
     ];
 
     public function client(): BelongsTo
@@ -33,6 +35,4 @@ class ClientRepository extends Model
     {
         return $this->belongsTo(Repository::class);
     }
-
-
 }

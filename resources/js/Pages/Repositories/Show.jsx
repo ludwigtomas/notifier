@@ -12,6 +12,8 @@ import {
     UsersIcon,
     ShieldCheckIcon,
     ClipboardIcon,
+    ServerIcon,
+    CheckIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
@@ -41,7 +43,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
         }
 
         let backup_code = repository.database_verification_code;
-        let backup_url = 'https://notifier.ludwigtomas.cz/api/repository/' + repository.slug;
+        let backup_url = 'https://notifier.ludwigtomas.cz/api/v1/repositories/' + repository.slug;
 
         let env_code = 'BACKUP_CODE=' + backup_code + '\n' + 'BACKUP_URL=' + backup_url
 
@@ -108,7 +110,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                         <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                     </Link>
 
-                                    <Link
+                                    {/* <Link
                                         as="button"
                                         method="delete"
                                         preserveScroll
@@ -120,7 +122,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                         </span>
 
                                         <TrashIcon className="w-6 h-6 text-red-500" />
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -136,8 +138,18 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div className="col-span-12 mb-20 flex justify-center items-center">
                                 <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
 
-                                    <div className="flex justify-between items-center">
-                                        <div id="header-buttons" className="p-2 flex space-x-2">
+                                    <div className="flex justify-between items-center relative">
+
+                                        <div className="absolute left-1/2 -translate-x-1/2">
+                                            <span className="text-gray-400 mr-4">
+                                                .env
+                                            </span>
+                                            <span className="text-white text-xl font-bold uppercase">
+                                                {repository.name}
+                                            </span>
+                                        </div>
+
+                                        <div className="p-2 flex space-x-2">
                                             <div className="space-x-2">
                                                 <motion.button
                                                     whileHover={{ scale: 1.1 }}
@@ -165,7 +177,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                             </div>
                                         </div>
 
-                                        <div id="header-buttons" className="p-4 flex space-x-2">
+                                        <div className="p-4 flex space-x-2">
                                             <div className="rounded-full w-3 h-3 bg-red-500"></div>
                                             <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
                                             <div className="rounded-full w-3 h-3 bg-green-500"></div>
@@ -187,13 +199,11 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                     <span className="text-blue-400">"</span>
 
                                                     <span className="text-purple-400">
-                                                        { showCode ?
-                                                            (
-                                                                repository.database_verification_code
-                                                            ) : (
-                                                                'xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx'
-                                                            )
-                                                        }
+                                                        { showCode ? (
+                                                            repository.database_verification_code
+                                                        ) : (
+                                                            'xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx'
+                                                        )}
                                                     </span>
 
                                                     <span className="text-blue-400">"</span>
@@ -208,15 +218,12 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                     </span>
                                                     <span className="text-blue-400">"</span>
 
-
                                                     <span className="text-purple-400">
-                                                        { showCode ?
-                                                            (
-                                                                'https://notifier.ludwigtomas.cz/api/repository/' + repository.slug
-                                                            ) : (
-                                                                'https://notifier.ludwigtomas.cz/api/repository/xxxxx-xxxxx'
-                                                            )
-                                                        }
+                                                        { showCode ? (
+                                                            'https://notifier.ludwigtomas.cz/api/v1/repositories/' + repository.slug
+                                                        ) : (
+                                                            'https://notifier.ludwigtomas.cz/api/v1/repositories/xxxxx-xxxxx'
+                                                        )}
                                                     </span>
 
                                                     <span className="text-blue-400">"</span>
@@ -228,7 +235,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
 
                             {/* Last commit */}
-                            <div className="col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
+                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
                                         <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
@@ -243,14 +250,14 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
-                                <div className="text-center space-x-4">
-                                    <div className="text-gray-500 text-xs">
+                                <div className="text-center">
+                                    <h3 className="text-gray-500 text-xs text-center">
                                         {new Date(repository.last_commit_at).toLocaleDateString("cs-CZ", {
                                             day: "2-digit",
                                             month: "2-digit",
                                             year: "numeric",
                                         })}
-                                    </div>
+                                    </h3>
 
                                     <div className="text-gray-200 mt-2">
                                         <h2 className="font-bold text-2xl">
@@ -267,7 +274,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             {/* Database */}
                             <div
                                 onClick={handleShowRepositoryRelation('databases')}
-                                className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
+                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
                                     (showRelationship === 'databases' ? ' border-sky-500' : ' border-transparent')}
                             >
                                 <div className="flex justify-center overflow-hidden">
@@ -298,7 +305,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             {/* Clients */}
                             <div
                                 onClick={handleShowRepositoryRelation('clients')}
-                                className={'col-span-4 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
+                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
                                     (showRelationship === 'clients' ? ' border-sky-500' : ' border-transparent' )}
                             >
                                 <div className="flex justify-center overflow-hidden">
@@ -323,6 +330,35 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                     <span className="text-gray-400 text-xs">
                                         klienti
                                     </span>
+                                </div>
+                            </div>
+
+                            {/* VPS */}
+                            <div
+                                onClick={handleShowRepositoryRelation('vps')}
+                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
+                                    (showRelationship === 'vps' ? ' border-sky-500' : ' border-transparent' )}
+                            >
+                                <div className="flex justify-center overflow-hidden">
+                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            VPS
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                    </div>
+                                </div>
+
+                                <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                                <div className="text-center space-x-4 flex items-center justify-center ">
+                                    {repository.relationships.vps ? (
+                                        <span className="bg-green-500 animate-pulse p-3 rounded-full"/>
+                                    ) : (
+                                        <span className="bg-red-500 animate-pulse p-3 rounded-full"/>
+                                    )}
                                 </div>
                             </div>
                         </div>

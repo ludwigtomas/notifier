@@ -71,6 +71,15 @@ export default function Authenticated({ user, header, children }) {
                                 </NavLink>
 
                                 <NavLink
+                                    href={route("vps.index")}
+                                    active={route().current("vps.*")}
+                                    className="gap-4"
+                                >
+                                    <UsersIcon className="w-6 h-6 text-sky-500"/>
+
+                                    VPS
+                                </NavLink>
+                                {/* <NavLink
                                     href={route("clients.index")}
                                     active={route().current("clients.*")}
                                     className="gap-4"
@@ -88,7 +97,7 @@ export default function Authenticated({ user, header, children }) {
                                     <TableCellsIcon className="w-6 h-6 text-sky-500"/>
 
                                     Templates
-                                </NavLink>
+                                </NavLink> */}
                             </div>
                         </div>
 

@@ -75,7 +75,7 @@ export default function Edit({ auth, repository, clients }) {
                                     <EyeIcon className="w-6 h-6 text-sky-500" />
                                 </Link>
 
-                                <Link
+                                {/* <Link
                                     as="button"
                                     method="delete"
                                     preserveScroll
@@ -87,7 +87,7 @@ export default function Edit({ auth, repository, clients }) {
                                     </span>
 
                                     <TrashIcon className="w-6 h-6 text-red-500" />
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                     </div>
@@ -99,15 +99,22 @@ export default function Edit({ auth, repository, clients }) {
             <div className="py-12">
                 <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryInformationForm repository={repository}/>
+                        <UpdateRepositoryInformationForm
+                            repository={repository}
+                        />
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryDetachClientsForm repository={repository}/>
+                        <UpdateRepositoryDetachClientsForm
+                            repository={repository}
+                        />
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryAttachClientsForm repository={repository} clients={clients}/>
+                        <UpdateRepositoryAttachClientsForm
+                            repository={repository}
+                            clients={clients}
+                        />
                     </div>
                 </div>
             </div>

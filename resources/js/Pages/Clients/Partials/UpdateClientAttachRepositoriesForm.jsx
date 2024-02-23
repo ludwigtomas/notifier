@@ -11,17 +11,17 @@ import {
     UserIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Show({ clients, repository, className = "" }) {
+export default function Show({ client, repositories, className = "" }) {
 
     const { data, setData, put, processing, errors } = useForm({
-        clients: []
+        repositories: []
     });
 
 
     const attachClientSubmit = (e) => {
         e.preventDefault();
 
-        put(route('client.repository.attach', repository.id));
+        put(route('client.repository.attach', client.id));
 
     }
 
@@ -29,20 +29,23 @@ export default function Show({ clients, repository, className = "" }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-100">
-                    Unattached Clients
+                    Attach new <b>Repositories</b>
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">
-                    Here you can see all unattached clients to this repository.
+                    Here you can see all unattached repositories to this client.
                 </p>
             </header>
 
-            <form onSubmit={attachClientSubmit} className="mt-6 grid grid-cols-12 gap-5">
-                {clients.map((client) => {
+            <form
+                onSubmit={attachClientSubmit}
+                className="mt-6 grid grid-cols-12 gap-5"
+            >
+                {repositories.map((repository) => {
                     return (
                         <div
                             className="col-span-12 sm:col-span-6 lg:col-span-4"
-                            key={client.id}
+                            key={repository.id}
                         >
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
                                 <div className="flex items-center space-x-4">
@@ -52,11 +55,11 @@ export default function Show({ clients, repository, className = "" }) {
 
                                     <div>
                                         <h3 className="text-lg font-semibold text-gray-100">
-                                            {client.name}
+                                            {repository.name}
                                         </h3>
 
                                         <p className="mt-1 text-sm text-gray-400">
-                                            {client.email}
+                                            {repository.email}
                                         </p>
                                     </div>
                                 </div>

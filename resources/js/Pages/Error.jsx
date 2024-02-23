@@ -1,4 +1,4 @@
-export default function Show({ auth, status }) {
+export default function Error({ auth, status }) {
 
     return (
         <Layout>

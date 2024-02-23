@@ -27,7 +27,7 @@ class StoreClientRequest extends FormRequest
             'phone'          => ['nullable', 'string', 'max:255'],
             'ico'            => ['nullable', 'integer', 'unique:clients,ico'],
             'repositories'   => ['nullable', 'array'],
-            'repositories.*' => ['integer', 'exists:repositories,id'],
+            'repositories.*.id' => ['integer', 'exists:repositories,id'],
         ];
     }
 

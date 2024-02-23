@@ -15,6 +15,9 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { useState } from 'react';
+import UpdateClientInformationForm from "@/Pages/Clients/Partials/UpdateClientInformationForm";
+import UpdateClientDetachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientDetachRepositoriesForm";
+import UpdateClientAttachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientAttachRepositoriesForm";
 
 export default function Edit({ auth, client, repositories }) {
 
@@ -68,10 +71,21 @@ export default function Edit({ auth, client, repositories }) {
                     </span>
 
                     <Link
-                        className="font-semibold text-lg leading-tight text-sky-500"
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
                         href={route("clients.edit", client.id)}
                     >
                         {client.name}
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500"
+                        href={route("clients.edit", client.id)}
+                    >
+                        Edit
                     </Link>
                 </header>
             }
@@ -79,7 +93,27 @@ export default function Edit({ auth, client, repositories }) {
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateClientInformationForm
+                            client={client}
+                        />
+                    </div>
+
+                   <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateClientDetachRepositoriesForm
+                            client={client}
+                        />
+                    </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateClientAttachRepositoriesForm
+                            client={client}
+                            repositories={repositories}
+                        />
+                    </div>
+                </div>
+                {/* <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-xl">
                         <form
                             onSubmit={submit}
@@ -236,7 +270,7 @@ export default function Edit({ auth, client, repositories }) {
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> */}
             </div>
         </AuthenticatedLayout>
     );

@@ -30,21 +30,27 @@ const Trigger = ({ children }) => {
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'p-1 bg-zinc-900 border border-zinc-700', children }) => {
+const Content = ({ align = 'right', width = '48', direction = '', contentClasses = 'p-1 bg-zinc-900 border border-zinc-700', children }) => {
     const { open, setOpen } = useContext(DropDownContext);
 
-    let alignmentClasses = 'origin-top';
+    let alignmentClasses = 'origin-bottom';
 
     if (align === 'left') {
-        alignmentClasses = 'ltr:origin-top-left rtl:origin-top-right start-0';
+        alignmentClasses = 'ltr:origin-bottom-left rtl:origin-bottom-right start-0';
     } else if (align === 'right') {
-        alignmentClasses = 'ltr:origin-top-right rtl:origin-top-left end-0';
+        alignmentClasses = 'ltr:origin-bottom-right rtl:origin-bottom-left end-0';
     }
 
     let widthClasses = '';
 
     if (width === '48') {
         widthClasses = 'w-48';
+    }
+
+    let directionClasses = 'mt-2';
+
+    if (direction === 'up') {
+        directionClasses = 'bottom-full mb-2';
     }
 
     return (
@@ -60,7 +66,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'p-1 bg-zinc-
                 leaveTo="opacity-0 scale-95"
             >
                 <div
-                    className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
+                    className={`absolute z-50 rounded-md shadow-lg ${alignmentClasses} ${widthClasses} ${directionClasses}`}
                     onClick={() => setOpen(false)}
                 >
                     <div className={`rounded-md ring-1 ring-black ring-opacity-5 overflow-hidden ` + contentClasses}>{children}</div>

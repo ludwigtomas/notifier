@@ -3,10 +3,21 @@ import { Head } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
 import InputError from "@/Components/InputError";
-import { useForm } from "@inertiajs/react";
+import { useForm, Link } from "@inertiajs/react";
 import PrimaryButton from "@/Components/PrimaryButton";
-
-export default function Dashboard({ auth, repositories }) {
+import {
+    TrashIcon,
+    EyeIcon,
+    PlusIcon,
+    ChevronRightIcon,
+    ArchiveBoxIcon,
+    XMarkIcon,
+    UsersIcon,
+} from "@heroicons/react/24/outline";
+export default function Dashboard({
+    auth,
+    repositories
+}) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         email: "",
@@ -21,171 +32,218 @@ export default function Dashboard({ auth, repositories }) {
         post(route("clients.store"));
     };
 
+    const handleRepositories = (repositoryId) => {
+        if (data.repositories.includes(repositoryId)) {
+            setData("repositories", data.repositories.filter((id) => id !== repositoryId));
+        } else {
+            setData("repositories", [...data.repositories, repositoryId]);
+        }
+    }
+
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
+                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("dashboard.index")}
+                    >
+                        Dashboard
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("clients.index")}
+                    >
+                        Klienti
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500 slower-animation"
+                        href={route("clients.create")}
+                    >
+                        Vytvořit
+                    </Link>
+
+                </header>
             }
         >
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
 
-                            <form
-                                onSubmit={submit}
-                                className="grid grid-cols-12"
-                            >
-                                <div className="col-span-8">
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="name"
-                                            value="name"
-                                        />
+                        <header>
+                            <h1 className="text-center text-xl font-bold text-gray-200">
+                                Vytvořit klienta
+                            </h1>
+                        </header>
 
-                                        <TextInput
-                                            id="name"
-                                            type="text"
-                                            name="name"
-                                            value={data.name}
-                                            autoComplete="name"
-                                            className="mt-1 block w-full"
-                                            onChange={(e) =>
-                                                setData("name", e.target.value)
-                                            }
-                                        />
+                        <form
+                            onSubmit={submit}
+                            className="mt-6 grid grid-cols-12 gap-10 items-start"
+                        >
+                            <div className="col-span-7 flex flex-col space-y-4 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                                <div>
+                                    <InputLabel
+                                        isRequired
+                                        htmlFor="name"
+                                        value="name"
+                                    />
 
-                                        <InputError
-                                            message={errors.name}
-                                            htmlFor="name"
-                                        />
-                                    </div>
+                                    <TextInput
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        placeholder="Tomáš Ludwig"
+                                        value={data.name}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("name", e.target.value)}
+                                    />
 
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="email"
-                                            value="email"
-                                        />
-
-                                        <TextInput
-                                            id="email"
-                                            type="email"
-                                            name="email"
-                                            value={data.email}
-                                            autoComplete="email"
-                                            className="mt-1 block w-full"
-                                            onChange={(e) =>
-                                                setData("email", e.target.value)
-                                            }
-                                        />
-
-                                        <InputError
-                                            message={errors.email}
-                                            htmlFor="email"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="phone"
-                                            value="phone"
-                                        />
-
-                                        <TextInput
-                                            id="phone"
-                                            type="text"
-                                            name="phone"
-                                            value={data.phone}
-                                            autoComplete="phone"
-                                            className="mt-1 block w-full"
-                                            onChange={(e) =>
-                                                setData("phone", e.target.value)
-                                            }
-                                        />
-
-                                        <InputError
-                                            message={errors.phone}
-                                            htmlFor="phone"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="ico"
-                                            value="ico"
-                                        />
-
-                                        <TextInput
-                                            id="ico"
-                                            type="text"
-                                            name="ico"
-                                            value={data.ico}
-                                            autoComplete="given-name"
-                                            className="mt-1 block w-full"
-                                            onChange={(e) =>
-                                                setData("ico", e.target.value)
-                                            }
-                                        />
-
-                                        <InputError
-                                            message={errors.ico}
-                                            htmlFor="ico"
-                                        />
-                                    </div>
+                                    <InputError
+                                        message={errors.name}
+                                        htmlFor="name"
+                                    />
                                 </div>
 
-                                <div className="col-span-4">
-                                    <div>
-                                        <InputLabel
-                                            htmlFor="repositories"
-                                            value="repositories"
-                                        />
+                                <div>
+                                    <InputLabel
+                                        htmlFor="email"
+                                        value="email"
+                                    />
 
-                                        {repositories.map((repository) => (
-                                            <div
-                                                className="flex items-center gap-x-2"
-                                                key={repository.id}
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    value={repository.id}
-                                                    onChange={(e) => {
-                                                        const repositoryId = e.target.value;
+                                    <TextInput
+                                        id="email"
+                                        type="email"
+                                        name="email"
+                                        placeholder="info@ludwigtomas.cz"
+                                        value={data.email}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("email", e.target.value)}
+                                    />
 
-                                                        if (e.target.checked) {
-                                                            setData("repositories", [ ...data.repositories, repositoryId,]
-                                                            );
-                                                        } else {
-                                                            setData("repositories", data.repositories.filter((id) => id !== repositoryId)
-                                                            );
-                                                        }
+                                    <InputError
+                                        message={errors.email}
+                                        htmlFor="email"
+                                    />
+                                </div>
 
+                                <div>
+                                    <InputLabel
+                                        htmlFor="phone"
+                                        value="phone"
+                                    />
 
-                                                    }}
-                                                />
-                                                <p>{repository.name}</p>
+                                    <TextInput
+                                        id="phone"
+                                        type="text"
+                                        name="phone"
+                                        placeholder="+420 730 681 670"
+                                        value={data.phone}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("phone", e.target.value)}
+                                    />
+
+                                    <InputError
+                                        message={errors.phone}
+                                        htmlFor="phone"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        htmlFor="ico"
+                                        value="ico"
+                                    />
+
+                                    <TextInput
+                                        id="ico"
+                                        type="text"
+                                        name="ico"
+                                        placeholder="19090901"
+                                        value={data.ico}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) => setData("ico", e.target.value)}
+                                    />
+
+                                    <InputError
+                                        message={errors.ico}
+                                        htmlFor="ico"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-span-5 h-[23.1rem] overflow-y-auto pr-4">
+                                <div className="flex flex-col space-y-2">
+                                    {repositories.map((repository) => (
+                                        <div
+                                            className={'flex items-center justify-between rounded-lg p-4 border-2 bg-zinc-800' +
+                                            (data.repositories.includes(repository.id) ? ' border-green-700' : ' border-zinc-700')}
+                                            key={repository.id}
+                                        >
+                                            <div className="flex items-center space-x-4">
+                                                <div className="flex items-center justify-center w-12 h-12 bg-zinc-700 rounded-lg">
+                                                    <ArchiveBoxIcon className="w-6 h-6 text-sky-500" />
+                                                </div>
+
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-gray-100">
+                                                        {repository.name}
+                                                    </h3>
+
+                                                    <p className="mt-1 text-sm text-gray-400">
+                                                        {repository.email}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        ))}
+                                            { data.repositories.includes(repository.id) ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRepositories(repository.id)}
+                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
+                                                >
+                                                    <XMarkIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRepositories(repository.id)}
+                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
+                                                >
+                                                    <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
 
-                                        <InputError
-                                            message={errors.repositories}
-                                            htmlFor="repositories"
-                                        />
-                                    </div>
+                                    <InputError
+                                        message={errors.repositories}
+                                        htmlFor="ico"
+                                    />
                                 </div>
+                            </div>
 
-                                <div className="col-span-12 mt-5 ">
-                                    <PrimaryButton disabled={processing}>
-                                        ADD
-                                    </PrimaryButton>
-                                </div>
-                            </form>
-                        </div>
+                            <div className="col-span-12">
+                                <PrimaryButton
+                                    typeOfButton='submit'
+                                    disabled={processing}
+                                >
+                                    <UsersIcon className="w-6 h-6 mr-4"/>
+                                    Vytvořit
+                                </PrimaryButton>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\GitSeeder;
+use Database\Seeders\VPSSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AdminSeeder;
 use Database\Seeders\ClientSeeder;
@@ -27,8 +28,9 @@ class DatabaseSeeder extends Seeder
 
         if (app()->isLocal()) {
             $this->call([
-                RepositoryDatabaseSeeder::class,
                 ClientRepositorySeeder::class,
+                RepositoryDatabaseSeeder::class,
+                VPSSeeder::class,
             ]);
         }
     }

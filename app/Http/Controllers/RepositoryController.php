@@ -19,7 +19,7 @@ class RepositoryController extends Controller
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with('clients')
+            ->with('clients', 'vps')
             ->withCount('clients', 'database_backups')
             ->when($request->search, function ($query, $search) {
                 $query->where('name', 'like', "%$search%")
@@ -37,6 +37,8 @@ class RepositoryController extends Controller
     public function show(Repository $repository): Response
     {
         $repository->loadCount('clients', 'database_backups');
+
+        $repository->load('vps');
 
         $clients = $repository->clients()->paginate(20);
 

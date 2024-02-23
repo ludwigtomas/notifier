@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\ClientRepository;
+use App\Models\VPS;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
-class ClientRepositorySeeder extends Seeder
+class VPSSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        ClientRepository::factory(100)->create();
+        VPS::factory(100)->create();
     }
 }

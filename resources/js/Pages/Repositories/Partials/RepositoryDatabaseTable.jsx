@@ -51,67 +51,63 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
 
                 {selectedDatabases.length > 0 &&
                     (
-                        <div className="fixed right-10 bottom-40">
-                            <div className="hidden sm:flex sm:items-center sm:ms-6">
-                                <div className="ms-3 relative ">
-                                    <Dropdown>
-                                        <Dropdown.Trigger>
-                                            <div className="flex items-center space-x-2">
-                                                <div className="py-3 px-5 rounded-xl bg-zinc-900 text-white">
-                                                    {selectedDatabases.length}
-                                                </div>
-                                                <div className="group inline-flex rounded-xl bg-sky-500 ">
-                                                    <button
-                                                        type="button"
-                                                        className="px-6 py-3 rounded-md focus:outline-none"
-                                                    >
-                                                        <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
-                                                            Vybráno
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </Dropdown.Trigger>
-
-                                        <Dropdown.Content>
+                        <div className="fixed right-10 bottom-10">
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <div className="flex items-center space-x-2">
+                                        <div className="py-3 px-5 rounded-xl bg-zinc-900 text-white">
+                                            {selectedDatabases.length}
+                                        </div>
+                                        <div className="group inline-flex rounded-xl bg-sky-500 ">
                                             <button
-                                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-red-500 hover:text-red-500"
-                                                onClick={() => setToggleBulkDeleteModal(true)}
+                                                type="button"
+                                                className="px-6 py-3 rounded-md focus:outline-none"
                                             >
-                                                <span className="mr-2">
-                                                    <TrashIcon className="w-6 h-6" />
+                                                <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                                    Vybráno
                                                 </span>
-
-                                                Smazat
                                             </button>
+                                        </div>
+                                    </div>
+                                </Dropdown.Trigger>
 
-                                            <a
-                                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                                                href={route("databases.bulk.download", {databases: selectedDatabases})}
-                                            >
-                                                <span className="mr-2 ">
-                                                    <ArrowDownTrayIcon className="w-6 h-6" />
-                                                </span>
+                                <Dropdown.Content direction="up">
+                                    <button
+                                        className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-red-500 hover:text-red-500"
+                                        onClick={() => setToggleBulkDeleteModal(true)}
+                                    >
+                                        <span className="mr-2">
+                                            <TrashIcon className="w-6 h-6" />
+                                        </span>
 
-                                                Stáhnout
-                                            </a>
+                                        Smazat
+                                    </button>
 
-                                            <button
-                                                className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                                                href={route("profile.edit")}
-                                                onClick={() => setSelectedDatabases([])}
-                                            >
-                                                <span className="mr-2">
-                                                    <BackspaceIcon className="w-6 h-6" />
-                                                </span>
+                                    <a
+                                        className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                        href={route("databases.bulk.download", {databases: selectedDatabases})}
+                                    >
+                                        <span className="mr-2 ">
+                                            <ArrowDownTrayIcon className="w-6 h-6" />
+                                        </span>
 
-                                                Odznačit vše
-                                            </button>
+                                        Stáhnout
+                                    </a>
 
-                                        </Dropdown.Content>
-                                    </Dropdown>
-                                </div>
-                            </div>
+                                    <button
+                                        className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                        href={route("profile.edit")}
+                                        onClick={() => setSelectedDatabases([])}
+                                    >
+                                        <span className="mr-2">
+                                            <BackspaceIcon className="w-6 h-6" />
+                                        </span>
+
+                                        Odznačit vše
+                                    </button>
+
+                                </Dropdown.Content>
+                            </Dropdown>
                         </div>
                     )
                 }
@@ -119,7 +115,6 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                 <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                     <thead className="bg-zinc-950">
                         <tr>
-
                             <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
@@ -286,7 +281,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
             >
                     <div className="p-4 flex flex-col space-y-4">
                         <h2 className="text-2xl font-medium text-gray-800 text-center">
-                            Hodláš se smazat vybrané databáze
+                            Smazat vybrané databáze
                         </h2>
 
                         <div className="my-4 space-y-1 text-center">
@@ -295,7 +290,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                             </p>
 
                             <p className="text-sm text-gray-600">
-                                Celkem se smaže <span className="font-bold text-lg mx-1">{selectedDatabases.length}</span> databází
+                                Celkem se smaže <span className="font-bold text-lg mx-1">{selectedDatabases.length}</span> databází.
                             </p>
                         </div>
 

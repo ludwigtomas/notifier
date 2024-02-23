@@ -20,13 +20,13 @@ export default function Show({ repository, className = "" }) {
     const detachSubmit = (e) => {
         e.preventDefault();
 
-        delete(route('repository.clients.detach', repository.id));
+        delete(route('client.repository.detach', repository.id));
     };
 
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('repository.clients.update', [repository.id, selectedClient]), {
+        patch(route('client.repository.update', [repository.id, selectedClient]), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedClient(null);
@@ -82,13 +82,9 @@ export default function Show({ repository, className = "" }) {
                                                 />
                                             </>
                                         ) : (
-                                            <TextInput
-                                                id="client_email"
-                                                type="text"
-                                                disabled
-                                                value={client.client_email ?? "undefined"}
-                                                className="mt-1 block w-full cursor-not-allowed bg-zinc-700/40 border-zinc-800 !text-gray-400"
-                                            />
+                                            <p className="mt-1 text-sm text-gray-400">
+                                                {client.client_email ?? "--"}
+                                            </p>
                                         )}
                                     </div>
                                 </div>
@@ -96,7 +92,7 @@ export default function Show({ repository, className = "" }) {
                                 <div className="flex flex-col space-y-2">
                                     {selectedClient === client.id ? (
                                         <>
-                                             <button
+                                            <button
                                                 type="button"
                                                 onClick={() => setSelectedClient(null)}
                                                 className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
@@ -130,7 +126,7 @@ export default function Show({ repository, className = "" }) {
                                                     method="DELETE"
                                                     preserveScroll
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('repository.clients.detach', {repository: repository.id, client: client.id})}
+                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
                                                 >
                                                     <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
                                                 </Link>

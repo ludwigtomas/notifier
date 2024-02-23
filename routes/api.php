@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RepositoryDatabaseController;
+use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-route::post('/repository/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
+route::post('/v1/repositories/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');

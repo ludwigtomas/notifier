@@ -1,17 +1,15 @@
 <?php
 
-use App\Mail\DatabaseRepositoryMail;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\VPSController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RepositoryClientAttachController;
 use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
 use App\Http\Controllers\RepositoryClientDetachController;
 
@@ -53,9 +51,11 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
     });
 
-    route::delete('/repository/{repository}/client/{client}/detach', [ClientRepositoryController::class, 'detach'])->name('repository.clients.detach');
-    route::post('/repository/{repository}/client/{client}/attach',  [ClientRepositoryController::class, 'attach'])->name('repository.clients.attach');
-    route::patch('/repository/{repository}/client/{client}/update',  [ClientRepositoryController::class, 'update'])->name('repository.clients.update');
+    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
+        route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
+        route::post('attach',  [ClientRepositoryController::class, 'attach'])->name('attach');
+        route::patch('update',  [ClientRepositoryController::class, 'update'])->name('update');
+    });
 
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
         route::get('/', [ClientController::class, 'index'])->name('index');
@@ -73,9 +73,11 @@ route::middleware('auth:sanctum')->group(function () {
 
         route::delete('/bulk/destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
         route::get('/bulk', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
-        //* STORE REQUEST is in api.php
+        //* STORE ---> api.php
     });
 
+
+    //! MBY DELETE ALSO
     route::group(['prefix' => '/dashboard/templates', 'as' => 'templates.'], function () {
         route::get('/', [TemplateController::class, 'index'])->name('index');
         route::get('/create', [TemplateController::class, 'create'])->name('create');
@@ -85,6 +87,13 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{template}', [TemplateController::class, 'update'])->name('update');
         route::delete('/{template}', [TemplateController::class, 'destroy'])->name('destroy');
     });
+
+    route::group(['prefix' => '/dashboard/vps', 'as' => 'vps.'], function () {
+        route::get('/', [VPSController::class, 'index'])->name('index');
+        route::get('/create', [VPSController::class, 'create'])->name('create');
+
+    });
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -93,7 +102,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-route::get('/test', [TestController::class, 'index']);
-
 
 require __DIR__ . '/auth.php';
+
+
+// DELETE IN PRODUCTION
+if(app()->isLocal()){
+    route::get('/test', [TestController::class, 'index']);
+}

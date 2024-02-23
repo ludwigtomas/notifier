@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
         if (app()->isProduction()) {
             User::create([
                 'name' => 'Ludwig Tomas',
-                'email' => 'ludwigtom@seznam.cz',
+                'email' => 'info@ludwigtomas.cz',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$L3BkZ54/462S3LaTIhatauhdKsGBg5/7JivXfMY0mQo5qq94GfBMO',
             ]);

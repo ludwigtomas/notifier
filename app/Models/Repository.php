@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Repository extends Model
@@ -33,7 +34,16 @@ class Repository extends Model
 
         'updated_at',                  // automatically - api
         'created_at',                  // automatically - api
+
+        'subscription_to',
+        
     ];
+
+
+    public function vps(): HasOne
+    {
+        return $this->hasOne(VPS::class);
+    }
 
     public function git(): BelongsTo
     {

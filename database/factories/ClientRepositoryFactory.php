@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Client;
 use App\Models\Repository;
+use App\Models\ClientRepository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -11,11 +12,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ClientRepositoryFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = ClientRepository::class;
+
     public function definition(): array
     {
         return [

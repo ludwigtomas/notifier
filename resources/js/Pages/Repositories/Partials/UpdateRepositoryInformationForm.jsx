@@ -4,9 +4,10 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { ClockIcon } from "@heroicons/react/24/outline";
+import Dropdown from "@/Components/Dropdown";
+import { TrashIcon } from "@heroicons/react/24/outline";
 
-
-export default function UpdateRepositoryInformationForm({repository, className = "" }) {
+export default function UpdateRepositoryInformationForm({repository, className = ''}) {
 
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
         analytics_property_id: repository.analytics_property_id ?? '',
@@ -25,9 +26,14 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
     return (
         <section className={className}>
+            {/* HEADER */}
             <header>
+                <h1 className="text-center text-xl font-bold text-gray-200">
+                    {repository.name}
+                </h1>
+
                 <h2 className="text-lg font-medium text-gray-100">
-                    Repository Information
+                    Repository edit
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">
@@ -35,8 +41,88 @@ export default function UpdateRepositoryInformationForm({repository, className =
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 grid grid-cols-12 gap-5 items-start">
-                <div className="col-span-7 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+            {/* FORM */}
+            <form
+                onSubmit={submit}
+                className="mt-6 grid grid-cols-12 gap-5 items-start"
+            >
+                <div className="col-span-12 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                    <div className="grid grid-cols-4">
+                        <div className="flex flex-col items-center justify-center space-y-2">
+                            <div>
+                                <ClockIcon className="w-7 h-7 text-sky-500" />
+                            </div>
+
+                            <div className="text-center">
+                                <p className="text-white">
+                                    Vytvořeno
+                                </p>
+
+                                <p className="flex items-start -mx-2">
+                                    <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                        {repository.created_at_human}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center space-y-2">
+                            <div>
+                                <ClockIcon className="w-7 h-7 text-sky-500" />
+                            </div>
+
+                            <div className="text-center">
+                                <p className="text-white">
+                                    Aktualizováno
+                                </p>
+
+                                <p className="flex items-start -mx-2">
+                                    <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                        {repository.updated_at_human}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center space-y-2">
+                            <div>
+                                <ClockIcon className="w-7 h-7 text-sky-500" />
+                            </div>
+
+                            <div className="text-center">
+                                <p className="text-white">
+                                    Repozitář vytvořen
+                                </p>
+
+                                <p className="flex items-start -mx-2">
+                                    <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                        {repository.repository_created_at_human}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center space-y-2">
+                            <div>
+                                <ClockIcon className="w-7 h-7 text-sky-500" />
+                            </div>
+
+                            <div className="text-center">
+                                <p className="text-white">
+                                    last_commit_at
+                                </p>
+
+                                <p className="flex items-start -mx-2">
+                                    <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
+                                        {repository.last_commit_at_human}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-span-6 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
                             htmlFor="analytics_property_id"
@@ -123,66 +209,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                     </div>
                 </div>
 
-                <div className="col-span-5 space-y-5 ">
-                    <div className="border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                        <div className="grid grid-cols-3 ">
-                            <div className="flex flex-col items-center justify-center space-y-2">
-                                <div>
-                                    <ClockIcon className="w-7 h-7 text-sky-500" />
-                                </div>
-
-                                <div className="text-center">
-                                    <p className="text-white">
-                                        Vytvořeno
-                                    </p>
-
-                                    <p className="flex items-start -mx-2">
-                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
-                                            {repository.created_at_human}
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col items-center justify-center space-y-2">
-                                <div>
-                                    <ClockIcon className="w-7 h-7 text-sky-500" />
-                                </div>
-
-                                <div className="text-center">
-                                    <p className="text-white">
-                                        Aktualizováno
-                                    </p>
-
-                                    <p className="flex items-start -mx-2">
-                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
-                                            {repository.updated_at_human}
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col items-center justify-center space-y-2">
-                                <div>
-                                    <ClockIcon className="w-7 h-7 text-sky-500" />
-                                </div>
-
-                                <div className="text-center">
-                                    <p className="text-white">
-                                        Repoziář vytvořen
-                                    </p>
-
-                                    <p className="flex items-start -mx-2">
-                                        <span className="mx-2 text-gray-700 truncate w-72 dark:text-gray-400">
-                                            {repository.repository_created_at_human}
-                                        </span>
-                                    </p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
+                <div className="col-span-6 space-y-5 ">
                     <div className="border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                         <div className="grid grid-cols-1 gap-y-4">
 
@@ -255,6 +282,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                 <div className="col-span-12 flex items-center space-x-4">
                     <div>
                         <PrimaryButton
+                            typeOfButton="submit"
                             className="w-full"
                             disabled={processing}
                         >
@@ -280,6 +308,48 @@ export default function UpdateRepositoryInformationForm({repository, className =
                     </div>
                 </div>
             </form>
+
+            {/* Another options */}
+            <div className="fixed right-10 bottom-10">
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <div className="flex items-center space-x-2">
+                            <div className="group inline-flex rounded-xl bg-sky-500 ">
+                                <button
+                                    type="button"
+                                    className="px-6 py-3 rounded-md focus:outline-none"
+                                >
+                                    <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                        Další možnosti
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content direction="up">
+                        <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                            Odeslání emailu
+                        </h3>
+
+                        <button
+                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                        >
+                            Last Commit
+                        </button>
+
+                        <button
+                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                        >
+                            Google analytics
+
+                        </button>
+
+                    </Dropdown.Content>
+                </Dropdown>
+
+            </div>
+
         </section>
     );
 }
