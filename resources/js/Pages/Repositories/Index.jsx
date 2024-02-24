@@ -82,7 +82,7 @@ export default function Index({ auth, repositories, filters }) {
 
             {/* TABLE */}
             <div className="py-12">
-                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-[95rem] mx-auto sm:px-6 lg:px-8">
 
                     <div className="mb-2">
                         <TextInput

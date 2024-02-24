@@ -4,7 +4,7 @@ The Notifier
 
 ## Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
-catch updates pushed into Gitlab and depending on this, send email to "client". 
+catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
 
 
 ## Requirements
@@ -24,7 +24,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client".
 
 ## Project setup
 
-1. Download project form Gitlab
+1. Download project from Gitlab
 ```sh
 git clone https://gitlab.com/bubak1/portfolio/the-notifier.git
 ```
