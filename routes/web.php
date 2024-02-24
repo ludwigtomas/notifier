@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
-use App\Http\Controllers\VPSController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HostingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
@@ -76,22 +76,12 @@ route::middleware('auth:sanctum')->group(function () {
         //* STORE ---> api.php
     });
 
-
-    //! MBY DELETE ALSO
-    route::group(['prefix' => '/dashboard/templates', 'as' => 'templates.'], function () {
-        route::get('/', [TemplateController::class, 'index'])->name('index');
-        route::get('/create', [TemplateController::class, 'create'])->name('create');
-        route::post('/', [TemplateController::class, 'store'])->name('store');
-        route::get('/{template}', [TemplateController::class, 'show'])->name('show');
-        route::get('/{template}/edit', [TemplateController::class, 'edit'])->name('edit');
-        route::put('/{template}', [TemplateController::class, 'update'])->name('update');
-        route::delete('/{template}', [TemplateController::class, 'destroy'])->name('destroy');
-    });
-
-    route::group(['prefix' => '/dashboard/vps', 'as' => 'vps.'], function () {
-        route::get('/', [VPSController::class, 'index'])->name('index');
-        route::get('/create', [VPSController::class, 'create'])->name('create');
-
+    route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function () {
+        route::get('/', [HostingController::class, 'index'])->name('index');
+        route::get('/create', [HostingController::class, 'create'])->name('create');
+        route::post('/', [HostingController::class, 'store'])->name('store');
+        route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
+        route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
     });
 
 });

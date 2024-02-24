@@ -333,18 +333,17 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 </div>
                             </div>
 
-                            {/* VPS */}
                             <div
-                                onClick={handleShowRepositoryRelation('vps')}
+                                onClick={handleShowRepositoryRelation('hosting')}
                                 className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'vps' ? ' border-sky-500' : ' border-transparent' )}
+                                    (showRelationship === 'hosting' ? ' border-sky-500' : ' border-transparent' )}
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
                                         <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
 
                                         <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            VPS
+                                            hosting
                                         </span>
 
                                         <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
@@ -354,7 +353,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
                                 <div className="text-center space-x-4 flex items-center justify-center ">
-                                    {repository.relationships.vps ? (
+                                    {repository.relationships.hosting ? (
                                         <span className="bg-green-500 animate-pulse p-3 rounded-full"/>
                                     ) : (
                                         <span className="bg-red-500 animate-pulse p-3 rounded-full"/>

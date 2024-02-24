@@ -10,6 +10,8 @@ import {
 import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
 import UpdateRepositoryDetachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryDetachClientsForm";
 import UpdateRepositoryAttachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryAttachClientsForm";
+import UpdateRepositoryHostingForm from "@/Pages/Repositories/Partials/UpdateRepositoryHostingForm";
+import CreateRepositoryHostingForm from "@/Pages/Repositories/Partials/CreateRepositoryHostingForm";
 
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 
@@ -116,6 +118,15 @@ export default function Edit({ auth, repository, clients }) {
                             clients={clients}
                         />
                     </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        {repository.relationships.hosting ? (
+                            <UpdateRepositoryHostingForm repository={repository}/>
+                        ) : (
+                            <CreateRepositoryHostingForm repository={repository}/>
+                        )}
+                    </div>
+
                 </div>
             </div>
         </AuthenticatedLayout>

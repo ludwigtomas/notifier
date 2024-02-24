@@ -15,6 +15,7 @@ export default function Show({ repository, className = "" }) {
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         client_email: "",
+        relationship: "repository_client",
     });
 
     const detachSubmit = (e) => {
@@ -39,7 +40,7 @@ export default function Show({ repository, className = "" }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-100">
-                    Attached Clients
+                    Detach Clients
                 </h2>
 
                 <p className="maxmt-1 text-sm text-gray-400">
@@ -61,9 +62,12 @@ export default function Show({ repository, className = "" }) {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-100">
+                                        <Link
+                                            href={route('clients.show', client.id)}
+                                            className="text-lg font-semibold text-gray-100"
+                                        >
                                             {client.name}
-                                        </h3>
+                                        </Link>
 
                                         <p className="mt-1 text-sm text-gray-400">
                                             {client.email ?? "N/A"}

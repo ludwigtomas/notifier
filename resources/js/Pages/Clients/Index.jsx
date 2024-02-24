@@ -1,15 +1,58 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import {
     PencilSquareIcon,
     TrashIcon,
     EyeIcon,
     PlusIcon,
+    CheckIcon,
     XMarkIcon,
     ChevronRightIcon,
+    LinkIcon,
+    ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import Modal from "@/Components/Modal";
+import DangerButton from "@/Components/DangerButton";
+import TextInput from "@/Components/TextInput";
+import SecondaryButton from "@/Components/SecondaryButton";
+import Pagination from "@/Components/Pagination";
+import debounce from 'lodash/debounce';
 
-export default function Dashboard({ auth, clients }) {
+export default function Index({ auth, clients, filters }) {
+    const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
+    const [selectedClient, setSelectedClient] = useState(null);
+    const [search, setSearch] = useState(filters.search ?? "");
+
+    // catch client into variable
+    const toggleModal = (client) => {
+        setSelectedClient(client);
+
+        setToggleDeleteModal(true);
+    };
+
+    const closeModal = () => {
+        setToggleDeleteModal(false);
+    };
+
+    const deleteClient = () => {
+        let url = route("clients.destroy", selectedClient.id);
+
+        router.delete(url, {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+        })
+    }
+
+    const debouncedSearch = debounce((value) => {
+        router.get(route('clients.index'), {
+            search: value
+        }, {
+            preserveScroll: true,
+            preserveState: true,
+        })
+    }, 100);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -40,6 +83,22 @@ export default function Dashboard({ auth, clients }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+                    <div className="mb-2">
+                        <TextInput
+                            label="Hledat"
+                            name="search"
+                            placeholder="Hledat klienta"
+                            type="text"
+                            className="w-72"
+                            value={search}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                                debouncedSearch(e.target.value);
+                            }}
+                        />
+                    </div>
+
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
@@ -83,7 +142,7 @@ export default function Dashboard({ auth, clients }) {
                                 </thead>
 
                                 <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                    {clients.map((client) => (
+                                    {clients.data.map((client) => (
                                         <tr
                                             key={client.id}
                                             className="group hover:bg-zinc-800"

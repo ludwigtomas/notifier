@@ -19,11 +19,11 @@ class RepositoryController extends Controller
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with('clients', 'vps')
-            ->withCount('clients', 'database_backups')
+            ->with('clients')
+            ->withCount('clients', 'database_backups', 'hosting')
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhere('slug', 'like', "%$search%");
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('slug', 'like', '%' . $search . '%');
             })
             ->orderBy('last_commit_at', 'desc')
             ->paginate(10);
@@ -58,7 +58,7 @@ class RepositoryController extends Controller
             ->get();
 
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository->load('clients')),
+            'repository' => new RepositoryResource($repository->load('clients', 'hosting')),
             'clients' => ClientResource::collection($clients),
         ]);
     }

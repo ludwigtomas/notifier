@@ -14,16 +14,21 @@ use App\Models\Repository;
 
 class ClientController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $clients = Client::query()
             ->with('repositories')
             ->withCount('repositories')
+            ->when($request->search, function ($query, $search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            })
             ->orderBy('name')
-            ->get();
+            ->paginate(10);
 
         return inertia('Clients/Index', [
             'clients' => ClientResource::collection($clients),
+            'filters' => $request->only('search')
         ]);
     }
 

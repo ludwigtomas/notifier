@@ -12,6 +12,7 @@ import {
     CircleStackIcon,
     TableCellsIcon,
     CogIcon,
+    ServerStackIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
@@ -47,7 +48,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     <BugAntIcon className="w-6 h-6 text-sky-500"/>
 
-                                    Gits
+                                    Git
                                 </NavLink>
 
                                 <NavLink
@@ -57,7 +58,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     <ArchiveBoxIcon className="w-6 h-6 text-sky-500"/>
 
-                                    Respositories
+                                    Repozitáři
                                 </NavLink>
 
                                 <NavLink
@@ -67,17 +68,17 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     <UsersIcon className="w-6 h-6 text-sky-500"/>
 
-                                    Clients
+                                    Klienti
                                 </NavLink>
 
                                 <NavLink
-                                    href={route("vps.index")}
-                                    active={route().current("vps.*")}
+                                    href={route("hostings.index")}
+                                    active={route().current("hostings.*")}
                                     className="gap-4"
                                 >
-                                    <UsersIcon className="w-6 h-6 text-sky-500"/>
+                                    <ServerStackIcon className="w-6 h-6 text-sky-500"/>
 
-                                    VPS
+                                    Hostingy
                                 </NavLink>
                                 {/* <NavLink
                                     href={route("clients.index")}

@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class VPS extends Model
+class Hosting extends Model
 {
     use HasFactory;
-
-    protected $table = 'vps';
 
     protected $fillable = [
         'id',

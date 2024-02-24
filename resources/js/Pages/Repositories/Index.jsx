@@ -17,7 +17,6 @@ import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import debounce from 'lodash/debounce';
-
 import { useState } from "react";
 
 export default function Index({ auth, repositories, filters }) {
@@ -130,6 +129,13 @@ export default function Index({ auth, repositories, filters }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
                                         >
+                                            Hosting
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
+                                        >
                                             Analytics
                                         </th>
 
@@ -228,6 +234,16 @@ export default function Index({ auth, repositories, filters }) {
                                                                 <XMarkIcon className="text-red-500 w-6 h-6" />
                                                             </div>
                                                         )}
+                                                    </div>
+                                                </td>
+
+                                                <td className="px-4 py-4">
+                                                    <div className="flex items-center justify-center">
+                                                        <div className={'p-2 rounded-xl ' + (
+                                                            repository.relationships.hosting_count >= 1  ? 'bg-green-950' : 'bg-red-950'
+                                                        )}>
+                                                            {repository.relationships.hosting_count >= 1 ? <CheckIcon className="w-6 h-6 text-green-500"/> : <XMarkIcon className="text-red-500 w-6 h-6" />}
+                                                        </div>
                                                     </div>
                                                 </td>
 

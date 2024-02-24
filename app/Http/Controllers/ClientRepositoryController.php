@@ -24,11 +24,19 @@ class ClientRepositoryController extends Controller
         return back();
     }
 
-    public function update(Client $client, Repository $repository, Request $request): RedirectResponse
+    public function update(Client $client, Repository $repository, UpdateClientRepositoryRequest $request): RedirectResponse
     {
-        $repository->clients()->updateExistingPivot($client, [
-            'client_email' => $request->client_email,
-        ]);
+        if ($request->relationship === 'repository_client') {
+            $repository->clients()->updateExistingPivot($client, [
+                'client_email' => $request->client_email,
+            ]);
+        }
+
+        if ($request->relationship === 'client_repository') {
+            $client->repositories()->updateExistingPivot($repository, [
+                'client_email' => $request->client_email,
+            ]);
+        }
 
         return back();
     }

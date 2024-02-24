@@ -36,13 +36,12 @@ class Repository extends Model
         'created_at',                  // automatically - api
 
         'subscription_to',
-        
+
     ];
 
-
-    public function vps(): HasOne
+    public function hosting(): HasOne
     {
-        return $this->hasOne(VPS::class);
+        return $this->hasOne(Hosting::class);
     }
 
     public function git(): BelongsTo

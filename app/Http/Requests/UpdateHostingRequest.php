@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateClientRepositoryRequest extends FormRequest
+class UpdateHostingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,12 @@ class UpdateClientRepositoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'relationship' => ['required', 'string', 'in:repository_client,client_repository'],
-            'client_email' => ['required', 'email'],
+            'name' => ['nullable', 'string', 'max:255'],
+            'hosting' => ['nullable', 'string', 'max:255'],
+            'ip_address' => ['nullable', 'string', 'max:255'],
+            'ip_port' => ['nullable', 'string', 'max:255'],
+            'login_user' => ['nullable', 'string', 'max:255'],
+            'login_password' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

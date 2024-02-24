@@ -2,19 +2,17 @@
 
 namespace Database\Factories;
 
+use App\Models\Hosting;
 use App\Models\Repository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VPS>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Hosting>
  */
-class VPSFactory extends Factory
+class HostingFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Hosting::class;
+
     public function definition(): array
     {
         return [

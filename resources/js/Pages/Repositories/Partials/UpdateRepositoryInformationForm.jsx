@@ -17,18 +17,16 @@ export default function UpdateRepositoryInformationForm({repository, className =
     });
 
     const submit = (e) => {
-
         e.preventDefault();
 
         put(route('repositories.update', repository.id));
-
     };
 
     return (
         <section className={className}>
             {/* HEADER */}
             <header>
-                <h1 className="text-center text-xl font-bold text-gray-200">
+                <h1 className="text-center text-2xl font-bold text-gray-200">
                     {repository.name}
                 </h1>
 

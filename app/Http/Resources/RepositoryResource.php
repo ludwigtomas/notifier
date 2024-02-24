@@ -4,7 +4,9 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Resources\VPSResource;
+use App\Http\Resources\GitResource;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RepositoryDatabaseResource;
 
@@ -50,7 +52,8 @@ class RepositoryResource extends JsonResource
                 'database_backups' => RepositoryDatabaseResource::collection($this->whenLoaded('database_backups')),
                 'database_backups_count' => $this->database_backups_count ?? 0,
 
-                'vps' => new VPSResource($this->whenLoaded('vps')),
+                'hosting' => new HostingResource($this->whenLoaded('hosting')),
+                'hosting_count' => $this->hosting_count ?? 0,
             ],
         ];
     }

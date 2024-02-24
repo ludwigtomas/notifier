@@ -54,9 +54,12 @@ export default function Show({ client, repositories, className = "" }) {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-100">
+                                        <Link
+                                            href={route('repositories.show', repository.id)}
+                                            className="text-lg font-semibold text-gray-100"
+                                        >
                                             {repository.name}
-                                        </h3>
+                                        </Link>
 
                                         <p className="mt-1 text-sm text-gray-400">
                                             {repository.email}

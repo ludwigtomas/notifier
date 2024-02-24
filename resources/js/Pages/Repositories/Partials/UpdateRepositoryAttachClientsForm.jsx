@@ -29,7 +29,7 @@ export default function Show({ clients, repository, className = "" }) {
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-100">
-                    Unattached Clients
+                    Attach new <b>Clients</b>
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">
@@ -51,9 +51,12 @@ export default function Show({ clients, repository, className = "" }) {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-100">
+                                        <Link
+                                            href={route('clients.show', client.id)}
+                                            className="text-lg font-semibold text-gray-100"
+                                        >
                                             {client.name}
-                                        </h3>
+                                        </Link>
 
                                         <p className="mt-1 text-sm text-gray-400">
                                             {client.email}

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Repository;
+use App\Models\RepositoryDatabase;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,11 +11,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RepositoryDatabaseFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = RepositoryDatabase::class;
+
     public function definition(): array
     {
         return [

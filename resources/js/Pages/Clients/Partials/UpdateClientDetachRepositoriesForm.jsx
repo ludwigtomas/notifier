@@ -1,3 +1,6 @@
+import { Link, useForm } from "@inertiajs/react";
+import InputError from '@/Components/InputError';
+import TextInput from '@/Components/TextInput';
 import {
     UserIcon,
     TrashIcon,
@@ -12,11 +15,28 @@ export default function UpdateClientInformationForm({ client, className }) {
 
     const [selectedRepository, setSelectedRepository] = useState(null)
 
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        client_email: "",
+        relationship: "client_repository",
+    });
+
     const detachSubmit = (e) => {
         e.preventDefault();
 
         delete route("client.repository.detach", repository.id);
     };
+
+    const updateSubmit = (e) => {
+        e.preventDefault();
+
+        patch(route('client.repository.update', [client.id, selectedRepository]), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setSelectedRepository(null);
+                setData("client_email", "");
+            },
+        });
+    }
 
     return (
         <section className={className}>
@@ -48,9 +68,12 @@ export default function UpdateClientInformationForm({ client, className }) {
                                     </div>
 
                                     <div>
-                                        <h3 className="text-lg font-semibold text-gray-100">
+                                        <Link
+                                            href={route("repositories.show", repository.id)}
+                                            className="text-lg font-semibold text-gray-100"
+                                        >
                                             {repository.name}
-                                        </h3>
+                                        </Link>
 
                                         <p className="mt-1 text-sm text-gray-400">
                                             {client.email ?? "N/A"}
@@ -62,29 +85,71 @@ export default function UpdateClientInformationForm({ client, className }) {
                                                     id="client_email"
                                                     type="email"
                                                     className="mt-1 block w-full"
+                                                    placeholder="info@ludwigtomas.cz"
                                                     value={data.client_email}
                                                     onChange={(e) => setData("client_email", e.target.value)}
                                                     isFocused
                                                     required
                                                 />
+
+                                                <InputError
+                                                    className="mt-2"
+                                                    message={errors.client_email}
+                                                />
                                             </>
                                         ): (
                                             <p className="mt-1 text-sm text-gray-400">
-                                                {repository.email ?? "N/A"}
+                                                {repository.client_email ?? "N/A"}
                                             </p>
                                         )}
-
-
-
                                     </div>
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    className="flex items-center justify-center w-8 h-8 bg-red-500 rounded-lg"
-                                >
-                                    <TrashIcon className="w-4 h-4 text-gray-100" />
-                                </button>
+                                <div className="flex flex-col space-y-2">
+                                    {selectedRepository === repository.id ? (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedRepository(null)}
+                                                className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
+                                            >
+                                                <XMarkIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                            </button>
+
+                                            <button
+                                                type="submit"
+                                                onClick={updateSubmit}
+                                                className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
+                                            >
+                                                <CheckIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
+                                            </button>
+                                        </>
+                                        ) : (
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedRepository(repository.id);
+                                                        setData("client_email", repository.client_email ?? "");
+                                                    }}
+                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
+                                                >
+                                                    <PencilSquareIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
+                                                </button>
+
+                                                <Link
+                                                    as="button"
+                                                    method="DELETE"
+                                                    preserveScroll
+                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
+                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
+                                                >
+                                                    <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                                </Link>
+                                            </>
+                                        )
+                                    }
+                                </div>
                             </div>
 
                         </div>
