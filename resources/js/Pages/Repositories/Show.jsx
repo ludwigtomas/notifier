@@ -362,10 +362,16 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
                         </div>
 
+                        {console.log(repository)}
+
                         { showRelationship === 'databases' ? (
-                                <RepositoryDatabaseTable repository={repository} database_backups={database_backups} />
+                                <RepositoryDatabaseTable
+                                    database_backups={database_backups}
+                                />
                             ): showRelationship === 'clients' ? (
-                                <RepositoryClientsTable/>
+                                <RepositoryClientsTable
+                                    clients={clients}
+                                />
                             ) : null
                         }
 

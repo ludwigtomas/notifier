@@ -27,7 +27,7 @@ export default function Show({ repository, className = "" }) {
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('client.repository.update', [repository.id, selectedClient]), {
+        patch(route('client.repository.update', [selectedClient, repository.id]), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedClient(null);
@@ -79,10 +79,16 @@ export default function Show({ repository, className = "" }) {
                                                     id="client_email"
                                                     type="email"
                                                     className="mt-1 block w-full"
+                                                    placeholder="info@ludwigtomas.cz"
                                                     value={data.client_email}
                                                     onChange={(e) => setData("client_email", e.target.value)}
                                                     isFocused
                                                     required
+                                                />
+
+                                                <InputError
+                                                    className="mt-2"
+                                                    message={errors.client_email}
                                                 />
                                             </>
                                         ) : (

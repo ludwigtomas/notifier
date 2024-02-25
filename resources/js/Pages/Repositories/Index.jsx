@@ -18,6 +18,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import debounce from 'lodash/debounce';
 import { useState } from "react";
+import Dropdown from "@/Components/Dropdown";
 
 export default function Index({ auth, repositories, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -82,7 +83,7 @@ export default function Index({ auth, repositories, filters }) {
 
             {/* TABLE */}
             <div className="py-12">
-                <div className="max-w-[95rem] mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
                     <div className="mb-2">
                         <TextInput
@@ -108,37 +109,47 @@ export default function Index({ auth, repositories, filters }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            ID
+                                            #
                                         </th>
 
                                         <th
                                             scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
+                                            className="px-4 py-3.5 text-sm font-normal"
                                         >
-                                            Gitlab
-                                        </th>
+                                            <div className="text-white">
+                                                Nastavení
+                                            </div>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
-                                        >
-                                            Web
-                                        </th>
+                                            <ul className="w-72 grid grid-cols-4 mt-2 ">
+                                                <li
+                                                    scope="col"
+                                                    className="text-sm font-normal text-center text-zinc-400"
+                                                >
+                                                    Gitlab
+                                                </li>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
-                                        >
-                                            Hosting
-                                        </th>
+                                                <li
+                                                    scope="col"
+                                                    className="text-sm font-normal text-center text-zinc-400"
+                                                >
+                                                    Web
+                                                </li>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
-                                        >
-                                            Analytics
-                                        </th>
+                                                <li
+                                                    scope="col"
+                                                    className="text-sm font-normal text-center text-zinc-400"
+                                                >
+                                                    Hosting
+                                                </li>
 
+                                                <li
+                                                    scope="col"
+                                                    className="text-sm font-normal text-center text-zinc-400"
+                                                >
+                                                    Analytics
+                                                </li>
+                                            </ul>
+                                        </th>
                                         <th
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
@@ -155,14 +166,14 @@ export default function Index({ auth, repositories, filters }) {
 
                                         <th
                                             scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             Počet klientů
                                         </th>
 
                                         <th
                                             scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             Počet databází
                                         </th>
@@ -176,7 +187,7 @@ export default function Index({ auth, repositories, filters }) {
 
                                         <th
                                             scope="col"
-                                            className="relative py-3.5 px-4"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             <span className="sr-only">
                                                 Edit
@@ -198,7 +209,7 @@ export default function Index({ auth, repositories, filters }) {
                                                     </span>
                                                 </td>
 
-                                                <td className="px-4 py-4">
+                                                <td className="w-72 grid grid-cols-4 px-2 py-2">
                                                     <div className="flex items-center justify-center">
                                                         {repository.repository_url ? (
                                                             <a
@@ -217,9 +228,7 @@ export default function Index({ auth, repositories, filters }) {
                                                             </div>
                                                         )}
                                                     </div>
-                                                </td>
 
-                                                <td className="px-4 py-4 ">
                                                     <div className="flex items-center justify-center">
                                                         {repository.website_url ? (
                                                             <a
@@ -235,9 +244,7 @@ export default function Index({ auth, repositories, filters }) {
                                                             </div>
                                                         )}
                                                     </div>
-                                                </td>
 
-                                                <td className="px-4 py-4">
                                                     <div className="flex items-center justify-center">
                                                         <div className={'p-2 rounded-xl ' + (
                                                             repository.relationships.hosting_count >= 1  ? 'bg-green-950' : 'bg-red-950'
@@ -245,9 +252,7 @@ export default function Index({ auth, repositories, filters }) {
                                                             {repository.relationships.hosting_count >= 1 ? <CheckIcon className="w-6 h-6 text-green-500"/> : <XMarkIcon className="text-red-500 w-6 h-6" />}
                                                         </div>
                                                     </div>
-                                                </td>
 
-                                                <td className="px-4 py-4">
                                                     <div className="flex items-center justify-center">
                                                         <div className={'p-2 rounded-xl ' + (
                                                             repository.analytics_property_id ? 'bg-green-950' : 'bg-red-950'
@@ -258,13 +263,13 @@ export default function Index({ auth, repositories, filters }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                    <span className="text-sm font-medium text-zinc-400 text-nowrap">
                                                         {repository.name}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                    <span className="text-sm font-medium text-zinc-400 text-nowrap">
                                                         {repository.slug}
                                                     </span>
                                                 </td>
@@ -337,6 +342,40 @@ export default function Index({ auth, repositories, filters }) {
                         <Pagination class="mt-6" links={repositories.meta} />
                     </div>
                 </div>
+
+
+                {/* Another options */}
+                <div className="fixed right-10 bottom-10">
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <div className="flex items-center space-x-2">
+                                <div className="group inline-flex rounded-xl bg-sky-500 ">
+                                    <button
+                                        type="button"
+                                        className="px-6 py-3 rounded-md focus:outline-none"
+                                    >
+                                        <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                            Další možnosti
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </Dropdown.Trigger>
+
+                        <Dropdown.Content direction="up">
+                            <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                                Odeslání emailu
+                            </h3>
+
+                            <button
+                                className="flex items-center  w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            >
+                                <code className="p-1">gitlab:repositories</code>
+                            </button>
+                        </Dropdown.Content>
+                    </Dropdown>
+                </div>
+
             </div>
 
             <Modal

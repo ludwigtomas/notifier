@@ -4,8 +4,6 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { ClockIcon } from "@heroicons/react/24/outline";
-import Dropdown from "@/Components/Dropdown";
-import { TrashIcon } from "@heroicons/react/24/outline";
 
 export default function UpdateRepositoryInformationForm({repository, className = ''}) {
 
@@ -306,48 +304,6 @@ export default function UpdateRepositoryInformationForm({repository, className =
                     </div>
                 </div>
             </form>
-
-            {/* Another options */}
-            <div className="fixed right-10 bottom-10">
-                <Dropdown>
-                    <Dropdown.Trigger>
-                        <div className="flex items-center space-x-2">
-                            <div className="group inline-flex rounded-xl bg-sky-500 ">
-                                <button
-                                    type="button"
-                                    className="px-6 py-3 rounded-md focus:outline-none"
-                                >
-                                    <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
-                                        Další možnosti
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </Dropdown.Trigger>
-
-                    <Dropdown.Content direction="up">
-                        <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
-                            Odeslání emailu
-                        </h3>
-
-                        <button
-                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                        >
-                            Last Commit
-                        </button>
-
-                        <button
-                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                        >
-                            Google analytics
-
-                        </button>
-
-                    </Dropdown.Content>
-                </Dropdown>
-
-            </div>
-
         </section>
     );
 }

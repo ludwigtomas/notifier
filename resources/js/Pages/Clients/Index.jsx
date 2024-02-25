@@ -18,6 +18,7 @@ import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import debounce from 'lodash/debounce';
+import Dropdown from "@/Components/Dropdown";
 
 export default function Index({ auth, clients, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -224,13 +225,37 @@ export default function Index({ auth, clients, filters }) {
                 </div>
             </div>
 
-            <div className="fixed bottom-5 right-5 flex">
-                <Link
-                    href={route('clients.create')}
-                    className="bg-green-500 p-2 rounded-full hover:bg-green-600 faster-animation"
-                >
-                    <PlusIcon className="w-8 h-8 text-white" />
-                </Link>
+            {/* Another options */}
+            <div className="fixed right-10 bottom-10">
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <div className="flex items-center space-x-2">
+                            <div className="group inline-flex rounded-xl bg-sky-500 ">
+                                <button
+                                    type="button"
+                                    className="px-6 py-3 rounded-md focus:outline-none"
+                                >
+                                    <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                        Další možnosti
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content direction="up">
+                        <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                            Možnosti
+                        </h3>
+
+                        <Dropdown.Link
+                            href={route('clients.create')}
+                            className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                        >
+                            Vytvořit klienta
+                        </Dropdown.Link>
+                    </Dropdown.Content>
+                </Dropdown>
             </div>
 
         </AuthenticatedLayout>

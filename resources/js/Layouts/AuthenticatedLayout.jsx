@@ -58,7 +58,7 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     <ArchiveBoxIcon className="w-6 h-6 text-sky-500"/>
 
-                                    Repozitáři
+                                    Repozitáře
                                 </NavLink>
 
                                 <NavLink

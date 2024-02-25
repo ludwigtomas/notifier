@@ -1,0 +1,1 @@
+import{r as t,j as c}from"./app-q7DrAXM7.js";const a=t.forwardRef(function({type:e="text",className:o="",isFocused:n=!1,...u},r){const s=r||t.useRef();return t.useEffect(()=>{n&&s.current.focus()},[]),c.jsx("input",{...u,type:e,className:"bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm "+o,ref:s})});export{a as T};

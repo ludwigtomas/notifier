@@ -37,17 +37,16 @@ class RepositoryController extends Controller
     public function show(Repository $repository): Response
     {
         $repository->loadCount('clients', 'database_backups');
+        $repository->load('hosting');
 
-        $repository->load('vps');
-
-        $clients = $repository->clients()->paginate(20);
+        $clients = $repository->clients()->paginate(10);
 
         $database_backups = $repository->database_backups()->paginate(20);
 
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
-            'database_backups' =>  DatabaseBackupResource::collection($database_backups),
             'clients' => ClientResource::collection($clients),
+            'database_backups' =>  DatabaseBackupResource::collection($database_backups),
         ]);
     }
 
