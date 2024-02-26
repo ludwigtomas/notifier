@@ -1,1 +1,0 @@
-import{j as e}from"./app-q7DrAXM7.js";function l({isRequired:s,value:t,className:r="",children:a,...m}){return e.jsxs("label",{...m,className:"block font-medium text-sm text-gray-400 "+r,children:[t||a,s&&e.jsx("span",{className:"text-red-500 ml-2",children:"*"})]})}export{l as I};
