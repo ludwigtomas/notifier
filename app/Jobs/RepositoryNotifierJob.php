@@ -21,9 +21,7 @@ class RepositoryNotifierJob implements ShouldQueue
      */
     public function __construct(
         protected Repository $repository,
-    )
-    {
-
+    ) {
     }
 
     /**
@@ -34,11 +32,11 @@ class RepositoryNotifierJob implements ShouldQueue
         $clients = $this->repository->clients;
 
         foreach ($clients as $client) {
-            Mail::to($client->email)->send(new RepositoryNotifierMail(
+
+            Mail::to($client->pivot->client_email ?? $client->email)->send(new RepositoryNotifierMail(
                 $this->repository,
                 $client,
             ));
         }
-
     }
 }

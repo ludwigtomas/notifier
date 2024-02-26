@@ -23,7 +23,7 @@ class UpdateClientRepositoryRequest extends FormRequest
     {
         return [
             'relationship' => ['required', 'string', 'in:repository_client,client_repository'],
-            'client_email' => ['required', 'email'],
+            'client_email' => ['nullable', 'email'],
         ];
     }
 }

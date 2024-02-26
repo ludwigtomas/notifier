@@ -151,18 +151,23 @@ export default function Edit({ auth, repository, clients }) {
                                     Odeslání emailu
                                 </h3>
 
-                                <button
+                                <Link
+                                    href={route("repositories.last-commit", repository.id)}
+                                    preserveScroll
                                     className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                 >
                                     Last Commit
-                                </button>
+                                </Link>
 
-                                <button
-                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                <Link
+                                    href={repository.analytics_property_id ? route("repositories.google-analytics", repository.id) : null}
+                                    preserveScroll
+                                    className={"flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out border-l-4 "
+                                    + (repository.analytics_property_id ? 'border-transparent hover:bg-zinc-800 hover:border-green-500 hover:text-green-500' : 'cursor-not-allowed border-red-500')}
                                 >
                                     Google analytics
 
-                                </button>
+                                </Link>
 
                             </Dropdown.Content>
                         </Dropdown>

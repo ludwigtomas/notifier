@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
+use App\Services\GitlabService;
 
 class RepositoryController extends Controller
 {
@@ -74,5 +75,17 @@ class RepositoryController extends Controller
         Storage::deleteDirectory($repository->slug);
 
         $repository->delete();
+    }
+
+    public function lastCommit(Repository $repository): RedirectResponse
+    {
+        GitlabService::getRepositorylastCommit($repository);
+
+        return to_route('repositories.edit', $repository->id);
+    }
+
+    public function googleAnalytics(Repository $repository): RedirectResponse
+    {
+        dd($repository);
     }
 }

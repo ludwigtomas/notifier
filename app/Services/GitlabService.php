@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\RepositoryNotifierJob;
+use App\Models\Git;
 use Carbon\Carbon;
 use App\Models\Repository;
 use Illuminate\Support\Str;
@@ -102,6 +103,33 @@ class GitlabService
             throw $th;
         }
     }
+
+    public static function getRepositorylastCommit($repository)
+    {
+        $gitlab = Git::whereSlug('gitlab')->first();
+
+        $client = new GuzzleClient([
+            "base_uri" => "https://gitlab.com/api/v4/",
+        ]);
+
+        try {
+            $response = $client->request('GET', 'projects/' . $repository->id . '/repository/commits?per_page=1&page=1', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                ],
+            ]);
+
+            $repositor_api = json_decode($response->getBody()->getContents());
+
+            $repository->update([
+                'last_commit_at' => Carbon::parse($repositor_api[0]->created_at),
+            ]);
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
 
     private static function sendNotificationToClient($repository)
     {
