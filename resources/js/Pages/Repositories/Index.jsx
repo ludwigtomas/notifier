@@ -10,6 +10,7 @@ import {
     ChevronRightIcon,
     LinkIcon,
     ArchiveBoxArrowDownIcon,
+    BackspaceIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -24,6 +25,7 @@ export default function Index({ auth, repositories, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
     const [selectedRepository, setSelectedRepository] = useState(null);
     const [search, setSearch] = useState(filters.search || "");
+    const [trashed, setTrashed] = useState(filters.trashed || false);
 
     // catch repository into variable
     const toggleModal = (repository) => {
@@ -88,7 +90,7 @@ export default function Index({ auth, repositories, filters }) {
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
-                    <div className="mb-2">
+                    <div className="mb-2 flex items-center space-x-10">
                         <TextInput
                             label="Hledat"
                             name="search"
@@ -101,6 +103,31 @@ export default function Index({ auth, repositories, filters }) {
                                 debouncedSearch(e.target.value);
                             }}
                         />
+
+                        <div>
+                            <label className="flex items-center justify-center cursor-pointer bg-zinc-900 px-6 py-4 rounded-xl">
+                                <input
+                                    label="Smazané"
+                                    name="trashed"
+                                    type="checkbox"
+                                    className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-900 checked:bg-sky-900 checked:before:bg-sky-900 hover:before:opacity-10"
+                                    checked={trashed === 'true' || trashed === true ? true : false}
+                                    onChange={(e) => {
+                                        setTrashed(e.target.checked);
+                                        
+                                        router.get(route('repositories.index'), {
+                                            trashed: e.target.checked
+                                        }, {
+                                            preserveScroll: true,
+                                            preserveState: true,
+                                        })
+                                        
+                                    }}
+                                />
+
+                                <span className="ml-4 text-base text-gray-300">Smazané</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
@@ -318,19 +345,41 @@ export default function Index({ auth, repositories, filters }) {
                                                             <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                                         </Link>
 
-                                                        <Link
-                                                            href={route("repositories.show", repository.id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                        >
-                                                            <EyeIcon className="w-6 h-6 text-sky-500" />
-                                                        </Link>
+                                                        { repository.deleted_at ? (
+                                                            <>
+                                                                <Link
+                                                                    href={route("repositories.show", repository.id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                                >
+                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                </Link>
+                                                                
+                                                                <button
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                    onClick={() => toggleModal(repository)}
+                                                                >
+                                                                    <BackspaceIcon className="w-6 h-6 text-red-500" />
+                                                                </button>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Link
+                                                                    href={route("repositories.show", repository.id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                                >
+                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                </Link>
 
-                                                        <button
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                            onClick={() => toggleModal(repository)}
-                                                        >
-                                                            <TrashIcon className="w-6 h-6 text-red-500" />
-                                                        </button>
+                                                                <button
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                    onClick={() => toggleModal(repository)}
+                                                                >
+                                                                    <TrashIcon className="w-6 h-6 text-red-500" />
+                                                                </button>
+                                                               
+                                                            </>
+                                                        )}
+                                                        
                                                     </div>
                                                 </td>
                                             </tr>
