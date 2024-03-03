@@ -73,7 +73,10 @@ class GitlabService
 
             foreach ($repositories as $repository_api) {
 
-                $repository = Repository::where('id', $repository_api->id)->first();
+                $repository = Repository::query()
+                    ->withTrashed()
+                    ->whereId($repository_api->id)
+                    ->first();
 
                 if ($repository) {
 

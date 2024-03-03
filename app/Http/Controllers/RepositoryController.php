@@ -26,6 +26,7 @@ class RepositoryController extends Controller
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('slug', 'like', '%' . $search . '%');
             })
+            ->whereNull('deleted_at')
             ->orderBy('last_commit_at', 'desc')
             ->paginate(10);
 
@@ -70,11 +71,13 @@ class RepositoryController extends Controller
         return to_route('repositories.edit', $repository->id);
     }
 
-    public function destroy(Repository $repository)
+    public function destroy(Repository $repository): RedirectResponse
     {
         Storage::deleteDirectory($repository->slug);
 
         $repository->delete();
+
+        return to_route('repositories.index');
     }
 
     public function lastCommit(Repository $repository): RedirectResponse

@@ -41,7 +41,10 @@ export default function Index({ auth, repositories, filters }) {
 
         router.delete(url, {
             preserveScroll: true,
-            onSuccess: () => closeModal(),
+            preserveState: true,
+            onSuccess: () => {
+                setToggleDeleteModal(false);
+            },
         })
     }
 
@@ -385,9 +388,8 @@ export default function Index({ auth, repositories, filters }) {
                 className="p-10"
             >
                 {selectedRepository && (
-                    <form
+                    <div
                         className="p-4 flex flex-col space-y-4"
-                        onSubmit={deleteRepository}
                     >
                         <h2 className="text-2xl font-medium text-gray-800 text-center">
                             {selectedRepository.name}
@@ -398,7 +400,10 @@ export default function Index({ auth, repositories, filters }) {
                         </p>
 
                         <div className="flex justify-center space-x-4">
-                            <DangerButton type="submit">
+                            <DangerButton
+                                type="submit"
+                                onClick={deleteRepository}
+                            >
                                 <TrashIcon className="w-6 h-6 mr-2"/>
 
                                 {selectedRepository.name}
@@ -410,7 +415,7 @@ export default function Index({ auth, repositories, filters }) {
                                 Zavřít
                             </SecondaryButton>
                         </div>
-                    </form>
+                    </div>
                 )}
             </Modal>
         </AuthenticatedLayout>
