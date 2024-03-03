@@ -26,18 +26,6 @@ class GitController extends Controller
         return inertia('Gits/Create');
     }
 
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => 'required',
-            'url' => 'required',
-        ]);
-
-        Git::create($request->all());
-
-        return redirect()->route('dashboard.gits.index');
-    }
-
     public function show(Git $git): Response
     {
         return inertia('Gits/Show', [

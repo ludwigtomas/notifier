@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('viewPulse', fn (User $user) => in_array($user->email, [
             'info@ludwigtomas.cz',
             'tkasparek01@gmail.com',
+            'admin@admin.com',
         ]));
     }
 }

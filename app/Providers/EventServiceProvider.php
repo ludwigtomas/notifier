@@ -21,10 +21,6 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    protected $observers = [
-        Repository::class => [RepositoryObserver::class],
-    ];
-
     /**
      * Register any events for your application.
      */

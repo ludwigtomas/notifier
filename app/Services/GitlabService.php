@@ -37,7 +37,7 @@ class GitlabService
         }
     }
 
-    public static function downloadAvatar($gitlab)
+    public static function downloadAvatar($gitlab): void
     {
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
@@ -56,7 +56,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositories($gitlab)
+    public static function getRepositories($gitlab): void
     {
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",
@@ -104,7 +104,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositorylastCommit($repository)
+    public static function getRepositorylastCommit($repository): void
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 

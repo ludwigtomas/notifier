@@ -35,7 +35,6 @@ route::middleware('auth:sanctum')->group(function () {
 
     route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
         route::get('/', [GitController::class, 'index'])->name('index');
-        route::post('/', [GitController::class, 'store'])->name('store');
         route::get('/{git}', [GitController::class, 'show'])->name('show');
         route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
         route::put('/{git}', [GitController::class, 'update'])->name('update');
@@ -50,6 +49,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
 
+        route::get('//last-commit', [RepositoryController::class, 'repositorieslastCommit'])->name('last-commit');
         route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
     });

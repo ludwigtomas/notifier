@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Git;
 use App\Models\Client;
 use App\Models\RepositoryDatabase;
+use App\Observers\RepositoryObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+#[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
 {
     use HasFactory, SoftDeletes;
