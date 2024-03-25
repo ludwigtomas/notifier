@@ -26,13 +26,15 @@ class RepositoryController extends Controller
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('slug', 'like', '%' . $search . '%');
             })
-            ->whereNull('deleted_at')
+            ->when($request->trashed === 'true', function ($query, $trashed) {
+                $query->withTrashed();
+            })
             ->orderBy('last_commit_at', 'desc')
             ->paginate(10);
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryResource::collection($repositories),
-            'filters' => $request->only('search')
+            'filters' => $request->only('search', 'trashed')
         ]);
     }
 

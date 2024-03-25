@@ -75,11 +75,9 @@ class GitlabService
 
                 $repository = Repository::query()
                     ->withTrashed()
-                    ->whereId($repository_api->id)
-                    ->first();
+                    ->find($repository_api->id);
 
                 if ($repository) {
-
                     $repository->last_commit_at < Carbon::parse($repository_api->last_activity_at) ? self::sendNotificationToClient($repository) : null;
 
                     $repository->update([
@@ -127,7 +125,6 @@ class GitlabService
             $repository->update([
                 'last_commit_at' => Carbon::parse($repositor_api[0]->created_at),
             ]);
-
         } catch (\Throwable $th) {
             throw $th;
         }
