@@ -77,13 +77,11 @@ export default function Show({ repository, className = "" }) {
                                             <>
                                                 <TextInput
                                                     id="client_email"
-                                                    type="email"
                                                     className="mt-1 block w-full"
                                                     placeholder="info@ludwigtomas.cz"
                                                     value={data.client_email}
                                                     onChange={(e) => setData("client_email", e.target.value)}
                                                     isFocused
-                                                    required
                                                 />
 
                                                 <InputError
@@ -92,14 +90,21 @@ export default function Show({ repository, className = "" }) {
                                                 />
                                             </>
                                         ) : (
-                                            <p className="mt-1 text-sm text-gray-400">
-                                                {client.client_email ?? "--"}
-                                            </p>
+                                            <TextInput
+                                                id="client_email"
+                                                className="mt-1 block w-full"
+                                                placeholder="---"
+                                                value={data.client_email}
+                                                onChange={(e) => setData("client_email", e.target.value)}
+                                                isFocused
+                                                disabled
+                                                readOnly
+                                            />
                                         )}
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col space-y-2">
+                                <div className="flex flex-col space-y-2 ml-4">
                                     {selectedClient === client.id ? (
                                         <>
                                             <button
@@ -120,6 +125,16 @@ export default function Show({ repository, className = "" }) {
                                         </>
                                         ) : (
                                             <>
+                                                <Link
+                                                    as="button"
+                                                    method="DELETE"
+                                                    preserveScroll
+                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
+                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
+                                                >
+                                                    <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                                </Link>
+
                                                 <button
                                                     type="button"
                                                     onClick={() => {
@@ -130,16 +145,6 @@ export default function Show({ repository, className = "" }) {
                                                 >
                                                     <PencilSquareIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
                                                 </button>
-
-                                                <Link
-                                                    as="button"
-                                                    method="DELETE"
-                                                    preserveScroll
-                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
-                                                >
-                                                    <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
-                                                </Link>
                                             </>
                                         )
                                     }

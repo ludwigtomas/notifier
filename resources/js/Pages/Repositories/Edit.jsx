@@ -1,11 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import {
-    TrashIcon,
     EyeIcon,
-    PlusIcon,
     ChevronRightIcon,
-    UserIcon,
-    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
 import UpdateRepositoryDetachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryDetachClientsForm";
@@ -15,7 +11,6 @@ import CreateRepositoryHostingForm from "@/Pages/Repositories/Partials/CreateRep
 import Dropdown from "@/Components/Dropdown";
 
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-
 
 export default function Edit({ auth, repository, clients }) {
 

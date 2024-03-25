@@ -57,7 +57,7 @@ route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
         route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
         route::post('attach',  [ClientRepositoryController::class, 'attach'])->name('attach');
-        route::patch('updateos',  [ClientRepositoryController::class, 'update'])->name('update');
+        route::patch('update',  [ClientRepositoryController::class, 'update'])->name('update');
     });
 
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {

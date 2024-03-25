@@ -123,7 +123,7 @@ export default function Index({ auth, repositories, filters }) {
                                                 Nastavení
                                             </div>
 
-                                            <ul className="w-72 grid grid-cols-4 mt-2 ">
+                                            <ul className="grid grid-cols-4 mt-2 w-full">
                                                 <li
                                                     scope="col"
                                                     className="text-sm font-normal text-center text-zinc-400"
@@ -212,7 +212,7 @@ export default function Index({ auth, repositories, filters }) {
                                                     </span>
                                                 </td>
 
-                                                <td className="w-72 grid grid-cols-4 px-2 py-2">
+                                                <td className="grid grid-cols-4 py-3.5">
                                                     <div className="flex items-center justify-center">
                                                         {repository.repository_url ? (
                                                             <a

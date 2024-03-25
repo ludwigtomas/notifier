@@ -17,7 +17,6 @@ export default function Show({ clients, repository, className = "" }) {
         clients: []
     });
 
-
     const attachClientSubmit = (e) => {
         e.preventDefault();
 
