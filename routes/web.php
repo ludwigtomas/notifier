@@ -33,6 +33,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [DashboardController::class, 'index'])->name('index');
     });
 
+    // 🔺 GITS
     route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
         route::get('/', [GitController::class, 'index'])->name('index');
         route::get('/{git}', [GitController::class, 'show'])->name('show');
@@ -41,6 +42,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
     });
 
+    // 🔺 REPOSITORIES
     route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
         route::get('/', [RepositoryController::class, 'index'])->name('index');
         route::post('/', [RepositoryController::class, 'store'])->name('store');
@@ -49,17 +51,12 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
 
-        route::get('//last-commit', [RepositoryController::class, 'repositorieslastCommit'])->name('last-commit');
         route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
+        route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
     });
 
-    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
-        route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
-        route::post('attach',  [ClientRepositoryController::class, 'attach'])->name('attach');
-        route::patch('update',  [ClientRepositoryController::class, 'update'])->name('update');
-    });
-
+    // 🔺 CLIENTS
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
         route::get('/', [ClientController::class, 'index'])->name('index');
         route::get('/create', [ClientController::class, 'create'])->name('create');
@@ -70,6 +67,14 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
     });
 
+    // 🔺 CLIENT REPOSITORY - relationship
+    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
+        route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
+        route::post('attach',  [ClientRepositoryController::class, 'attach'])->name('attach');
+        route::patch('update',  [ClientRepositoryController::class, 'update'])->name('update');
+    });
+
+    // 🔺 DATABASES
     route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
         route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
         route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
@@ -79,6 +84,7 @@ route::middleware('auth:sanctum')->group(function () {
         //* STORE ---> api.php
     });
 
+    // 🔺 HOSTINGS
     route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function () {
         route::get('/', [HostingController::class, 'index'])->name('index');
         route::get('/create', [HostingController::class, 'create'])->name('create');
@@ -94,11 +100,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 require __DIR__ . '/auth.php';
 
-
 // DELETE IN PRODUCTION
-if(app()->isLocal()){
+if (app()->isLocal()) {
     route::get('/test', [TestController::class, 'index']);
 }

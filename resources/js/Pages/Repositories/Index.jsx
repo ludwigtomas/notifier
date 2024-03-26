@@ -114,14 +114,14 @@ export default function Index({ auth, repositories, filters }) {
                                     checked={trashed === 'true' || trashed === true ? true : false}
                                     onChange={(e) => {
                                         setTrashed(e.target.checked);
-                                        
+
                                         router.get(route('repositories.index'), {
                                             trashed: e.target.checked
                                         }, {
                                             preserveScroll: true,
                                             preserveState: true,
                                         })
-                                        
+
                                     }}
                                 />
 
@@ -353,7 +353,7 @@ export default function Index({ auth, repositories, filters }) {
                                                                 >
                                                                     <EyeIcon className="w-6 h-6 text-sky-500" />
                                                                 </Link>
-                                                                
+
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                                     onClick={() => toggleModal(repository)}
@@ -376,10 +376,10 @@ export default function Index({ auth, repositories, filters }) {
                                                                 >
                                                                     <TrashIcon className="w-6 h-6 text-red-500" />
                                                                 </button>
-                                                               
+
                                                             </>
                                                         )}
-                                                        
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -419,11 +419,14 @@ export default function Index({ auth, repositories, filters }) {
                                 Odeslání emailu
                             </h3>
 
-                            <button
-                                className="flex items-center  w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            <Link
+                                href={route("repositories.sync")}
+                                preserveScroll
+                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                             >
                                 <code className="p-1">gitlab:repositories</code>
-                            </button>
+                            </Link>
+
                         </Dropdown.Content>
                     </Dropdown>
                 </div>

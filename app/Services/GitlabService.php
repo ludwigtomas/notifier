@@ -30,7 +30,6 @@ class GitlabService
                 'avatar_url' => $body->avatar_url,
             ]);
 
-            // call downloadAvatar() method
             self::downloadAvatar($gitlab);
         } catch (\Throwable $th) {
             throw $th;
@@ -129,7 +128,6 @@ class GitlabService
             throw $th;
         }
     }
-
 
     private static function sendNotificationToClient($repository)
     {

@@ -93,4 +93,9 @@ class RepositoryController extends Controller
     {
         dd($repository);
     }
+
+    public function syncWithGit(Request $request)
+    {
+        dd('Asd');
+    }
 }

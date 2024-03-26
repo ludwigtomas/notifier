@@ -21,7 +21,7 @@ export default function Show({ repository, className = "" }) {
     const detachSubmit = (e) => {
         e.preventDefault();
 
-        delete(route('client.repository.detach', repository.id));
+        delete(route('client.repository.detach', [selectedClient, repository.id]));
     };
 
     const updateSubmit = (e) => {
@@ -55,13 +55,13 @@ export default function Show({ repository, className = "" }) {
                             className="col-span-12 sm:col-span-6 lg:col-span-4"
                             key={client.id}
                         >
-                            <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
-                                <div className="flex items-center space-x-4">
-                                    <div className="flex items-center justify-center w-12 h-12 bg-zinc-700 rounded-lg">
+                            <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-2">
+                                <div className="flex items-center space-x-4 w-full">
+                                    <div className="flex items-center justify-center size-12 bg-zinc-700 rounded-lg">
                                         <UserIcon className="w-6 h-6 text-sky-500" />
                                     </div>
 
-                                    <div>
+                                    <div className="w-full">
                                         <Link
                                             href={route('clients.show', client.id)}
                                             className="text-lg font-semibold text-gray-100"
@@ -94,7 +94,7 @@ export default function Show({ repository, className = "" }) {
                                                 id="client_email"
                                                 className="mt-1 block w-full"
                                                 placeholder="---"
-                                                value={data.client_email}
+                                                value={client.client_email}
                                                 onChange={(e) => setData("client_email", e.target.value)}
                                                 isFocused
                                                 disabled
@@ -130,7 +130,10 @@ export default function Show({ repository, className = "" }) {
                                                     method="DELETE"
                                                     preserveScroll
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
+                                                    href={route('client.repository.detach', {
+                                                        client: client.id,
+                                                        repository: repository.id}
+                                                    )}
                                                 >
                                                     <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
                                                 </Link>

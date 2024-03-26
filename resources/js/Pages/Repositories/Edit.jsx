@@ -72,20 +72,6 @@ export default function Edit({ auth, repository, clients }) {
 
                                     <EyeIcon className="w-6 h-6 text-sky-500" />
                                 </Link>
-
-                                {/* <Link
-                                    as="button"
-                                    method="delete"
-                                    preserveScroll
-                                    href={route("repositories.destroy", repository.id)}
-                                    className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
-                                >
-                                    <span className="text-gray-200">
-                                        Smazat
-                                    </span>
-
-                                    <TrashIcon className="w-6 h-6 text-red-500" />
-                                </Link> */}
                             </div>
                         </div>
                     </div>
@@ -149,7 +135,7 @@ export default function Edit({ auth, repository, clients }) {
                                 <Link
                                     href={route("repositories.last-commit", repository.id)}
                                     preserveScroll
-                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                 >
                                     Last Commit
                                 </Link>
@@ -157,6 +143,7 @@ export default function Edit({ auth, repository, clients }) {
                                 <Link
                                     href={repository.analytics_property_id ? route("repositories.google-analytics", repository.id) : null}
                                     preserveScroll
+                                    disabled={!repository.analytics_property_id}
                                     className={"flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out border-l-4 "
                                     + (repository.analytics_property_id ? 'border-transparent hover:bg-zinc-800 hover:border-green-500 hover:text-green-500' : 'cursor-not-allowed border-red-500')}
                                 >
