@@ -99,7 +99,6 @@ export default function Index({ auth, gits }) {
                                                         className="w-10 h-10 rounded-lg"
                                                         src={"/storage/avatars/" + git.username + ".png"}
                                                         alt={git.name}
-                                                        key={git.id}
                                                     />
                                                 </td>
 

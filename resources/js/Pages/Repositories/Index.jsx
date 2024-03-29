@@ -57,7 +57,7 @@ export default function Index({ auth, repositories, filters }) {
             preserveScroll: true,
             preserveState: true,
         })
-    }, 100);
+    }, 500);
 
     return (
         <AuthenticatedLayout

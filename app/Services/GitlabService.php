@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 
 class GitlabService
 {
-    public static function getUserID($gitlab): void
+    public static function getUserID(Git $gitlab): void
     {
         $client = new GuzzleClient([
             "base_uri" => "https://gitlab.com/api/v4/",

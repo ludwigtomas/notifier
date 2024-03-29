@@ -6,7 +6,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HostingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\ClientRepositoryController;
