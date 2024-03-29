@@ -19,7 +19,7 @@ import RepositoryHostingTable from "@/Pages/Repositories/Partials/RepositoryHost
 
 export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
-    const [showRelationship, setShowRelationship] = useState('databases');
+    const [showRelationship, setShowRelationship] = useState("databases");
 
     // Function to toggle the database_verification_code
     function toggleShowCode() {
@@ -29,19 +29,22 @@ export default function Show({ auth, repository, database_backups, clients }) {
     const handleShowRepositoryRelation = (relation) => {
         return () => {
             setShowRelationship(relation);
-        }
-    }
+        };
+    };
 
     // Function to copy the code to clipboard
     const handleCopyToClipboard = () => {
-        if(!showCode){
-            alert('Nelze zkopírovat skrytý kód')
+        if (!showCode) {
+            alert("Nelze zkopírovat skrytý kód");
         }
 
         let backup_code = repository.database_verification_code;
-        let backup_url = 'https://notifier.ludwigtomas.cz/api/v1/repositories/' + repository.slug;
+        let backup_url =
+            "https://notifier.ludwigtomas.cz/api/v1/repositories/" +
+            repository.slug;
 
-        let env_code = 'BACKUP_CODE=' + backup_code + '\n' + 'BACKUP_URL=' + backup_url
+        let env_code =
+            "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url;
 
         navigator.clipboard.writeText(env_code);
     };
@@ -96,7 +99,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
                                 <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-4 grid gap-y-2 ">
                                     <Link
-                                        href={route("repositories.edit", repository.id)}
+                                        href={route(
+                                            "repositories.edit",
+                                            repository.id
+                                        )}
                                         className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-green-500"
                                     >
                                         <span className="text-gray-200">
@@ -111,17 +117,14 @@ export default function Show({ auth, repository, database_backups, clients }) {
                     </header>
                 }
             >
-                <Head title={repository.name + ' repozitář'} />
+                <Head title={repository.name + " repozitář"} />
 
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="grid grid-cols-12 gap-x-8 ">
-
-                            <div className="col-span-12 mb-20 flex justify-center items-center">
+                            <div className="col-span-12 mb-10 flex justify-center items-center">
                                 <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
-
                                     <div className="flex justify-between items-center relative">
-
                                         <div className="absolute left-1/2 -translate-x-1/2">
                                             <span className="text-gray-400 mr-4">
                                                 .env
@@ -139,7 +142,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                     onClick={toggleShowCode}
                                                     className="bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
                                                 >
-                                                    { showCode ? (
+                                                    {showCode ? (
                                                         <EyeIcon className="w-6 h-6" />
                                                     ) : (
                                                         <EyeSlashIcon className="w-6 h-6" />
@@ -149,10 +152,16 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                 <motion.button
                                                     whileHover={{ scale: 1.1 }}
                                                     whileTap={{ scale: 0.9 }}
-                                                    onClick={ showCode ?  handleCopyToClipboard : null}
-                                                    className={'bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600' + (
-                                                        showCode === false && ' cursor-not-allowed'
-                                                    )}
+                                                    onClick={
+                                                        showCode
+                                                            ? handleCopyToClipboard
+                                                            : null
+                                                    }
+                                                    className={
+                                                        "bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600" +
+                                                        (showCode === false &&
+                                                            " cursor-not-allowed")
+                                                    }
                                                 >
                                                     <ClipboardIcon className="w-6 h-6" />
                                                 </motion.button>
@@ -168,27 +177,32 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                     <div className="w-full flex items-center justify-center">
                                         <div className="bg-stone-800 rounded-lg w-full">
-                                            <div id="code-area" className="p-5 space-y-3">
+                                            <div
+                                                id="code-area"
+                                                className="p-5 space-y-3"
+                                            >
                                                 <div className="text-base">
                                                     <span className="text-yellow-300">
-                                                    BACKUP_CODE
+                                                        BACKUP_CODE
                                                     </span>
 
                                                     <span className="text-green-400">
                                                         =
                                                     </span>
 
-                                                    <span className="text-blue-400">"</span>
-
-                                                    <span className="text-purple-400">
-                                                        { showCode ? (
-                                                            repository.database_verification_code
-                                                        ) : (
-                                                            'xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx'
-                                                        )}
+                                                    <span className="text-blue-400">
+                                                        "
                                                     </span>
 
-                                                    <span className="text-blue-400">"</span>
+                                                    <span className="text-purple-400">
+                                                        {showCode
+                                                            ? repository.database_verification_code
+                                                            : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx"}
+                                                    </span>
+
+                                                    <span className="text-blue-400">
+                                                        "
+                                                    </span>
                                                 </div>
 
                                                 <div className="text-base">
@@ -198,17 +212,102 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                     <span className="text-green-400">
                                                         =
                                                     </span>
-                                                    <span className="text-blue-400">"</span>
-
-                                                    <span className="text-purple-400">
-                                                        { showCode ? (
-                                                            'https://notifier.ludwigtomas.cz/api/v1/repositories/' + repository.slug
-                                                        ) : (
-                                                            'https://notifier.ludwigtomas.cz/api/v1/repositories/xxxxx-xxxxx'
-                                                        )}
+                                                    <span className="text-blue-400">
+                                                        "
                                                     </span>
 
-                                                    <span className="text-blue-400">"</span>
+                                                    <span className="text-purple-400">
+                                                        {showCode
+                                                            ? "https://notifier.ludwigtomas.cz/api/v1/repositories/" +
+                                                              repository.slug
+                                                            : "https://notifier.ludwigtomas.cz/api/v1/repositories/xxxxx-xxxxx"}
+                                                    </span>
+
+                                                    <span className="text-blue-400">
+                                                        "
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="col-span-12 mb-20 flex justify-center items-center">
+                                <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
+                                    <div className="flex justify-between items-center relative">
+                                        <div className="absolute left-1/2 -translate-x-1/2">
+                                            <span className="text-gray-400 mr-4">
+                                                .ssh
+                                            </span>
+                                            <span className="text-white text-xl font-bold uppercase">
+                                                VPS connection
+                                            </span>
+                                        </div>
+
+                                        <div className="p-2 flex space-x-2">
+                                            <div className="space-x-2">
+                                                <motion.button
+                                                    whileHover={{ scale: 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                    onClick={
+                                                        showCode
+                                                            ? handleCopyToClipboard
+                                                            : null
+                                                    }
+                                                    className={
+                                                        "bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600" +
+                                                        (showCode === false &&
+                                                            " cursor-not-allowed")
+                                                    }
+                                                >
+                                                    <ClipboardIcon className="w-6 h-6" />
+                                                </motion.button>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-4 flex space-x-2">
+                                            <div className="rounded-full w-3 h-3 bg-red-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-green-500"></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full flex items-center justify-center">
+                                        <div className="bg-stone-800 rounded-lg w-full">
+                                            <div
+                                                id="code-area"
+                                                className="p-5 space-y-3"
+                                            >
+                                                <div className="text-base text-center">
+                                                    <span className="text-yellow-300">
+                                                        ssh
+                                                    </span>
+                                                    {" "}
+
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting.login_user }
+                                                    </span>
+
+                                                    <span className="text-green-300">
+                                                        @
+                                                    </span>
+
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting.ip_address}
+                                                    </span>
+
+                                                    {" "}
+
+                                                    <span className="text-green-300">
+                                                        -p
+                                                    </span>
+
+                                                    {" "}
+
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting.ip_port}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +333,9 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <div className="text-center">
                                     <h3 className="text-gray-500 text-xs text-center">
-                                        {new Date(repository.last_commit_at).toLocaleDateString("cs-CZ", {
+                                        {new Date(
+                                            repository.last_commit_at
+                                        ).toLocaleDateString("cs-CZ", {
                                             day: "2-digit",
                                             month: "2-digit",
                                             year: "numeric",
@@ -255,9 +356,15 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                             {/* Database */}
                             <div
-                                onClick={handleShowRepositoryRelation('databases')}
-                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'databases' ? ' border-sky-500' : ' border-transparent')}
+                                onClick={handleShowRepositoryRelation(
+                                    "databases"
+                                )}
+                                className={
+                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    (showRelationship === "databases"
+                                        ? " border-sky-500"
+                                        : " border-transparent")
+                                }
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -275,7 +382,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <div className="text-center space-x-4">
                                     <span className="text-gray-200 font-bold text-xl">
-                                        { repository.relationships.database_backups_count}
+                                        {
+                                            repository.relationships
+                                                .database_backups_count
+                                        }
                                     </span>
 
                                     <span className="text-gray-400 text-xs">
@@ -286,9 +396,15 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                             {/* Clients */}
                             <div
-                                onClick={handleShowRepositoryRelation('clients')}
-                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'clients' ? ' border-sky-500' : ' border-transparent' )}
+                                onClick={handleShowRepositoryRelation(
+                                    "clients"
+                                )}
+                                className={
+                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    (showRelationship === "clients"
+                                        ? " border-sky-500"
+                                        : " border-transparent")
+                                }
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -316,9 +432,15 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
 
                             <div
-                                onClick={handleShowRepositoryRelation('hosting')}
-                                className={'col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer' +
-                                    (showRelationship === 'hosting' ? ' border-sky-500' : ' border-transparent' )}
+                                onClick={handleShowRepositoryRelation(
+                                    "hosting"
+                                )}
+                                className={
+                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    (showRelationship === "hosting"
+                                        ? " border-sky-500"
+                                        : " border-transparent")
+                                }
                             >
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
@@ -336,29 +458,25 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <div className="text-center space-x-4 flex items-center justify-center ">
                                     {repository.relationships.hosting ? (
-                                        <span className="bg-green-500 animate-pulse p-3 rounded-full"/>
+                                        <span className="bg-green-500 animate-pulse p-3 rounded-full" />
                                     ) : (
-                                        <span className="bg-red-500 animate-pulse p-3 rounded-full"/>
+                                        <span className="bg-red-500 animate-pulse p-3 rounded-full" />
                                     )}
                                 </div>
                             </div>
                         </div>
 
-                        { showRelationship === 'databases' ? (
-                                <RepositoryDatabaseTable
-                                    database_backups={database_backups}
-                                />
-                            ): showRelationship === 'clients' ? (
-                                <RepositoryClientsTable
-                                    clients={clients}
-                                />
-                            ) : showRelationship === 'hosting' ? (
-                                <RepositoryHostingTable
-                                    hosting={repository.relationships.hosting}
-                                />
-                            ) : null
-                        }
-
+                        {showRelationship === "databases" ? (
+                            <RepositoryDatabaseTable
+                                database_backups={database_backups}
+                            />
+                        ) : showRelationship === "clients" ? (
+                            <RepositoryClientsTable clients={clients} />
+                        ) : showRelationship === "hosting" ? (
+                            <RepositoryHostingTable
+                                hosting={repository.relationships.hosting}
+                            />
+                        ) : null}
                     </div>
                 </div>
             </AuthenticatedLayout>
