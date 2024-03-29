@@ -6,9 +6,8 @@ use App\Models\Repository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
 class DatabaseRepositoryMail extends Mailable
 {
@@ -34,7 +33,7 @@ class DatabaseRepositoryMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Notifier - ' . '(' . $this->repository->name . ')' . ' - ' . strtoupper($this->status),
+            subject: 'Notifier - '.'('.$this->repository->name.')'.' - '.strtoupper($this->status),
         );
     }
 

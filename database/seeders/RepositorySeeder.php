@@ -2,14 +2,9 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
 use App\Models\Git;
-use App\Models\Repository;
-use Illuminate\Support\Str;
 use App\Services\GitlabService;
 use Illuminate\Database\Seeder;
-use GuzzleHttp\Client as GuzzleClient;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RepositorySeeder extends Seeder
 {

@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GitController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ClientRepositoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GitController;
 use App\Http\Controllers\HostingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
-use App\Http\Controllers\RepositoryClientDetachController;
+use App\Http\Controllers\TestController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,8 +68,8 @@ route::middleware('auth:sanctum')->group(function () {
     // 🔺 CLIENT REPOSITORY - relationship
     route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
         route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
-        route::post('attach',  [ClientRepositoryController::class, 'attach'])->name('attach');
-        route::patch('update',  [ClientRepositoryController::class, 'update'])->name('update');
+        route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
+        route::patch('update', [ClientRepositoryController::class, 'update'])->name('update');
     });
 
     // 🔺 DATABASES
@@ -99,7 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
 
 // DELETE IN PRODUCTION
 if (app()->isLocal()) {

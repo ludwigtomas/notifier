@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use ZipArchive;
-use Carbon\Carbon;
-use App\Models\Repository;
-use Illuminate\Http\Request;
 use App\Models\RepositoryDatabase;
-use App\Jobs\RepositoryDatabaseJob;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreDatabaseRequest;
+use ZipArchive;
 
 class RepositoryDatabaseController extends Controller
 {
@@ -19,7 +14,7 @@ class RepositoryDatabaseController extends Controller
     {
         $repository_database->delete();
 
-        Storage::delete($repository_database->path . '/' . $repository_database->name);
+        Storage::delete($repository_database->path.'/'.$repository_database->name);
 
         return back();
     }
@@ -28,20 +23,20 @@ class RepositoryDatabaseController extends Controller
     {
         $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 
-        $file_name = explode('/', $databases[0]->path)[0] . '.zip';
-        $file_path = storage_path('app/' . $file_name);
+        $file_name = explode('/', $databases[0]->path)[0].'.zip';
+        $file_path = storage_path('app/'.$file_name);
         $password = 'test';
 
         $zip = new ZipArchive();
 
         $zip_file = $zip->open($file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-        if ($zip_file === TRUE) {
+        if ($zip_file === true) {
 
             // $zip->setPassword($password); (:  for some reason this doesn't work  :)
 
             foreach ($databases as $file) {
-                $zip->addFile(storage_path('app/' . $file->path . '/' . $file->name), $file->name);
+                $zip->addFile(storage_path('app/'.$file->path.'/'.$file->name), $file->name);
 
                 $zip->setEncryptionName($file->name, ZipArchive::EM_AES_256, $password);
             }
@@ -51,7 +46,7 @@ class RepositoryDatabaseController extends Controller
             // Nyní odešlete soubor ke stažení
             return response()->download($file_path)->deleteFileAfterSend(true);
         } else {
-            return "Failed to create the zip file.";
+            return 'Failed to create the zip file.';
         }
     }
 
@@ -60,7 +55,7 @@ class RepositoryDatabaseController extends Controller
         $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 
         foreach ($databases as $database) {
-            File::delete(storage_path('app/' . $database->path . '/' . $database->name));
+            File::delete(storage_path('app/'.$database->path.'/'.$database->name));
 
             $database->delete();
         }

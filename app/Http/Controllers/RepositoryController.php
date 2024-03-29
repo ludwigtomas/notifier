@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\DatabaseBackupResource;
+use App\Http\Resources\RepositoryResource;
 use App\Models\Client;
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\ClientResource;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\RepositoryResource;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\DatabaseBackupResource;
 use App\Services\GitlabService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Inertia\Response;
 
 class RepositoryController extends Controller
 {
@@ -23,8 +22,8 @@ class RepositoryController extends Controller
             ->with('clients')
             ->withCount('clients', 'database_backups', 'hosting')
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('slug', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('slug', 'like', '%'.$search.'%');
             })
             ->when($request->trashed === 'true', function ($query, $trashed) {
                 $query->withTrashed();
@@ -34,7 +33,7 @@ class RepositoryController extends Controller
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryResource::collection($repositories),
-            'filters' => $request->only('search', 'trashed')
+            'filters' => $request->only('search', 'trashed'),
         ]);
     }
 
@@ -50,7 +49,7 @@ class RepositoryController extends Controller
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
             'clients' => ClientResource::collection($clients),
-            'database_backups' =>  DatabaseBackupResource::collection($database_backups),
+            'database_backups' => DatabaseBackupResource::collection($database_backups),
         ]);
     }
 

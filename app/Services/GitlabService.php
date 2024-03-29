@@ -4,23 +4,23 @@ namespace App\Services;
 
 use App\Jobs\RepositoryNotifierJob;
 use App\Models\Git;
-use Carbon\Carbon;
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GitlabService
 {
     public static function getUserID(Git $gitlab): void
     {
         $client = new GuzzleClient([
-            "base_uri" => "https://gitlab.com/api/v4/",
+            'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
         try {
-            $response = $client->request('GET', 'users?username=' . $gitlab->username);
+            $response = $client->request('GET', 'users?username='.$gitlab->username);
 
             $body = json_decode($response->getBody()->getContents())[0];
 
@@ -39,7 +39,7 @@ class GitlabService
     public static function downloadAvatar($gitlab): void
     {
         $client = new GuzzleClient([
-            "base_uri" => "https://gitlab.com/api/v4/",
+            'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
         try {
@@ -47,24 +47,24 @@ class GitlabService
 
             $body = $response->getBody();
 
-            $path = "avatars/" . $gitlab->username . ".png";
+            $path = 'avatars/'.$gitlab->username.'.png';
             Storage::deleteDirectory('path');
             Storage::put($path, $body);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage() . 'download avatar error', ['gitlab' => $gitlab]);
+            Log::error($th->getMessage().'download avatar error', ['gitlab' => $gitlab]);
         }
     }
 
     public static function getRepositories($gitlab): void
     {
         $client = new GuzzleClient([
-            "base_uri" => "https://gitlab.com/api/v4/",
+            'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
         try {
             $response = $client->request('GET', 'groups/64297613/projects?order_by=updated_at&sort=desc', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                    'Authorization' => 'Bearer '.$gitlab->api_token,
                 ],
             ]);
 
@@ -109,13 +109,13 @@ class GitlabService
         $gitlab = Git::whereSlug('gitlab')->first();
 
         $client = new GuzzleClient([
-            "base_uri" => "https://gitlab.com/api/v4/",
+            'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
         try {
-            $response = $client->request('GET', 'projects/' . $repository->id . '/repository/commits?per_page=1&page=1', [
+            $response = $client->request('GET', 'projects/'.$repository->id.'/repository/commits?per_page=1&page=1', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                    'Authorization' => 'Bearer '.$gitlab->api_token,
                 ],
             ]);
 

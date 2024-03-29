@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Client;
-use App\Models\Repository;
 use App\Models\ClientRepository;
+use App\Models\Repository;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

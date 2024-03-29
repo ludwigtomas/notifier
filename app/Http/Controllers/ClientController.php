@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Models\Client;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\ClientResource;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Http\Resources\RepositoryResource;
+use App\Models\Client;
 use App\Models\Repository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class ClientController extends Controller
 {
@@ -19,15 +19,15 @@ class ClientController extends Controller
         $clients = Client::query()
             ->with('repositories')
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
             })
             ->orderBy('name')
             ->paginate(10);
 
         return inertia('Clients/Index', [
             'clients' => ClientResource::collection($clients),
-            'filters' => $request->only('search')
+            'filters' => $request->only('search'),
         ]);
     }
 
@@ -41,10 +41,10 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request): RedirectResponse
     {
         $client = Client::create([
-            'name'  => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'ico'   => $request->ico,
+            'ico' => $request->ico,
         ]);
 
         $client->repositories()->sync($request->repositories);
@@ -69,10 +69,10 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request, Client $client): RedirectResponse
     {
         $client->update([
-            'name'  => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'ico'   => $request->ico,
+            'ico' => $request->ico,
         ]);
 
         $client->repositories()->sync($request->repositories);

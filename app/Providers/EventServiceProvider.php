@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Repository;
-use App\Observers\RepositoryObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +25,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
     }
-
 
     /**
      * Determine if events and listeners should be automatically discovered.

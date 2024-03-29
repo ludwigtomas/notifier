@@ -4,11 +4,7 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Resources\GitResource;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\HostingResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\RepositoryDatabaseResource;
 
 class RepositoryResource extends JsonResource
 {
@@ -23,7 +19,7 @@ class RepositoryResource extends JsonResource
             'id' => $this->id,
             'analytics_property_id' => $this->analytics_property_id,
 
-            'name'  => $this->name,
+            'name' => $this->name,
             'slug' => $this->slug,
             'website_url' => $this->website_url,
             'repository_url' => $this->repository_url,

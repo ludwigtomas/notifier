@@ -2,24 +2,20 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
     PencilSquareIcon,
-    TrashIcon,
     EyeIcon,
     EyeSlashIcon,
-    PlusIcon,
     ChevronRightIcon,
     CircleStackIcon,
     CalendarDaysIcon,
     UsersIcon,
-    ShieldCheckIcon,
     ClipboardIcon,
     ServerIcon,
-    CheckIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
 import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
-import Pagination from "@/Components/Pagination";
+import RepositoryHostingTable from "@/Pages/Repositories/Partials/RepositoryHostingTable";
 
 export default function Show({ auth, repository, database_backups, clients }) {
     const [showCode, setShowCode] = useState(false);
@@ -109,20 +105,6 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                         <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                     </Link>
-
-                                    {/* <Link
-                                        as="button"
-                                        method="delete"
-                                        preserveScroll
-                                        href={route( "repositories.destroy", repository.id)}
-                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-sky-500"
-                                    >
-                                        <span className="text-gray-200">
-                                            Smazat
-                                        </span>
-
-                                        <TrashIcon className="w-6 h-6 text-red-500" />
-                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -362,8 +344,6 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
                         </div>
 
-                        {console.log(repository)}
-
                         { showRelationship === 'databases' ? (
                                 <RepositoryDatabaseTable
                                     database_backups={database_backups}
@@ -371,6 +351,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             ): showRelationship === 'clients' ? (
                                 <RepositoryClientsTable
                                     clients={clients}
+                                />
+                            ) : showRelationship === 'hosting' ? (
+                                <RepositoryHostingTable
+                                    hosting={repository.relationships.hosting}
                                 />
                             ) : null
                         }

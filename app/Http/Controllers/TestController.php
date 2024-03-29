@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Repository;
-use Illuminate\Http\Request;
-use Spatie\Analytics\Period;
 use Spatie\Analytics\Facades\Analytics;
+use Spatie\Analytics\Period;
 
 class TestController extends Controller
 {

@@ -3,14 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Database\Seeders\GitSeeder;
 use Illuminate\Database\Seeder;
-use Database\Seeders\AdminSeeder;
-use Database\Seeders\ClientSeeder;
-use Database\Seeders\HostingSeeder;
-use Database\Seeders\RepositorySeeder;
-use Database\Seeders\ClientRepositorySeeder;
-use Database\Seeders\RepositoryDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {

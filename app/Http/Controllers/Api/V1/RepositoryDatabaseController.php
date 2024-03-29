@@ -2,30 +2,27 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Throwable;
+use App\Http\Controllers\Controller;
+use App\Jobs\RepositoryDatabaseJob;
 use App\Models\Repository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\Jobs\RepositoryDatabaseJob;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class RepositoryDatabaseController extends Controller
 {
-
-
     public function store(Request $request, Repository $repository)
     {
         try {
             $this->checkPassword($request->password, $repository);
 
-            $path = $repository->slug . '/databases/' . Carbon::now()->format('Y') . '/' . Carbon::now()->format('m');
+            $path = $repository->slug.'/databases/'.Carbon::now()->format('Y').'/'.Carbon::now()->format('m');
 
-            $backup_name = Carbon::now()->format('Y-m-d') . '.sql';
+            $backup_name = Carbon::now()->format('Y-m-d').'.sql';
 
             $this->checkIfRepositoryFileExists($repository, $path, $backup_name);
-
 
             // check if DATABASE already exists
             if ($repository->database_backups()->where('name', $backup_name)->exists()) {
@@ -74,7 +71,7 @@ class RepositoryDatabaseController extends Controller
     {
         $isReady = $password === $repository->database_verification_code;
 
-        if (!$isReady) {
+        if (! $isReady) {
             $this->sendMail($repository, 'failed', 'Invalid password');
 
             return response()->json([
@@ -84,11 +81,11 @@ class RepositoryDatabaseController extends Controller
         }
     }
 
-    private function checkIfRepositoryFileExists(Repository $repository, String $path, String $backup_name)
+    private function checkIfRepositoryFileExists(Repository $repository, string $path, string $backup_name)
     {
         $all_files = Storage::allFiles($path);
 
-        if (in_array($path . '/' . $backup_name, $all_files)) {
+        if (in_array($path.'/'.$backup_name, $all_files)) {
 
             $this->sendMail($repository, 'failed', 'Database backup "FILE" already exists');
 

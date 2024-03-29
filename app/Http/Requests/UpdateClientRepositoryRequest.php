@@ -32,14 +32,13 @@ class UpdateClientRepositoryRequest extends FormRequest
      *
      * @return array<string, string>
      */
-
     public function messages(): array
     {
         return [
             'relationship.required' => 'The relationship field is required.',
             'relationship.string' => 'The relationship field must be a string.',
             'relationship.in' => 'The selected relationship is invalid.',
-            
+
             'client_email.email' => 'The client email must be a valid email address.',
         ];
     }

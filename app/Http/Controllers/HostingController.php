@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Models\Hosting;
-use App\Models\Repository;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\HostingResource;
 use App\Http\Requests\StoreHostingRequest;
 use App\Http\Requests\UpdateHostingRequest;
+use App\Http\Resources\HostingResource;
+use App\Models\Hosting;
+use App\Models\Repository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class HostingController extends Controller
 {
@@ -21,7 +21,7 @@ class HostingController extends Controller
 
         return inertia('Hostings/Index', [
             'hostings' => HostingResource::collection(Hosting::all()),
-            'filters' => $request->only('search')
+            'filters' => $request->only('search'),
         ]);
     }
 
