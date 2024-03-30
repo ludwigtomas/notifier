@@ -18,10 +18,12 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
+
             $table->integer('analytics_property_id')->nullable();
 
             $table->string('name');
             $table->string('slug')->unique();
+            $table->string('avatar')->nullable();
             $table->string('website_url')->nullable();
             $table->string('repository_url')->nullable();
             $table->longText('description')->nullable();

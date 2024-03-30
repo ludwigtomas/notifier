@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Git;
 use App\Models\Repository;
+use App\Services\GitlabService;
 use Spatie\Analytics\Facades\Analytics;
 use Spatie\Analytics\Period;
 
@@ -10,12 +12,16 @@ class TestController extends Controller
 {
     public function index()
     {
-        dd(Repository::withTrashed()->get());
+        $gitlab = Git::whereSlug('gitlab')->first();
 
-        dd(Period::days(30));
+        GitlabService::getRepositories($gitlab);
 
-        $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(30));
+        // dd(Repository::withTrashed()->get());
 
-        return $analyticsData;
+        // dd(Period::days(30));
+
+        // $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(30));
+
+        // return $analyticsData;
     }
 }

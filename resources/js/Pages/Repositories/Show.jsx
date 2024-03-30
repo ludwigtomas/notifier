@@ -34,15 +34,12 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
     // Function to copy the code to clipboard
     const handleCopyToClipboard = () => {
-        if (!showCode) {
-            alert("Nelze zkopírovat skrytý kód");
-        }
-
         let backup_code = repository.database_verification_code;
-        let backup_url =
-            "https://notifier.ludwigtomas.cz/api/v1/repositories/" +
-            repository.slug;
 
+        let backup_url =
+            import.meta.env.VITE_APP_URL +
+            "/api/v1/repositories/" +
+            repository.slug;
         let env_code =
             "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url;
 
@@ -218,9 +215,13 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                                     <span className="text-purple-400">
                                                         {showCode
-                                                            ? "https://notifier.ludwigtomas.cz/api/v1/repositories/" +
+                                                            ? import.meta.env
+                                                                  .VITE_APP_URL +
+                                                              "/api/v1/repositories/" +
                                                               repository.slug
-                                                            : "https://notifier.ludwigtomas.cz/api/v1/repositories/xxxxx-xxxxx"}
+                                                            : import.meta.env
+                                                                  .VITE_APP_URL +
+                                                              "/api/v1/repositories/xxxxx-xxxxx"}
                                                     </span>
 
                                                     <span className="text-blue-400">
@@ -282,31 +283,35 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                 <div className="text-base text-center">
                                                     <span className="text-yellow-300">
                                                         ssh
-                                                    </span>
-                                                    {" "}
-
+                                                    </span>{" "}
                                                     <span className="text-purple-400">
-                                                        { repository.relationships.hosting.login_user }
+                                                        {
+                                                            repository
+                                                                .relationships
+                                                                .hosting
+                                                                .login_user
+                                                        }
                                                     </span>
-
                                                     <span className="text-green-300">
                                                         @
                                                     </span>
-
                                                     <span className="text-purple-400">
-                                                        { repository.relationships.hosting.ip_address}
-                                                    </span>
-
-                                                    {" "}
-
+                                                        {
+                                                            repository
+                                                                .relationships
+                                                                .hosting
+                                                                .ip_address
+                                                        }
+                                                    </span>{" "}
                                                     <span className="text-green-300">
                                                         -p
-                                                    </span>
-
-                                                    {" "}
-
+                                                    </span>{" "}
                                                     <span className="text-purple-400">
-                                                        { repository.relationships.hosting.ip_port}
+                                                        {
+                                                            repository
+                                                                .relationships
+                                                                .hosting.ip_port
+                                                        }
                                                     </span>
                                                 </div>
                                             </div>

@@ -21,6 +21,7 @@ class RepositoryResource extends JsonResource
 
             'name' => $this->name,
             'slug' => $this->slug,
+            'avatar' => $this->avatar,
             'website_url' => $this->website_url,
             'repository_url' => $this->repository_url,
             'description' => $this->description,

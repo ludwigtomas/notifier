@@ -16,7 +16,9 @@ export default function Pagination({ links }) {
                         <div
                             key={key}
                             className="px-4 py-3 text-sm leading-4 text-gray-300 ring-2 ring-zinc-900 bg-zinc-700 rounded cursor-not-allowed"
-                            dangerouslySetInnerHTML={{__html: link.label}}
+                            dangerouslySetInnerHTML={
+                                (link.label === 'pagination.previous' ? { __html: 'Předchozí' } : { __html: 'Další' })
+                            }
                         />
                     ) : (
                         <Link

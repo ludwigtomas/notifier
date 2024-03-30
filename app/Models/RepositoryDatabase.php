@@ -21,14 +21,6 @@ class RepositoryDatabase extends Model
         'updated_at',
     ];
 
-    // protected function path(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: fn (string $value) => ucfirst($value),
-    //         set: fn (string $value) => 'Awd',
-    //     );
-    // }
-
     public function repository(): BelongsTo
     {
         return $this->belongsTo(Repository::class);

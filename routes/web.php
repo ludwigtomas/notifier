@@ -48,6 +48,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
         route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
+        route::delete('/{repository}/delete', [RepositoryController::class, 'delete'])->name('delete');
 
         route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');

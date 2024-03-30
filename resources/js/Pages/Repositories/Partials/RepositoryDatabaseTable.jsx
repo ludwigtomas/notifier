@@ -162,7 +162,7 @@ export default function RepositoryDatabaseTable({ database_backups }) {
                                 <td className="px-4 py-4">
                                     <input
                                         type="checkbox"
-                                        className="rounded-md"
+                                        className="rounded-md p-3"
                                         onChange={(e) => {
                                             if (e.target.checked) {
                                                 setSelectedDatabases([...selectedDatabases, database.id]);

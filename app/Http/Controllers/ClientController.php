@@ -31,6 +31,15 @@ class ClientController extends Controller
         ]);
     }
 
+    public function show(Client $client): Response
+    {
+        $client->load('repositories');
+
+        return inertia('Clients/Show', [
+            'client' => new ClientResource($client),
+        ]);
+    }
+
     public function create(): Response
     {
         return inertia('Clients/Create', [

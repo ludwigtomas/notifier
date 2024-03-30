@@ -99,10 +99,7 @@ export default function RepositoryClientsTable({ clients }) {
 
                                 <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <Link
-                                        href={route(
-                                            "clients.show",
-                                            client.id
-                                        )}
+                                        href={route("clients.show", client.id)}
                                         className="text-sky-500 hover:text-sky-600"
                                     >
                                         <EyeIcon className="w-5 h-5" />

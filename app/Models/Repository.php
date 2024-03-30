@@ -24,6 +24,7 @@ class Repository extends Model
 
         'name',                        // automatically - api
         'slug',                        // automatically - generated
+        'avatar',                      // automatically - api
         'website_url',                 //! manually added
         'repository_url',              // automatically - api
         'description',                 //! manually added
@@ -35,7 +36,7 @@ class Repository extends Model
         'updated_at',                  // automatically - api
         'created_at',                  // automatically - api
 
-        'subscription_to',
+        'subscription_to',             //! manually added
 
     ];
 
