@@ -14,13 +14,6 @@ The Notifier
     - [Start project](#point_right-start-project)
     - [Supervisor setup](#point_right-supervisor-setup)
     - [Supervisor config](#point_right-supervisor-config)
-
-<br>
-<br>
-- [Contact](#handshake-contact)
-    - [Prerequisites](#bangbang-prerequisites)
-    - [Installation](#gear-installation)
-
 ## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
