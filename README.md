@@ -16,10 +16,13 @@ The Notifier
     - [Supervisor config](#point_right-supervisor-config)
     - [Supervisor start](#point_right-supervisor-start)
 
+<br>
+
 ## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
 
+<br>
 
 ## :point_right: Frameworks
 -   Laravel 10.x
@@ -27,6 +30,8 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   ReactJS
 -   MySQL
 -   TailwindCSS 3.x
+
+<br>
 
 ## :point_right: Requirements
 -   PHP 8.3
@@ -37,8 +42,12 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   Node
 -   Redis
 
+<br>
+
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
+
+<br>
 
 ## :point_right: Project setup
 ### Clone project
@@ -111,6 +120,8 @@ MAIL_FROM_NAME="${APP_NAME}"
 #### `DB_USERNAME` (required)
 #### `DB_PASSWORD` (required)
 
+<br>
+
 ## :point_right: Start project
 
 ```sh
@@ -140,6 +151,8 @@ php artisan serve
 ```sh
 php run dev
 ```
+
+<br>
 
 ## :point_right: Supervisor setup
 - <b>laravel_horizon</b> - for managing queues
@@ -174,6 +187,8 @@ nano notifier.conf
 ```
 
 - paste the following <b>config</b> 
+
+<br>
 
 ## :point_right: Supervisor config
 - ⚠️ <code>important - change the path to your project path</code> ⚠️
@@ -233,6 +248,8 @@ stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.l
 <br>
 
 - Then you need to update supervisor and start the notifier group
+
+<br>
 
 ## :point_right: Supervisor start
 ```sh
