@@ -42,7 +42,7 @@ class HostingController extends Controller
     public function destroy(Hosting $hosting): RedirectResponse
     {
         $hosting->delete();
-
+        
         return back();
     }
 }

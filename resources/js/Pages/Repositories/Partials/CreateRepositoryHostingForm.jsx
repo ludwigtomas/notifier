@@ -41,9 +41,9 @@ export default function Show({ repository, className = "" }) {
 
             <form
                 onSubmit={submit}
-                className="mt-6 grid grid-cols-12 gap-5 items-start"
+                className="mt-6"
             >
-                <div className="col-span-6 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
                             htmlFor="name"

@@ -285,33 +285,19 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                         ssh
                                                     </span>{" "}
                                                     <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting
-                                                                .login_user
-                                                        }
+                                                        { repository.relationships.hosting.login_user }
                                                     </span>
                                                     <span className="text-green-300">
                                                         @
                                                     </span>
                                                     <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting
-                                                                .ip_address
-                                                        }
+                                                        { repository.relationships.hosting.ip_address }
                                                     </span>{" "}
                                                     <span className="text-green-300">
                                                         -p
                                                     </span>{" "}
                                                     <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting.ip_port
-                                                        }
+                                                        { repository.relationships.hosting.ip_port }
                                                     </span>
                                                 </div>
                                             </div>

@@ -12,8 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
-        $schedule->command('gitlab:repositories');
+        $schedule->command('gitlab:repositories')->hourly();
+        $schedule->command('gitlab:repositories')->at('15:00');
     }
 
     /**

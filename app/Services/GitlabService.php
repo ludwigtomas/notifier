@@ -141,7 +141,7 @@ class GitlabService
         RepositoryNotifierJob::dispatch($repository);
     }
 
-    private function downloadRepositoryAvatar(Repository $repository, $repository_api, Git $gitlab): void
+    private static function downloadRepositoryAvatar(Repository $repository, $repository_api, Git $gitlab): void
     {
         if ($repository_api->avatar_url) {
             try {

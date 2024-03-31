@@ -1,28 +1,29 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
 import { ClockIcon } from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-export default function Show({ clients, repository, className = "" }) {
-
-    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
-        id: repository.relationships.hosting.id ?? 0,
-        name: repository.relationships.hosting.name ?? '',
-        hosting: repository.relationships.hosting.hosting ?? '',
-        ip_address: repository.relationships.hosting.ip_address ?? '',
-        ip_port: repository.relationships.hosting.ip_port ?? '',
-        login_user: repository.relationships.hosting.login_user ?? '',
-        login_password: repository.relationships.hosting.login_password ?? '',
-    });
+export default function Show({ repository, className = "" }) {
+    const { data, setData, put, errors, processing, recentlySuccessful } =
+        useForm({
+            id: repository.relationships.hosting.id ?? 0,
+            name: repository.relationships.hosting.name ?? "",
+            hosting: repository.relationships.hosting.hosting ?? "",
+            ip_address: repository.relationships.hosting.ip_address ?? "",
+            ip_port: repository.relationships.hosting.ip_port ?? "",
+            login_user: repository.relationships.hosting.login_user ?? "",
+            login_password:
+                repository.relationships.hosting.login_password ?? "",
+        });
 
     const submit = (e) => {
         e.preventDefault();
 
-        put(route('hostings.update', data.id), {
+        put(route("hostings.update", data.id), {
             preserveScroll: true,
         });
     };
@@ -41,9 +42,9 @@ export default function Show({ clients, repository, className = "" }) {
 
             <form
                 onSubmit={submit}
-                className="mt-6 grid grid-cols-12 gap-5 items-start"
+                className="mt-6"
             >
-                <div className="col-span-6 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
                             htmlFor="name"
@@ -56,20 +57,14 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="name"
                             value={data.name}
-                            onChange={(e) => setData('name', e.target.value)}
+                            onChange={(e) => setData("name", e.target.value)}
                         />
 
-                        <InputError
-                            className="mt-2"
-                            message={errors.name}
-                        />
+                        <InputError className="mt-2" message={errors.name} />
                     </div>
 
                     <div>
-                        <InputLabel
-                            htmlFor="hosting"
-                            value="hosting"
-                        />
+                        <InputLabel htmlFor="hosting" value="hosting" />
 
                         <TextInput
                             type="text"
@@ -77,20 +72,14 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="hosting"
                             value={data.hosting}
-                            onChange={(e) => setData('hosting', e.target.value)}
+                            onChange={(e) => setData("hosting", e.target.value)}
                         />
 
-                        <InputError
-                            className="mt-2"
-                            message={errors.hosting}
-                        />
+                        <InputError className="mt-2" message={errors.hosting} />
                     </div>
 
                     <div>
-                        <InputLabel
-                            htmlFor="ip_address"
-                            value="ip_address"
-                        />
+                        <InputLabel htmlFor="ip_address" value="ip_address" />
 
                         <TextInput
                             type="text"
@@ -98,7 +87,9 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="ip_address"
                             value={data.ip_address}
-                            onChange={(e) => setData('ip_address', e.target.value)}
+                            onChange={(e) =>
+                                setData("ip_address", e.target.value)
+                            }
                         />
 
                         <InputError
@@ -108,10 +99,7 @@ export default function Show({ clients, repository, className = "" }) {
                     </div>
 
                     <div>
-                        <InputLabel
-                            htmlFor="ip_port"
-                            value="ip_port"
-                        />
+                        <InputLabel htmlFor="ip_port" value="ip_port" />
 
                         <TextInput
                             type="text"
@@ -119,20 +107,14 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="ip_port"
                             value={data.ip_port}
-                            onChange={(e) => setData('ip_port', e.target.value)}
+                            onChange={(e) => setData("ip_port", e.target.value)}
                         />
 
-                        <InputError
-                            className="mt-2"
-                            message={errors.ip_port}
-                        />
+                        <InputError className="mt-2" message={errors.ip_port} />
                     </div>
 
                     <div>
-                        <InputLabel
-                            htmlFor="login_user"
-                            value="login_user"
-                        />
+                        <InputLabel htmlFor="login_user" value="login_user" />
 
                         <TextInput
                             type="text"
@@ -140,7 +122,9 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="login_user"
                             value={data.login_user}
-                            onChange={(e) => setData('login_user', e.target.value)}
+                            onChange={(e) =>
+                                setData("login_user", e.target.value)
+                            }
                         />
 
                         <InputError
@@ -161,7 +145,9 @@ export default function Show({ clients, repository, className = "" }) {
                             className="mt-1 block w-full"
                             placeholder="login_password"
                             value={data.login_password}
-                            onChange={(e) => setData('login_password', e.target.value)}
+                            onChange={(e) =>
+                                setData("login_password", e.target.value)
+                            }
                         />
 
                         <InputError
@@ -190,11 +176,10 @@ export default function Show({ clients, repository, className = "" }) {
                         as="button"
                         method="DELETE"
                         preserveScroll
-                        href={route('hostings.destroy', data.id)}
+                        href={route("hostings.destroy", data.id)}
                         className="flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     >
                         <TrashIcon className="w-5 h-5 mr-2 text-white" />
-
                         Smazat
                     </Link>
                 </div>

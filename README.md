@@ -2,27 +2,42 @@
 The Notifier
 </h1>
 
-## Description
+# :notebook_with_decorative_cover: Summary
+
+- [Description](#point_right-description)
+- [Getting Started](#toolbox-getting-started)
+  - [Prerequisites](#bangbang-prerequisites)
+  - [Installation](#gear-installation)
+- [Usage](#eyes-usage)
+- [Contributing](#wave-contributing)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+
+## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
 
 
-## Requirements
--   PHP 8.3
--   Git
--   Composer
--   MySQL
--   Npm
--   Node
-
-## Frameworks
+## 👉 Frameworks
 -   Laravel 10.x
 -   InertiaJS
 -   ReactJS
 -   MySQL
 -   TailwindCSS 3.x
 
-## Project setup
+## 👉 Requirements
+-   PHP 8.3
+-   Git
+-   Composer
+-   MySQL
+-   Npm
+-   Node
+-   Redis
+
+## 👉 Important
+-   Supervisor - for running queue, scheduler
+
+## 👉 Project setup
 
 1. Download project from Gitlab
 ```sh
@@ -98,7 +113,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 #### `DB_USERNAME (required)`
 #### `DB_PASSWORD (required)`
 
-## Start project
+## 👉 Start project
 
 ```sh
 composer install
@@ -126,4 +141,112 @@ php artisan serve
 
 ```sh
 php run dev
+```
+
+## 👉 Supervisor setup
+- <b>laravel_horizon</b> - for managing queues
+- <b>pulse_check</b> - check VPS status (Ram, CPU, Disk, etc.)
+- <b>pulse_work</b> - for showing visual representation of the data
+- <b>schedule_work</b> - for running scheduler
+
+<br>
+
+<p>
+Usual path to supervisor config file is 
+</p>
+
+```sh
+cd /etc/supervisor/conf.d/
+```
+
+or 
+
+```sh
+cd /etc/supervisor/supervisord.conf
+```
+
+- Then you need to create new file with <b>.conf</b> extension and paste the following code
+- So for example lets create new file called <b>notifier.conf</b> (becase of the project name)
+
+```sh
+nano notifier.conf
+```
+
+- paste the following code
+
+<br>
+
+<details>
+  <summary><code>Supervisor config</code></summary>
+
+```sh
+[group:notifier]
+programs=laravel_horizon,pulse_check,pulse_work, schedule_work
+
+[program:laravel_horizon]
+process_name=%(program_name)s
+command=php /home/bubak/Desktop/project/notifier/artisan horizon
+directory=/home/bubak/Desktop/project/notifier
+autostart=true
+autorestart=true
+user=www-data
+stopwaitsecs=3600
+stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
+stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
+
+
+[program:pulse_check]
+process_name=%(program_name)s
+command=php /home/bubak/Desktop/project/notifier/artisan pulse:check
+directory=/home/bubak/Desktop/project/notifier
+autostart=true
+autorestart=true
+user=www-data
+stopwaitsecs=3600
+stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+
+[program:pulse_work]
+process_name=%(program_name)s
+command=php /home/bubak/Desktop/project/notifier/artisan pulse:work
+directory=/home/bubak/Desktop/project/notifier
+autostart=true
+autorestart=true
+user=www-data
+stopwaitsecs=3600
+stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+
+[program:schedule_work]
+process_name=%(program_name)s
+command=php /home/bubak/Desktop/project/notifier/artisan schedule:work
+directory=/home/bubak/Desktop/project/notifier
+autostart=true
+autorestart=true
+user=www-data
+stopwaitsecs=3600
+stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
+stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
+```
+
+</details>
+
+- ⚠️ <code>important - change the path to your project path</code> ⚠️
+
+- Save the file and exit <code>( ctrl + x, ctrl + y, enter)</code>
+
+<br>
+
+- Then you need to update supervisor and start the notifier group
+
+```sh
+supervisorctl reread
+```
+
+```sh
+supervisorctl update
+```
+
+```sh
+supervisorctl start notifier:*
 ```

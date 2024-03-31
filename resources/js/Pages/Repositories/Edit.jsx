@@ -1,16 +1,23 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {
-    EyeIcon,
-    ChevronRightIcon,
-} from "@heroicons/react/24/outline";
 import UpdateRepositoryInformationForm from "@/Pages/Repositories/Partials/UpdateRepositoryInformationForm";
 import UpdateRepositoryDetachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryDetachClientsForm";
 import UpdateRepositoryAttachClientsForm from "@/Pages/Repositories/Partials/UpdateRepositoryAttachClientsForm";
 import UpdateRepositoryHostingForm from "@/Pages/Repositories/Partials/UpdateRepositoryHostingForm";
 import CreateRepositoryHostingForm from "@/Pages/Repositories/Partials/CreateRepositoryHostingForm";
 import Dropdown from "@/Components/Dropdown";
-
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { motion } from "framer-motion";
+import {
+    PencilSquareIcon,
+    EyeIcon,
+    EyeSlashIcon,
+    ChevronRightIcon,
+    CircleStackIcon,
+    CalendarDaysIcon,
+    UsersIcon,
+    ClipboardIcon,
+    ServerIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Edit({ auth, repository, clients }) {
 
@@ -101,12 +108,106 @@ export default function Edit({ auth, repository, clients }) {
                         />
                     </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl grid grid-cols-2 gap-20">
                         {repository.relationships.hosting ? (
                             <UpdateRepositoryHostingForm repository={repository}/>
                         ) : (
                             <CreateRepositoryHostingForm repository={repository}/>
                         )}
+
+                            <div className="mb-20 flex justify-center items-center">
+                                <div className="w-full bg-stone-900 p-1 drop-shadow-2xl rounded-xl overflow-hidden">
+                                    <div className="flex justify-between items-center relative">
+                                        <div className="absolute left-1/2 -translate-x-1/2">
+                                            <span className="text-gray-400 mr-4">
+                                                .ssh
+                                            </span>
+                                            <span className="text-white text-xl font-bold uppercase">
+                                                VPS connection
+                                            </span>
+                                        </div>
+
+                                        <div className="p-2 flex space-x-2">
+                                            <div className="space-x-2">
+                                                <motion.button
+                                                    whileHover={{ scale: 1.1 }}
+                                                    whileTap={{ scale: 0.9 }}
+                                                >
+                                                    <ClipboardIcon className="w-6 h-6" />
+                                                </motion.button>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-4 flex space-x-2">
+                                            <div className="rounded-full w-3 h-3 bg-red-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
+                                            <div className="rounded-full w-3 h-3 bg-green-500"></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="w-full flex items-center justify-center">
+                                        <div className="bg-stone-800 rounded-lg w-full">
+                                            <div
+                                                id="code-area"
+                                                className="p-5 space-y-3"
+                                            >
+                                                <div className="text-base text-center">
+                                                    <span className="text-yellow-300">
+                                                        ssh
+                                                    </span>{" "}
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting?.login_user }
+                                                    </span>
+                                                    <span className="text-green-300">
+                                                        @
+                                                    </span>
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting?.ip_address }
+                                                    </span>{" "}
+                                                    <span className="text-green-300">
+                                                        -p
+                                                    </span>{" "}
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting?.ip_port }
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {/* <div className="flex items-center">
+                            <div className="w-full flex items-center justify-center">
+                                <div className="bg-stone-800 rounded-lg w-full">
+                                    <div
+                                        id="code-area"
+                                        className="p-5 space-y-3"
+                                    >
+                                        <div className="text-base text-center">
+                                            <span className="text-yellow-300">
+                                                ssh
+                                            </span>{" "}
+                                            <span className="text-purple-400">
+                                                { repository.relationships.hosting?.login_user }
+                                            </span>
+                                            <span className="text-green-300">
+                                                @
+                                            </span>
+                                            <span className="text-purple-400">
+                                                { repository.relationships.hosting?.ip_address }
+                                            </span>{" "}
+                                            <span className="text-green-300">
+                                                -p
+                                            </span>{" "}
+                                            <span className="text-purple-400">
+                                                { repository.relationships.hosting?.ip_port }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                     </div>
 
                     {/* Another options */}
