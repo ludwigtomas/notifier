@@ -6,12 +6,12 @@ The Notifier
 
 - [Description](#point_right-description)
 - [Frameworks](#point_right-frameworks)
-  - [Prerequisites](#bangbang-prerequisites)
-  - [Installation](#gear-installation)
-- [Usage](#eyes-usage)
-- [Contributing](#wave-contributing)
-- [License](#warning-license)
+- [Requirements](#point_right-requirements)
+<br>
+<br>
 - [Contact](#handshake-contact)
+    - [Prerequisites](#bangbang-prerequisites)
+    - [Installation](#gear-installation)
 
 ## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
@@ -25,7 +25,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   MySQL
 -   TailwindCSS 3.x
 
-## 👉 Requirements
+## :point_right: Requirements
 -   PHP 8.3
 -   Git
 -   Composer
@@ -34,10 +34,10 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   Node
 -   Redis
 
-## 👉 Important
+## :point_right: Important
 -   Supervisor - for running queue, scheduler
 
-## 👉 Project setup
+## :point_right: Project setup
 
 1. Download project from Gitlab
 ```sh
@@ -113,7 +113,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 #### `DB_USERNAME (required)`
 #### `DB_PASSWORD (required)`
 
-## 👉 Start project
+## :point_right: Start project
 
 ```sh
 composer install
@@ -143,7 +143,7 @@ php artisan serve
 php run dev
 ```
 
-## 👉 Supervisor setup
+## :point_right: Supervisor setup
 - <b>laravel_horizon</b> - for managing queues
 - <b>pulse_check</b> - check VPS status (Ram, CPU, Disk, etc.)
 - <b>pulse_work</b> - for showing visual representation of the data
