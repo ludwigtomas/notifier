@@ -14,6 +14,7 @@ The Notifier
     - [Start project](#point_right-start-project)
     - [Supervisor setup](#point_right-supervisor-setup)
     - [Supervisor config](#point_right-supervisor-config)
+
 ## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
@@ -174,8 +175,7 @@ nano notifier.conf
 - paste the following <b>config</b> 
 
 ## :point_right: Supervisor config
-<details>
-  <summary><code>Supervisor config</code></summary>
+- ⚠️ <code>important - change the path to your project path</code> ⚠️
 
 ```sh
 [group:notifier]
@@ -226,10 +226,6 @@ stopwaitsecs=3600
 stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
 stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
 ```
-
-</details>
-
-- ⚠️ <code>important - change the path to your project path</code> ⚠️
 
 - Save the file and exit <code>( ctrl + x, ctrl + y, enter)</code>
 
