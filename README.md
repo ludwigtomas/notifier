@@ -7,6 +7,14 @@ The Notifier
 - [Description](#point_right-description)
 - [Frameworks](#point_right-frameworks)
 - [Requirements](#point_right-requirements)
+- [Important](#point_right-important)
+- [Setup](#point_right-project-setup)
+    - [Clone project](#clone-project)
+    - [Setup ENV file](#setup-env-file)
+    - [Start](#point_right-start)
+    - [Supervisor setup](#point_right-supervisor-setup)
+    - [Supervisor config](#point_right-supervisor-config)
+
 <br>
 <br>
 - [Contact](#handshake-contact)
@@ -37,16 +45,15 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
 
-## :point_right: Project setup
-
-1. Download project from Gitlab
+## :point_right: Setup
+### Clone project
 ```sh
 git clone https://gitlab.com/bubak1/portfolio/the-notifier.git
 ```
 
-2. Open folder
+### Setup ENV file
 ```sh
-cd Notifier
+cd The-notifier
 ```
 
 3. Copy .env.example file and create .env file
@@ -82,38 +89,34 @@ MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS="hello@example.com"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
-#### `APP_NAME (required - string)`
+
+#### `APP_NAME` (required - string)
 - name of project 
 
-
-#### `APP_ENV (required - local, production)`
+#### `APP_ENV` (required - local, production)
 - local for local development
 - production for production build
 
-
-#### `APP_DEBUG (required - true, false)`
+#### `APP_DEBUG` (required - true, false)
 - true for local development
 - false for production
 
-
-#### `APP_URL (required - localhost, domain url)`
+#### `APP_URL` (required - localhost, domain url)
 - local development -> localhost / 127.0.0.1
 - production -> domain url (for example: `APP_URL=https://ludwigtomas.cz/`)
 
-
-#### `LOG_CHANNEL (required - stack, daily)`
+#### `LOG_CHANNEL` (required - stack, daily)
 - stack - create laravel.log and all logs are logged here
 - daily - creates laravel.log depending on date (`laravel-2023-12-14.log`, `laravel-2023-12-15.log`, `laravel-2023-12-16.log`)
 
+#### `DB_CONNECTION` (required - mysql)
+#### `DB_HOST` (required)
+#### `DB_PORT` (required)
+#### `DB_DATABASE` (required)
+#### `DB_USERNAME` (required)
+#### `DB_PASSWORD` (required)
 
-#### `DB_CONNECTION (required - mysql)`
-#### `DB_HOST (required)`
-#### `DB_PORT (required)`
-#### `DB_DATABASE (required)`
-#### `DB_USERNAME (required)`
-#### `DB_PASSWORD (required)`
-
-## :point_right: Start project
+## :point_right: Start
 
 ```sh
 composer install
@@ -151,15 +154,18 @@ php run dev
 
 <br>
 
-<p>
-Usual path to supervisor config file is 
-</p>
+- First you need to install supervisor
+```sh
+apt install supervisor
+```
+
+- Usual path to supervisor config file is 
 
 ```sh
 cd /etc/supervisor/conf.d/
 ```
 
-or 
+-  or 
 
 ```sh
 cd /etc/supervisor/supervisord.conf
@@ -174,8 +180,7 @@ nano notifier.conf
 
 - paste the following code
 
-<br>
-
+## :point_right: Supervisor config
 <details>
   <summary><code>Supervisor config</code></summary>
 
