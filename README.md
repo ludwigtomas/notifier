@@ -5,7 +5,7 @@ The Notifier
 # :notebook_with_decorative_cover: Summary
 
 - [Description](#point_right-description)
-- [Getting Started](#toolbox-getting-started)
+- [Frameworks](#point_right-frameworks)
   - [Prerequisites](#bangbang-prerequisites)
   - [Installation](#gear-installation)
 - [Usage](#eyes-usage)
@@ -18,7 +18,7 @@ The main purpose of this website is to store database backups, VPS information (
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
 
 
-## 👉 Frameworks
+## :point_right: Frameworks
 -   Laravel 10.x
 -   InertiaJS
 -   ReactJS
