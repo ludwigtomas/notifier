@@ -12,8 +12,9 @@ The Notifier
     - [Clone project](#clone-project)
     - [Setup ENV file](#setup-env-file)
     - [Start project](#point_right-start-project)
-    - [Supervisor setup](#point_right-supervisor-setup)
+- [Supervisor setup](#point_right-supervisor-setup)
     - [Supervisor config](#point_right-supervisor-config)
+    - [Supervisor start](#point_right-supervisor-start)
 
 ## :point_right: Description
 The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
@@ -233,6 +234,7 @@ stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.l
 
 - Then you need to update supervisor and start the notifier group
 
+## :point_right: Supervisor start
 ```sh
 supervisorctl reread
 ```
