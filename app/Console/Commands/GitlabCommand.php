@@ -30,7 +30,5 @@ class GitlabCommand extends Command
         $gitlab = Git::whereSlug('gitlab')->first();
 
         $gitlab = GitlabService::getRepositories($gitlab);
-
-        $this->info($gitlab);
     }
 }

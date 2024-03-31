@@ -10,26 +10,30 @@ export default function Pagination({ links }) {
 
     return (
         <div className="mb-4">
+
+            <div>
+
+                <span className="text-sm text-gray-400">
+                    Showing
+                    <span className="font-medium"> {links.from} </span>
+                    to
+                    <span className="font-medium"> {links.to} </span>
+                    of
+                    <span className="font-medium"> {links.total} </span>
+                    results
+                </span>
+            </div>
+
             <div className="flex flex-wrap mt-8 space-x-2">
-                {links.links.map((link, key) =>
-                    link.url === null ? (
-                        <div
-                            key={key}
-                            className="px-4 py-3 text-sm leading-4 text-gray-300 ring-2 ring-zinc-900 bg-zinc-700 rounded cursor-not-allowed"
-                            dangerouslySetInnerHTML={
-                                (link.label === 'pagination.previous' ? { __html: 'Předchozí' } : { __html: 'Další' })
-                            }
-                        />
-                    ) : (
-                        <Link
-                            key={key}
-                            className={getClassName(link.active)}
-                            href={link.url}
-                            preserveScroll
-                            dangerouslySetInnerHTML={{ __html: link.label }}
-                        />
-                    )
-                )}
+                {links.links.map((link, key) => (
+                    <Link
+                        key={key}
+                        className={getClassName(link.active)}
+                        href={link.url}
+                        preserveScroll
+                        dangerouslySetInnerHTML={{ __html: link.label === 'pagination.next' ? 'Next' : link.label === 'pagination.previous' ? 'Previous' : link.label}}
+                    />
+                ))}
             </div>
         </div>
     );

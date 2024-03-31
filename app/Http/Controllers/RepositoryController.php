@@ -22,10 +22,12 @@ class RepositoryController extends Controller
             ->with('clients')
             ->withCount('clients', 'database_backups', 'hosting')
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('slug', 'like', '%'.$search.'%');
+                $query->whereAny([
+                    'name',
+                    'slug'
+                ], 'like', '%' . $search . '%');
             })
-            ->when($request->trashed === 'true', function ($query, $trashed) {
+            ->when($request->trashed, function ($query, $trashed) {
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')

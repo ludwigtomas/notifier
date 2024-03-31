@@ -49,9 +49,7 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const debouncedSearch = debounce((value) => {
-        router.get(
-            route("repositories.index"),
-            {
+        router.get(route("repositories.index"),{
                 search: value,
             },
             {

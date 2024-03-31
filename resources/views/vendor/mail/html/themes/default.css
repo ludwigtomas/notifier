@@ -288,6 +288,12 @@ img {
     margin: 21px 0;
 }
 
+.panel-grey {
+    border-left: 0px;
+    margin: auto 0;
+}
+
+
 .panel-red,
 .panel-failed,
 .panel-error {
@@ -295,13 +301,19 @@ img {
     margin: 21px 0;
 }
 
-.panel-content {
+.panel-content-green {
+    background-color: #C1FFD9;
+    color: #718096;
+    padding: 16px;
+}
+
+.panel-content-default {
     background-color: #edf2f7;
     color: #718096;
     padding: 16px;
 }
 
-.panel-content p {
+.panel-content-default p {
     color: #718096;
 }
 
