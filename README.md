@@ -8,10 +8,10 @@ The Notifier
 - [Frameworks](#point_right-frameworks)
 - [Requirements](#point_right-requirements)
 - [Important](#point_right-important)
-- [Setup](#point_right-project-setup)
+- [Project setup](#point_right-project-setup)
     - [Clone project](#clone-project)
     - [Setup ENV file](#setup-env-file)
-    - [Start](#point_right-start)
+    - [Start project](#point_right-start-project)
     - [Supervisor setup](#point_right-supervisor-setup)
     - [Supervisor config](#point_right-supervisor-config)
 
@@ -45,7 +45,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
 
-## :point_right: Setup
+## :point_right: Project setup
 ### Clone project
 ```sh
 git clone https://gitlab.com/bubak1/portfolio/the-notifier.git
@@ -116,7 +116,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 #### `DB_USERNAME` (required)
 #### `DB_PASSWORD` (required)
 
-## :point_right: Start
+## :point_right: Start project
 
 ```sh
 composer install
