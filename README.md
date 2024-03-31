@@ -178,7 +178,7 @@ cd /etc/supervisor/supervisord.conf
 nano notifier.conf
 ```
 
-- paste the following code
+- paste the following <b>config</b> 
 
 ## :point_right: Supervisor config
 <details>
