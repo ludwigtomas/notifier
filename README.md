@@ -8,6 +8,9 @@ The Notifier
 - [Frameworks](#point_right-frameworks)
 - [Requirements](#point_right-requirements)
 - [Important](#point_right-important)
+- [Packages](#point_right-packages)
+    - [Composer](#composer)
+    - [NPM](#npm)
 - [Project setup](#point_right-project-setup)
     - [Clone project](#clone-project)
     - [Setup ENV file](#setup-env-file)
@@ -44,6 +47,25 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   php pcntl (extension)
 
 <br>
+
+## :point_right: Packages
+### Composer
+-   <a href="https://docs.guzzlephp.org/en/stable/">Guzzle HTTP</a>
+-   <a href="https://inertiajs.com/">Inertia</a>
+-   <a href="https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia">Laravel Breeze</a>
+-   <a href="https://laravel.com/docs/11.x/horizon">Laravel Horizon</a>
+-   <a href="https://laravel.com/docs/11.x/pulse">Laravel Pulse</a>
+-   <a href="https://log-viewer.opcodes.io/">LogViewer</a>
+-   <a href="https://github.com/predis/predis">Predis/Predis</a>
+-   <a href="https://github.com/tighten/ziggy">Ziggy</a>
+-   <a href="https://github.com/spatie/laravel-sitemap">Spatie - sitemap</a>
+-   <a href="https://github.com/barryvdh/laravel-debugbar">Laravel debugbar</a>
+
+### NPM
+-   <a href="https://headlessui.com/">Headless UI</a>
+-   <a href="https://heroicons.com/">Heroicons</a>
+-   <a href="https://lodash.com/">Loadash</a>
+
 
 ## :point_right: Project setup
 ### Clone project
