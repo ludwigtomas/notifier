@@ -2,7 +2,7 @@
 The Notifier
 </h1>
 
-# :notebook_with_decorative_cover: Summary
+### :notebook_with_decorative_cover: Summary
 
 - [Description](#point_right-description)
 - [Frameworks](#point_right-frameworks)
