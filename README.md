@@ -72,17 +72,16 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 git clone https://gitlab.com/bubak1/portfolio/the-notifier.git
 ```
 
-### Setup ENV file
 ```sh
 cd The-notifier
 ```
-
-3. Copy .env.example file and create .env file
+### Setup ENV file
+- Copy .env.example file and create .env file
 ```sh
 cp .env.example .env
 ```
 
-3. open .env file
+- open .env file
 ```sh
 APP_NAME=GreenHosting
 APP_ENV=local
