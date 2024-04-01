@@ -1,4 +1,4 @@
-<h1 align="center">
+<h1 style="text-align: center;">
 The Notifier
 </h1>
 
