@@ -1,6 +1,10 @@
-<h1 style="text-align: center;">
-The Notifier
-</h1>
+<div align="center">
+    <h1>The Notifier</h1>
+    <a href="https://ludwigtomas.cz/">
+        odkaz na web
+    </a>
+</div>
+
 
 ### :notebook_with_decorative_cover: Summary
 
