@@ -41,6 +41,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
+-   php pcntl (extension)
 
 <br>
 
