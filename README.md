@@ -42,7 +42,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
--   php pcntl (extension)
+-   php pcntl (extension for running queue - Horizon)
 
 ## :point_right: Packages
 ### Composer
