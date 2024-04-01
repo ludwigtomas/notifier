@@ -155,6 +155,7 @@ php run dev
 <br>
 
 ## :point_right: Supervisor setup
+There are 4 different processes that need to be run by supervisor
 - <b>laravel_horizon</b> - for managing queues
 - <b>pulse_check</b> - check VPS status (Ram, CPU, Disk, etc.)
 - <b>pulse_work</b> - for showing visual representation of the data
@@ -208,7 +209,6 @@ stopwaitsecs=3600
 stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
 stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
 
-
 [program:pulse_check]
 process_name=%(program_name)s
 command=php /home/bubak/Desktop/project/notifier/artisan pulse:check
@@ -247,11 +247,9 @@ stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.l
 
 <br>
 
+## :point_right: Supervisor start
 - Then you need to update supervisor and start the notifier group
 
-<br>
-
-## :point_right: Supervisor start
 ```sh
 supervisorctl reread
 ```
