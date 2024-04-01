@@ -18,7 +18,7 @@
     @inertiaHead
 </head>
 
-<body class="font-sans antialiased" style="margin-bottom:0px">
+<body class="font-sans antialiased min-h-screen bg-zinc-800" style="margin-bottom:0px">
     @inertia
 </body>
 

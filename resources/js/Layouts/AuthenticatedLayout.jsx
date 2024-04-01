@@ -2,106 +2,29 @@ import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import {
     PresentationChartBarIcon,
     BugAntIcon,
     ArchiveBoxIcon,
     UsersIcon,
-    CogIcon,
     ServerStackIcon,
-} from "@heroicons/react/24/outline";
+} from "@heroicons/react/24/solid";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-zinc-800">
-            <nav className="bg-zinc-900 border-b border-stone-600">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="bg-sky-500 w-12 h-12 p-1.5 rounded-xl" />
-                                </Link>
-                            </div>
+        <main className="flex flex-row items-start justify-start min-h-screen">
+            <aside className="min-h-screen relative grid w-[16rem]">
+                <nav className="bg-zinc-900 fixed w-56 h-full left-0 top-0 py-20 ">
+                    <div className="flex flex-col items-center justify-between h-full">
+                        <div className="flex flex-col items-center space-y-5">
+                            <Link href="/">
+                                <ApplicationLogo className="bg-sky-500 w-20 h-20 p-1.5 rounded-xl" />
+                            </Link>
 
-                            <div className="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("dashboard.index")}
-                                    active={route().current("dashboard.*")}
-                                    className="gap-4"
-                                >
-                                    <PresentationChartBarIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Dashboard
-                                </NavLink>
-
-                                <NavLink
-                                    href={route("gits.index")}
-                                    active={route().current("gits.*")}
-                                    className="gap-4"
-                                >
-                                    <BugAntIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Git
-                                </NavLink>
-
-                                <NavLink
-                                    href={route("repositories.index")}
-                                    active={route().current("repositories.*")}
-                                    className="gap-4"
-                                >
-                                    <ArchiveBoxIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Repozitáře
-                                </NavLink>
-
-                                <NavLink
-                                    href={route("clients.index")}
-                                    active={route().current("clients.*")}
-                                    className="gap-4"
-                                >
-                                    <UsersIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Klienti
-                                </NavLink>
-
-                                <NavLink
-                                    href={route("hostings.index")}
-                                    active={route().current("hostings.*")}
-                                    className="gap-4"
-                                >
-                                    <ServerStackIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Hostingy
-                                </NavLink>
-                                {/* <NavLink
-                                    href={route("clients.index")}
-                                    active={route().current("clients.*")}
-                                    className="gap-4"
-                                >
-                                    <CircleStackIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Backups
-                                </NavLink>
-
-                                <NavLink
-                                    href={route("clients.index")}
-                                    active={route().current("clients.*")}
-                                    className="gap-4"
-                                >
-                                    <TableCellsIcon className="w-6 h-6 text-sky-500"/>
-
-                                    Templates
-                                </NavLink> */}
-                            </div>
-                        </div>
-
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative ">
+                            <div className="relative">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
@@ -127,7 +50,7 @@ export default function Authenticated({ user, header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content>
+                                    <Dropdown.Content align="left">
                                         <Dropdown.Link
                                             href={route("profile.edit")}
                                         >
@@ -144,134 +67,114 @@ export default function Authenticated({ user, header, children }) {
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
-
-                            <div className="ms-3 relative ">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-none text-[20px]  hover:text-sky-500 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                <CogIcon className="w-8 h-8"/>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <a
-                                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                            href={route("horizon.index")}
-                                        >
-                                            Horizon
-                                        </a>
-
-                                        <a
-                                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                            href='/dashboard/pulse'
-                                        >
-                                            Pulse
-                                        </a>
-
-                                        <a
-                                            className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                            href={route("log-viewer.index")}
-                                        >
-                                            Log Viewer
-                                        </a>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                        <div className="space-y-2 px-4">
+                            <NavLink
+                                href={route("dashboard.index")}
+                                active={route().current("dashboard.*")}
+                                className="gap-4 w-full"
                             >
-                                <svg
-                                    className="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
+                                <PresentationChartBarIcon className="size-6"/>
+
+                                <span className="w-full">
+                                    Dashboard
+                                </span>
+                            </NavLink>
+
+                            <NavLink
+                                href={route("gits.index")}
+                                active={route().current("gits.*")}
+                                className="gap-4 w-full"
+                            >
+                                <BugAntIcon className="size-6"/>
+
+                                <span className="w-full">
+                                    Git
+                                </span>
+                            </NavLink>
+
+                            <NavLink
+                                href={route("repositories.index")}
+                                active={route().current("repositories.*")}
+                                className="gap-4 w-full"
+                            >
+                                <ArchiveBoxIcon className="size-6"/>
+
+                                <span className="w-full">
+                                    Repozitáře
+                                </span>
+                            </NavLink>
+
+                            <NavLink
+                                href={route("clients.index")}
+                                active={route().current("clients.*")}
+                                className="gap-4 w-full"
+                            >
+                                <UsersIcon className="size-6"/>
+
+                                <span className="w-full">
+                                    Klienti
+                                </span>
+                            </NavLink>
+
+                            <NavLink
+                                href={route("hostings.index")}
+                                active={route().current("hostings.*")}
+                                className="gap-4 w-full"
+                            >
+                                <ServerStackIcon className="size-6"/>
+
+                                <span className="w-full">
+                                    Hostingy
+                                </span>
+                            </NavLink>
+                        </div>
+
+                        <div className="flex items-center flex-col">
+                            <div className="relative grid grid-cols-3">
+                                <a
+                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    href={route("horizon.index")}
                                 >
-                                    <path
-                                        className={
-                                            !showingNavigationDropdown
-                                                ? "inline-flex"
-                                                : "hidden"
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={
-                                            showingNavigationDropdown
-                                                ? "inline-flex"
-                                                : "hidden"
-                                        }
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                                    Horizon
+                                </a>
 
-                <div
-                    className={
-                        (showingNavigationDropdown ? "block" : "hidden") +
-                        " sm:hidden"
-                    }
-                >
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            href={route("dashboard.index")}
-                            active={route().current("dashboard")}
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                                <a
+                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    href='/dashboard/pulse'
+                                >
+                                    Pulse
+                                </a>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
-                                {user.name}
-                            </div>
-                            <div className="font-medium text-sm text-gray-500">
-                                {user.email}
+                                <a
+                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    href={route("log-viewer.index")}
+                                >
+                                    Log Viewer
+                                </a>
+
                             </div>
                         </div>
+                    </div>
+                </nav>
+            </aside>
 
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                method="post"
-                                href={route("logout")}
-                                as="button"
-                            >
-                                Log Out
-                            </ResponsiveNavLink>
+            <section className="w-full">
+                {header && (
+                    <header className="bg-zinc-900">
+                        <div className="py-6 px-4 sm:px-6 lg:px-8">
+                            {header}
                         </div>
-                    </div>
+                    </header>
+                )}
+
+                <div className="max-w-[90rem] mx-auto">
+                    {children}
                 </div>
-            </nav>
+            </section>
 
-            {header && (
-                <header className="bg-zinc-900 shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
+        </main>
 
-            <main>{children}</main>
-        </div>
     );
 }

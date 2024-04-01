@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Jobs\RepositoryNotifierJob;
+use Throwable;
+use Carbon\Carbon;
 use App\Models\Git;
 use App\Models\Repository;
-use Carbon\Carbon;
-use GuzzleHttp\Client as GuzzleClient;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Throwable;
+use App\Jobs\RepositoryNotifierJob;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Facades\Storage;
 
 class GitlabService
 {
@@ -50,8 +50,7 @@ class GitlabService
 
             $path = 'avatars/' . $gitlab->username . '.png';
 
-            Storage::put($path, $body);
-
+            Storage::disk('public')->put($path, $body);
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'download avatar error', ['gitlab' => $gitlab]);
         }
@@ -136,7 +135,7 @@ class GitlabService
         }
     }
 
-    private static function sendNotificationToClient(Repository $repository)
+    private static function sendNotificationToClient(Repository $repository): void
     {
         RepositoryNotifierJob::dispatch($repository);
     }
@@ -163,7 +162,7 @@ class GitlabService
                     'avatar' => $repository->slug . '.png',
                 ]);
 
-                Storage::put($path, $body);
+                Storage::disk('public')->put($path, $body);
             } catch (Throwable $th) {
                 Log::error($th->getMessage() . 'download repository avatar error', ['repository' => $repository]);
             }
