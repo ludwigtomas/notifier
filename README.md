@@ -24,7 +24,7 @@ The main purpose of this website is to store database backups, VPS information (
 catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
 
 ## :point_right: Frameworks
--   Laravel 10.x
+-   Laravel 11.x
 -   InertiaJS
 -   ReactJS
 -   MySQL
