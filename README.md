@@ -40,13 +40,9 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   Redis
 -   Supervisor
 
-<br>
-
 ## :point_right: Important
 -   Supervisor - for running queue, scheduler
 -   php pcntl (extension)
-
-<br>
 
 ## :point_right: Packages
 ### Composer
@@ -65,7 +61,6 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   <a href="https://headlessui.com/">Headless UI</a>
 -   <a href="https://heroicons.com/">Heroicons</a>
 -   <a href="https://lodash.com/">Loadash</a>
-
 
 ## :point_right: Project setup
 ### Clone project
