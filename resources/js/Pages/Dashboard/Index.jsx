@@ -20,8 +20,8 @@ export default function Dashboard({ auth }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-zinc-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-300">
                             Dashboard
                         </div>
                     </div>
