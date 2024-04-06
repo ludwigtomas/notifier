@@ -21,7 +21,7 @@ export default function Authenticated({ user, header, children }) {
                     <div className="flex flex-col items-center justify-between h-full">
                         <div className="flex flex-col items-center space-y-5">
                             <Link href="/">
-                                <ApplicationLogo className="bg-sky-500 w-20 h-20 p-1.5 rounded-xl" />
+                                <ApplicationLogo className="bg-zinc-950 w-20 h-20 p-1.5 rounded-xl" />
                             </Link>
 
                             <div className="relative">
@@ -132,23 +132,23 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="flex items-center flex-col">
-                            <div className="relative grid grid-cols-3">
+                            <div className="relative grid grid-cols-1">
                                 <a
-                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
                                     href={route("horizon.index")}
                                 >
                                     Horizon
                                 </a>
 
                                 <a
-                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
                                     href='/dashboard/pulse'
                                 >
                                     Pulse
                                 </a>
 
                                 <a
-                                    className="px-1 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
+                                    className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
                                     href={route("log-viewer.index")}
                                 >
                                     Log Viewer

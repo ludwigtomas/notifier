@@ -80,7 +80,7 @@ export default function Index({ auth, hostings, filters }) {
             }
         >
 
-        <Head title="Dashboard" />
+        <Head title="Hostings" />
 
         </AuthenticatedLayout>
     );

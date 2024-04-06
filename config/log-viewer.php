@@ -44,7 +44,7 @@ return [
     |
     */
 
-    'back_to_system_url' => config('app.url', null),
+    'back_to_system_url' => '/dashboard',
 
     'back_to_system_label' => 'Zpátky do dashboardu', // Displayed by default: "Back to {{ app.name }}"
 
@@ -131,6 +131,7 @@ return [
     */
 
     'include_files' => [
+        'cron.log',
         '*.log',
         '**/*.log',
 
