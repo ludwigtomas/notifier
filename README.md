@@ -83,7 +83,7 @@ cp .env.example .env
 
 - open .env file
 ```sh
-APP_NAME=GreenHosting
+APP_NAME=Notifier
 APP_ENV=local
 APP_KEY=
 APP_DEBUG=true
@@ -277,3 +277,13 @@ supervisorctl update
 ```sh
 supervisorctl start notifier:*
 ```
+<br>
+<br>
+<br>
+
+<div align="center">
+    <h1>vytvořil:</h1>
+    <a href="https://ludwigtomas.cz/">
+        Ludwig Tomáš
+    </a>
+</div>
