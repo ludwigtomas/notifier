@@ -18,6 +18,7 @@ class ClientController extends Controller
     {
         $clients = Client::query()
             ->with('repositories')
+            ->withCount('repositories')
             ->when($request->search, function ($query, $search) {
                 $query->where('name', 'like', '%'.$search.'%')
                     ->orWhere('email', 'like', '%'.$search.'%');
