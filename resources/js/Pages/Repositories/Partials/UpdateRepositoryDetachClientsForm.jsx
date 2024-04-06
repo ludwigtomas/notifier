@@ -94,11 +94,8 @@ export default function Show({ repository, className = "" }) {
                                                 id="client_email"
                                                 className="mt-1 block w-full"
                                                 placeholder="---"
-                                                value={client.client_email}
-                                                onChange={(e) => setData("client_email", e.target.value)}
-                                                isFocused
+                                                defaultValue={client.client_email}
                                                 disabled
-                                                readOnly
                                             />
                                         )}
                                     </div>

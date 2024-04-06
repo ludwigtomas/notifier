@@ -1,22 +1,19 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { ClockIcon } from "@heroicons/react/24/outline";
-import Dropdown from "@/Components/Dropdown";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import GoBackLink from "@/Components/GoBackLink";
 
 export default function UpdateClientInformationForm({
     client,
     className = "",
 }) {
-
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
-        name: client.name,
-        email: client.email,
-        phone: client.phone,
-        ico: client.ico,
+        name: client.name ?? '',
+        email: client.email ?? '',
+        phone: client.phone ?? '',
+        ico: client.ico ?? '',
     });
 
     const submit = (e) => {
@@ -149,14 +146,11 @@ export default function UpdateClientInformationForm({
                     )}
 
                     <div>
-                        <Link
-                            href={route('repositories.index')}
-                            className="inline-flex items-center px-4 py-2 bg-gray-400 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-gray-300 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                        <GoBackLink
+                            href={route('clients.index')}
                         >
-                            <span className="text-gray-800">
-                                Zpátky
-                            </span>
-                        </Link>
+                            Zpátky
+                        </GoBackLink>
                     </div>
                 </div>
             </form>

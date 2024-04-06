@@ -94,13 +94,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </Link>
 
                             <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
-                                <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-4 grid gap-y-2 ">
+                                <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
                                     <Link
-                                        href={route(
-                                            "repositories.edit",
-                                            repository.id
-                                        )}
-                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-1.5 rounded-lg border border-transparent hover:border-green-500"
+                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-green-500"
+                                        href={route("repositories.edit", repository.id)}
                                     >
                                         <span className="text-gray-200">
                                             Editovat
@@ -114,7 +111,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                     </header>
                 }
             >
-                <Head title={repository.name + " repozitář"} />
+                <Head title={repository.name + " - Show"} />
 
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

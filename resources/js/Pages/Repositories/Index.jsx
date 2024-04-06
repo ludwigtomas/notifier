@@ -84,7 +84,7 @@ export default function Index({ auth, repositories, filters }) {
                 </header>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Repositories" />
 
             {/* TABLE */}
             <div className="py-12">

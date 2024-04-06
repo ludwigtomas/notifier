@@ -117,19 +117,23 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'projects/' . $repository->id . '/repository/commits?per_page=1&page=1', [
+            $response = $client->request('GET', 'projects/' . $repository->id . '/repository/commits', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
+                'query' => [
+                    'per_page' => 1,
+                    'page' => 1,
+                ]
             ]);
 
             $repository_api = json_decode($response->getBody()->getContents());
 
             $repository->last_commit_at < Carbon::parse($repository_api[0]->committed_date) ? self::sendNotificationToClient($repository) : null;
 
-            // $repository->update([
-            //     'last_commit_at' => Carbon::parse($repository_api[0]->created_at),
-            // ]);
+            $repository->update([
+                'last_commit_at' => Carbon::parse($repository_api[0]->created_at),
+            ]);
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repository last commit error', ['repository' => $repository]);
         }

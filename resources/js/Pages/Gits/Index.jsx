@@ -33,7 +33,7 @@ export default function Index({ auth, gits }) {
                 </header>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Gits Index" />
 
             {/* TABLE */}
 

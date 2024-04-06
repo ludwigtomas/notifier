@@ -45,14 +45,23 @@ export default function Index({ auth, clients, filters }) {
         })
     }
 
-    const debouncedSearch = debounce((value) => {
+    // const debouncedSearch = debounce((value) => {
+    //     router.get(route('clients.index'), {
+    //         search: value
+    //     }, {
+    //         preserveScroll: true,
+    //         preserveState: true,
+    //     })
+    // }, 500);
+
+        const debouncedSearch = debounce((value) => {
         router.get(route('clients.index'), {
             search: value
         }, {
             preserveScroll: true,
             preserveState: true,
         })
-    }, 100);
+    }, 500);
 
     return (
         <AuthenticatedLayout
@@ -80,7 +89,7 @@ export default function Index({ auth, clients, filters }) {
                 </header>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Clients" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

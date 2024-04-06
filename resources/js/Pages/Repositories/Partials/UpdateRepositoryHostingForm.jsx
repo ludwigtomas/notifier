@@ -16,8 +16,7 @@ export default function Show({ repository, className = "" }) {
             ip_address: repository.relationships.hosting.ip_address ?? "",
             ip_port: repository.relationships.hosting.ip_port ?? "",
             login_user: repository.relationships.hosting.login_user ?? "",
-            login_password:
-                repository.relationships.hosting.login_password ?? "",
+            login_password: repository.relationships.hosting.login_password ?? "",
         });
 
     const submit = (e) => {
@@ -25,6 +24,7 @@ export default function Show({ repository, className = "" }) {
 
         put(route("hostings.update", data.id), {
             preserveScroll: true,
+            
         });
     };
 

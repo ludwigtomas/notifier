@@ -54,7 +54,7 @@ class GitController extends Controller
 
     public function destroy(Git $git): RedirectResponse
     {
-        $git->delete();
+        // $git->delete();
 
         return to_route('gits.index');
     }
