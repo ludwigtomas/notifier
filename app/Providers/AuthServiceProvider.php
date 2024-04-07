@@ -28,5 +28,11 @@ class AuthServiceProvider extends ServiceProvider
             'tkasparek01@gmail.com',
             'admin@admin.com',
         ]));
+
+        Gate::define('viewLogViewer', fn (User $user) => in_array($user->email, [
+            'info@ludwigtomas.cz',
+            'tkasparek01@gmail.com',
+            'admin@admin.com',
+        ]));
     }
 }
