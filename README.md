@@ -216,47 +216,47 @@ programs=laravel_horizon,pulse_check,pulse_work, schedule_work
 
 [program:laravel_horizon]
 process_name=%(program_name)s
-command=php /home/bubak/Desktop/project/notifier/artisan horizon
-directory=/home/bubak/Desktop/project/notifier
+command=php /var/www/html/artisan horizon
+directory=/var/www/html
 autostart=true
 autorestart=true
 user=www-data
 stopwaitsecs=3600
-stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
-stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/horizon.log
+stderr_logfile=/var/www/html/storage/logs/horizon.log
+stdout_logfile=/var/www/html/storage/logs/horizon.log
 
 [program:pulse_check]
 process_name=%(program_name)s
-command=php /home/bubak/Desktop/project/notifier/artisan pulse:check
-directory=/home/bubak/Desktop/project/notifier
+command=php /var/www/html/artisan pulse:check
+directory=/var/www/html
 autostart=true
 autorestart=true
 user=www-data
 stopwaitsecs=3600
-stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
-stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+stderr_logfile=/var/www/html/storage/logs/pulse.log
+stdout_logfile=/var/www/html/storage/logs/pulse.log
 
 [program:pulse_work]
 process_name=%(program_name)s
-command=php /home/bubak/Desktop/project/notifier/artisan pulse:work
-directory=/home/bubak/Desktop/project/notifier
+command=php /var/www/html/artisan pulse:work
+directory=/var/www/html
 autostart=true
 autorestart=true
 user=www-data
 stopwaitsecs=3600
-stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
-stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/pulse.log
+stderr_logfile=/var/www/html/storage/logs/pulse.log
+stdout_logfile=/var/www/html/storage/logs/pulse.log
 
 [program:schedule_work]
 process_name=%(program_name)s
-command=php /home/bubak/Desktop/project/notifier/artisan schedule:work
-directory=/home/bubak/Desktop/project/notifier
+command=php /var/www/html/artisan schedule:work
+directory=/var/www/html
 autostart=true
 autorestart=true
 user=www-data
 stopwaitsecs=3600
-stderr_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
-stdout_logfile=/home/bubak/Desktop/project/notifier/storage/logs/schedule_work.log
+stderr_logfile=/var/www/html/storage/logs/schedule_work.log
+stdout_logfile=/var/www/html/storage/logs/schedule_work.log
 ```
 
 - Save the file and exit <code>( ctrl + x, ctrl + y, enter)</code>
