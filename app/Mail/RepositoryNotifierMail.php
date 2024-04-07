@@ -19,6 +19,7 @@ class RepositoryNotifierMail extends Mailable
      */
     public function __construct(
         protected Repository $repository,
+        protected string $commit_message,
         protected Client $client,
     ) {
     }
@@ -43,6 +44,7 @@ class RepositoryNotifierMail extends Mailable
             markdown: 'mail.repositories.repository_notifier',
             with: [
                 'repository' => $this->repository,
+                'commit_message' => $this->commit_message,
                 'client' => $this->client,
             ],
         );

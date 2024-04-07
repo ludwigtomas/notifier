@@ -21,7 +21,11 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'users?username=' . $gitlab->username);
+            $response = $client->request('GET', 'users', [
+                'query' => [
+                    'username' => $gitlab->username,
+                ],
+            ]);
 
             $body = json_decode($response->getBody()->getContents())[0];
 
@@ -63,20 +67,23 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'groups/64297613/projects?order_by=updated_at&sort=desc', [
+            $response = $client->request('GET', 'groups/64297613/projects', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
+                'query' => [
+                    'order_by' => 'updated_at',
+                    'sort' => 'desc',
+                ]
             ]);
 
             $repositories_api = json_decode($response->getBody()->getContents());
 
-            foreach ($repositories_api as $repository_api) {
 
+            foreach ($repositories_api as $repository_api) {
                 $repository = Repository::query()
                     ->withTrashed()
                     ->find($repository_api->id);
-
 
                 if ($repository) {
                     $repository->last_commit_at < Carbon::parse($repository_api->last_activity_at) ? self::sendNotificationToClient($repository) : null;
@@ -129,7 +136,9 @@ class GitlabService
 
             $repository_api = json_decode($response->getBody()->getContents());
 
-            $repository->last_commit_at < Carbon::parse($repository_api[0]->committed_date) ? self::sendNotificationToClient($repository) : null;
+            $commit_message = $repository_api[0]->title;
+
+            $repository->last_commit_at < Carbon::parse($repository_api[0]->committed_date) ? self::sendNotificationToClient($repository, $commit_message) : null;
 
             $repository->update([
                 'last_commit_at' => Carbon::parse($repository_api[0]->created_at),
@@ -139,9 +148,9 @@ class GitlabService
         }
     }
 
-    private static function sendNotificationToClient(Repository $repository): void
+    private static function sendNotificationToClient(Repository $repository, ?string $commit_message = null): void
     {
-        RepositoryNotifierJob::dispatch($repository);
+        RepositoryNotifierJob::dispatch($repository, $commit_message);
     }
 
     private static function downloadRepositoryAvatar(Repository $repository, $repository_api, Git $gitlab): void
@@ -152,7 +161,7 @@ class GitlabService
                     'base_uri' => 'https://gitlab.com/api/v4/',
                 ]);
 
-                $response = $client->request('GET', 'https://gitlab.com/api/v4/projects/' . $repository->id . '/avatar', [
+                $response = $client->request('GET', 'projects/' . $repository->id . '/avatar', [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $gitlab->api_token,
                     ],

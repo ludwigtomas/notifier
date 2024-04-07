@@ -46,7 +46,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                 className="mt-6 grid grid-cols-12 gap-5 items-start"
             >
                 <div className="col-span-12 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                    <div className="grid grid-cols-4">
+                    <div className="grid grid-cols-4 divide-x divide-zinc-600">
                         <div className="flex flex-col items-center justify-center space-y-2">
                             <div>
                                 <ClockIcon className="w-7 h-7 text-sky-500" />
@@ -54,11 +54,11 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
                             <div className="text-center">
                                 <p className="text-white">
-                                    Vytvořeno
+                                    Přidáno (sem)
                                 </p>
 
                                 <p className="flex items-start -mx-2">
-                                    <span className="mx-2 text-zinc-700 truncate w-72 dark:text-zinc-400">
+                                    <span className="mx-2 text-zinc-400 truncate w-72">
                                         {repository.created_at_human}
                                     </span>
                                 </p>
@@ -76,7 +76,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                 </p>
 
                                 <p className="flex items-start -mx-2">
-                                    <span className="mx-2 text-zinc-700 truncate w-72 dark:text-zinc-400">
+                                    <span className="mx-2 text-zinc-400 truncate w-72">
                                         {repository.updated_at_human}
                                     </span>
                                 </p>
@@ -94,7 +94,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                 </p>
 
                                 <p className="flex items-start -mx-2">
-                                    <span className="mx-2 text-zinc-700 truncate w-72 dark:text-zinc-400">
+                                    <span className="mx-2 text-zinc-400 truncate w-72">
                                         {repository.repository_created_at_human}
                                     </span>
                                 </p>
@@ -108,11 +108,11 @@ export default function UpdateRepositoryInformationForm({repository, className =
 
                             <div className="text-center">
                                 <p className="text-white">
-                                    last_commit_at
+                                    Nejnovější commit
                                 </p>
 
                                 <p className="flex items-start -mx-2">
-                                    <span className="mx-2 text-zinc-700 truncate w-72 dark:text-zinc-400">
+                                    <span className="mx-2 text-zinc-400 truncate w-72">
                                         {repository.last_commit_at_human}
                                     </span>
                                 </p>
