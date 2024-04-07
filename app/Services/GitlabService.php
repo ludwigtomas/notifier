@@ -79,21 +79,18 @@ class GitlabService
 
             $repositories_api = json_decode($response->getBody()->getContents());
 
-
             foreach ($repositories_api as $repository_api) {
                 $repository = Repository::query()
                     ->withTrashed()
                     ->find($repository_api->id);
 
                 if ($repository) {
-                    self::getRepositorylastCommit($repository);
 
                     $repository->update([
                         'name' => $repository_api->name,
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'last_commit_at' => Carbon::parse($repository_api->last_activity_at),
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 } else {
@@ -103,11 +100,11 @@ class GitlabService
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
-                        'last_commit_at' => Carbon::parse($repository_api->last_activity_at),
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 }
-
+                
+                self::getRepositorylastCommit($repository);
                 self::downloadRepositoryAvatar($repository, $repository_api, $gitlab);
             }
         } catch (Throwable $th) {
