@@ -250,11 +250,11 @@ export default function Index({ auth, repositories, filters }) {
                                                     </span>
                                                 </td>
 
-                                                <td className="px-4 py-2">
+                                                <td className="px-4 py-2 w-20">
                                                     <img
                                                         src={repository.avatar ? "/storage/avatars/" + repository.avatar : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"}
                                                         alt="test"
-                                                        className="w-12 h-12 object-contain p-1 bg-zinc-800 rounded-xl"
+                                                        className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
                                                     />
                                                 </td>
 
