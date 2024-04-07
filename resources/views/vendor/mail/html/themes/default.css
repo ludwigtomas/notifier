@@ -319,6 +319,7 @@ img {
 
 .panel-item {
     padding: 0;
+    color: rgb(34, 34, 34);
 }
 
 .panel-item p:last-of-type {
