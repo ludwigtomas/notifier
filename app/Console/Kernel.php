@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('gitlab:repositories')->everyMinute();
+        $schedule->command('gitlab:repositories')->everyTwoDays();
     }
 
     /**

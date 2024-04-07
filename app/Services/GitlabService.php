@@ -86,7 +86,7 @@ class GitlabService
                     ->find($repository_api->id);
 
                 if ($repository) {
-                    $repository->last_commit_at < Carbon::parse($repository_api->last_activity_at) ? self::sendNotificationToClient($repository) : null;
+                    self::getRepositorylastCommit($repository);
 
                     $repository->update([
                         'name' => $repository_api->name,
