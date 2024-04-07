@@ -20,7 +20,7 @@ class RepositoryNotifierJob implements ShouldQueue
      */
     public function __construct(
         protected Repository $repository,
-        protected ?string $commit_message,
+        protected $commit_message,
     ) {
     }
 

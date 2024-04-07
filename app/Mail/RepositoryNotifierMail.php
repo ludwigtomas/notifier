@@ -19,7 +19,7 @@ class RepositoryNotifierMail extends Mailable
      */
     public function __construct(
         protected Repository $repository,
-        protected string $commit_message,
+        protected $commit_message,
         protected Client $client,
     ) {
     }

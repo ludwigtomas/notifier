@@ -148,7 +148,7 @@ class GitlabService
         }
     }
 
-    private static function sendNotificationToClient(Repository $repository, ?string $commit_message = 'empty'): void
+    private static function sendNotificationToClient(Repository $repository, $commit_message = null): void
     {
         RepositoryNotifierJob::dispatch($repository, $commit_message);
     }
