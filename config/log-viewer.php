@@ -136,8 +136,8 @@ return [
         '**/*.log',
 
         // You can include paths to other log types as well, such as apache, nginx, and more.
-        '/var/log/httpd/*',
-        '/var/log/nginx/*',
+        // '/var/log/httpd/*',
+        // '/var/log/nginx/*',
 
         // MacOS Apple Silicon logs
         '/opt/homebrew/var/log/nginx/*',
@@ -172,7 +172,7 @@ return [
     |
     */
 
-    'hide_unknown_files' => true,
+    'hide_unknown_files' => false,
 
     /*
     |--------------------------------------------------------------------------
