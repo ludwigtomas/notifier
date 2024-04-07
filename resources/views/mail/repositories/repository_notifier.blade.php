@@ -4,10 +4,6 @@
 {{ $repository->name }}
 </x-mail::headline>
 
-<x-mail::panel color="green" content_color="green">
-Proběhla aktualizace.
-</x-mail::panel>
-
 <p>
 Dobrý den, {{ $client->name }}!
 </p>
@@ -19,13 +15,15 @@ Rád bych Vás informoval, že na Vaší stránce <b>{{ $repository->name }}</b>
 </p>
 
 <br>
+<x-mail::panel color="green" content_color="green">
+{{ $commit_message ?? 'Proběhla aktualizace.' }}.
+</x-mail::panel>
 
 <p>
 Pokud máte nějaké otázky nebo potřebujete konkrétnější informace, neváhejte mě kontaktovat.
 </p>
 
 <br>
-
 <b>Kontaktní informace:</b>
 <x-mail::panel color="grey">
 <a href='mailto:info@ludwigtomas.cz'><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z' /%3E%3C/svg%3E" alt="Email Ikonka" style="vertical-align: middle; width: 1.5rem; height: 1.5rem; margin-right: 0.5rem; margin-top:0.2rem"> info@ludwigtomas.cz</a>
@@ -38,9 +36,8 @@ Pokud máte nějaké otázky nebo potřebujete konkrétnější informace, nevá
 <br>
 
 <p>
-Chcete-li zrušit zasílání novinek, kontaktujte mě pomocí emailu.
+Chcete-li zrušit zasílání novinek ohledně Vašeho webu, kontaktujte mě pomocí emailu.
 </p>
-
 
 <br>
 

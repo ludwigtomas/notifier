@@ -250,14 +250,13 @@ export default function Index({ auth, repositories, filters }) {
                                                     </span>
                                                 </td>
 
-                                                <td>
+                                                <td className="px-4 py-2">
                                                     <img
                                                         src={repository.avatar ? "/storage/avatars/" + repository.avatar : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"}
                                                         alt="test"
-                                                        className="w-12 h-12 object-cover p-1"
+                                                        className="w-12 h-12 object-contain p-1 bg-zinc-800 rounded-xl"
                                                     />
                                                 </td>
-
 
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium text-zinc-400 text-nowrap">
@@ -320,7 +319,7 @@ export default function Index({ auth, repositories, filters }) {
                                                         {repository.website_url ? (
                                                             <a
                                                                 className="bg-green-950 p-2 rounded-xl"
-                                                                href={ repository.repository_url }
+                                                                href={ repository.website_url }
                                                                 target="_blank"
                                                             >
                                                                 <LinkIcon className="text-green-500 w-6 h-6" />
@@ -333,14 +332,12 @@ export default function Index({ auth, repositories, filters }) {
                                                     </div>
 
                                                     <div className="flex items-center justify-center">
-                                                        <div className={ "p-2 rounded-xl " + (repository .relationships.hosting_count >= 1
-                                                                    ? "bg-green-950"
-                                                                    : "bg-red-950")
+                                                        <div
+                                                            className={ "p-2 rounded-xl " + (repository .relationships.hosting_count >= 1
+                                                                ? "bg-green-950"
+                                                                : "bg-red-950")
                                                         }>
-                                                            {repository
-                                                                .relationships
-                                                                .hosting_count >=
-                                                            1 ? (
+                                                            {repository.relationships.hosting_count >= 1 ? (
                                                                 <CheckIcon className="w-6 h-6 text-green-500" />
                                                             ) : (
                                                                 <XMarkIcon className="text-red-500 w-6 h-6" />
@@ -350,11 +347,9 @@ export default function Index({ auth, repositories, filters }) {
 
                                                     <div className="flex items-center justify-center">
                                                         <div
-                                                            className={
-                                                                "p-2 rounded-xl " +
-                                                                (repository.analytics_property_id
-                                                                    ? "bg-green-950"
-                                                                    : "bg-red-950")
+                                                            className={"p-2 rounded-xl " + (repository.analytics_property_id
+                                                                ? "bg-green-950"
+                                                                : "bg-red-950")
                                                             }
                                                         >
                                                             {repository.analytics_property_id ? (
@@ -384,10 +379,7 @@ export default function Index({ auth, repositories, filters }) {
                                                         {repository.deleted_at ? (
                                                             <>
                                                                 <Link
-                                                                    href={route(
-                                                                        "repositories.show",
-                                                                        repository.id
-                                                                    )}
+                                                                    href={route("repositories.show", repository.id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
                                                                     <EyeIcon className="w-6 h-6 text-sky-500" />
@@ -395,11 +387,7 @@ export default function Index({ auth, repositories, filters }) {
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                                    onClick={() =>
-                                                                        toggleModal(
-                                                                            repository
-                                                                        )
-                                                                    }
+                                                                    onClick={() => toggleModal(repository)}
                                                                 >
                                                                     <BackspaceIcon className="w-6 h-6 text-red-500" />
                                                                 </button>
@@ -407,10 +395,7 @@ export default function Index({ auth, repositories, filters }) {
                                                         ) : (
                                                             <>
                                                                 <Link
-                                                                    href={route(
-                                                                        "repositories.show",
-                                                                        repository.id
-                                                                    )}
+                                                                    href={route("repositories.show",repository.id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
                                                                     <EyeIcon className="w-6 h-6 text-sky-500" />
@@ -418,11 +403,7 @@ export default function Index({ auth, repositories, filters }) {
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                                    onClick={() =>
-                                                                        toggleModal(
-                                                                            repository
-                                                                        )
-                                                                    }
+                                                                    onClick={() => toggleModal(repository)}
                                                                 >
                                                                     <TrashIcon className="w-6 h-6 text-red-500" />
                                                                 </button>
