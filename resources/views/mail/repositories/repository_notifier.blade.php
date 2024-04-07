@@ -16,7 +16,7 @@ Rád bych Vás informoval, že na Vaší stránce <b>{{ $repository->name }}</b>
 
 <br>
 <x-mail::panel color="green" content_color="green">
-{{ $commit_message ?? 'Proběhla aktualizace.' }}.
+{{ $commit_message && $commit_message !=='empty' ?? 'Proběhla aktualizace.' }}.
 </x-mail::panel>
 
 <p>
