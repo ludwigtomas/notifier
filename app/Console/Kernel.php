@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('gitlab:repositories');
+        $schedule->command('gitlab:repositories')->dailyAt('00:00');
     }
 
     /**
