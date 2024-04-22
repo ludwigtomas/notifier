@@ -81,7 +81,7 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                                     class="absolute inset-0"
                                 />
 
-                                <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-2xl font-bold rounded-tl-xl">
+                                <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
                                     {databases_count}
                                 </div>
                             </div>
