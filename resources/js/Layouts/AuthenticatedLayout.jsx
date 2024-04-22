@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
@@ -9,19 +8,18 @@ import {
     ArchiveBoxIcon,
     UsersIcon,
     ServerStackIcon,
+    ChevronDownIcon,
 } from "@heroicons/react/24/solid";
 
 export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <main className="flex flex-row items-start justify-start min-h-screen">
-            <aside className="min-h-screen relative grid w-[16rem]">
-                <nav className="bg-zinc-900 fixed w-56 h-full left-0 top-0 py-20 ">
+            <aside className="min-h-screen relative grid w-[6.6rem] lg:w-[16rem]">
+                <nav className="bg-zinc-900 border-r border-neutral-700 fixed lg:w-56 h-full left-0 top-0 py-20 ">
                     <div className="flex flex-col items-center justify-between h-full">
                         <div className="flex flex-col items-center space-y-5">
                             <Link href="/">
-                                <ApplicationLogo className="bg-zinc-950 w-20 h-20 p-1.5 rounded-xl" />
+                                <ApplicationLogo className="bg-zinc-950 size-20 p-1.5 rounded-xl" />
                             </Link>
 
                             <div className="relative">
@@ -34,18 +32,7 @@ export default function Authenticated({ user, header, children }) {
                                             >
                                                 {user.name}
 
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
+                                                <ChevronDownIcon className="ms-2 -me-0.5 size-4" />
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
@@ -77,7 +64,7 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <PresentationChartBarIcon className="size-6"/>
 
-                                <span className="w-full">
+                                <span className="w-full hidden xl:block">
                                     Dashboard
                                 </span>
                             </NavLink>
@@ -89,7 +76,7 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <BugAntIcon className="size-6"/>
 
-                                <span className="w-full">
+                                <span className="w-full hidden xl:block">
                                     Git
                                 </span>
                             </NavLink>
@@ -101,7 +88,7 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <ArchiveBoxIcon className="size-6"/>
 
-                                <span className="w-full">
+                                <span className="w-full hidden xl:block">
                                     Repozitáře
                                 </span>
                             </NavLink>
@@ -113,7 +100,7 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <UsersIcon className="size-6"/>
 
-                                <span className="w-full">
+                                <span className="w-full hidden xl:block">
                                     Klienti
                                 </span>
                             </NavLink>
@@ -125,7 +112,7 @@ export default function Authenticated({ user, header, children }) {
                             >
                                 <ServerStackIcon className="size-6"/>
 
-                                <span className="w-full">
+                                <span className="w-full hidden xl:block">
                                     Hostingy
                                 </span>
                             </NavLink>
@@ -169,12 +156,10 @@ export default function Authenticated({ user, header, children }) {
                     </header>
                 )}
 
-                <div className="max-w-[90rem] mx-auto">
+                <div className="max-w-[100rem] py-8 mx-auto">
                     {children}
                 </div>
             </section>
-
         </main>
-
     );
 }

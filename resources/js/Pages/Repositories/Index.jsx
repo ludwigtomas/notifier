@@ -16,7 +16,7 @@ import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import debounce from "lodash/debounce";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dropdown from "@/Components/Dropdown";
 
 export default function Index({ auth, repositories, filters }) {
@@ -49,6 +49,9 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const debouncedSearch = debounce((value) => {
+
+        setSearch(value);
+
         router.get(route("repositories.index"),{
                 search: value,
             },
@@ -96,11 +99,7 @@ export default function Index({ auth, repositories, filters }) {
                             placeholder="Hledat repozitář"
                             type="text"
                             className="w-72"
-                            value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                debouncedSearch(e.target.value);
-                            }}
+                            onChange={(e) => debouncedSearch(e.target.value)}
                         />
 
                         <div>
@@ -110,17 +109,14 @@ export default function Index({ auth, repositories, filters }) {
                                     name="trashed"
                                     type="checkbox"
                                     className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-900 checked:bg-sky-900 checked:before:bg-sky-900 hover:before:opacity-10"
-                                    checked={
-                                        trashed === "true" || trashed === true
+                                    checked={ trashed === "true" || trashed === true
                                             ? true
                                             : false
                                     }
                                     onChange={(e) => {
                                         setTrashed(e.target.checked);
 
-                                        router.get(
-                                            route("repositories.index"),
-                                            {
+                                        router.get(route("repositories.index"), {
                                                 trashed: e.target.checked,
                                             },
                                             {
