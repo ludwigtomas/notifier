@@ -439,16 +439,16 @@ export default function Index({ auth, repositories, filters }) {
                         </Dropdown.Trigger>
 
                         <Dropdown.Content direction="up">
-                            <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                            <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
                                 Odeslání emailu
                             </h3>
 
                             <Link
                                 href={route("repositories.sync")}
                                 preserveScroll
-                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                className="flex items-center justify-center py-2 text-center text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                             >
-                                <code className="p-1">gitlab:repositories</code>
+                                <code className="p-1 w-full">gitlab:repositories</code>
                             </Link>
                         </Dropdown.Content>
                     </Dropdown>

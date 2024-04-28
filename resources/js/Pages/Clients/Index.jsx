@@ -45,22 +45,18 @@ export default function Index({ auth, clients, filters }) {
         })
     }
 
-    // const debouncedSearch = debounce((value) => {
-    //     router.get(route('clients.index'), {
-    //         search: value
-    //     }, {
-    //         preserveScroll: true,
-    //         preserveState: true,
-    //     })
-    // }, 500);
+    const debouncedSearch = debounce((value) => {
 
-        const debouncedSearch = debounce((value) => {
-        router.get(route('clients.index'), {
-            search: value
-        }, {
-            preserveScroll: true,
-            preserveState: true,
-        })
+        setSearch(value);
+
+        router.get(route("clients.index"),{
+                search: value,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
     }, 500);
 
     return (
@@ -92,7 +88,7 @@ export default function Index({ auth, clients, filters }) {
             <Head title="Clients" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
                     <div className="mb-2">
                         <TextInput
@@ -101,11 +97,7 @@ export default function Index({ auth, clients, filters }) {
                             placeholder="Hledat klienta"
                             type="text"
                             className="w-72"
-                            value={search}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                                debouncedSearch(e.target.value);
-                            }}
+                            onChange={(e) => debouncedSearch(e.target.value)}
                         />
                     </div>
 
@@ -253,15 +245,15 @@ export default function Index({ auth, clients, filters }) {
                     </Dropdown.Trigger>
 
                     <Dropdown.Content direction="up">
-                        <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                        <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
                             Možnosti
                         </h3>
 
                         <Dropdown.Link
                             href={route('clients.create')}
-                            className="border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            className="flex items-center justify-center py-2 text-center text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-sky-500 hover:text-sky-500"
                         >
-                            Vytvořit klienta
+                            <code className="p-1 w-full">Vytvořit klienta</code>
                         </Dropdown.Link>
                     </Dropdown.Content>
                 </Dropdown>

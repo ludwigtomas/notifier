@@ -194,7 +194,7 @@ export default function Dashboard({
                                         >
                                             <div className="flex items-center space-x-4">
                                                 <div className="flex items-center justify-center w-12 h-12 bg-zinc-700 rounded-lg">
-                                                    <ArchiveBoxIcon className="w-6 h-6 text-sky-500" />
+                                                    <ArchiveBoxIcon className="size-6 text-sky-500" />
                                                 </div>
 
                                                 <div>
@@ -213,7 +213,7 @@ export default function Dashboard({
                                                     onClick={() => handleRepositories(repository.id)}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
                                                 >
-                                                    <XMarkIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                                    <XMarkIcon className="size-8 text-red-500 group-hover:text-red-100"/>
                                                 </button>
                                             ) : (
                                                 <button
@@ -221,7 +221,7 @@ export default function Dashboard({
                                                     onClick={() => handleRepositories(repository.id)}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
                                                 >
-                                                    <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
+                                                    <PlusIcon className="size-8 text-green-500 group-hover:text-green-100"/>
                                                 </button>
                                             )}
                                         </div>
@@ -239,7 +239,7 @@ export default function Dashboard({
                                     typeOfButton='submit'
                                     disabled={processing}
                                 >
-                                    <UsersIcon className="w-6 h-6 mr-4"/>
+                                    <UsersIcon className="size-6 mr-4"/>
                                     Vytvořit
                                 </PrimaryButton>
                             </div>
