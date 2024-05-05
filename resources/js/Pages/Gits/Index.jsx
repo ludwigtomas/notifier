@@ -122,7 +122,7 @@ export default function Index({ auth, gits }) {
 
                                                 <td className="px-4 py-4 flex justify-center ">
                                                     <div className="bg-green-100 py-1 px-2 rounded-lg ">
-                                                        {git.relationships.repositories_count}
+                                                        {git.relationships.git_groups_count}
                                                     </div>
                                                 </td>
 

@@ -17,9 +17,14 @@ class Repository extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'repositories';
+
+    protected $primaryKey = 'repository_id';
+
     protected $fillable = [
-        'id',                          // automatically - repositories_id api
-        'git_id',                      // automatically - relationship
+        'repository_id',                          // automatically - repositories_id api
+
+        'group_id',                      // automatically - relationship
         'analytics_property_id',       //! manually added
 
         'name',                        // automatically - api
@@ -40,14 +45,14 @@ class Repository extends Model
 
     ];
 
+    public function git_group(): BelongsTo
+    {
+        return $this->belongsTo(GitGroup::class, 'group_id', 'group_id');
+    }
+
     public function hosting(): HasOne
     {
         return $this->hasOne(Hosting::class);
-    }
-
-    public function git(): BelongsTo
-    {
-        return $this->belongsTo(Git::class);
     }
 
     public function clients(): BelongsToMany

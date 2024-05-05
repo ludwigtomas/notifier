@@ -32,7 +32,7 @@ class GitlabService
             $gitlab->update([
                 'user_id' => $body->id,
                 'username' => $body->username,
-                'avatar_url' => $body->avatar_url,
+                'user_avatar_url' => $body->avatar_url,
             ]);
 
             self::downloadAvatar($gitlab);
@@ -48,7 +48,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', $gitlab->avatar_url);
+            $response = $client->request('GET', $gitlab->user_avatar_url);
 
             $body = $response->getBody();
 
@@ -103,7 +103,7 @@ class GitlabService
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
                     ]);
                 }
-                
+
                 self::getRepositorylastCommit($repository);
                 self::downloadRepositoryAvatar($repository, $repository_api, $gitlab);
             }
@@ -152,7 +152,7 @@ class GitlabService
 
     private static function downloadRepositoryAvatar(Repository $repository, $repository_api, Git $gitlab): void
     {
-        if ($repository_api->avatar_url) {
+        if ($repository_api->user_avatar_url) {
             try {
                 $client = new GuzzleClient([
                     'base_uri' => 'https://gitlab.com/api/v4/',

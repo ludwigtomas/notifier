@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TemplateSeeder extends Seeder
+class GitGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.

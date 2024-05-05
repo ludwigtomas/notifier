@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->string('username')->nullable();
             $table->string('user_id')->nullable();
-            $table->string('avatar_url')->nullable();
+            $table->string('user_avatar_url')->nullable();
 
             $table->timestamps();
         });

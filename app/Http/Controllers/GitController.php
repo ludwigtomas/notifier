@@ -13,8 +13,9 @@ class GitController extends Controller
     public function index(): Response
     {
         $gits = Git::query()
-            ->withCount('repositories')
+            ->withCount(['git_groups'])
             ->get();
+
 
         return inertia('Gits/Index', [
             'gits' => GitResource::collection($gits),

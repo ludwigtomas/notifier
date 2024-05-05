@@ -19,8 +19,8 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->foreignIdFor(Repository::class)
-                ->constrained()
+            $table->foreignId('repository_id')
+                ->constrained('repositories', 'repository_id')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Git;
+use App\Models\GitGroup;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('repositories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Git::class)
-                ->constrained()
+            $table->bigIncrements('repository_id')
+                ->unique()
+                ->primary();
+
+            $table->foreignId('group_id')
+                ->constrained('git_groups', 'group_id')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 

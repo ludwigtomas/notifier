@@ -17,6 +17,7 @@ class Client extends Model
         'ico',
     ];
 
+
     public function repositories(): BelongsToMany
     {
         return $this->belongsToMany(Repository::class)->withPivot('client_email');
