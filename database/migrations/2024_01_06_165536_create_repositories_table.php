@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('repositories', function (Blueprint $table) {
-            $table->bigIncrements('repository_id')
+            $table->unsignedBigInteger('repository_id')
                 ->unique()
                 ->primary();
 

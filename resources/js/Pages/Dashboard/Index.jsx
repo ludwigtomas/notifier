@@ -1,8 +1,17 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-import { FireIcon, ArrowRightCircleIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import {
+    FireIcon,
+    ArrowRightCircleIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/outline";
 
-export default function Dashboard({ auth, repositories_count, databases_count, clients_count }) {
+export default function Dashboard({
+    auth,
+    repositories_count,
+    databases_count,
+    clients_count,
+}) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -22,7 +31,6 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
             <div className="sm:px-6 lg:px-8">
                 <section class="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="container px-6 py-10 mx-auto">
-
                         <h1 class="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
                             Dahboard
                         </h1>
@@ -30,7 +38,7 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                         <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-8 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
                             <div class="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span class="inline-block text-zinc-400">
-                                    <FireIcon className="size-8"/>
+                                    <FireIcon className="size-8" />
                                 </span>
 
                                 <h1 class="text-xl font-semibold capitalize text-white">
@@ -38,12 +46,14 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                                 </h1>
 
                                 <p class="text-zinc-400">
-                                    Správá repozitářů, přístupových údajů k VPS, zálohování a obnova databází a mnoho dalšího.
+                                    Správá repozitářů, přístupových údajů k VPS,
+                                    zálohování a obnova databází a mnoho
+                                    dalšího.
                                 </p>
 
                                 <div className="pt-4">
                                     <div class="inline-flex p-2 capitalize group-hover:scale-110 faster-animation rounded-full bg-zinc-500 text-white hover:underline hover:text-sky-500">
-                                        <ArrowRightCircleIcon className="size-6"/>
+                                        <ArrowRightCircleIcon className="size-6" />
                                     </div>
                                 </div>
 
@@ -59,7 +69,7 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
 
                             <div class="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span class="inline-block text-zinc-400">
-                                    <FireIcon className="size-8"/>
+                                    <FireIcon className="size-8" />
                                 </span>
 
                                 <h1 class="text-xl font-semibold capitalize text-white">
@@ -67,12 +77,13 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                                 </h1>
 
                                 <p class="text-zinc-400">
-                                    Správá databází, zálohování a obnova databází.
+                                    Správá databází, zálohování a obnova
+                                    databází.
                                 </p>
 
                                 <div className="pt-4">
                                     <div class="inline-flex p-2 capitalize group-hover:scale-110 faster-animation rounded-full bg-zinc-500 text-white hover:underline hover:text-sky-500">
-                                        <ArrowRightCircleIcon className="size-6"/>
+                                        <ArrowRightCircleIcon className="size-6" />
                                     </div>
                                 </div>
 
@@ -88,7 +99,7 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
 
                             <div class="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span class="inline-block text-zinc-400">
-                                    <FireIcon className="size-8"/>
+                                    <FireIcon className="size-8" />
                                 </span>
 
                                 <h1 class="text-xl font-semibold capitalize text-white">
@@ -96,12 +107,13 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                                 </h1>
 
                                 <p class="text-zinc-400">
-                                    Správá klientů, zálohování a obnova databází.
+                                    Správá klientů, zálohování a obnova
+                                    databází.
                                 </p>
 
                                 <div className="pt-4">
                                     <div class="inline-flex p-2 capitalize group-hover:scale-110 faster-animation rounded-full bg-zinc-500 text-white hover:underline hover:text-sky-500">
-                                        <ArrowRightCircleIcon className="size-6"/>
+                                        <ArrowRightCircleIcon className="size-6" />
                                     </div>
                                 </div>
 
@@ -114,7 +126,6 @@ export default function Dashboard({ auth, repositories_count, databases_count, c
                                     {clients_count}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </section>

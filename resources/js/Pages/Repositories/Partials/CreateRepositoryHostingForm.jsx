@@ -7,7 +7,7 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-export default function Show({ repository, className = "" }) {
+export default function CreateRepositoryHostingForm({ repository, className = "" }) {
 
     const { data, setData, post, errors, processing } = useForm({
         repository_id: repository.id,

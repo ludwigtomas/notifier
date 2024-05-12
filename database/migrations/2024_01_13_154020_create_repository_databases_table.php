@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('repository_databases', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor('repository_id')
+            $table->foreignId('repository_id')
                 ->constrained('repositories', 'repository_id')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();

@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\GitGroupController;
 use App\Http\Controllers\HostingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepositoryController;
@@ -36,8 +37,13 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [GitController::class, 'index'])->name('index');
         route::get('/{git}', [GitController::class, 'show'])->name('show');
         route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
+        route::post('/', [GitController::class, 'store'])->name('store');
         route::put('/{git}', [GitController::class, 'update'])->name('update');
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+    });
+
+    route::group(['prefix' => '/dashboard/git-groups', 'as' => 'git-groups.'], function () {
+        route::get('/', [GitGroupController::class, 'index'])->name('index');
     });
 
     // 🔺 REPOSITORIES

@@ -1,59 +1,102 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { useState } from "react";
-import TextInput from "@/Components/TextInput";
-import InputLabel from "@/Components/InputLabel";
-import InputError from "@/Components/InputError";
+import { Head, Link } from '@inertiajs/react';
+import {
+    EyeIcon,
+    ChevronRightIcon,
+} from "@heroicons/react/24/outline";
+import UpdateGitInformationForm from "@/Pages/Gits/Partials/UpdateGitInformationForm";
+import UpdateGitGroupsForm from "@/Pages/Gits/Partials/UpdateGitGroupsForm";
+import StoreGitGroupsForm from "@/Pages/Gits/Partials/StoreGitGroupsForm";
 
-export default function Edit({ auth, git: initialGit }) {
-    const [git, setGit] = useState({ name: initialGit.name });
-    const [newName, setNewName] = useState("");
-
-    const handleInputChange = (event) => {
-        setNewName(event.target.value);
-    };
-
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-
-        if (!newName) return null;
-        setGit({ ...git, name: newName });
-        setNewName("");
-    };
+export default function Edit({ auth, git }) {
 
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
+                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("dashboard.index")}
+                    >
+                        Dashboard
+                    </Link>
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            <p className="ml-0.5">{git.name}</p>
-                            <div>
-                                <form onSubmit={handleFormSubmit}>
-                                    <input
-                                        type="text"
-                                        value={newName}
-                                        onChange={handleInputChange}
-                                        placeholder="Enter new name"
-                                    />
-                                    <button type="submit" className="ml-4">
-                                        Update Name
-                                    </button>
-                                </form>
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
+                        href={route("gits.index")}
+                    >
+                        Gits
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <Link
+                        className="font-semibold text-lg leading-tight text-sky-500"
+                        href={route("gits.edit", git.id)}
+                    >
+                        {git.name}
+                    </Link>
+
+                    <span>
+                        <ChevronRightIcon className="w-5 h-5" />
+                    </span>
+
+                    <div className="relative group">
+                        <Link
+                            className="font-semibold text-lg leading-tight text-sky-500"
+                            href={route("gits.edit", git.id)}
+                        >
+                            Edit
+                        </Link>
+
+                        <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
+                            <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
+                                <Link
+                                    className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-sky-500"
+                                    href={route("gits.show", git.id)}
+                                >
+                                    <span className="text-gray-200">
+                                        Zobrazit
+                                    </span>
+
+                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                </Link>
                             </div>
                         </div>
                     </div>
+                </header>
+            }
+        >
+            <Head title={git.name + " - Edit"} />
+
+            <div className="py-12">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateGitInformationForm
+                            git={git}
+                        />
+                    </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateGitGroupsForm />
+                    </div>
+
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <StoreGitGroupsForm />
+                    </div>
+
                 </div>
             </div>
+
+
         </AuthenticatedLayout>
     );
 }

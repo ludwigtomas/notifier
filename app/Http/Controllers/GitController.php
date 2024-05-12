@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\GitResource;
 use App\Models\Git;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Response;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Resources\GitResource;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\Gits\UpdateGitRequest;
 
 class GitController extends Controller
 {
     public function index(): Response
     {
         $gits = Git::query()
-            ->withCount(['git_groups'])
+            ->withCount(['gitGroups'])
             ->get();
-
 
         return inertia('Gits/Index', [
             'gits' => GitResource::collection($gits),
@@ -30,32 +31,34 @@ class GitController extends Controller
     public function show(Git $git): Response
     {
         return inertia('Gits/Show', [
-            'git' => $git,
+            'git' => new GitResource($git),
         ]);
     }
 
     public function edit(Git $git): Response
     {
         return inertia('Gits/Edit', [
-            'git' => $git,
+            'git' => new GitResource($git),
         ]);
     }
 
-    public function update(Request $request, Git $git): RedirectResponse
+    public function update(UpdateGitRequest $request, Git $git): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required',
-            'url' => 'required',
+        $git->update([
+            'name' => $request->name,
+            'slug' => Str::slug($request->name),
+            'api_token' => $request->api_token,
+            'username' => $request->username,
+            'user_id' => $request->user_id,
+            'user_avatar_url' => $request->user_avatar_url,
         ]);
 
-        $git->update($request->all());
-
-        return redirect()->route('dashboard.gits.index');
+        return to_route('gits.edit', $git);
     }
 
     public function destroy(Git $git): RedirectResponse
     {
-        // $git->delete();
+        $git->delete();
 
         return to_route('gits.index');
     }

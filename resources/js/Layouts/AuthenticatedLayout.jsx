@@ -82,6 +82,18 @@ export default function Authenticated({ user, header, children }) {
                             </NavLink>
 
                             <NavLink
+                                href={route("git-groups.index")}
+                                active={route().current("git-groups.*")}
+                                className="gap-4 w-full"
+                            >
+                                <BugAntIcon className="size-6"/>
+
+                                <span className="w-full hidden xl:block">
+                                    Git groups
+                                </span>
+                            </NavLink>
+
+                            <NavLink
                                 href={route("repositories.index")}
                                 active={route().current("repositories.*")}
                                 className="gap-4 w-full"

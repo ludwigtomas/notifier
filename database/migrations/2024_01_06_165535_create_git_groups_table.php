@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('git_groups', function (Blueprint $table) {
-            $table->bigIncrements('group_id')
+            $table->unsignedBigInteger('group_id')
                 ->unique()
                 ->primary();
 

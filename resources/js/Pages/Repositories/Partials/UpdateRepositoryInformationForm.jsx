@@ -303,8 +303,6 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             Repository information has been updated!
                         </p>
                     )}
-
-
                 </div>
             </form>
         </section>

@@ -178,4 +178,27 @@ class GitlabService
             }
         }
     }
+
+
+    public static function getGroups($gitlab)
+    {
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
+
+        try {
+            $response = $client->request('GET', 'groups', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                ],
+            ]);
+
+            $groups_api = json_decode($response->getBody()->getContents());
+
+            return $groups_api;
+
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'get groups error', ['gitlab' => $gitlab]);
+        }
+    }
 }

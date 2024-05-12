@@ -6,6 +6,11 @@ import {
     EyeIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import {
+    EditButton,
+    ShowButton,
+    DeleteButton,
+} from '@/Components/Buttons/ActionButtons';
 
 export default function Index({ auth, gits }) {
     return (
@@ -60,6 +65,13 @@ export default function Index({ auth, gits }) {
 
                                         <th
                                             scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            slug
+                                        </th>
+
+                                        <th
+                                            scope="col"
                                             className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             Uživatelské jméno
@@ -70,6 +82,13 @@ export default function Index({ auth, gits }) {
                                             className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
                                             Token
+                                        </th>
+
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Počet repozitářů
                                         </th>
 
                                         <th
@@ -108,6 +127,12 @@ export default function Index({ auth, gits }) {
                                                     </span>
                                                 </td>
 
+                                                <td className="px-4 py-4">
+                                                    <span className="text-sm font-medium text-zinc-400">
+                                                        {git.slug}
+                                                    </span>
+                                                </td>
+
                                                 <td className="px-12 py-4">
                                                     <span className="text-sm font-medium text-zinc-400">
                                                         {git.username}
@@ -120,37 +145,24 @@ export default function Index({ auth, gits }) {
                                                     </span>
                                                 </td>
 
-                                                <td className="px-4 py-4 flex justify-center ">
-                                                    <div className="bg-green-100 py-1 px-2 rounded-lg ">
+                                                <td className="px-4 py-4">
+                                                    <div className="bg-stone-800 text-center py-1 px-2 text-gray-200 rounded-lg ">
                                                         {git.relationships.git_groups_count}
+                                                    </div>
+                                                </td>
+
+
+                                                <td className="px-4 py-4">
+                                                    <div className="bg-stone-800 text-center py-1 px-2 text-gray-200 rounded-lg ">
+                                                        {git.relationships.repositories_count}
                                                     </div>
                                                 </td>
 
                                                 <td className="px-4 py-4">
                                                     <div className="flex space-x-2">
-                                                        <Link
-                                                            href={route("gits.edit", git.id)}
-                                                            className="bg-green-100 p-1 rounded-lg hover:bg-green-200 slower-animation"
-                                                        >
-                                                            <PencilSquareIcon className="w-6 h-6 text-green-500" />
-                                                        </Link>
-
-                                                        <Link
-                                                            href={route("gits.show", git.id)}
-                                                            className="bg-sky-100 p-1 rounded-lg hover:bg-sky-200 slower-animation"
-                                                        >
-                                                            <EyeIcon className="w-6 h-6 text-sky-500" />
-                                                        </Link>
-
-                                                        <Link
-                                                            as="button"
-                                                            method="delete"
-                                                            preserveScroll
-                                                            href={route("gits.destroy", git.id)}
-                                                            className="bg-red-100 p-1 rounded-lg hover:bg-red-200 slower-animation"
-                                                        >
-                                                            <TrashIcon className="w-6 h-6 text-red-500" />
-                                                        </Link>
+                                                        <EditButton href={route("gits.edit", git.id)}/>
+                                                        <ShowButton href={route("gits.show", git.id)}/>
+                                                        <DeleteButton as="button" method="DELETE" href={route("gits.destroy", git.id)}/>
                                                     </div>
                                                 </td>
                                             </tr>
