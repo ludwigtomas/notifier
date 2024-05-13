@@ -42,6 +42,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
     });
 
+    // 🔺 GIT GROUPS
     route::group(['prefix' => '/dashboard/git-groups', 'as' => 'git-groups.'], function () {
         route::get('/', [GitGroupController::class, 'index'])->name('index');
         route::post('/attach', [GitGroupController::class, 'attach'])->name('attach');
@@ -54,8 +55,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
         route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
-        route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
-        route::delete('/{repository}/delete', [RepositoryController::class, 'delete'])->name('delete');
+        route::delete('/{repository}/delete', [RepositoryController::class, 'destroy'])->name('destroy');
 
         route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
 
 // DELETE IN PRODUCTION
 if (app()->isLocal()) {

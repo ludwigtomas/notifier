@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\DatabaseBackupResource;
-use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use Carbon\Carbon;
+use Inertia\Response;
 use App\Models\Client;
 use App\Models\Repository;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Services\GitlabService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Resources\ClientResource;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Response;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\DatabaseBackupResource;
 
 class RepositoryController extends Controller
 {
@@ -81,6 +84,28 @@ class RepositoryController extends Controller
         $repository->delete();
 
         return to_route('repositories.index');
+    }
+
+    public function store(StoreRepositoryRequest $request)
+    {
+        $repository = GitlabService::getRepository($request->repository_id);
+
+        $group_id = $request->group_id;
+
+        // Check if the repository belongs to the selected group
+        if($group_id !== $repository['namespace']['id']){
+            return back()->with('error', 'Repository does not belong to the selected group');
+        }
+
+        Repository::create([
+            'group_id' => $repository['namespace']['id'],
+            'repository_id' => $repository['id'],
+            'name' => $repository['name'],
+            'slug' => Str::slug($repository['name']),
+            'repository_url' => $repository['web_url'],
+
+            'repository_created_at' => Carbon::parse($repository['created_at']),
+        ]);
     }
 
     public function lastCommit(Repository $repository): RedirectResponse

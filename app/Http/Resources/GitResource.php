@@ -27,7 +27,7 @@ class GitResource extends JsonResource
             'user_avatar_url' => $this->user_avatar_url,
 
             'relationships' => [
-                'git_groups' => GitGroupResource::collection($this->whenLoaded('git_groups')),
+                'git_groups' => GitGroupResource::collection($this->whenLoaded('gitGroups')),
                 'git_groups_count' => $this->git_groups_count ?? 0,
 
                 'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),

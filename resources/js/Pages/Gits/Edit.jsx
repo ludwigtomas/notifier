@@ -5,8 +5,8 @@ import {
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import UpdateGitInformationForm from "@/Pages/Gits/Partials/UpdateGitInformationForm";
-import UpdateGitGroupsForm from "@/Pages/Gits/Partials/UpdateGitGroupsForm";
-import StoreGitGroupsForm from "@/Pages/Gits/Partials/StoreGitGroupsForm";
+import UpdateGitGroups from "@/Pages/Gits/Partials/UpdateGitGroups";
+import AttachGitGroups from "@/Pages/Gits/Partials/AttachGitGroups";
 
 export default function Edit({ auth, git }) {
 
@@ -85,12 +85,15 @@ export default function Edit({ auth, git }) {
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateGitGroupsForm />
+                        <UpdateGitGroups
+                            git={git}
+                        />
                     </div>
 
-
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <StoreGitGroupsForm />
+                        <AttachGitGroups
+                            git_groups={git.relationships.git_groups}
+                        />
                     </div>
 
                 </div>

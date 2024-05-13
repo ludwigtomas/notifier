@@ -29,6 +29,8 @@ route::group(['prefix' => 'v1'], function () {
 
     route::group(['prefix' => 'gitlab', 'as' => 'api.gitlab.'], function () {
         route::get('/groups', [GitlabController::class, 'groups'])->name('groups');
+        route::get('/groups/{group}/subgroups', [GitlabController::class, 'subgroups'])->name('subgroups');
+        route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
     });
 
 });

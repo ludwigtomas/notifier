@@ -6,17 +6,22 @@ use App\Models\Git;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\GitlabService;
+use Illuminate\Http\JsonResponse;
 
 class GitlabController extends Controller
 {
-    public function groups()
+    public function groups(): JsonResponse
     {
-        $gitlab = Git::whereSlug('gitlab')->first();
+        return GitlabService::getGroups();
+    }
 
-        $groups = GitlabService::getGroups($gitlab);
+    public function subgroups($group): JsonResponse
+    {
+        return GitlabService::getSubgroups($group);
+    }
 
-        return response()->json([
-            'data' => $groups,
-        ]);
+    public function groupDetail($group_id): JsonResponse
+    {
+        return GitlabService::getGroupDetail($group_id);
     }
 }

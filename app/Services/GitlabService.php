@@ -56,7 +56,7 @@ class GitlabService
 
             Storage::disk('public')->put($path, $body);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'download avatar error', ['gitlab' => $gitlab]);
+            Log::error($th->getMessage() . 'download avatar error');
         }
     }
 
@@ -179,8 +179,7 @@ class GitlabService
         }
     }
 
-
-    public static function getGroups($gitlab)
+    public static function getGroups()
     {
         $client = new GuzzleClient([
             'base_uri' => 'https://gitlab.com/api/v4/',
@@ -189,13 +188,11 @@ class GitlabService
         try {
             $response = $client->request('GET', 'groups', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
                 ],
             ]);
 
-
             $groups_api = json_decode($response->getBody()->getContents(), true);
-
 
             $groups = [];
 
@@ -203,10 +200,108 @@ class GitlabService
                 $group_api['parent_id'] ? null : $groups[] = $group_api;
             }
 
-            return $groups;
+            return response()->json([
+                'success' => true,
+                'data' => $groups,
+            ], 200);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'get groups error');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'get groups error',
+            ], 500);
+        }
+    }
+
+    public static function getGroupDetail($group_id)
+    {
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
+
+        try {
+            $response = $client->request('GET', 'groups/' . $group_id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                ],
+            ]);
+
+            $group_api = json_decode($response->getBody()->getContents(), true);
+
+            return response()->json([
+                'success' => true,
+                'data' => $group_api,
+            ], 200);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'get group detail error');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'get group detail error',
+            ], 500);
+        }
+    }
+
+    public static function getRepository($repository_id)
+    {
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
+
+        try {
+            $response = $client->request('GET', 'projects/' . $repository_id, [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                ],
+            ]);
+
+            $repository_api = json_decode($response->getBody()->getContents(), true);
+
+            return $repository_api;
 
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get groups error', ['gitlab' => $gitlab]);
+            Log::error($th->getMessage() . 'get repository error');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'get repository error',
+            ], 500);
         }
+    }
+
+    // get subgroups from a group
+    public static function getSubGroups($group_id)
+    {
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
+
+        try {
+            $response = $client->request('GET', 'groups/' . $group_id . '/subgroups', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                ],
+            ]);
+
+            $subgroups_api = json_decode($response->getBody()->getContents(), true);
+
+            return response()->json([
+                'success' => true,
+                'data' => $subgroups_api,
+            ], 200);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'get subgroups error');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'get subgroups error',
+            ], 500);
+        }
+    }
+
+    private static function getGitlab()
+    {
+        return Git::whereSlug('gitlab')->first();
     }
 }
