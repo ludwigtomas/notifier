@@ -23,7 +23,16 @@ return new class extends Migration
                 ->cascadeOnUpdate();
 
             $table->string('name')->nullable();
-            $table->string('url')->nullable();
+            $table->string('web_url')->nullable();
+
+            $table->unsignedBigInteger('parent_id')
+                ->nullable();
+
+            $table->foreign('parent_id')
+                ->references('group_id')
+                ->on('git_groups')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->timestamps();
         });

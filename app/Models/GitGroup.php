@@ -22,12 +22,16 @@ class GitGroup extends Model
 
         'git_id',
         'name',
-        'url',
+        'web_url',
+        'parent_id',
     ];
 
     protected $casts = [
         'group_id' => 'integer',
         'git_id' => 'integer',
+        'name' => 'string',
+        'web_url' => 'string',
+        'parent_id' => 'integer',
     ];
 
     public function git(): BelongsTo
@@ -38,5 +42,15 @@ class GitGroup extends Model
     public function repositories(): HasMany
     {
         return $this->hasMany(Repository::class);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(GitGroup::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(GitGroup::class, 'parent_id');
     }
 }

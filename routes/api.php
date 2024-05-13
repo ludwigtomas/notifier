@@ -23,13 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 route::group(['prefix' => 'v1'], function () {
-
     route::group(['prefix' => 'repositories'], function () {
         route::post('/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
     });
 
-
     route::group(['prefix' => 'gitlab', 'as' => 'api.gitlab.'], function () {
         route::get('/groups', [GitlabController::class, 'groups'])->name('groups');
     });
+
 });

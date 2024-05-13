@@ -193,9 +193,17 @@ class GitlabService
                 ],
             ]);
 
-            $groups_api = json_decode($response->getBody()->getContents());
 
-            return $groups_api;
+            $groups_api = json_decode($response->getBody()->getContents(), true);
+
+
+            $groups = [];
+
+            foreach ($groups_api as $group_api) {
+                $group_api['parent_id'] ? null : $groups[] = $group_api;
+            }
+
+            return $groups;
 
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get groups error', ['gitlab' => $gitlab]);
