@@ -76,21 +76,21 @@ export default function Edit({ auth, git }) {
         >
             <Head title={git.name + " - Edit"} />
 
-            <div className="py-12">
-                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+            <div className="sm:px-6 lg:px-8">
+                <div className="container mx-auto space-y-6 ">
+                    <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
                         <UpdateGitInformationForm
                             git={git}
                         />
                     </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
                         <UpdateGitGroups
                             git={git}
                         />
                     </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
                         <AttachGitGroups
                             git_groups={git.relationships.git_groups}
                         />

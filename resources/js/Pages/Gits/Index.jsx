@@ -1,9 +1,6 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -40,11 +37,16 @@ export default function Index({ auth, gits }) {
         >
             <Head title="Gits Index" />
 
-            {/* TABLE */}
+            <div className="sm:px-6 lg:px-8">
+                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
+                    <div className="">
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="mb-2 px-6 pt-6">
+                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                Gits index
+                            </h1>
+                        </div>
+
                         <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                                 <thead className="bg-zinc-950">
@@ -88,7 +90,7 @@ export default function Index({ auth, gits }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            Počet repozitářů
+                                            Počet skupin
                                         </th>
 
                                         <th
@@ -172,7 +174,7 @@ export default function Index({ auth, gits }) {
                             </table>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </AuthenticatedLayout>
     );

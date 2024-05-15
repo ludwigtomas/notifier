@@ -21,6 +21,21 @@ class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
+        // $repositories = Repository::query()
+        //     ->with('clients')
+        //     ->withCount('clients', 'database_backups', 'hosting')
+        //     ->when($request->search, function ($query, $search) {
+        //         $query->whereAny([
+        //             'name',
+        //             'slug'
+        //         ], 'like', '%' . $search . '%');
+        //     })
+        //     ->when($request->trashed, function ($query, $trashed) {
+        //         $query->withTrashed();
+        //     })
+        //     ->orderBy('last_commit_at', 'desc')
+        //     ->paginate(10);
+
         $repositories = Repository::query()
             ->with('clients')
             ->withCount('clients', 'database_backups', 'hosting')
@@ -93,7 +108,7 @@ class RepositoryController extends Controller
         $group_id = $request->group_id;
 
         // Check if the repository belongs to the selected group
-        if($group_id !== $repository['namespace']['id']){
+        if ($group_id !== $repository['namespace']['id']) {
             return back()->with('error', 'Repository does not belong to the selected group');
         }
 

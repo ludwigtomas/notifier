@@ -279,7 +279,7 @@ export default function ({ git, className = "" }) {
                                     </div>
                                 </div>
 
-                                <div className="mt-5 grid h-56 overflow-y-auto">
+                                <div className="mt-5 grid h-72 overflow-y-auto">
                                     <div className="text-center bg-stone-700 py-2">
                                         <p className="text-xl text-zinc-200">
                                             Projekty

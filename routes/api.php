@@ -33,4 +33,7 @@ route::group(['prefix' => 'v1'], function () {
         route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
     });
 
+    route::get('/test', function () {
+        return response()->json(['message' => 'Hello World!']);
+    });
 });

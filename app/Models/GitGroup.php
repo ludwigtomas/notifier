@@ -49,8 +49,14 @@ class GitGroup extends Model
         return $this->belongsTo(GitGroup::class, 'parent_id');
     }
 
-    public function children(): HasMany
+    public function childrens(): HasMany
     {
         return $this->hasMany(GitGroup::class, 'parent_id');
+    }
+
+    // repositories through children
+    public function allRepositories(): HasMany
+    {
+        return $this->childrens()->with('repositories');
     }
 }

@@ -11,9 +11,26 @@ use Illuminate\Http\Response as HttpResponse;
 
 class GitGroupController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request)
     {
-        return inertia('GitGroups/Index');
+        $git_groups = GitGroup::query()
+            ->whereNull('parent_id')
+            ->withCount(['childrens', 'allRepositories'])
+            ->get();
+
+
+        if ($request->has('group_id')) {
+            $group_details = GitGroup::query()
+                ->where('group_id', $request->group_id)
+                ->with(['childrens'])
+                ->first();
+
+            return $group_details;
+        }
+
+        return inertia('GitGroups/Index', [
+            'git_groups' => $git_groups,
+        ]);
     }
 
     public function attach(Request $request): RedirectResponse
@@ -53,5 +70,13 @@ class GitGroupController extends Controller
         }
 
         return to_route('gits.edit', $gitlab);
+    }
+
+    public function edit(GitGroup $git_group): Response
+    {
+        dd($git_group);
+        return inertia('GitGroups/Edit', [
+            'git_group' => $git_group,
+        ]);
     }
 }

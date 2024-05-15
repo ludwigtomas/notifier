@@ -135,7 +135,7 @@ export default function ({ git, className = "" }) {
                 <div className="col-span-12 flex items-center space-x-4">
                     <div>
                         <BackButton
-                            href={route('repositories.index')}
+                            href={route('gits.index')}
                             className="w-full"
                         >
                             Zpátky

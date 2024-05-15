@@ -8,6 +8,8 @@ import {
 
 export default function Dashboard({
     auth,
+    git_groups_parent_count,
+    git_groups_childrens_count,
     repositories_count,
     databases_count,
     clients_count,
@@ -29,14 +31,16 @@ export default function Dashboard({
             <Head title="Dashboard" />
 
             <div className="sm:px-6 lg:px-8">
-                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                    <div className="container px-6 py-10 mx-auto">
-                        <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                            Dahboard
-                        </h1>
+                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
+                    <div className="p-6">
+                        <div className="mb-2">
+                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                Dahboard
+                            </h1>
+                        </div>
 
-                        <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-8 xl:gap-12 md:grid-cols-2 xl:grid-cols-3">
-                            <div className="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
+                        <div className="grid grid-cols-1 gap-8 xl:gap-2 md:grid-cols-2 xl:grid-cols-3">
+                            <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span className="inline-block text-zinc-400">
                                     <FireIcon className="size-8" />
                                 </span>
@@ -67,7 +71,7 @@ export default function Dashboard({
                                 </div>
                             </div>
 
-                            <div className="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
+                            <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span className="inline-block text-zinc-400">
                                     <FireIcon className="size-8" />
                                 </span>
@@ -97,7 +101,7 @@ export default function Dashboard({
                                 </div>
                             </div>
 
-                            <div className="group relative p-8 space-y-3 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
+                            <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
                                 <span className="inline-block text-zinc-400">
                                     <FireIcon className="size-8" />
                                 </span>
@@ -126,6 +130,67 @@ export default function Dashboard({
                                     {clients_count}
                                 </div>
                             </div>
+
+                            <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
+                                <span className="inline-block text-zinc-400">
+                                    <FireIcon className="size-8" />
+                                </span>
+
+                                <h1 className="text-xl font-semibold capitalize text-white">
+                                    Git skupiny (rodiče)
+                                </h1>
+
+                                <p className="text-zinc-400">
+                                    Správá git skupin (rodičů), zálohování a
+                                    obnova databází.
+                                </p>
+
+                                <div className="pt-4">
+                                    <div className="inline-flex p-2 capitalize group-hover:scale-110 faster-animation rounded-full bg-zinc-500 text-white hover:underline hover:text-sky-500">
+                                        <ArrowRightCircleIcon className="size-6" />
+                                    </div>
+                                </div>
+
+                                <Link
+                                    href={route("repositories.index")}
+                                    className="absolute inset-0"
+                                />
+
+                                <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
+                                    {git_groups_parent_count}
+                                </div>
+                            </div>
+
+                            <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-xl overflow-hidden">
+                                <span className="inline-block text-zinc-400">
+                                    <FireIcon className="size-8" />
+                                </span>
+
+                                <h1 className="text-xl font-semibold capitalize text-white">
+                                    Git skupiny (dětí)
+                                </h1>
+
+                                <p className="text-zinc-400">
+                                    Správá git skupin (dětí), zálohování a
+                                    obnova databází.
+                                </p>
+
+                                <div className="pt-4">
+                                    <div className="inline-flex p-2 capitalize group-hover:scale-110 faster-animation rounded-full bg-zinc-500 text-white hover:underline hover:text-sky-500">
+                                        <ArrowRightCircleIcon className="size-6" />
+                                    </div>
+                                </div>
+
+                                <Link
+                                    href={route("repositories.index")}
+                                    className="absolute inset-0"
+                                />
+
+                                <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
+                                    {git_groups_childrens_count}
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </section>

@@ -16,7 +16,7 @@ class RepositoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
+            'repository_id' => $this->repository_id,
             'analytics_property_id' => $this->analytics_property_id,
 
             'name' => $this->name,

@@ -37,7 +37,7 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const deleteRepository = () => {
-        let url = route("repositories.destroy", selectedRepository.id);
+        let url = route("repositories.destroy", selectedRepository.repository_id);
 
         router.delete(url, {
             preserveScroll: true,
@@ -237,12 +237,12 @@ export default function Index({ auth, repositories, filters }) {
                                     {repositories.data.map((repository) => {
                                         return (
                                             <tr
-                                                key={repository.id}
+                                                key={repository.repository_id}
                                                 className="group hover:bg-zinc-800"
                                             >
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium text-zinc-400">
-                                                        {repository.id}
+                                                        {repository.repository_id}
                                                     </span>
                                                 </td>
 
@@ -366,7 +366,7 @@ export default function Index({ auth, repositories, filters }) {
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
                                                         <Link
-                                                            href={route("repositories.edit", repository.id)}
+                                                            href={route("repositories.edit", repository.repository_id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
                                                             <PencilSquareIcon className="w-6 h-6 text-green-500" />
@@ -375,7 +375,7 @@ export default function Index({ auth, repositories, filters }) {
                                                         {repository.deleted_at ? (
                                                             <>
                                                                 <Link
-                                                                    href={route("repositories.show", repository.id)}
+                                                                    href={route("repositories.show", repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
                                                                     <EyeIcon className="w-6 h-6 text-sky-500" />
@@ -391,7 +391,7 @@ export default function Index({ auth, repositories, filters }) {
                                                         ) : (
                                                             <>
                                                                 <Link
-                                                                    href={route("repositories.show",repository.id)}
+                                                                    href={route("repositories.show",repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
                                                                     <EyeIcon className="w-6 h-6 text-sky-500" />
