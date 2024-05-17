@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class GitGroup extends Model
 {
@@ -41,7 +42,7 @@ class GitGroup extends Model
 
     public function repositories(): HasMany
     {
-        return $this->hasMany(Repository::class);
+        return $this->hasMany(Repository::class, 'group_id');
     }
 
     public function parent(): BelongsTo
@@ -55,8 +56,8 @@ class GitGroup extends Model
     }
 
     // repositories through children
-    public function allRepositories(): HasMany
+    public function allRepositories(): HasManyThrough
     {
-        return $this->childrens()->with('repositories');
+        return $this->hasManyThrough(Repository::class, GitGroup::class, 'parent_id', 'group_id', 'group_id', 'group_id');
     }
 }

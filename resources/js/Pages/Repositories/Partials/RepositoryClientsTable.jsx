@@ -102,7 +102,7 @@ export default function RepositoryClientsTable({ clients }) {
                                         href={route("clients.show", client.id)}
                                         className="text-sky-500 hover:text-sky-600"
                                     >
-                                        <EyeIcon className="w-5 h-5" />
+                                        <EyeIcon className="size-5" />
                                     </Link>
                                 </td>
                             </tr>

@@ -49,7 +49,6 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const debouncedSearch = debounce((value) => {
-
         setSearch(value);
 
         router.get(route("repositories.index"),{
@@ -75,7 +74,7 @@ export default function Index({ auth, repositories, filters }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link

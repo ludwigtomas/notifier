@@ -207,7 +207,7 @@ export default function ({ git, className = "" }) {
             <Modal
                 show={toggleUpdateModal}
                 onClose={() => setToggleUpdateModal(false)}
-                maxWidth="6xl"
+                maxWidth="7xl"
             >
                 { selectedGroup && (
                     <div className="p-4">
@@ -216,287 +216,297 @@ export default function ({ git, className = "" }) {
                         </h2>
 
                         { gitInformations && (
-                            <div className="mt-4">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="col-span-2 text-center bg-stone-700 py-2">
-                                        <p className="text-xs text-zinc-200">
-                                            ID
-                                        </p>
-                                        <p className="text-xl  font-medium text-zinc-100">
-                                            {gitInformations.id}
-                                        </p>
-                                    </div>
+                            <div className="mt-4 grid grid-cols-12">
 
-                                    <div>
-                                        <p className="text-xs font-medium text-zinc-200">
-                                            Name
-                                        </p>
-                                        <p className="text-sm text-zinc-400">
-                                            {gitInformations.name}
-                                        </p>
-                                    </div>
+                                <div className="col-span-4">
+                                    <div className="grid grid-cols-1 gap-4 text-center">
+                                        <div className="col-span-1 border-b border-zinc-700">
+                                            <p className="text-sm text-zinc-400">
+                                                ID
+                                            </p>
+                                            <p className="text-xl  font-medium text-zinc-100">
+                                                {gitInformations.id}
+                                            </p>
+                                        </div>
 
-                                    <div>
-                                        <p className="text-xs font-medium text-zinc-200">
-                                            Path
-                                        </p>
-                                        <p className="text-sm text-zinc-400">
-                                            {gitInformations.path}
-                                        </p>
-                                    </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Name
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.name}
+                                            </p>
+                                        </div>
 
-                                    <div>
-                                        <p className="text-xs font-medium text-zinc-200">
-                                            Full Path
-                                        </p>
-                                        <p className="text-sm text-zinc-400">
-                                            {gitInformations.full_path}
-                                        </p>
-                                    </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Path
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.path}
+                                            </p>
+                                        </div>
 
-                                    <div>
-                                        <p className="text-xs font-medium text-zinc-200">
-                                            Web Url
-                                        </p>
-                                        <p className="text-sm text-zinc-400">
-                                            <a
-                                                href={gitInformations.web_url}
-                                                target="_blank"
-                                                className="hover:underline"
-                                            >
-                                                {gitInformations.web_url}
-                                            </a>
-                                        </p>
-                                    </div>
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Full Path
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.full_path}
+                                            </p>
+                                        </div>
 
-                                    <div>
-                                        <p className="text-xs font-medium text-zinc-200">
-                                            Parent Id
-                                        </p>
-                                        <p className="text-sm text-zinc-400">
-                                            {gitInformations.parent_id ? gitInformations.parent_id : 'N/A'}
-                                        </p>
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Web Url
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                <a
+                                                    href={gitInformations.web_url}
+                                                    target="_blank"
+                                                    className="hover:underline"
+                                                >
+                                                    {gitInformations.web_url}
+                                                </a>
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Parent Id
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.parent_id ? gitInformations.parent_id : 'N/A'}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="mt-5 grid h-72 overflow-y-auto">
-                                    <div className="text-center bg-stone-700 py-2">
-                                        <p className="text-xl text-zinc-200">
-                                            Projekty
-                                        </p>
+                                <div className="col-span-8 grid gap-y-5">
+
+                                    <div className="grid h-[20rem] overflow-y-auto px-2">
+                                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
+                                            <div className="flex justify-center items-center">
+                                                <p className="text-xl text-zinc-200 pb-2">
+                                                    Projekty
+                                                </p>
+                                            </div>
+
+                                            {gitInformations.projects && gitInformations.projects.length > 0 ? (
+                                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                                    <thead className="bg-stone-800 text-nowrap">
+                                                        <tr>
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                #
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                ID
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                Name
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                URL
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                <span className="sr-only">
+                                                                    Edit
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                                        {gitInformations.projects.map((project, index) => (
+                                                            <tr
+                                                                key={project.id}
+                                                                className="bg-stone-700 p-4 rounded-md"
+                                                            >
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {index + 1}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {project.id}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {project.name}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <a
+                                                                        href={project.web_url}
+                                                                        target="_blank"
+                                                                        className="text-sm font-medium text-zinc-200 hover:underline"
+                                                                    >
+                                                                        {project.web_url}
+                                                                    </a>
+                                                                </td>
+
+                                                                <td className="px-4 py-4">
+                                                                {/* {git_groups.find(git_group => git_group.group_id === group.id) ? (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 group-hover:bg-stone-800"
+                                                                            disabled
+                                                                        >
+                                                                            Already attached
+                                                                        </button>
+                                                                    ) : (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
+                                                                            onClick={() => {setSelectedGroup(group)}}
+                                                                        >
+                                                                            Attach
+                                                                        </button>
+                                                                    )} */}
+                                                                    <button
+                                                                        className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
+                                                                        onClick={() => storeProject(gitInformations.id, project.id)}
+                                                                    >
+                                                                        Přidat
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            ): (
+                                                <div className="text-center py-2">
+                                                    <p className="text-sm text-red-500">
+                                                        No <b>projects</b> found.
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
 
-                                    {gitInformations.projects && gitInformations.projects.length > 0 ? (
-                                        <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                            <thead className="bg-stone-800 text-nowrap">
-                                                <tr>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        #
-                                                    </th>
+                                    <div className="grid h-[20rem] overflow-y-auto px-2">
+                                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
+                                            <div className="flex justify-center items-center">
+                                                <p className="text-xl text-zinc-200 pb-2">
+                                                    Sub Groups
+                                                </p>
+                                            </div>
 
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        ID
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        Name
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        URL
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        <span className="sr-only">
-                                                            Edit
-                                                        </span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="divide-y divide-zinc-700 bg-zinc-800">
-                                                {gitInformations.projects.map((project, index) => (
-                                                    <tr
-                                                        key={project.id}
-                                                        className="bg-stone-700 p-4 rounded-md"
-                                                    >
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {index + 1}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {project.id}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {project.name}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <a
-                                                                href={project.web_url}
-                                                                target="_blank"
-                                                                className="text-sm font-medium text-zinc-200 hover:underline"
+                                            {subgroups && subgroups.length > 0 ? (
+                                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                                    <thead className="bg-stone-800 text-nowrap">
+                                                        <tr>
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                                             >
-                                                                {project.web_url}
-                                                            </a>
-                                                        </td>
+                                                                #
+                                                            </th>
 
-                                                        <td className="px-4 py-4">
-                                                        {/* {git_groups.find(git_group => git_group.group_id === group.id) ? (
-                                                                <button
-                                                                    className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 group-hover:bg-stone-800"
-                                                                    disabled
-                                                                >
-                                                                    Already attached
-                                                                </button>
-                                                            ) : (
-                                                                <button
-                                                                    className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
-                                                                    onClick={() => {setSelectedGroup(group)}}
-                                                                >
-                                                                    Attach
-                                                                </button>
-                                                            )} */}
-                                                            <button
-                                                                className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
-                                                                onClick={() => storeProject(gitInformations.id, project.id)}
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                                             >
-                                                                Přidat
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    ): (
-                                        <div className="text-center py-2">
-                                            <p className="text-sm text-red-500">
-                                                No <b>projects</b> found.
-                                            </p>
+                                                                ID
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                Name
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                URL
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                <span className="sr-only">
+                                                                    Edit
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                                        {subgroups.map((subgroup, index) => (
+                                                            <tr
+                                                                key={subgroup.id}
+                                                                className="bg-stone-700 p-4 rounded-md"
+                                                            >
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {index + 1}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.id}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.name}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.web_url}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4">
+                                                                    <button
+                                                                        className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
+                                                                        onClick={() => {storeSubgroup(selectedGroup.group_id, subgroup)}}
+                                                                    >
+                                                                        Attach
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            ): (
+                                                <div className="text-center py-2">
+                                                    <p className="text-sm text-red-500">
+                                                        No <b>subgroups</b> found.
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
-                                </div>
-
-                                <div className="mt-5 grid">
-                                    <div className="text-center bg-stone-700 py-2">
-                                        <p className="text-xl text-zinc-200">
-                                            Sub Groups
-                                        </p>
                                     </div>
-
-                                    {subgroups && subgroups.length > 0 ? (
-                                        <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                            <thead className="bg-stone-800 text-nowrap">
-                                                <tr>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        #
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        ID
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        Name
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        URL
-                                                    </th>
-
-                                                    <th
-                                                        scope="col"
-                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                    >
-                                                        <span className="sr-only">
-                                                            Edit
-                                                        </span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody className="divide-y divide-zinc-700 bg-zinc-800">
-                                                {subgroups.map((subgroup, index) => (
-                                                    <tr
-                                                        key={subgroup.id}
-                                                        className="bg-stone-700 p-4 rounded-md"
-                                                    >
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {index + 1}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {subgroup.id}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {subgroup.name}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 ">
-                                                            <span className="text-sm font-medium text-zinc-200">
-                                                                {subgroup.web_url}
-                                                            </span>
-                                                        </td>
-
-                                                        <td className="px-4 py-4">
-                                                            <button
-                                                                className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
-                                                                onClick={() => {storeSubgroup(selectedGroup.group_id, subgroup)}}
-                                                            >
-                                                                Attach
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    ): (
-                                        <div className="text-center py-2">
-                                            <p className="text-sm text-red-500">
-                                                No <b>subgroups</b> found.
-                                            </p>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         )}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\GitGroupResource;
 use App\Models\Git;
 use Inertia\Response;
 use App\Models\GitGroup;
@@ -15,21 +16,34 @@ class GitGroupController extends Controller
     {
         $git_groups = GitGroup::query()
             ->whereNull('parent_id')
+            ->when($request->search, function ($query, $search) {
+                $query->whereAny([
+                    'group_id',
+                    'name',
+                ], 'like', '%' . $search . '%');
+            })
             ->withCount(['childrens', 'allRepositories'])
             ->get();
 
-
         if ($request->has('group_id')) {
-            $group_details = GitGroup::query()
-                ->where('group_id', $request->group_id)
-                ->with(['childrens'])
-                ->first();
+            $group_details = GitGroup::findOrFail($request->group_id);
 
-            return $group_details;
+            $relationship = $request->relationship;
+
+            if ($relationship == 'childrens') {
+                $group_details = $group_details->childrens()->get();
+            }
+
+            if ($relationship == 'repositories') {
+                $group_details = $group_details->repositories()->get();
+            }
         }
+
 
         return inertia('GitGroups/Index', [
             'git_groups' => $git_groups,
+            'group_details' => $group_details ?? null,
+            'filters' => $request->only('search', 'group_id', 'relationship'),
         ]);
     }
 
@@ -74,9 +88,10 @@ class GitGroupController extends Controller
 
     public function edit(GitGroup $git_group): Response
     {
-        dd($git_group);
+        $git_group->load('git', 'repositories', 'parent', 'childrens');
+
         return inertia('GitGroups/Edit', [
-            'git_group' => $git_group,
+            'git_group' => new GitGroupResource($git_group),
         ]);
     }
 }

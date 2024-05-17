@@ -14,6 +14,26 @@ class GitGroupResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'group_id' => $this->group_id,
+            'git_id' => $this->git_id,
+
+            'name' => $this->name,
+            'web_url' => $this->web_url,
+            'parent_id' => $this->parent_id,
+
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+
+            'relationships' => [
+                'git' => $this->whenLoaded('git'),
+
+                'repositories' => $this->whenLoaded('repositories'),
+
+                'parent' => $this->whenLoaded('parent'),
+                
+                'childrens' => $this->whenLoaded('childrens'),
+            ],
+        ];
     }
 }

@@ -24,7 +24,7 @@ export default function Show({ repository, className = "" }) {
 
         put(route("hostings.update", data.id), {
             preserveScroll: true,
-            
+
         });
     };
 
@@ -179,7 +179,7 @@ export default function Show({ repository, className = "" }) {
                         href={route("hostings.destroy", data.id)}
                         className="flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     >
-                        <TrashIcon className="w-5 h-5 mr-2 text-white" />
+                        <TrashIcon className="size-5 mr-2 text-white" />
                         Smazat
                     </Link>
                 </div>

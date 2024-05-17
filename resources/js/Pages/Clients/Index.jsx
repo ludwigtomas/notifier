@@ -72,7 +72,7 @@ export default function Index({ auth, clients, filters }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5"/>
+                        <ChevronRightIcon className="size-5"/>
                     </span>
 
                     <Link

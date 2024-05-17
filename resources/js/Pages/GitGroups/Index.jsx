@@ -1,47 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import {
     PencilSquareIcon,
     ChevronRightIcon,
     FireIcon,
-    EyeSlashIcon,
     EyeIcon,
-    ArchiveBoxIcon,
 } from "@heroicons/react/24/outline";
-import axios from "axios";
-import { EditButton } from '@/Components/Buttons/ActionButtons';
+import { ChildrensTable, RepositoriesTable } from "@/Pages/GitGroups/Partials/GroupsRelationshipsTable";
+import TextInput from "@/Components/TextInput";
+import debounce from "lodash/debounce";
 
+export default function({ auth, git_groups, group_details, filters }) {
+    const [search, setSearch] = useState(filters.search || "");
 
-export default function Index({ auth, git_groups, group_details }) {
-    const [selectedGroup, setSelectedGroup] = useState();
-    const [selectedGroupType, setSelectedGroupType] = useState();
-    const [groupDetails, setGroupDetails] = useState();
+    const debouncedSearch = debounce((value) => {
+        setSearch(value);
 
-
-    const handleSelectGroup = (group, type) => {
-        setSelectedGroup(group);
-        setSelectedGroupType(type);
-    }
-
-    useEffect(() => {
-        if (selectedGroup) {
-            let url = route('git-groups.index');
-
-            axios.get(url, {
-                params: {
-                    group_id: selectedGroup.group_id
-                }
-            })
-            .then(response => {
-                setGroupDetails(response.data);
-            })
-            .catch(error => {
-                alert('Error: ' + error);
-            });
-        }
-    }, [selectedGroup]);
-
+        router.get(route("git-groups.index"),{
+                search: value,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+                replace: true,
+            }
+        );
+    }, 500);
 
     return (
         <AuthenticatedLayout
@@ -56,22 +41,34 @@ export default function Index({ auth, git_groups, group_details }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link
                         className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route("gits.index")}
+                        href={route("git-groups.index")}
                     >
-                        Gits
+                        Git groups
                     </Link>
                 </header>
             }
         >
             <Head title="Gits Index" />
 
+
             <div className="sm:px-6 lg:px-8 relative">
-                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl ">
+                <div className="mx-auto w-96">
+                    <TextInput
+                        label="Hledat"
+                        name="search"
+                        placeholder="Hledat hlavní skupinu..."
+                        type="text"
+                        className="w-full"
+                        onChange={(e) => debouncedSearch(e.target.value)}
+                    />
+                </div>
+
+                <section className="mt-2 bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl ">
                     <div className="p-6">
                         <div className="mb-2">
                             <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
@@ -84,8 +81,14 @@ export default function Index({ auth, git_groups, group_details }) {
                                 return (
                                     <div
                                         key={group.group_id}
-                                        className="group relative p-8 pb-20 space-y-3 border-2 bg-zinc-800 hover:border-zinc-600 border-zinc-700 rounded-xl overflow-hidden"
+                                        className="group relative p-8 pb-20 space-y-10 border-2  bg-zinc-800 hover:border-zinc-600 border-zinc-700 rounded-xl"
                                     >
+                                        <div className="absolute left-1/2 -translate-x-1/2 top-0 bg-zinc-700 border-zinc-700 border-b-2 border-x-2 rounded-b-xl ">
+                                            <span className="px-2 text-zinc-400">
+                                                {group.group_id}
+                                            </span>
+                                        </div>
+
                                         <div className="flex items-center justify-center space-x-4">
                                             <span className="inline-block">
                                                 <FireIcon className="size-8 text-sky-500" />
@@ -120,34 +123,37 @@ export default function Index({ auth, git_groups, group_details }) {
                                             </div>
                                         </div>
 
-                                        <div className="absolute right-0 bottom-0 grid grid-cols-2 place-items-center w-full ">
+                                        <div className="absolute right-0 bottom-0 grid grid-cols-2 place-items-center w-full rounded-b-[0.65rem] overflow-hidden">
                                             <div className="grid grid-cols-2 place-items-center w-full h-full">
-                                                <button
-                                                    className={"flex justify-center items-center w-full h-full " + (selectedGroup && selectedGroup.group_id === group.group_id ? 'bg-green-950 hover:bg-green-900' : 'bg-red-950 hover:bg-red-900')}
-                                                    onClick={() => setSelectedGroup(group, 'repositories')}
+                                                <Link
+                                                    className={"flex justify-center items-center w-full h-full " + (filters?.relationship == 'childrens' && filters?.group_id == group.group_id ? 'bg-sky-950 hover:bg-sky-900' : 'bg-red-950 hover:bg-red-900')}
+                                                    href={route('git-groups.index', {
+                                                        group_id: group.group_id,
+                                                        relationship: 'childrens',
+                                                    })}
                                                 >
-                                                    { selectedGroup && selectedGroup.group_id === group.group_id ? (
-                                                        <EyeIcon className="size-8 text-green-500"/>
-                                                    ) : (
-                                                        <EyeSlashIcon className="size-8 text-red-500"/>
-                                                    )}
-                                                </button>
+                                                    <EyeIcon className={"size-8 " + (filters?.relationship == 'childrens' && filters?.group_id == group.group_id ? 'text-sky-500' : 'text-red-500')}/>
+                                                </Link>
 
-                                                <button
-                                                    className={"flex justify-center items-center w-full h-full " + (selectedGroup && selectedGroup.group_id === group.group_id ? 'bg-green-950 hover:bg-green-900' : 'bg-red-950 hover:bg-red-900')}
-                                                    onClick={() => setSelectedGroup(group, 'childrens')}
+                                                <Link
+                                                    className={"flex justify-center items-center w-full h-full " + (filters?.relationship == 'repositories' && filters?.group_id == group.group_id ? 'bg-sky-950 hover:bg-sky-900' : 'bg-red-950 hover:bg-red-900')}
+                                                    href={route('git-groups.index', {
+                                                        group_id: group.group_id,
+                                                        relationship: 'repositories',
+                                                    })}
+                                                    preserveScroll
                                                 >
-                                                    { selectedGroup && selectedGroup.group_id === group.group_id ? (
-                                                        <EyeIcon className="size-8 text-green-500"/>
-                                                    ) : (
-                                                        <EyeSlashIcon className="size-8 text-red-500"/>
-                                                    )}
-                                                </button>
+                                                    <EyeIcon className={"size-8 " + (filters?.relationship == 'repositories' && filters?.group_id == group.group_id ? 'text-sky-500' : 'text-red-500')}/>
+                                                </Link>
                                             </div>
 
-                                            <button className="p-2 w-full flex justify-center bg-sky-950 hover:bg-sky-900">
-                                                <PencilSquareIcon className="size-8 text-sky-500"/>
-                                            </button>
+                                            <Link
+                                                className="p-2 w-full flex justify-center bg-green-950 hover:bg-green-900"
+                                                href={route('git-groups.edit', group.group_id)}
+                                                preserveScroll
+                                            >
+                                                <PencilSquareIcon className="size-8 text-green-500"/>
+                                            </Link>
                                         </div>
                                     </div>
                                 );
@@ -155,100 +161,20 @@ export default function Index({ auth, git_groups, group_details }) {
                         </div>
                     </div>
 
-                    {console.log(groupDetails)}
-
-                    {groupDetails && groupDetails.childrens.length > 0 ? (
+                    {group_details && group_details.length > 0 ? (
                         <div>
                             <div className="px-6 pt-6 text-center">
                                 <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                    {groupDetails.name}
+                                    {filters.relationship}
                                 </h1>
                             </div>
 
                             <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                    <thead className="bg-zinc-950">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                Group ID
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                Name
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                url
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
-                                            >
-                                                Parent
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="relative py-3.5 px-4"
-                                            >
-                                                <span className="sr-only">
-                                                    Edit
-                                                </span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                        {groupDetails && groupDetails.childrens.map((group) => {
-                                            return (
-                                            <tr key={group.group_id}>
-                                                <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {group.group_id}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {group.name}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4">
-                                                    <a
-                                                        href={group.web_url}
-                                                        target="_blank"
-                                                        className="text-sm font-medium text-zinc-200 hover:underline"
-                                                    >
-                                                        {group.web_url}
-                                                    </a>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className={`flex justify-center uppercase text-sm py-1 rounded-xl font-bold ${group.parent_id ? "text-red-800 bg-red-100" : "text-green-800 bg-green-100"}`}>
-                                                        {group.parent_id ? 'children - ' + group.parent_id : "parent"}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4">
-                                                    <div className="flex space-x-2">
-                                                        <EditButton href={route("git-groups.edit", group.group_id)}/>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
+                                {filters.relationship === 'repositories' ? (
+                                    <RepositoriesTable repositories={group_details} />
+                                ): (
+                                    <ChildrensTable childrens={group_details} />
+                                )}
                             </div>
                         </div>
                     ): (

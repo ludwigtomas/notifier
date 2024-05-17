@@ -23,7 +23,7 @@ export default function Edit({ auth, git }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link
@@ -34,7 +34,7 @@ export default function Edit({ auth, git }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link
@@ -45,7 +45,7 @@ export default function Edit({ auth, git }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <div className="relative group">
