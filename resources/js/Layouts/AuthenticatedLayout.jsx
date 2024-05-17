@@ -9,7 +9,7 @@ import {
     UsersIcon,
     ServerStackIcon,
     ChevronDownIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
     return (

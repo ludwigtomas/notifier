@@ -48,6 +48,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::post('/attach', [GitGroupController::class, 'attach'])->name('attach');
         route::get('/{git_group}/edit', [GitGroupController::class, 'edit'])->name('edit');
         route::put('/{git_group}', [GitGroupController::class, 'update'])->name('update');
+        route::post('/', [GitGroupController::class, 'store'])->name('store');
     });
 
     // 🔺 REPOSITORIES

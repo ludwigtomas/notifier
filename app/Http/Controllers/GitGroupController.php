@@ -39,7 +39,6 @@ class GitGroupController extends Controller
             }
         }
 
-
         return inertia('GitGroups/Index', [
             'git_groups' => $git_groups,
             'group_details' => $group_details ?? null,
@@ -93,5 +92,10 @@ class GitGroupController extends Controller
         return inertia('GitGroups/Edit', [
             'git_group' => new GitGroupResource($git_group),
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
     }
 }

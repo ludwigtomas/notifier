@@ -300,6 +300,35 @@ class GitlabService
         }
     }
 
+    public static function getGroupRepositories($group_id)
+    {
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
+
+        try {
+            $response = $client->request('GET', 'groups/' . $group_id . '/projects', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                ],
+            ]);
+
+            $repositories_api = json_decode($response->getBody()->getContents(), true);
+
+            return response()->json([
+                'success' => true,
+                'data' => $repositories_api,
+            ], 200);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'get group repositories error');
+
+            return response()->json([
+                'success' => false,
+                'message' => 'get group repositories error',
+            ], 500);
+        }
+    }
+
     private static function getGitlab()
     {
         return Git::whereSlug('gitlab')->first();

@@ -24,4 +24,9 @@ class GitlabController extends Controller
     {
         return GitlabService::getGroupDetail($group_id);
     }
+
+    public function groupRepositories($group_id): JsonResponse
+    {
+        return GitlabService::getGroupRepositories($group_id);
+    }
 }
