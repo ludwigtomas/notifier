@@ -21,13 +21,13 @@ export default function Show({ repository, className = "" }) {
     const detachSubmit = (e) => {
         e.preventDefault();
 
-        delete(route('client.repository.detach', [selectedClient, repository.id]));
+        delete(route('client.repository.detach', [selectedClient, repository.repository_id]));
     };
 
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('client.repository.update', [selectedClient, repository.id]), {
+        patch(route('client.repository.update', [selectedClient, repository.repository_id]), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedClient(null);
@@ -129,7 +129,7 @@ export default function Show({ repository, className = "" }) {
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
                                                     href={route('client.repository.detach', {
                                                         client: client.id,
-                                                        repository: repository.id}
+                                                        repository: repository.repository_id}
                                                     )}
                                                 >
                                                     <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>

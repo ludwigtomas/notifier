@@ -74,7 +74,7 @@ class RepositoryController extends Controller
     {
         $repository->update($request->validated());
 
-        return to_route('repositories.edit', $repository->id);
+        return to_route('repositories.edit', $repository);
     }
 
     public function destroy(Repository $repository): RedirectResponse
@@ -112,7 +112,7 @@ class RepositoryController extends Controller
     {
         GitlabService::getRepositorylastCommit($repository);
 
-        return to_route('repositories.edit', $repository->id);
+        return to_route('repositories.edit', $repository);
     }
 
     public function googleAnalytics(Repository $repository): RedirectResponse

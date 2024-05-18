@@ -18,7 +18,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
     const submit = (e) => {
         e.preventDefault();
 
-        put(route('repositories.update', repository.id), {
+        put(route('repositories.update', repository.repository_id), {
             preserveScroll: true,
         });
     };
@@ -227,7 +227,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
                             disabled
                             placeholder="52740614"
-                            defaultValue={repository.id}
+                            defaultValue={repository.repository_id}
                         />
                     </div>
 

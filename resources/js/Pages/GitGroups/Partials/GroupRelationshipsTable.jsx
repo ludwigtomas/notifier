@@ -1,5 +1,8 @@
 import React from 'react'
-import { EditButton } from '@/Components/Buttons/ActionButtons';
+import {
+    EditButton,
+    ShowButton,
+} from '@/Components/Buttons/ActionButtons';
 
 const ChildrensTable = (childrens) => {
     return (
@@ -83,6 +86,7 @@ const ChildrensTable = (childrens) => {
                             <td className="px-4 py-4">
                                 <div className="flex space-x-2">
                                     <EditButton href={route("git-groups.edit", group.group_id)} />
+                                    {/* <ShowButton href={route("git-groups.show", group.group_id)} /> */}
                                 </div>
                             </td>
                         </tr>
@@ -174,6 +178,7 @@ const RepositoriesTable = (repositories) => {
                             <td className="px-4 py-4">
                                 <div className="flex space-x-2">
                                     <EditButton href={route("repositories.edit", repository.repository_id)} />
+                                    <ShowButton href={route("repositories.show", repository.repository_id)} />
                                 </div>
                             </td>
                         </tr>

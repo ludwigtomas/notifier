@@ -22,10 +22,8 @@ class GitGroupController extends Controller
                     'name',
                 ], 'like', '%' . $search . '%');
             })
-            ->withCount(['childrens', 'countAllRepositoriesWithChildren'])
+            ->withCount(['childrens', 'allRepositories'])
             ->get();
-
-        dd($git_groups);
 
 
         if ($request->has('group_id')) {
@@ -33,12 +31,12 @@ class GitGroupController extends Controller
 
             $relationship = $request->relationship;
 
-            if ($relationship == 'childrens') {
+            if ($relationship === 'childrens') {
                 $group_details = $group_details->childrens()->get();
             }
 
-            if ($relationship == 'repositories') {
-                $group_details = $group_details->repositories()->get();
+            if ($relationship === 'repositories') {
+                $group_details = $group_details->repositories->merge($group_details->allRepositories);
             }
         }
 

@@ -60,11 +60,4 @@ class GitGroup extends Model
     {
         return $this->hasManyThrough(Repository::class, GitGroup::class, 'parent_id', 'group_id', 'group_id', 'group_id');
     }
-
-    public function countAllRepositoriesWithChildren(): HasManyThrough
-    {
-        return $this->allRepositories()->selectRaw('count(*) as all_repositories_count')->groupBy('group_id');
-    }
-
-
 }

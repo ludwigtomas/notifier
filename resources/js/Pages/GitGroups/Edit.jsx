@@ -459,117 +459,119 @@ export default function ({ auth, git_group}) {
                     </div>
 
                     <div className="grid overflow-y-auto px-2">
-                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
-                            <div className="flex justify-center items-center">
-                                <p className="text-xl text-zinc-200 pb-2">
+                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800 ">
+                            <div className="flex justify-center items-center bg-stone-900 rounded-xl">
+                                <p className="text-xl text-zinc-200 py-2">
                                     Projekty
                                 </p>
                             </div>
 
-                            {repositories && repositories.length > 0 ? (
-                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                    <thead className="bg-stone-800 text-nowrap">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                #
-                                            </th>
+                            <div className="h-80 overflow-y-scroll mt-5">
+                                {repositories && repositories.length > 0 ? (
+                                    <table className="min-w-full divide-y divide-zinc-700 rounded-md">
+                                        <thead className="bg-stone-900 text-nowrap">
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    #
+                                                </th>
 
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                ID
-                                            </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    ID
+                                                </th>
 
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                Name
-                                            </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    Name
+                                                </th>
 
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                URL
-                                            </th>
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    URL
+                                                </th>
 
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                <span className="sr-only">
-                                                    Edit
-                                                </span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
-                                        {repositories.map((repository, index) => (
-                                            <tr
-                                                key={repository.id}
-                                                className="bg-stone-700 p-4 rounded-md"
-                                            >
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {index + 1}
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    <span className="sr-only">
+                                                        Edit
                                                     </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {repository.id}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {repository.name}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <a
-                                                        href={repository.web_url}
-                                                        target="_blank"
-                                                        className="text-sm font-medium text-zinc-200 hover:underline"
-                                                    >
-                                                        {repository.web_url}
-                                                    </a>
-                                                </td>
-
-                                                <td className="px-4 py-4">
-                                                    {git_group.relationships.repositories.find(repo => repo.repository_id === repository.id) ? (
-                                                        <button
-                                                            className="px-4 py-2 rounded-md bg-red-950 text-zinc-100"
-                                                            disabled
-                                                        >
-                                                            Already attached
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
-                                                            onClick={() => storeRepository(repository.id)}
-                                                        >
-                                                            Attach
-                                                        </button>
-                                                    )}
-                                                </td>
+                                                </th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            ): (
-                                <div className="text-center py-2">
-                                    <p className="text-sm text-red-500">
-                                        No <b>projects</b> found.
-                                    </p>
-                                </div>
-                            )}
+                                        </thead>
+                                        <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                            {repositories.map((repository, index) => (
+                                                <tr
+                                                    key={repository.id}
+                                                    className="bg-stone-700 p-4 rounded-md"
+                                                >
+                                                    <td className="px-4 py-4 ">
+                                                        <span className="text-sm font-medium text-zinc-200">
+                                                            {index + 1}
+                                                        </span>
+                                                    </td>
+
+                                                    <td className="px-4 py-4 ">
+                                                        <span className="text-sm font-medium text-zinc-200">
+                                                            {repository.id}
+                                                        </span>
+                                                    </td>
+
+                                                    <td className="px-4 py-4 ">
+                                                        <span className="text-sm font-medium text-zinc-200">
+                                                            {repository.name}
+                                                        </span>
+                                                    </td>
+
+                                                    <td className="px-4 py-4 ">
+                                                        <a
+                                                            href={repository.web_url}
+                                                            target="_blank"
+                                                            className="text-sm font-medium text-zinc-200 hover:underline"
+                                                        >
+                                                            {repository.web_url}
+                                                        </a>
+                                                    </td>
+
+                                                    <td className="px-4 py-4">
+                                                        {git_group.relationships.repositories.find(repo => repo.repository_id === repository.id) ? (
+                                                            <button
+                                                                className="px-4 py-2 rounded-md bg-red-950 text-zinc-100"
+                                                                disabled
+                                                            >
+                                                                Already attached
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
+                                                                onClick={() => storeRepository(repository.id)}
+                                                            >
+                                                                Attach
+                                                            </button>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ): (
+                                    <div className="text-center py-2">
+                                        <p className="text-sm text-red-500">
+                                            No <b>projects</b> found.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 

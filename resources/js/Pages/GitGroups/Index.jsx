@@ -7,17 +7,22 @@ import {
     FireIcon,
     EyeIcon,
 } from "@heroicons/react/24/outline";
-import { ChildrensTable, RepositoriesTable } from "@/Pages/GitGroups/Partials/GroupsRelationshipsTable";
+import {
+    ChildrensTable,
+    RepositoriesTable,
+} from "@/Pages/GitGroups/Partials/GroupRelationshipsTable";
 import TextInput from "@/Components/TextInput";
 import debounce from "lodash/debounce";
 
-export default function({ auth, git_groups, group_details, filters }) {
+export default function ({ auth, git_groups, group_details, filters }) {
     const [search, setSearch] = useState(filters.search || "");
 
     const debouncedSearch = debounce((value) => {
         setSearch(value);
 
-        router.get(route("git-groups.index"),{
+        router.get(
+            route("git-groups.index"),
+            {
                 search: value,
             },
             {
@@ -54,7 +59,6 @@ export default function({ auth, git_groups, group_details, filters }) {
             }
         >
             <Head title="Gits Index" />
-
 
             <div className="sm:px-6 lg:px-8 relative">
                 <div className="mx-auto w-96">
@@ -95,7 +99,7 @@ export default function({ auth, git_groups, group_details, filters }) {
                                             </span>
 
                                             <h2 className="text-3xl font-semibold capitalize text-white">
-                                                { group.name }
+                                                {group.name}
                                             </h2>
                                         </div>
 
@@ -103,7 +107,7 @@ export default function({ auth, git_groups, group_details, filters }) {
                                             <div className="grid grid-cols-2 place-items-center">
                                                 <div className="text-center">
                                                     <p className="text-lg font-bold text-zinc-200">
-                                                        { group.childrens_count }
+                                                        {group.childrens_count}
                                                     </p>
 
                                                     <p className="text-xs text-zinc-400">
@@ -113,7 +117,9 @@ export default function({ auth, git_groups, group_details, filters }) {
 
                                                 <div className="text-center">
                                                     <p className="text-lg font-bold text-zinc-200">
-                                                        { group.all_repositories_count }
+                                                        {
+                                                            group.all_repositories_count
+                                                        }
                                                     </p>
 
                                                     <p className="text-xs text-zinc-400">
@@ -126,34 +132,83 @@ export default function({ auth, git_groups, group_details, filters }) {
                                         <div className="absolute right-0 bottom-0 grid grid-cols-2 place-items-center w-full rounded-b-[0.65rem] overflow-hidden">
                                             <div className="grid grid-cols-2 place-items-center w-full h-full">
                                                 <Link
-                                                    className={"flex justify-center items-center w-full h-full " + (filters?.relationship == 'childrens' && filters?.group_id == group.group_id ? 'bg-sky-950 hover:bg-sky-900' : 'bg-red-950 hover:bg-red-900')}
+                                                    className={
+                                                        "flex justify-center items-center w-full h-full " +
+                                                        (filters?.relationship ==
+                                                            "childrens" &&
+                                                        filters?.group_id ==
+                                                            group.group_id
+                                                            ? "bg-sky-950 hover:bg-sky-900"
+                                                            : "bg-red-950 hover:bg-red-900")
+                                                    }
                                                     preserveScroll
-                                                    href={route('git-groups.index', {
-                                                        group_id: group.group_id,
-                                                        relationship: 'childrens',
-                                                    })}
+                                                    href={route(
+                                                        "git-groups.index",
+                                                        {
+                                                            group_id:
+                                                                group.group_id,
+                                                            relationship:
+                                                                "childrens",
+                                                        }
+                                                    )}
                                                 >
-                                                    <EyeIcon className={"size-8 " + (filters?.relationship == 'childrens' && filters?.group_id == group.group_id ? 'text-sky-500' : 'text-red-500')}/>
+                                                    <EyeIcon
+                                                        className={
+                                                            "size-8 " +
+                                                            (filters?.relationship ==
+                                                                "childrens" &&
+                                                            filters?.group_id ==
+                                                                group.group_id
+                                                                ? "text-sky-500"
+                                                                : "text-red-500")
+                                                        }
+                                                    />
                                                 </Link>
 
                                                 <Link
-                                                    className={"flex justify-center items-center w-full h-full " + (filters?.relationship == 'repositories' && filters?.group_id == group.group_id ? 'bg-sky-950 hover:bg-sky-900' : 'bg-red-950 hover:bg-red-900')}
-                                                    href={route('git-groups.index', {
-                                                        group_id: group.group_id,
-                                                        relationship: 'repositories',
-                                                    })}
+                                                    className={
+                                                        "flex justify-center items-center w-full h-full " +
+                                                        (filters?.relationship ==
+                                                            "repositories" &&
+                                                        filters?.group_id ==
+                                                            group.group_id
+                                                            ? "bg-sky-950 hover:bg-sky-900"
+                                                            : "bg-red-950 hover:bg-red-900")
+                                                    }
+                                                    href={route(
+                                                        "git-groups.index",
+                                                        {
+                                                            group_id:
+                                                                group.group_id,
+                                                            relationship:
+                                                                "repositories",
+                                                        }
+                                                    )}
                                                     preserveScroll
                                                 >
-                                                    <EyeIcon className={"size-8 " + (filters?.relationship == 'repositories' && filters?.group_id == group.group_id ? 'text-sky-500' : 'text-red-500')}/>
+                                                    <EyeIcon
+                                                        className={
+                                                            "size-8 " +
+                                                            (filters?.relationship ==
+                                                                "repositories" &&
+                                                            filters?.group_id ==
+                                                                group.group_id
+                                                                ? "text-sky-500"
+                                                                : "text-red-500")
+                                                        }
+                                                    />
                                                 </Link>
                                             </div>
 
                                             <Link
                                                 className="p-2 w-full flex justify-center bg-green-950 hover:bg-green-900"
                                                 preserveScroll
-                                                href={route('git-groups.edit', group.group_id)}
+                                                href={route(
+                                                    "git-groups.edit",
+                                                    group.group_id
+                                                )}
                                             >
-                                                <PencilSquareIcon className="size-8 text-green-500"/>
+                                                <PencilSquareIcon className="size-8 text-green-500" />
                                             </Link>
                                         </div>
                                     </div>
@@ -171,14 +226,16 @@ export default function({ auth, git_groups, group_details, filters }) {
                             </div>
 
                             <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                                {filters.relationship === 'repositories' ? (
-                                    <RepositoriesTable repositories={group_details} />
-                                ): (
+                                {filters.relationship === "repositories" ? (
+                                    <RepositoriesTable
+                                        repositories={group_details}
+                                    />
+                                ) : (
                                     <ChildrensTable childrens={group_details} />
                                 )}
                             </div>
                         </div>
-                    ): (
+                    ) : (
                         <div className="py-5 absolute left-1/2 -translate-x-1/2">
                             <h3 className="text-xl font-semibold text-zinc-200">
                                 No data available
