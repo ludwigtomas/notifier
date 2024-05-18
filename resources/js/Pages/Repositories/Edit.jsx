@@ -44,7 +44,7 @@ export default function Edit({ auth, repository, clients }) {
 
                     <Link
                         className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route("repositories.edit", repository.id)}
+                        href={route("repositories.edit", repository.repository_id)}
                     >
                         {repository.name}
                     </Link>
@@ -56,7 +56,7 @@ export default function Edit({ auth, repository, clients }) {
                     <div className="relative group">
                         <Link
                             className="font-semibold text-lg leading-tight text-sky-500"
-                            href={route("repositories.show", repository.id)}
+                            href={route("repositories.show", repository.repository_id)}
                         >
                             Edit
                         </Link>
@@ -65,7 +65,7 @@ export default function Edit({ auth, repository, clients }) {
                             <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
                                 <Link
                                     className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-sky-500"
-                                    href={route("repositories.show", repository.id)}
+                                    href={route("repositories.show", repository.repository_id)}
                                 >
                                     <span className="text-gray-200">
                                         Zobrazit
@@ -195,7 +195,7 @@ export default function Edit({ auth, repository, clients }) {
                                 </h3>
 
                                 <Link
-                                    href={route("repositories.last-commit", repository.id)}
+                                    href={route("repositories.last-commit", repository.repository_id)}
                                     preserveScroll
                                     className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                 >
@@ -203,7 +203,7 @@ export default function Edit({ auth, repository, clients }) {
                                 </Link>
 
                                 <Link
-                                    href={repository.analytics_property_id ? route("repositories.google-analytics", repository.id) : null}
+                                    href={repository.analytics_property_id ? route("repositories.google-analytics", repository.repository_id) : null}
                                     preserveScroll
                                     disabled={!repository.analytics_property_id}
                                     className={"flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out border-l-4 "

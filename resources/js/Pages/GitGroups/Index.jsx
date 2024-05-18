@@ -127,6 +127,7 @@ export default function({ auth, git_groups, group_details, filters }) {
                                             <div className="grid grid-cols-2 place-items-center w-full h-full">
                                                 <Link
                                                     className={"flex justify-center items-center w-full h-full " + (filters?.relationship == 'childrens' && filters?.group_id == group.group_id ? 'bg-sky-950 hover:bg-sky-900' : 'bg-red-950 hover:bg-red-900')}
+                                                    preserveScroll
                                                     href={route('git-groups.index', {
                                                         group_id: group.group_id,
                                                         relationship: 'childrens',
@@ -149,8 +150,8 @@ export default function({ auth, git_groups, group_details, filters }) {
 
                                             <Link
                                                 className="p-2 w-full flex justify-center bg-green-950 hover:bg-green-900"
-                                                href={route('git-groups.edit', group.group_id)}
                                                 preserveScroll
+                                                href={route('git-groups.edit', group.group_id)}
                                             >
                                                 <PencilSquareIcon className="size-8 text-green-500"/>
                                             </Link>

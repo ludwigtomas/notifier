@@ -22,8 +22,11 @@ class GitGroupController extends Controller
                     'name',
                 ], 'like', '%' . $search . '%');
             })
-            ->withCount(['childrens', 'allRepositories'])
+            ->withCount(['childrens', 'countAllRepositoriesWithChildren'])
             ->get();
+
+        dd($git_groups);
+
 
         if ($request->has('group_id')) {
             $group_details = GitGroup::findOrFail($request->group_id);

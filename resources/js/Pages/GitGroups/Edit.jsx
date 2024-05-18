@@ -72,10 +72,6 @@ export default function ({ auth, git_group}) {
         }, {
             preserveScroll: true,
 
-            onSuccess: () => {
-                setToggleRepositoriesModal(false);
-            },
-
             onError: () => {
                 alert('Error');
             }
@@ -418,7 +414,7 @@ export default function ({ auth, git_group}) {
                                                             >
                                                                 <LinkIcon className="w-4 h-4" />
 
-                                                                {repository.web_url}
+                                                                {repository.repository_url}
                                                             </a>
                                                         </td>
 
