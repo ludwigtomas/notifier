@@ -94,8 +94,16 @@ class GitGroupController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
+        GitGroup::create([
+            'group_id' => $request->group['id'],
+            'git_id' => Git::whereSlug('gitlab')->first()->id,
+            'name' => $request->group['name'],
+            'web_url' => $request->group['web_url'],
+            'parent_id' => $request->group['parent_id'] ?? null,
+        ]);
+
+        return back();
     }
 }

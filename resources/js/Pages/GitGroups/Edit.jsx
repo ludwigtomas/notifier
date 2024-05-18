@@ -85,14 +85,8 @@ export default function ({ auth, git_group}) {
     const storeSubgroup = (group) => {
         let url = route('git-groups.store');
 
-        router.post(url, {
-            group: group,
-        }, {
+        router.post(url, {group}, {
             preserveScroll: true,
-
-            onSuccess: () => {
-                setToggleRepositoriesModal(false);
-            },
 
             onError: () => {
                 alert('Error');
@@ -221,6 +215,113 @@ export default function ({ auth, git_group}) {
                     <div className="p-4 sm:rounded-3xl bg-zinc-900">
                         <section className="grid grid-cols-12">
                             <div className="col-span-4 my-auto">
+                                <h2 className="text-lg font-medium text-zinc-200 mb-2">
+                                    Children groups
+                                </h2>
+
+                                <p className="text-zinc-400">
+                                    {git_group.relationships.childrens.length} children groups.
+                                </p>
+                            </div>
+
+                            <div className="col-span-8">
+                                <div className="mb-5 col-span-12">
+                                    <div className="flex justify-end items-center space-x-2">
+                                        <button
+                                            className="px-4 py-2 rounded-xl bg-sky-500 text-zinc-100 hover:bg-sky-600"
+                                            onClick={groupSubgroups}
+                                        >
+                                            <ArrowPathIcon className="size-6" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-zinc-800 rounded-xl">
+                                    <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                        <thead className="bg-zinc-950 text-nowrap">
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    #
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    Group name
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    Group URL
+                                                </th>
+
+                                                <th
+                                                    scope="col"
+                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                >
+                                                    <span className="sr-only">
+                                                        Edit
+                                                    </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+                                            { git_group.relationships.childrens.map((group) => {
+                                                return (
+                                                    <tr
+                                                        key={group.group_id}
+                                                    >
+                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                            {group.group_id}
+                                                        </td>
+
+                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                            {group.name}
+                                                        </td>
+
+
+                                                        <td className="px-4 py-3.5 text-sm text-zinc-400">
+                                                            <a
+                                                                href={group.web_url}
+                                                                target="_blank"
+                                                                className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
+                                                            >
+                                                                <LinkIcon className="w-4 h-4" />
+
+                                                                {group.web_url}
+                                                            </a>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                            <div className="flex items-center space-x-2">
+                                                                <Link
+                                                                    href={route("git-groups.edit", group.group_id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                >
+                                                                    <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                                </Link>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div className="p-4 sm:rounded-3xl bg-zinc-900">
+                        <section className="grid grid-cols-12">
+                            <div className="col-span-4 my-auto">
                                 <h2 className="text-lg underline underline-offset-8 font-medium text-zinc-200 mb-2">
                                     Repositories
                                 </h2>
@@ -325,113 +426,6 @@ export default function ({ auth, git_group}) {
                                                             <div className="flex items-center space-x-2">
                                                                 <Link
                                                                     href={route("repositories.edit", repository.repository_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                                >
-                                                                    <PencilSquareIcon className="w-6 h-6 text-green-500" />
-                                                                </Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <div className="p-4 sm:rounded-3xl bg-zinc-900">
-                        <section className="grid grid-cols-12">
-                            <div className="col-span-4 my-auto">
-                                <h2 className="text-lg font-medium text-zinc-200 mb-2">
-                                    Children groups
-                                </h2>
-
-                                <p className="text-zinc-400">
-                                    {git_group.relationships.childrens.length} children groups.
-                                </p>
-                            </div>
-
-                            <div className="col-span-8">
-                                <div className="mb-5 col-span-12">
-                                    <div className="flex justify-end items-center space-x-2">
-                                        <button
-                                            className="px-4 py-2 rounded-xl bg-sky-500 text-zinc-100 hover:bg-sky-600"
-                                            onClick={groupSubgroups}
-                                        >
-                                            <ArrowPathIcon className="size-6" />
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="p-4 bg-zinc-800 rounded-xl">
-                                    <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                        <thead className="bg-zinc-950 text-nowrap">
-                                            <tr>
-                                                <th
-                                                    scope="col"
-                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                >
-                                                    #
-                                                </th>
-
-                                                <th
-                                                    scope="col"
-                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                >
-                                                    Group name
-                                                </th>
-
-                                                <th
-                                                    scope="col"
-                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                >
-                                                    Group URL
-                                                </th>
-
-                                                <th
-                                                    scope="col"
-                                                    className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                                >
-                                                    <span className="sr-only">
-                                                        Edit
-                                                    </span>
-                                                </th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                            { git_group.relationships.childrens.map((group) => {
-                                                return (
-                                                    <tr
-                                                        key={group.group_id}
-                                                    >
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {group.group_id}
-                                                        </td>
-
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {group.name}
-                                                        </td>
-
-
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400">
-                                                            <a
-                                                                href={group.web_url}
-                                                                target="_blank"
-                                                                className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
-                                                            >
-                                                                <LinkIcon className="w-4 h-4" />
-
-                                                                {group.web_url}
-                                                            </a>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            <div className="flex items-center space-x-2">
-                                                                <Link
-                                                                    href={route("git-groups.edit", group.group_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                                 >
                                                                     <PencilSquareIcon className="w-6 h-6 text-green-500" />
