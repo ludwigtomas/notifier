@@ -48,7 +48,7 @@ export default function Show({ repository, className = "" }) {
                     <div>
                         <InputLabel
                             htmlFor="name"
-                            value="name"
+                            value="Název"
                         />
 
                         <TextInput
@@ -64,13 +64,16 @@ export default function Show({ repository, className = "" }) {
                     </div>
 
                     <div>
-                        <InputLabel htmlFor="hosting" value="hosting" />
+                        <InputLabel
+                            htmlFor="hosting"
+                            value="Hosting"
+                        />
 
                         <TextInput
                             type="text"
                             id="hosting"
                             className="mt-1 block w-full"
-                            placeholder="hosting"
+                            placeholder="Bohemia Cloud"
                             value={data.hosting}
                             onChange={(e) => setData("hosting", e.target.value)}
                         />
@@ -78,14 +81,39 @@ export default function Show({ repository, className = "" }) {
                         <InputError className="mt-2" message={errors.hosting} />
                     </div>
 
+
+                    <div className="pt-10">
+                        <InputLabel
+                            htmlFor="login_user"
+                            value="User"
+                        />
+
+                        <TextInput
+                            type="text"
+                            id="login_user"
+                            className="mt-1 block w-full"
+                            placeholder="tech1"
+                            value={data.login_user}
+                            onChange={(e) => setData("login_user", e.target.value)}
+                        />
+
+                        <InputError
+                            className="mt-2"
+                            message={errors.login_user}
+                        />
+                    </div>
+
                     <div>
-                        <InputLabel htmlFor="ip_address" value="ip_address" />
+                        <InputLabel
+                            htmlFor="ip_address"
+                            value="IP adresa"
+                        />
 
                         <TextInput
                             type="text"
                             id="ip_address"
                             className="mt-1 block w-full"
-                            placeholder="ip_address"
+                            placeholder="127.0.0.10"
                             value={data.ip_address}
                             onChange={(e) =>
                                 setData("ip_address", e.target.value)
@@ -99,13 +127,16 @@ export default function Show({ repository, className = "" }) {
                     </div>
 
                     <div>
-                        <InputLabel htmlFor="ip_port" value="ip_port" />
+                        <InputLabel
+                            htmlFor="ip_port"
+                            value="IP port"
+                        />
 
                         <TextInput
                             type="text"
                             id="ip_port"
                             className="mt-1 block w-full"
-                            placeholder="ip_port"
+                            placeholder="1788"
                             value={data.ip_port}
                             onChange={(e) => setData("ip_port", e.target.value)}
                         />
@@ -113,41 +144,20 @@ export default function Show({ repository, className = "" }) {
                         <InputError className="mt-2" message={errors.ip_port} />
                     </div>
 
-                    <div>
-                        <InputLabel htmlFor="login_user" value="login_user" />
-
-                        <TextInput
-                            type="text"
-                            id="login_user"
-                            className="mt-1 block w-full"
-                            placeholder="login_user"
-                            value={data.login_user}
-                            onChange={(e) =>
-                                setData("login_user", e.target.value)
-                            }
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.login_user}
-                        />
-                    </div>
 
                     <div>
                         <InputLabel
                             htmlFor="login_password"
-                            value="login_password"
+                            value="Heslo"
                         />
 
                         <TextInput
                             type="text"
                             id="login_password"
                             className="mt-1 block w-full"
-                            placeholder="login_password"
+                            placeholder="empty"
                             value={data.login_password}
-                            onChange={(e) =>
-                                setData("login_password", e.target.value)
-                            }
+                            onChange={(e) => setData("login_password", e.target.value)}
                         />
 
                         <InputError
@@ -157,7 +167,7 @@ export default function Show({ repository, className = "" }) {
                     </div>
                 </div>
 
-                <div className="mt-6 col-span-12 flex space-x-4">
+                <div className="mt-6 col-span-12 flex items-center space-x-4">
                     <PrimaryButton
                         typeOfButton="submit"
                         className="justify-center"
@@ -165,12 +175,6 @@ export default function Show({ repository, className = "" }) {
                     >
                         Update
                     </PrimaryButton>
-
-                    {recentlySuccessful && (
-                        <p className="text-green-500">
-                            Repository information has been updated!
-                        </p>
-                    )}
 
                     <Link
                         as="button"
@@ -180,8 +184,15 @@ export default function Show({ repository, className = "" }) {
                         className="flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     >
                         <TrashIcon className="size-5 mr-2 text-white" />
+                        
                         Smazat
                     </Link>
+
+                    {recentlySuccessful && (
+                        <p className="text-green-500">
+                            Repository information has been updated!
+                        </p>
+                    )}
                 </div>
             </form>
         </section>

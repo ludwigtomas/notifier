@@ -71,7 +71,7 @@ export default function Edit({ auth, repository, clients }) {
                                         Zobrazit
                                     </span>
 
-                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                    <EyeIcon className="size-6 text-sky-500" />
                                 </Link>
                             </div>
                         </div>
@@ -84,15 +84,11 @@ export default function Edit({ auth, repository, clients }) {
             <div className="py-12">
                 <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryInformationForm
-                            repository={repository}
-                        />
+                        <UpdateRepositoryInformationForm repository={repository}/>
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateRepositoryDetachClientsForm
-                            repository={repository}
-                        />
+                        <UpdateRepositoryDetachClientsForm repository={repository}/>
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
@@ -102,13 +98,13 @@ export default function Edit({ auth, repository, clients }) {
                         />
                     </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl grid grid-cols-2 gap-20">
-                        { repository.relationships.hosting ?
-                            <UpdateRepositoryHostingForm repository={repository}/> :
-                            <CreateRepositoryHostingForm repository={repository}/>
-                        }
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl grid grid-cols-2 place-items-center gap-20">
+                        { repository.relationships.hosting ? (
+                            <UpdateRepositoryHostingForm repository={repository} className="w-full"/>
+                        ) : (
+                            <CreateRepositoryHostingForm repository={repository} className="w-full"/>
+                        )}
 
-                        <div className="mb-20 flex justify-center items-center">
                             <div className="w-full bg-stone-900 p-1 drop-shadow-2xl rounded-xl overflow-hidden">
                                 <div className="flex justify-between items-center relative">
                                     <div className="absolute left-1/2 -translate-x-1/2">
@@ -126,7 +122,7 @@ export default function Edit({ auth, repository, clients }) {
                                                 whileHover={{ scale: 1.1 }}
                                                 whileTap={{ scale: 0.9 }}
                                             >
-                                                <ClipboardIcon className="w-6 h-6" />
+                                                <ClipboardIcon className="size-6 text-white" />
                                             </motion.button>
                                         </div>
                                     </div>
@@ -168,7 +164,6 @@ export default function Edit({ auth, repository, clients }) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
 
                     {/* Another options */}

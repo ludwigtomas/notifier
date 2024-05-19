@@ -47,7 +47,7 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                     <div>
                         <InputLabel
                             htmlFor="name"
-                            value="Název hostingu"
+                            value="Název"
                         />
 
                         <TextInput
@@ -68,14 +68,14 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                     <div>
                         <InputLabel
                             htmlFor="hosting"
-                            value="hosting"
+                            value="Hosting"
                         />
 
                         <TextInput
                             type="text"
                             id="hosting"
                             className="mt-1 block w-full"
-                            placeholder="hosting"
+                            placeholder="Bohemia Cloud"
                             value={data.hosting}
                             onChange={(e) => setData('hosting', e.target.value)}
                         />
@@ -86,17 +86,38 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                         />
                     </div>
 
+                    <div className="pt-10">
+                        <InputLabel
+                            htmlFor="login_user"
+                            value="User"
+                        />
+
+                        <TextInput
+                            type="text"
+                            id="login_user"
+                            className="mt-1 block w-full"
+                            placeholder="tech1"
+                            value={data.login_user}
+                            onChange={(e) => setData('login_user', e.target.value)}
+                        />
+
+                        <InputError
+                            className="mt-2"
+                            message={errors.login_user}
+                        />
+                    </div>
+
                     <div>
                         <InputLabel
                             htmlFor="ip_address"
-                            value="ip_address"
+                            value="IP adresa"
                         />
 
                         <TextInput
                             type="text"
                             id="ip_address"
                             className="mt-1 block w-full"
-                            placeholder="ip_address"
+                            placeholder="127.0.0.10"
                             value={data.ip_address}
                             onChange={(e) => setData('ip_address', e.target.value)}
                         />
@@ -110,14 +131,14 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                     <div>
                         <InputLabel
                             htmlFor="ip_port"
-                            value="ip_port"
+                            value="IP port"
                         />
 
                         <TextInput
                             type="text"
                             id="ip_port"
                             className="mt-1 block w-full"
-                            placeholder="ip_port"
+                            placeholder="1788"
                             value={data.ip_port}
                             onChange={(e) => setData('ip_port', e.target.value)}
                         />
@@ -130,36 +151,15 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
 
                     <div>
                         <InputLabel
-                            htmlFor="login_user"
-                            value="login_user"
-                        />
-
-                        <TextInput
-                            type="text"
-                            id="login_user"
-                            className="mt-1 block w-full"
-                            placeholder="login_user"
-                            value={data.login_user}
-                            onChange={(e) => setData('login_user', e.target.value)}
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.login_user}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
                             htmlFor="login_password"
-                            value="login_password"
+                            value="Heslo"
                         />
 
                         <TextInput
                             type="text"
                             id="login_password"
                             className="mt-1 block w-full"
-                            placeholder="login_password"
+                            placeholder="empty"
                             value={data.login_password}
                             onChange={(e) => setData('login_password', e.target.value)}
                         />

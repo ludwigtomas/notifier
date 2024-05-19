@@ -270,23 +270,23 @@ export default function Index({ auth, repositories, filters }) {
                                                 <td className="px-4 py-4 ">
                                                     <div className="flex items-center gap-x-2 text-nowrap ">
                                                         { repository.relationships.clients_count > 0 ? (
-                                                            <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                            <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-4 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                                 {repository.relationships.clients.slice(0, 2).map((client) => (
                                                                         <p
                                                                             key={client.id}
-                                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
+                                                                            className="text-xs text-zinc-400"
                                                                         >
                                                                             {client.name}
                                                                         </p>
                                                                     ))}
 
                                                                 {repository.relationships.clients_count > 2 && (
-                                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
+                                                                    <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
                                                                         +{" "}
                                                                         {repository.relationships.clients_count - 2}
                                                                     </span>
                                                                 )}
-                                                            </span>
+                                                            </div>
                                                         ): (
                                                             <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                                 0
