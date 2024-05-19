@@ -1,15 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from '@inertiajs/react';
-import {
-    EyeIcon,
-    ChevronRightIcon,
-} from "@heroicons/react/24/outline";
+import { Head, Link } from "@inertiajs/react";
+import { EyeIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import UpdateGitInformationForm from "@/Pages/Gits/Partials/UpdateGitInformationForm";
 import UpdateGitGroups from "@/Pages/Gits/Partials/UpdateGitGroups";
 import AttachGitGroups from "@/Pages/Gits/Partials/AttachGitGroups";
 
 export default function Edit({ auth, git }) {
-
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -79,27 +75,18 @@ export default function Edit({ auth, git }) {
             <div className="sm:px-6 lg:px-8">
                 <div className="container mx-auto space-y-6 ">
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
-                        <UpdateGitInformationForm
-                            git={git}
-                        />
+                        <UpdateGitInformationForm git={git} />
                     </div>
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
-                        <UpdateGitGroups
-                            git={git}
-                        />
+                        <UpdateGitGroups git_groups={git.relationships.git_groups}/>
                     </div>
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
-                        <AttachGitGroups
-                            git_groups={git.relationships.git_groups}
-                        />
+                        <AttachGitGroups git_groups={git.relationships.git_groups}/>
                     </div>
-
                 </div>
             </div>
-
-
         </AuthenticatedLayout>
     );
 }

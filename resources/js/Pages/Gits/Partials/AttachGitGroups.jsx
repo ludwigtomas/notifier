@@ -4,7 +4,8 @@ import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import {
     BackButton,
-    EditButton
+    EditButton,
+    ShowButton,
 } from '@/Components/Buttons/ActionButtons';
 import PrimaryButton from "@/Components/PrimaryButton";
 import { Link, router } from "@inertiajs/react";
@@ -162,25 +163,19 @@ export default function ({ git_groups, className = "" }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-200">
-                                                        {/* <Link
-                                                            className="px-4 py-2 rounded-md bg-sky-500 text-zinc-100 hover:bg-sky-600"
-                                                            as="button"
-                                                            href={route("git-groups.attach", {
-                                                                'group_id': group.id,
-                                                                'parent_id': group.parent_id ? group.parent_id : 0
-                                                            })}
-                                                        >
-                                                            Attach
-                                                        </Link> */}
-
+                                                    <div className="flex items-center justify-center space-x-2 text-sm font-medium text-zinc-200">
                                                         {git_groups.find(git_group => git_group.group_id === group.id) ? (
-                                                            <button
-                                                                className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 group-hover:bg-stone-800"
-                                                                disabled
-                                                            >
-                                                                Already attached
-                                                            </button>
+                                                            <>
+                                                                <button
+                                                                    className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 group-hover:bg-stone-800"
+                                                                    disabled
+                                                                >
+                                                                    Already attached
+                                                                </button>
+
+                                                                <EditButton href={route("git-groups.edit", group.id)} />
+                                                            </>
+
                                                         ) : (
                                                             <button
                                                                 className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
@@ -191,7 +186,7 @@ export default function ({ git_groups, className = "" }) {
                                                         )}
 
 
-                                                    </span>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         ))}

@@ -44,7 +44,7 @@ class GitController extends Controller
 
     public function edit(Git $git): Response
     {
-        $git->load('gitGroups');
+        $git->load('gitGroups', 'repositories');
 
         return inertia('Gits/Edit', [
             'git' => new GitResource($git),

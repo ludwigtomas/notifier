@@ -52,7 +52,7 @@ export default function Show({ clients, repository, className = "" }) {
                                     <div>
                                         <Link
                                             href={route('clients.show', client.id)}
-                                            className="text-lg font-semibold text-gray-100"
+                                            className="text-lg font-semibold text-gray-100 hover:underline"
                                         >
                                             {client.name}
                                         </Link>

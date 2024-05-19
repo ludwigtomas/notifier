@@ -10,7 +10,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 export default function CreateRepositoryHostingForm({ repository, className = "" }) {
 
     const { data, setData, post, errors, processing } = useForm({
-        repository_id: repository.id,
+        repository_id: repository.repository_id,
         name: '',
         hosting: '',
         ip_address: '',
@@ -47,7 +47,7 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                     <div>
                         <InputLabel
                             htmlFor="name"
-                            value="name"
+                            value="Název hostingu"
                         />
 
                         <TextInput

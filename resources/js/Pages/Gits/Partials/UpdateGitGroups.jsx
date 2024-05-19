@@ -1,12 +1,18 @@
 import Modal from "@/Components/Modal";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-    ArrowPathIcon
-} from "@heroicons/react/24/solid";
 import { router } from "@inertiajs/react";
+import {
+    EditButton,
+    ShowButton,
+} from '@/Components/Buttons/ActionButtons';
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    EyeIcon,
+} from "@heroicons/react/24/outline";
 
-export default function ({ git, className = "" }) {
+export default function ({ git_groups, className = "" }) {
     const [toggleUpdateModal, setToggleUpdateModal] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [gitInformations, setGitInformations] = useState(null);
@@ -23,10 +29,9 @@ export default function ({ git, className = "" }) {
             return;
         }
 
-        let url_groups = route('api.gitlab.groups.detail', selectedGroup.group_id)
-
+        // Get group details
         axios
-            .get(url_groups)
+            .get(route('api.gitlab.groups.detail', selectedGroup.group_id))
             .then((response) => {
                 setGitInformations(response.data.data);
             })
@@ -34,10 +39,10 @@ export default function ({ git, className = "" }) {
                 alert('Error: ' + error);
             })
 
-        let url_subgroups = route('api.gitlab.subgroups', selectedGroup.group_id)
 
+        // Get subgroups
         axios
-            .get(url_subgroups)
+            .get(route('api.gitlab.subgroups', selectedGroup.group_id))
             .then((response) => {
                 setSubgroups(response.data.data);
             })
@@ -56,10 +61,6 @@ export default function ({ git, className = "" }) {
         }, {
             preserveScroll: true,
 
-            onSuccess: () => {
-                setToggleUpdateModal(false);
-            },
-
             onError: () => {
                 alert('Error');
             }
@@ -75,10 +76,6 @@ export default function ({ git, className = "" }) {
             subgroup: subgroup
         }, {
             preserveScroll: true,
-
-            onSuccess: () => {
-                setToggleUpdateModal(false);
-            },
 
             onError: () => {
                 alert('Error');
@@ -102,7 +99,7 @@ export default function ({ git, className = "" }) {
                 <div className="max-w-[100rem] mx-auto">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="divide-y divide-zinc-800">
-                            { git.relationships.git_groups ? (
+                            { git_groups ? (
                                 <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
                                     <thead className="bg-zinc-950 text-nowrap">
                                         <tr>
@@ -145,7 +142,7 @@ export default function ({ git, className = "" }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-zinc-700 bg-zinc-800">
-                                        {git.relationships.git_groups.map((group) => (
+                                        {git_groups.map((group) => (
                                             <tr
                                                 key={group.group_id}
                                                 className="hover:bg-zinc-700"
@@ -179,13 +176,15 @@ export default function ({ git, className = "" }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    <div>
+                                                    <div className="space-x-2">
                                                         <button
-                                                            className="px-4 py-2 rounded-md bg-sky-500 text-zinc-100 hover:bg-sky-600"
+                                                            className="inline-flex items-center p-1.5 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest transition ease-in-out duration-150 bg-blue-100 hover:bg-blue-200"
                                                             onClick={() => handleToggle(group, true)}
                                                         >
-                                                            Details
+                                                            <EyeIcon className="size-6 text-blue-500" />
                                                         </button>
+
+                                                        <EditButton href={route("git-groups.edit", group.group_id)} />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -369,21 +368,8 @@ export default function ({ git, className = "" }) {
                                                                 </td>
 
                                                                 <td className="px-4 py-4">
-                                                                {/* {git_groups.find(git_group => git_group.group_id === group.id) ? (
-                                                                        <button
-                                                                            className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 group-hover:bg-stone-800"
-                                                                            disabled
-                                                                        >
-                                                                            Already attached
-                                                                        </button>
-                                                                    ) : (
-                                                                        <button
-                                                                            className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
-                                                                            onClick={() => {setSelectedGroup(group)}}
-                                                                        >
-                                                                            Attach
-                                                                        </button>
-                                                                    )} */}
+
+
                                                                     <button
                                                                         className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
                                                                         onClick={() => storeProject(gitInformations.id, project.id)}
@@ -460,7 +446,7 @@ export default function ({ git, className = "" }) {
                                                         {subgroups.map((subgroup, index) => (
                                                             <tr
                                                                 key={subgroup.id}
-                                                                className="bg-stone-700 p-4 rounded-md"
+                                                                className="group bg-stone-700 hover:bg-stone-800 p-4 rounded-md"
                                                             >
                                                                 <td className="px-4 py-4 ">
                                                                     <span className="text-sm font-medium text-zinc-200">
@@ -487,12 +473,22 @@ export default function ({ git, className = "" }) {
                                                                 </td>
 
                                                                 <td className="px-4 py-4">
-                                                                    <button
-                                                                        className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
-                                                                        onClick={() => {storeSubgroup(selectedGroup.group_id, subgroup)}}
-                                                                    >
-                                                                        Attach
-                                                                    </button>
+
+                                                                    {git_groups.find(git_group => git_group.group_id === subgroup.id) ? (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-stone-800 text-zinc-100 group-hover:bg-stone-700"
+                                                                            disabled
+                                                                        >
+                                                                            Already attached
+                                                                        </button>
+                                                                    ) : (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
+                                                                            onClick={() => {storeSubgroup(selectedGroup.group_id, subgroup)}}
+                                                                        >
+                                                                            Attach
+                                                                        </button>
+                                                                    )}
                                                                 </td>
                                                             </tr>
                                                         ))}

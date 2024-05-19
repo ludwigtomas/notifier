@@ -9,6 +9,7 @@ import {
     ChevronRightIcon,
     LinkIcon,
     BackspaceIcon,
+    CommandLineIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -372,11 +373,16 @@ export default function Index({ auth, repositories, filters }) {
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
+
+                                                        <button className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation">
+                                                            <CommandLineIcon className="size-6 text-orange-400" />
+                                                        </button>
+
                                                         <Link
                                                             href={route("repositories.edit", repository.repository_id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
-                                                            <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                            <PencilSquareIcon className="size-6 text-green-500" />
                                                         </Link>
 
                                                         {repository.deleted_at ? (
@@ -385,14 +391,14 @@ export default function Index({ auth, repositories, filters }) {
                                                                     href={route("repositories.show", repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
-                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                    <EyeIcon className="size-6 text-sky-500" />
                                                                 </Link>
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                                     onClick={() => toggleModal(repository)}
                                                                 >
-                                                                    <BackspaceIcon className="w-6 h-6 text-red-500" />
+                                                                    <BackspaceIcon className="size-6 text-red-500" />
                                                                 </button>
                                                             </>
                                                         ) : (
@@ -401,14 +407,14 @@ export default function Index({ auth, repositories, filters }) {
                                                                     href={route("repositories.show",repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
-                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                    <EyeIcon className="size-6 text-sky-500" />
                                                                 </Link>
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                                     onClick={() => toggleModal(repository)}
                                                                 >
-                                                                    <TrashIcon className="w-6 h-6 text-red-500" />
+                                                                    <TrashIcon className="size-6 text-red-500" />
                                                                 </button>
                                                             </>
                                                         )}
@@ -484,7 +490,7 @@ export default function Index({ auth, repositories, filters }) {
                                 type="submit"
                                 onClick={deleteRepository}
                             >
-                                <TrashIcon className="w-6 h-6 mr-2" />
+                                <TrashIcon className="size-6 mr-2" />
 
                                 {selectedRepository.name}
                             </DangerButton>
