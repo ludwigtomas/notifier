@@ -12,9 +12,13 @@ class TestController extends Controller
 {
     public function index()
     {
-        $gitlab = Git::whereSlug('gitlab')->first();
+        return inertia('SSHClient');
 
-        GitlabService::getRepositories($gitlab);
+
+
+        // $gitlab = Git::whereSlug('gitlab')->first();
+
+        // GitlabService::getRepositories($gitlab);
 
         // dd(Repository::withTrashed()->get());
 

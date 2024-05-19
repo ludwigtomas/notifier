@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
+
 // DELETE IN PRODUCTION
 if (app()->isLocal()) {
     route::get('/test', [TestController::class, 'index']);
