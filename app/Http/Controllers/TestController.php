@@ -3,16 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Git;
+use App\Models\Hosting;
 use App\Models\Repository;
+use Spatie\Analytics\Period;
 use App\Services\GitlabService;
 use Spatie\Analytics\Facades\Analytics;
-use Spatie\Analytics\Period;
 
 class TestController extends Controller
 {
     public function index()
     {
-        return inertia('SSHClient');
+        $vps = Hosting::first();
+
+        return inertia('SSHClient', [
+            'host' => $vps->ip_address,
+            'port' => $vps->ip_port,
+            'username' => $vps->login_user,
+            'password' => $vps->login_password,
+        ]);
+    }
+}
 
 
 
@@ -27,5 +37,3 @@ class TestController extends Controller
         // $analyticsData = Analytics::fetchTotalVisitorsAndPageViews(Period::days(30));
 
         // return $analyticsData;
-    }
-}

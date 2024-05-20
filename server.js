@@ -2,11 +2,12 @@ import express from "express";
 import http from "http";
 import { Server as SocketIoServer } from "socket.io";
 import { Client } from "ssh2";
-import cors from "cors";
-import dotenv from "dotenv";
+import { readFileSync } from "fs";
+
+// import dotenv from "dotenv";
 
 // Load environment variables from .env file
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -50,9 +51,10 @@ io.on("connection", (socket) => {
         });
     }).connect({
         host: "178.22.117.90",
-        port: 1787,
-        username: "tech1",
-        password: "4sa7fkav7MI**",
+        port: 32259,
+        username: "tomludwig",
+        password: "ahojahoj12*",
+        // privateKey: readFileSync("privatekey.txt"),
     });
 
     socket.on("disconnect", () => {
