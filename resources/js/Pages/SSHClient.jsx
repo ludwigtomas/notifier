@@ -4,13 +4,11 @@ import io from "socket.io-client";
 import { Terminal } from "@xterm/xterm";
 import "@xterm/xterm/css/xterm.css";
 
-const SshClient = () => {
-    const { props } = usePage(); // Get props from Laravel
-    const { host, port, username, password } = props;
+export default function SshClient({host, port, username, password}) {
 
     let param = 'host=' + host + '&port=' + port + '&username=' + username + '&password=' + password;
 
-    let url = "https://ssh-connector.notifier.ludwigtomas.cz?" + param;
+    let url = import.meta.env.VITE_NODE_SERVER_URL + '?' + param;
 
     useEffect(() => {
         const socket = io(url);
@@ -32,7 +30,7 @@ const SshClient = () => {
         return () => {
             socket.disconnect();
         };
-    }, [host, port, username, password]);
+    }, [url]);
 
     return (
         <div className="text-white">
@@ -54,5 +52,3 @@ const SshClient = () => {
         </div>
     );
 };
-
-export default SshClient;
