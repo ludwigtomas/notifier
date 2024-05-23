@@ -10,7 +10,7 @@ const SshClient = () => {
 
     let param = 'host=' + host + '&port=' + port + '&username=' + username + '&password=' + password;
 
-    let url = "http://127.0.0.1:3000?" + param;
+    let url = "https://ssh-connector.notifier.ludwigtomas.cz?" + param;
 
     useEffect(() => {
         const socket = io(url);
