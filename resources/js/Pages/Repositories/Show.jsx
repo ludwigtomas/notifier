@@ -69,7 +69,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                         </Link>
 
                         <span>
-                            <ChevronRightIcon className="w-5 h-5" />
+                            <ChevronRightIcon className="size-5" />
                         </span>
 
                         <Link
@@ -80,24 +80,24 @@ export default function Show({ auth, repository, database_backups, clients }) {
                         </Link>
 
                         <span>
-                            <ChevronRightIcon className="w-5 h-5" />
+                            <ChevronRightIcon className="size-5" />
                         </span>
 
                         <Link
                             className="font-semibold text-lg leading-tight text-sky-500"
-                            href={route("repositories.show", repository.id)}
+                            href={route("repositories.show", repository.repository_id)}
                         >
                             {repository.name}
                         </Link>
 
                         <span>
-                            <ChevronRightIcon className="w-5 h-5" />
+                            <ChevronRightIcon className="size-5" />
                         </span>
 
                         <div className="relative group">
                             <Link
                                 className="font-semibold text-lg leading-tight text-sky-500"
-                                href={route("repositories.show", repository.id)}
+                                href={route("repositories.show", repository.repository_id)}
                             >
                                 Zobrazit
                             </Link>
@@ -106,7 +106,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
                                     <Link
                                         className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-green-500"
-                                        href={route("repositories.edit", repository.id)}
+                                        href={route("repositories.edit", repository.repository_id)}
                                     >
                                         <span className="text-gray-200">
                                             Editovat
@@ -189,19 +189,19 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                                         ssh
                                                                     </span>{" "}
                                                                     <span className="text-purple-400">
-                                                                        { repository.relationships.hosting.login_user }
+                                                                        { repository.relationships.hosting?.login_user }
                                                                     </span>
                                                                     <span className="text-green-300">
                                                                         @
                                                                     </span>
                                                                     <span className="text-purple-400">
-                                                                        { repository.relationships.hosting.ip_address }
+                                                                        { repository.relationships.hosting?.ip_address }
                                                                     </span>{" "}
                                                                     <span className="text-green-300">
                                                                         -p
                                                                     </span>{" "}
                                                                     <span className="text-purple-400">
-                                                                        { repository.relationships.hosting.ip_port }
+                                                                        { repository.relationships.hosting?.ip_port }
                                                                     </span>
                                                                 </div>
                                                             </div>

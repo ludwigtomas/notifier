@@ -2,26 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\GitGroup;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Git extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',      //
-        'slug',      // automatically generated
+        'name',
+        'slug',
         'api_token',
 
         'username',
-        'user_id',   // api
-        'avatar_url', // api
+        'user_id',
+        'user_avatar_url',
     ];
 
-    public function repositories(): HasMany
+    public function gitGroups(): HasMany
     {
-        return $this->hasMany(Repository::class);
+        return $this->hasMany(GitGroup::class, 'git_id', 'id');
+    }
+
+    public function repositories(): HasManyThrough
+    {
+        return $this->hasManyThrough(Repository::class, GitGroup::class, 'git_id', 'group_id', 'id', 'group_id');
     }
 }

@@ -20,7 +20,7 @@ export default function Show({ clients, repository, className = "" }) {
     const attachClientSubmit = (e) => {
         e.preventDefault();
 
-        put(route('client.repository.attach', repository.id));
+        put(route('client.repository.attach', repository.repository_id));
 
     }
 
@@ -52,7 +52,7 @@ export default function Show({ clients, repository, className = "" }) {
                                     <div>
                                         <Link
                                             href={route('clients.show', client.id)}
-                                            className="text-lg font-semibold text-gray-100"
+                                            className="text-lg font-semibold text-gray-100 hover:underline"
                                         >
                                             {client.name}
                                         </Link>
@@ -70,7 +70,7 @@ export default function Show({ clients, repository, className = "" }) {
                                         preserveScroll
                                         preserveState
                                         className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
-                                        href={route('client.repository.attach', {client: client.id, repository: repository.id})}
+                                        href={route('client.repository.attach', {client: client.id, repository: repository.repository_id})}
                                     >
                                         <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
                                     </Link>

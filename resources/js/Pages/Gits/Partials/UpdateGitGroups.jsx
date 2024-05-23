@@ -1,0 +1,521 @@
+import Modal from "@/Components/Modal";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { router } from "@inertiajs/react";
+import {
+    EditButton,
+    ShowButton,
+} from '@/Components/Buttons/ActionButtons';
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    EyeIcon,
+} from "@heroicons/react/24/outline";
+
+export default function ({ className = "", git_groups, repositories }) {
+    const [toggleUpdateModal, setToggleUpdateModal] = useState(false);
+    const [selectedGroup, setSelectedGroup] = useState(null);
+    const [gitInformations, setGitInformations] = useState(null);
+
+    const [subgroups, setSubgroups] = useState([]);
+
+    const handleToggle = (group, modal_status) => {
+        setSelectedGroup(group);
+        setToggleUpdateModal(modal_status);
+    }
+
+    useEffect(() => {
+        if (!selectedGroup) {
+            return;
+        }
+
+        // Get group details
+        axios
+            .get(route('api.gitlab.groups.detail', selectedGroup.group_id))
+            .then((response) => {
+                setGitInformations(response.data.data);
+            })
+            .catch((error) => {
+                alert('Error: ' + error);
+            })
+
+
+        // Get subgroups
+        axios
+            .get(route('api.gitlab.subgroups', selectedGroup.group_id))
+            .then((response) => {
+                setSubgroups(response.data.data);
+            })
+            .catch((error) => {
+                alert('Error: ' + error);
+            })
+
+    }, [selectedGroup]);
+
+    const storeProject = (group_id, repository_id) => {
+        let url = route('repositories.store');
+
+        router.post(url, {
+            group_id: group_id,
+            repository_id: repository_id
+        }, {
+            preserveScroll: true,
+
+            onError: () => {
+                alert('Error');
+            }
+        })
+    }
+
+    const storeSubgroup = (group_id, subgroup) => {
+        let url = route('git-groups.attach');
+
+        router.post(url, {
+            type: 'child',
+            group_id: group_id,
+            subgroup: subgroup
+        }, {
+            preserveScroll: true,
+
+            onError: () => {
+                alert('Error');
+            }
+        })
+    }
+
+    return (
+        <section className={className}>
+            <header>
+                <h2 className="text-lg font-medium text-zinc-100">
+                    Update Git Groups
+                </h2>
+
+                <p className="mt-1 text-sm text-zinc-400">
+                    Update your git groups.
+                </p>
+            </header>
+
+            <div className="pt-5">
+                <div className="max-w-[100rem] mx-auto">
+                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="divide-y divide-zinc-800">
+                            { git_groups ? (
+                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                    <thead className="bg-zinc-950 text-nowrap">
+                                        <tr>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                #
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Název
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Url
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400"
+                                            >
+                                                Hlavní skupina
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                <span className="sr-only">
+                                                    Edit
+                                                </span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                        {git_groups.map((group) => (
+                                            <tr
+                                                key={group.group_id}
+                                                className="hover:bg-zinc-700"
+                                            >
+                                                <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium text-zinc-200">
+                                                        {group.group_id}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium text-zinc-200">
+                                                        {group.name}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-4 py-4 ">
+                                                    <a
+                                                        href={group.web_url}
+                                                        target="_blank"
+                                                        className="text-sm font-medium text-zinc-200 hover:underline"
+                                                    >
+                                                        {group.web_url}
+                                                    </a>
+                                                </td>
+
+                                                <td className="px-4 py-4 ">
+                                                    <span className={`flex justify-center w-20 mx-auto uppercase text-xs py-1 rounded-xl font-bold ${group.parent_id ? "text-red-800 bg-red-100" : "text-green-800 bg-green-100"}`}>
+                                                        {group.parent_id ? 'children' : "parent"}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-4 py-4 ">
+                                                    <div className="space-x-2">
+                                                        <button
+                                                            className="inline-flex items-center p-1.5 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest transition ease-in-out duration-150 bg-blue-100 hover:bg-blue-200"
+                                                            onClick={() => handleToggle(group, true)}
+                                                        >
+                                                            <EyeIcon className="size-6 text-blue-500" />
+                                                        </button>
+
+                                                        <EditButton href={route("git-groups.edit", group.group_id)} />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <div className="p-6">
+                                    <p className="text-center text-zinc-400">
+                                        No git groups found.
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <Modal
+                show={toggleUpdateModal}
+                onClose={() => setToggleUpdateModal(false)}
+                maxWidth="7xl"
+            >
+                { selectedGroup && (
+                    <div className="p-4">
+                        <h2 className="text-lg font-medium text-zinc-100 text-center">
+                            {selectedGroup.name}
+                        </h2>
+
+                        { gitInformations && (
+                            <div className="mt-4 grid grid-cols-12 gap-2">
+
+                                <div className="col-span-4  bg-stone-700 p-2 rounded-xl border border-stone-800 h-full">
+                                    <div className="grid grid-cols-1 gap-4 text-center">
+                                        <div className="col-span-1 border-b border-zinc-900">
+                                            <p className="text-sm text-zinc-400">
+                                                ID
+                                            </p>
+                                            <p className="text-xl  font-medium text-zinc-100">
+                                                {gitInformations.id}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Name
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.name}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Path
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.path}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Full Path
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.full_path}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Web Url
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                <a
+                                                    href={gitInformations.web_url}
+                                                    target="_blank"
+                                                    className="hover:underline"
+                                                >
+                                                    {gitInformations.web_url}
+                                                </a>
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p className="text-sm text-zinc-400">
+                                                Parent Id
+                                            </p>
+                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                                {gitInformations.parent_id ? gitInformations.parent_id : 'N/A'}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col-span-8 grid gap-y-2">
+                                    <div className="grid h-[20rem] overflow-y-auto">
+                                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
+                                            <div className="flex justify-center items-center">
+                                                <p className="text-xl text-zinc-200 pb-2">
+                                                    Projekty
+                                                </p>
+                                            </div>
+
+                                            {gitInformations.projects && gitInformations.projects.length > 0 ? (
+                                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                                    <thead className="bg-stone-800 text-nowrap">
+                                                        <tr>
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                #
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                ID
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                Name
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                URL
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                <span className="sr-only">
+                                                                    Edit
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                                        {gitInformations.projects.map((project, index) => (
+                                                            <tr
+                                                                key={project.id}
+                                                                className="bg-stone-700 p-4 rounded-md"
+                                                            >
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {index + 1}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {project.id}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {project.name}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <a
+                                                                        href={project.web_url}
+                                                                        target="_blank"
+                                                                        className="text-sm font-medium text-zinc-200 hover:underline"
+                                                                    >
+                                                                        {project.web_url}
+                                                                    </a>
+                                                                </td>
+
+                                                                <td className="px-4 py-4">
+                                                                    <button
+                                                                        className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
+                                                                        onClick={() => storeProject(gitInformations.id, project.id)}
+                                                                    >
+                                                                        Přidat
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            ): (
+                                                <div className="text-center py-2">
+                                                    <p className="text-sm text-red-500">
+                                                        No <b>projects</b> found.
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="grid h-[20rem] overflow-y-auto">
+                                        <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
+                                            <div className="flex justify-center items-center">
+                                                <p className="text-xl text-zinc-200 pb-2">
+                                                    Sub Groups
+                                                </p>
+                                            </div>
+
+                                            {subgroups && subgroups.length > 0 ? (
+                                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                                    <thead className="bg-stone-800 text-nowrap">
+                                                        <tr>
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                #
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                ID
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                Name
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                URL
+                                                            </th>
+
+                                                            <th
+                                                                scope="col"
+                                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                            >
+                                                                <span className="sr-only">
+                                                                    Edit
+                                                                </span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody className="divide-y divide-zinc-700 bg-zinc-800">
+                                                        {subgroups.map((subgroup, index) => (
+                                                            <tr
+                                                                key={subgroup.id}
+                                                                className="group bg-stone-700 hover:bg-stone-800 p-4 rounded-md"
+                                                            >
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {index + 1}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.id}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.name}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4 ">
+                                                                    <span className="text-sm font-medium text-zinc-200">
+                                                                        {subgroup.web_url}
+                                                                    </span>
+                                                                </td>
+
+                                                                <td className="px-4 py-4">
+
+                                                                    {git_groups.find(git_group => git_group.group_id === subgroup.id) ? (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-stone-800 text-zinc-100 group-hover:bg-stone-700"
+                                                                            disabled
+                                                                        >
+                                                                            Already attached
+                                                                        </button>
+                                                                    ) : (
+                                                                        <button
+                                                                            className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
+                                                                            onClick={() => {storeSubgroup(selectedGroup.group_id, subgroup)}}
+                                                                        >
+                                                                            Attach
+                                                                        </button>
+                                                                    )}
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            ): (
+                                                <div className="text-center py-2">
+                                                    <p className="text-sm text-red-500">
+                                                        No <b>subgroups</b> found.
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        <div className="mt-4 flex justify-end space-x-4">
+                            <button
+                                className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 hover:bg-stone-600"
+                                onClick={() => setToggleUpdateModal(false)}
+                            >
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </Modal>
+
+        </section>
+    );
+}

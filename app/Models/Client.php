@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Client extends Model
@@ -17,8 +17,14 @@ class Client extends Model
         'ico',
     ];
 
+
     public function repositories(): BelongsToMany
     {
-        return $this->belongsToMany(Repository::class)->withPivot('client_email');
+        return $this->belongsToMany(
+            Repository::class,
+            'client_repository',
+            'client_id',
+            'repository_id'
+        )->withPivot('client_email');
     }
 }

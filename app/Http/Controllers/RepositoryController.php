@@ -2,32 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\DatabaseBackupResource;
-use App\Http\Resources\RepositoryResource;
+use Carbon\Carbon;
+use Inertia\Response;
 use App\Models\Client;
+use App\Models\Hosting;
 use App\Models\Repository;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Services\GitlabService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Response;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\DatabaseBackupResource;
 
 class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with('clients')
-            ->withCount('clients', 'database_backups', 'hosting')
+            ->with('clients', 'hosting_repository')
+            ->withCount('clients', 'database_backups')
             ->when($request->search, function ($query, $search) {
                 $query->whereAny([
                     'name',
                     'slug'
                 ], 'like', '%' . $search . '%');
             })
-            ->when($request->trashed, function ($query, $trashed) {
+            ->when($request->trashed === "true", function ($query, $trashed) {
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')
@@ -62,7 +67,8 @@ class RepositoryController extends Controller
             ->get();
 
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository->load('clients', 'hosting')),
+            'repository' => new RepositoryResource($repository->load('clients', 'hosting_repository', 'hosting')),
+            'hostings' => HostingResource::collection(Hosting::all()),
             'clients' => ClientResource::collection($clients),
         ]);
     }
@@ -71,7 +77,7 @@ class RepositoryController extends Controller
     {
         $repository->update($request->validated());
 
-        return to_route('repositories.edit', $repository->id);
+        return to_route('repositories.edit', $repository);
     }
 
     public function destroy(Repository $repository): RedirectResponse
@@ -83,11 +89,33 @@ class RepositoryController extends Controller
         return to_route('repositories.index');
     }
 
+    public function store(StoreRepositoryRequest $request)
+    {
+        $repository = GitlabService::getRepository($request->repository_id);
+
+        $group_id = $request->group_id;
+
+        // Check if the repository belongs to the selected group
+        if ($group_id !== $repository['namespace']['id']) {
+            return back()->with('error', 'Repository does not belong to the selected group');
+        }
+
+        Repository::create([
+            'group_id' => $repository['namespace']['id'],
+            'repository_id' => $repository['id'],
+            'name' => $repository['name'],
+            'slug' => Str::slug($repository['name']),
+            'repository_url' => $repository['web_url'],
+
+            'repository_created_at' => Carbon::parse($repository['created_at']),
+        ]);
+    }
+
     public function lastCommit(Repository $repository): RedirectResponse
     {
         GitlabService::getRepositorylastCommit($repository);
 
-        return to_route('repositories.edit', $repository->id);
+        return to_route('repositories.edit', $repository);
     }
 
     public function googleAnalytics(Repository $repository): RedirectResponse

@@ -15,17 +15,8 @@ return new class extends Migration
         Schema::create('hostings', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Repository::class)
-                ->constrained()
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-
             $table->string('name')->nullable();
-            $table->string('hosting')->nullable();
-            $table->string('ip_address')->nullable();
-            $table->string('ip_port')->nullable();
-            $table->string('login_user')->nullable();
-            $table->string('login_password')->nullable();
+            $table->string('hosting_url')->nullable();
 
             $table->timestamps();
         });

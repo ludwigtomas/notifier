@@ -7,12 +7,12 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-export default function Show({ repository, className = "" }) {
+export default function CreateRepositoryHostingForm({ repository_id, hosting_repository, hostings, className = "" }) {
 
     const { data, setData, post, errors, processing } = useForm({
-        repository_id: repository.id,
-        name: '',
-        hosting: '',
+        repository_id: repository_id,
+        hosting_id: '',
+
         ip_address: '',
         ip_port: '',
         login_user: '',
@@ -22,7 +22,7 @@ export default function Show({ repository, className = "" }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('hostings.store'), {
+        post(route('hosting-repository.store'), {
             preserveScroll: true,
         });
     };
@@ -36,6 +36,8 @@ export default function Show({ repository, className = "" }) {
 
                 <p className="mt-1 text-sm text-gray-400">
                     Create hosting information for this repository.
+
+                    {console.log(errors)}
                 </p>
             </header>
 
@@ -44,10 +46,10 @@ export default function Show({ repository, className = "" }) {
                 className="mt-6"
             >
                 <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                    <div>
+                    {/* <div>
                         <InputLabel
                             htmlFor="name"
-                            value="name"
+                            value="Název"
                         />
 
                         <TextInput
@@ -63,40 +65,77 @@ export default function Show({ repository, className = "" }) {
                             className="mt-2"
                             message={errors.name}
                         />
-                    </div>
+                    </div> */}
+
+                    {console.log(hosting_repository)}
 
                     <div>
                         <InputLabel
                             htmlFor="hosting"
-                            value="hosting"
+                            value="Hosting"
+                        />
+
+                        <select
+                            className="mt-1 block w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                            value={data.hosting_id}
+                            onChange={(e) => setData('hosting_id', e.target.value)}
+                        >
+                            <option
+                                disabled
+                                hidden
+                                value={""}
+                            >
+                                Select hosting
+                            </option>
+
+                            {hostings.map((hosting) => (
+                                <option
+                                    key={hosting.id}
+                                    value={hosting.id}
+                                >
+                                    {hosting.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        <InputError
+                            className="mt-2"
+                            message={errors.hosting_id}
+                        />
+                    </div>
+
+                    <div className="pt-10">
+                        <InputLabel
+                            htmlFor="login_user"
+                            value="User"
                         />
 
                         <TextInput
                             type="text"
-                            id="hosting"
+                            id="login_user"
                             className="mt-1 block w-full"
-                            placeholder="hosting"
-                            value={data.hosting}
-                            onChange={(e) => setData('hosting', e.target.value)}
+                            placeholder="tech1"
+                            value={data.login_user}
+                            onChange={(e) => setData('login_user', e.target.value)}
                         />
 
                         <InputError
                             className="mt-2"
-                            message={errors.hosting}
+                            message={errors.login_user}
                         />
                     </div>
 
                     <div>
                         <InputLabel
                             htmlFor="ip_address"
-                            value="ip_address"
+                            value="IP adresa"
                         />
 
                         <TextInput
                             type="text"
                             id="ip_address"
                             className="mt-1 block w-full"
-                            placeholder="ip_address"
+                            placeholder="127.0.0.10"
                             value={data.ip_address}
                             onChange={(e) => setData('ip_address', e.target.value)}
                         />
@@ -110,14 +149,14 @@ export default function Show({ repository, className = "" }) {
                     <div>
                         <InputLabel
                             htmlFor="ip_port"
-                            value="ip_port"
+                            value="IP port"
                         />
 
                         <TextInput
                             type="text"
                             id="ip_port"
                             className="mt-1 block w-full"
-                            placeholder="ip_port"
+                            placeholder="1788"
                             value={data.ip_port}
                             onChange={(e) => setData('ip_port', e.target.value)}
                         />
@@ -130,36 +169,15 @@ export default function Show({ repository, className = "" }) {
 
                     <div>
                         <InputLabel
-                            htmlFor="login_user"
-                            value="login_user"
-                        />
-
-                        <TextInput
-                            type="text"
-                            id="login_user"
-                            className="mt-1 block w-full"
-                            placeholder="login_user"
-                            value={data.login_user}
-                            onChange={(e) => setData('login_user', e.target.value)}
-                        />
-
-                        <InputError
-                            className="mt-2"
-                            message={errors.login_user}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
                             htmlFor="login_password"
-                            value="login_password"
+                            value="Heslo"
                         />
 
                         <TextInput
                             type="text"
                             id="login_password"
                             className="mt-1 block w-full"
-                            placeholder="login_password"
+                            placeholder="empty"
                             value={data.login_password}
                             onChange={(e) => setData('login_password', e.target.value)}
                         />

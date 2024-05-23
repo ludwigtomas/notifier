@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Hosting extends Model
 {
@@ -12,18 +11,12 @@ class Hosting extends Model
 
     protected $fillable = [
         'id',
-        'repository_id',
-
         'name',
-        'hosting',
-        'ip_address',
-        'ip_port',
-        'login_user',
-        'login_password',
+        'hosting_url',
     ];
 
-    public function repository(): BelongsTo
+    public function repositories()
     {
-        return $this->belongsTo(Repository::class);
+        return $this->hasMany(Repository::class, 'hosting_id');
     }
 }

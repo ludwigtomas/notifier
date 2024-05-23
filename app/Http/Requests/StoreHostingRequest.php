@@ -22,7 +22,7 @@ class StoreHostingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'repository_id' => ['required', 'exists:repositories,id'],
+            'repository_id' => ['required', 'exists:repositories,repository_id'],
             'name' => ['nullable', 'string', 'max:255'],
             'hosting' => ['nullable', 'string', 'max:255'],
             'ip_address' => ['nullable', 'string', 'max:255'],

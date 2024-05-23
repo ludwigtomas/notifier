@@ -4,10 +4,10 @@
         odkaz na web
     </a>
 </div>
-
+ 
 
 ### :notebook_with_decorative_cover: Summary
-
+ 
 - [Description](#point_right-description)
 - [Frameworks](#point_right-frameworks)
 - [Requirements](#point_right-requirements)

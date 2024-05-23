@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\GitGroupResource;
+use App\Http\Resources\RepositoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GitResource extends JsonResource
@@ -22,10 +24,14 @@ class GitResource extends JsonResource
 
             'username' => $this->username,
             'user_id' => $this->user_id,
-            'avatar_url' => $this->avatar_url,
+            'user_avatar_url' => $this->user_avatar_url,
 
             'relationships' => [
-                'repositories_count' => $this->repositories_count,
+                'git_groups' => GitGroupResource::collection($this->whenLoaded('gitGroups')),
+                'git_groups_count' => $this->git_groups_count ?? 0,
+
+                'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),
+                'repositories_count' => $this->repositories_count ?? 0,
             ],
 
         ];

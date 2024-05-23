@@ -9,7 +9,7 @@ import {
     UsersIcon,
     ServerStackIcon,
     ChevronDownIcon,
-} from "@heroicons/react/24/solid";
+} from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
     return (
@@ -78,6 +78,18 @@ export default function Authenticated({ user, header, children }) {
 
                                 <span className="w-full hidden xl:block">
                                     Git
+                                </span>
+                            </NavLink>
+
+                            <NavLink
+                                href={route("git-groups.index")}
+                                active={route().current("git-groups.*")}
+                                className="gap-4 w-full"
+                            >
+                                <BugAntIcon className="size-6"/>
+
+                                <span className="w-full hidden xl:block">
+                                    Git groups
                                 </span>
                             </NavLink>
 

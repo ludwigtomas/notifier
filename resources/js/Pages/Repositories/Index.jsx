@@ -9,6 +9,7 @@ import {
     ChevronRightIcon,
     LinkIcon,
     BackspaceIcon,
+    CommandLineIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -37,7 +38,7 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const deleteRepository = () => {
-        let url = route("repositories.destroy", selectedRepository.id);
+        let url = route("repositories.destroy", selectedRepository.repository_id);
 
         router.delete(url, {
             preserveScroll: true,
@@ -49,7 +50,6 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const debouncedSearch = debounce((value) => {
-
         setSearch(value);
 
         router.get(route("repositories.index"),{
@@ -75,7 +75,7 @@ export default function Index({ auth, repositories, filters }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="w-5 h-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link
@@ -237,12 +237,12 @@ export default function Index({ auth, repositories, filters }) {
                                     {repositories.data.map((repository) => {
                                         return (
                                             <tr
-                                                key={repository.id}
+                                                key={repository.repository_id}
                                                 className="group hover:bg-zinc-800"
                                             >
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium text-zinc-400">
-                                                        {repository.id}
+                                                        {repository.repository_id}
                                                     </span>
                                                 </td>
 
@@ -269,19 +269,27 @@ export default function Index({ auth, repositories, filters }) {
 
                                                 <td className="px-4 py-4 ">
                                                     <div className="flex items-center gap-x-2 text-nowrap ">
-                                                        {repository.relationships.clients.slice(0, 2).map((client) => (
-                                                                <p
-                                                                    key={client.id}
-                                                                    className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
-                                                                >
-                                                                    {client.name}
-                                                                </p>
-                                                            ))}
+                                                        { repository.relationships.clients_count > 0 ? (
+                                                            <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-4 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                                {repository.relationships.clients.slice(0, 2).map((client) => (
+                                                                    <p
+                                                                        key={client.id}
+                                                                        className="text-xs text-zinc-400"
+                                                                    >
+                                                                        {client.name}
+                                                                    </p>
+                                                                ))}
 
-                                                        {repository.relationships.clients_count > 2 && (
-                                                            <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
-                                                                +{" "}
-                                                                {repository.relationships.clients_count - 2}
+                                                                {repository.relationships.clients_count > 2 && (
+                                                                    <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
+                                                                        +{" "}
+                                                                        {repository.relationships.clients_count - 2}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        ): (
+                                                            <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                                0
                                                             </span>
                                                         )}
                                                     </div>
@@ -329,11 +337,11 @@ export default function Index({ auth, repositories, filters }) {
 
                                                     <div className="flex items-center justify-center">
                                                         <div
-                                                            className={ "p-2 rounded-xl " + (repository .relationships.hosting_count >= 1
+                                                            className={ "p-2 rounded-xl " + (repository.relationships?.hosting_repository?.hosting_id
                                                                 ? "bg-green-950"
                                                                 : "bg-red-950")
                                                         }>
-                                                            {repository.relationships.hosting_count >= 1 ? (
+                                                            {repository.relationships?.hosting_repository?.hosting_id >= 1 ? (
                                                                 <CheckIcon className="w-6 h-6 text-green-500" />
                                                             ) : (
                                                                 <XMarkIcon className="text-red-500 w-6 h-6" />
@@ -359,49 +367,63 @@ export default function Index({ auth, repositories, filters }) {
 
                                                 <td className="px-4 py-4">
                                                     <span className="text-sm font-medium text-zinc-400">
-                                                        { repository.last_commit_at_human }
+                                                        { repository.last_commit_at_human ?? '-' }
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
+
+                                                        {repository.relationships.hosting_repository ? (
+                                                            <>
+                                                                <Link
+                                                                    href={route("test.index", repository.relationships.hosting_repository.id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                                >
+                                                                    <CommandLineIcon className="size-6 text-orange-400" />
+                                                                </Link>
+                                                            </>
+                                                        ): (
+                                                            'nic'
+                                                        )}
+
                                                         <Link
-                                                            href={route("repositories.edit", repository.id)}
+                                                            href={route("repositories.edit", repository.repository_id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
-                                                            <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                            <PencilSquareIcon className="size-6 text-green-500" />
                                                         </Link>
 
                                                         {repository.deleted_at ? (
                                                             <>
                                                                 <Link
-                                                                    href={route("repositories.show", repository.id)}
+                                                                    href={route("repositories.show", repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
-                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                    <EyeIcon className="size-6 text-sky-500" />
                                                                 </Link>
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                                     onClick={() => toggleModal(repository)}
                                                                 >
-                                                                    <BackspaceIcon className="w-6 h-6 text-red-500" />
+                                                                    <BackspaceIcon className="size-6 text-red-500" />
                                                                 </button>
                                                             </>
                                                         ) : (
                                                             <>
                                                                 <Link
-                                                                    href={route("repositories.show",repository.id)}
+                                                                    href={route("repositories.show",repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
-                                                                    <EyeIcon className="w-6 h-6 text-sky-500" />
+                                                                    <EyeIcon className="size-6 text-sky-500" />
                                                                 </Link>
 
                                                                 <button
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                                     onClick={() => toggleModal(repository)}
                                                                 >
-                                                                    <TrashIcon className="w-6 h-6 text-red-500" />
+                                                                    <TrashIcon className="size-6 text-red-500" />
                                                                 </button>
                                                             </>
                                                         )}
@@ -463,11 +485,11 @@ export default function Index({ auth, repositories, filters }) {
             >
                 {selectedRepository && (
                     <div className="p-4 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-medium text-gray-800 text-center">
+                        <h2 className="text-2xl font-medium text-gray-200 text-center">
                             {selectedRepository.name}
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-600">
+                        <p className="mt-1 text-sm text-gray-400">
                             Chystáš se smazat repozitář společně se všemi
                             databázemi a klienty. Tato akce je nevratná.
                         </p>
@@ -477,7 +499,7 @@ export default function Index({ auth, repositories, filters }) {
                                 type="submit"
                                 onClick={deleteRepository}
                             >
-                                <TrashIcon className="w-6 h-6 mr-2" />
+                                <TrashIcon className="size-6 mr-2" />
 
                                 {selectedRepository.name}
                             </DangerButton>

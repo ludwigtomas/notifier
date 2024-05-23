@@ -15,9 +15,6 @@ class HostingController extends Controller
 {
     public function index(Request $request): Response
     {
-        $repositories = Repository::query()
-            ->whereDoesntHave('hosting')
-            ->get();
 
         return inertia('Hostings/Index', [
             'hostings' => HostingResource::collection(Hosting::all()),
@@ -42,7 +39,7 @@ class HostingController extends Controller
     public function destroy(Hosting $hosting): RedirectResponse
     {
         $hosting->delete();
-        
+
         return back();
     }
 }

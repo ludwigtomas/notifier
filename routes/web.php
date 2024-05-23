@@ -4,7 +4,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GitController;
+use App\Http\Controllers\GitGroupController;
 use App\Http\Controllers\HostingController;
+use App\Http\Controllers\HostingRepositoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
@@ -36,8 +38,18 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [GitController::class, 'index'])->name('index');
         route::get('/{git}', [GitController::class, 'show'])->name('show');
         route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
+        route::post('/', [GitController::class, 'store'])->name('store');
         route::put('/{git}', [GitController::class, 'update'])->name('update');
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+    });
+
+    // 🔺 GIT GROUPS
+    route::group(['prefix' => '/dashboard/git-groups', 'as' => 'git-groups.'], function () {
+        route::get('/', [GitGroupController::class, 'index'])->name('index');
+        route::post('/attach', [GitGroupController::class, 'attach'])->name('attach');
+        route::get('/{git_group}/edit', [GitGroupController::class, 'edit'])->name('edit');
+        route::put('/{git_group}', [GitGroupController::class, 'update'])->name('update');
+        route::post('/', [GitGroupController::class, 'store'])->name('store');
     });
 
     // 🔺 REPOSITORIES
@@ -47,8 +59,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
         route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
         route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
-        route::delete('/{repository}', [RepositoryController::class, 'destroy'])->name('destroy');
-        route::delete('/{repository}/delete', [RepositoryController::class, 'delete'])->name('delete');
+        route::delete('/{repository}/delete', [RepositoryController::class, 'destroy'])->name('destroy');
 
         route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
@@ -83,6 +94,13 @@ route::middleware('auth:sanctum')->group(function () {
         //* STORE ---> api.php
     });
 
+    // 🔺 HOSTINGS REPOSITORY
+    route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
+        route::put('/{hosting_repository}', [HostingRepositoryController::class, 'update'])->name('update');
+        route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
+        route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
+    });
+
     // 🔺 HOSTINGS
     route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function () {
         route::get('/', [HostingController::class, 'index'])->name('index');
@@ -101,7 +119,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
+
+
 // DELETE IN PRODUCTION
-if (app()->isLocal()) {
-    route::get('/test', [TestController::class, 'index']);
-}
+    Route::get('/test/{hosting_repository}', [TestController::class, 'index'])->name('test.index');
