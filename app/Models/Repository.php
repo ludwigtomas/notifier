@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Hosting;
+use App\Models\HostingRepository;
 use App\Observers\RepositoryObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
@@ -50,11 +53,6 @@ class Repository extends Model
         return $this->belongsTo(GitGroup::class, 'group_id', 'group_id');
     }
 
-    public function hosting(): HasOne
-    {
-        return $this->hasOne(Hosting::class, 'repository_id', 'repository_id');
-    }
-
     public function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class, 'client_repository', 'repository_id', 'client_id')
@@ -66,4 +64,22 @@ class Repository extends Model
         return $this->hasMany(RepositoryDatabase::class, 'repository_id', 'repository_id')
             ->orderBy('created_at', 'desc');
     }
+
+    public function hosting_repository(): HasOne
+    {
+        return $this->hasOne(HostingRepository::class, 'repository_id', 'repository_id');
+    }
+
+    public function hosting(): HasOneThrough
+    {
+        return $this->hasOneThrough(
+            Hosting::class,
+            HostingRepository::class,
+            'repository_id',
+            'id',
+            'repository_id',
+            'hosting_id'
+        );
+    }
+
 }

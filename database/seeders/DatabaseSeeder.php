@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             // RepositorySeeder::class,
             ClientSeeder::class,
+            HostingSeeder::class,
         ]);
 
         if (app()->isLocal()) {

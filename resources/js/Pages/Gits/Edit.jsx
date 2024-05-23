@@ -5,7 +5,7 @@ import UpdateGitInformationForm from "@/Pages/Gits/Partials/UpdateGitInformation
 import UpdateGitGroups from "@/Pages/Gits/Partials/UpdateGitGroups";
 import AttachGitGroups from "@/Pages/Gits/Partials/AttachGitGroups";
 
-export default function Edit({ auth, git }) {
+export default function Edit({ auth, git, repositories }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -79,7 +79,10 @@ export default function Edit({ auth, git }) {
                     </div>
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
-                        <UpdateGitGroups git_groups={git.relationships.git_groups}/>
+                        <UpdateGitGroups
+                            git_groups={git.relationships.git_groups}
+                            repositories={repositories}
+                        />
                     </div>
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">

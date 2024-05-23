@@ -9,6 +9,9 @@ class HostingSeeder extends Seeder
 {
     public function run(): void
     {
-        Hosting::factory(100)->create();
+        Hosting::create([
+            'name' => 'Bohemia Cloud',
+            'hosting_url' => 'https://bohemia-cloud.cz/',
+        ]);
     }
 }

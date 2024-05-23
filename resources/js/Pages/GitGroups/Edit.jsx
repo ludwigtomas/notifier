@@ -447,29 +447,18 @@ export default function ({ auth, git_group}) {
                 maxWidth="7xl"
             >
                 <div className="p-4">
-
-                    <div className="text-center">
-                        <h2 className="text-lg font-medium text-zinc-100">
-                            Not working
-                        </h2>
-
-                        <p className="mt-1 text-sm text-zinc-400">
-                            This feature is not working yet.
-                        </p>
-                    </div>
-
-                    <div className="grid overflow-y-auto px-2">
+                    <div className="grid px-2">
                         <div className="bg-stone-700 p-2 rounded-xl border border-stone-800 ">
                             <div className="flex justify-center items-center bg-stone-900 rounded-xl">
                                 <p className="text-xl text-zinc-200 py-2">
-                                    Projekty
+                                    Repozitáře
                                 </p>
                             </div>
 
-                            <div className="h-80 overflow-y-scroll mt-5">
+                            <div className="max-h-[40rem] overflow-y-scroll mt-5">
                                 {repositories && repositories.length > 0 ? (
                                     <table className="min-w-full divide-y divide-zinc-700 rounded-md">
-                                        <thead className="bg-stone-900 text-nowrap">
+                                        <thead className="bg-stone-900/50 text-nowrap">
                                             <tr>
                                                 <th
                                                     scope="col"

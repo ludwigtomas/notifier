@@ -13,7 +13,7 @@ import {
     ClipboardIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Edit({ auth, repository, clients }) {
+export default function Edit({ auth, repository, hostings, clients }) {
 
     return (
         <AuthenticatedLayout
@@ -99,10 +99,20 @@ export default function Edit({ auth, repository, clients }) {
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl grid grid-cols-2 place-items-center gap-20">
-                        { repository.relationships.hosting ? (
-                            <UpdateRepositoryHostingForm repository={repository} className="w-full"/>
+                        { repository.relationships.hosting_repository ? (
+                            <UpdateRepositoryHostingForm
+                                hosting_repository={repository.relationships.hosting_repository}
+                                hosting={repository.relationships.hosting}
+                                hostings={hostings}
+                                className="w-full"
+                            />
                         ) : (
-                            <CreateRepositoryHostingForm repository={repository} className="w-full"/>
+                            <CreateRepositoryHostingForm
+                                repository_id={repository.repository_id}
+                                hosting_repository={repository.relationships.hosting_repository}
+                                hostings={hostings}
+                                className="w-full"
+                            />
                         )}
 
                             <div className="w-full bg-stone-900 p-1 drop-shadow-2xl rounded-xl overflow-hidden">
@@ -145,19 +155,19 @@ export default function Edit({ auth, repository, clients }) {
                                                     ssh
                                                 </span>{" "}
                                                 <span className="text-purple-400">
-                                                    { repository.relationships.hosting?.login_user }
+                                                    { repository.relationships.hosting_repository?.login_user }
                                                 </span>
                                                 <span className="text-green-300">
                                                     @
                                                 </span>
                                                 <span className="text-purple-400">
-                                                    { repository.relationships.hosting?.ip_address }
+                                                    { repository.relationships.hosting_repository?.ip_address }
                                                 </span>{" "}
                                                 <span className="text-green-300">
                                                     -p
                                                 </span>{" "}
                                                 <span className="text-purple-400">
-                                                    { repository.relationships.hosting?.ip_port }
+                                                    { repository.relationships.hosting_repository?.ip_port }
                                                 </span>
                                             </div>
                                         </div>
@@ -194,8 +204,25 @@ export default function Edit({ auth, repository, clients }) {
                                     preserveScroll
                                     className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                 >
+                                    VPS
+                                </Link>
+
+                                <Link
+                                    href={route("repositories.last-commit", repository.repository_id)}
+                                    preserveScroll
+                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                >
+                                    Delete
+                                </Link>
+
+                                <Link
+                                    href={route("repositories.last-commit", repository.repository_id)}
+                                    preserveScroll
+                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                                >
                                     Last Commit
                                 </Link>
+
 
                                 <Link
                                     href={repository.analytics_property_id ? route("repositories.google-analytics", repository.repository_id) : null}

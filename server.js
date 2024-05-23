@@ -4,29 +4,26 @@ import { Server as SocketIoServer } from "socket.io";
 import { Client } from "ssh2";
 import { readFileSync } from "fs";
 
-// import dotenv from "dotenv";
-
-// Load environment variables from .env file
-// dotenv.config();
-
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIoServer(server, {
     cors: {
-        origin: "http://127.0.0.1:8000", // Updated to match the correct origin
+        origin: "http://127.0.0.1:8000",
         methods: ["GET", "POST"],
     },
     allowEIO3: true,
 });
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8000"); // Correct origin for the frontend
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8000");
     res.header("Access-Control-Allow-Methods", "GET, POST");
     next();
 });
 
 io.on("connection", (socket) => {
     const conn = new Client();
+
+    const { host, port, username, password } = socket.handshake.query;
 
     conn.on("ready", () => {
         socket.emit("data", "\r\n*** SSH CONNECTION ESTABLISHED ***\r\n");
@@ -50,11 +47,10 @@ io.on("connection", (socket) => {
                 });
         });
     }).connect({
-        host: "178.22.117.90",
-        port: 32259,
-        username: "tomludwig",
-        password: "ahojahoj12*",
-        // privateKey: readFileSync("privatekey.txt"),
+        host,
+        port,
+        username,
+        password,
     });
 
     socket.on("disconnect", () => {

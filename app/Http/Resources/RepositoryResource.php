@@ -28,7 +28,7 @@ class RepositoryResource extends JsonResource
 
             'database_verification_code' => $this->database_verification_code,
             'last_commit_at' => $this->last_commit_at,
-            'last_commit_at_human' => Carbon::parse($this->last_commit_at)->diffForHumans(),
+            'last_commit_at_human' => $this->last_commit_at ? Carbon::parse($this->last_commit_at)->diffForHumans() : null,
             'repository_created_at' => $this->repository_created_at,
             'repository_created_at_human' => Carbon::parse($this->repository_created_at)->diffForHumans(),
 
@@ -54,6 +54,9 @@ class RepositoryResource extends JsonResource
 
                 'hosting' => new HostingResource($this->whenLoaded('hosting')),
                 'hosting_count' => $this->hosting_count ?? 0,
+
+                'hosting_repository' => $this->whenLoaded('hosting_repository'),
+                'hosting_repository_count' => $this->hosting_repository_count ?? 0,
             ],
         ];
     }

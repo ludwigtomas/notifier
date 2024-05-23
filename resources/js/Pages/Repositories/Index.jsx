@@ -337,11 +337,11 @@ export default function Index({ auth, repositories, filters }) {
 
                                                     <div className="flex items-center justify-center">
                                                         <div
-                                                            className={ "p-2 rounded-xl " + (repository .relationships.hosting_count >= 1
+                                                            className={ "p-2 rounded-xl " + (repository.relationships?.hosting_repository?.hosting_id
                                                                 ? "bg-green-950"
                                                                 : "bg-red-950")
                                                         }>
-                                                            {repository.relationships.hosting_count >= 1 ? (
+                                                            {repository.relationships?.hosting_repository?.hosting_id >= 1 ? (
                                                                 <CheckIcon className="w-6 h-6 text-green-500" />
                                                             ) : (
                                                                 <XMarkIcon className="text-red-500 w-6 h-6" />
@@ -367,16 +367,25 @@ export default function Index({ auth, repositories, filters }) {
 
                                                 <td className="px-4 py-4">
                                                     <span className="text-sm font-medium text-zinc-400">
-                                                        { repository.last_commit_at_human }
+                                                        { repository.last_commit_at_human ?? '-' }
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                     <div className="flex items-center space-x-2">
 
-                                                        <button className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation">
-                                                            <CommandLineIcon className="size-6 text-orange-400" />
-                                                        </button>
+                                                        {repository.relationships.hosting_repository ? (
+                                                            <>
+                                                                <Link
+                                                                    href={route("test.index", repository.relationships.hosting_repository.id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                                >
+                                                                    <CommandLineIcon className="size-6 text-orange-400" />
+                                                                </Link>
+                                                            </>
+                                                        ): (
+                                                            'nic'
+                                                        )}
 
                                                         <Link
                                                             href={route("repositories.edit", repository.repository_id)}
@@ -476,11 +485,11 @@ export default function Index({ auth, repositories, filters }) {
             >
                 {selectedRepository && (
                     <div className="p-4 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-medium text-gray-800 text-center">
+                        <h2 className="text-2xl font-medium text-gray-200 text-center">
                             {selectedRepository.name}
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-600">
+                        <p className="mt-1 text-sm text-gray-400">
                             Chystáš se smazat repozitář společně se všemi
                             databázemi a klienty. Tato akce je nevratná.
                         </p>

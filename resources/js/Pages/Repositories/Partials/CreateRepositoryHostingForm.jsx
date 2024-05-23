@@ -7,12 +7,12 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-export default function CreateRepositoryHostingForm({ repository, className = "" }) {
+export default function CreateRepositoryHostingForm({ repository_id, hosting_repository, hostings, className = "" }) {
 
     const { data, setData, post, errors, processing } = useForm({
-        repository_id: repository.repository_id,
-        name: '',
-        hosting: '',
+        repository_id: repository_id,
+        hosting_id: '',
+
         ip_address: '',
         ip_port: '',
         login_user: '',
@@ -22,7 +22,7 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('hostings.store'), {
+        post(route('hosting-repository.store'), {
             preserveScroll: true,
         });
     };
@@ -36,6 +36,8 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
 
                 <p className="mt-1 text-sm text-gray-400">
                     Create hosting information for this repository.
+
+                    {console.log(errors)}
                 </p>
             </header>
 
@@ -44,7 +46,7 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                 className="mt-6"
             >
                 <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                    <div>
+                    {/* <div>
                         <InputLabel
                             htmlFor="name"
                             value="Název"
@@ -63,7 +65,9 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                             className="mt-2"
                             message={errors.name}
                         />
-                    </div>
+                    </div> */}
+
+                    {console.log(hosting_repository)}
 
                     <div>
                         <InputLabel
@@ -71,18 +75,32 @@ export default function CreateRepositoryHostingForm({ repository, className = ""
                             value="Hosting"
                         />
 
-                        <TextInput
-                            type="text"
-                            id="hosting"
-                            className="mt-1 block w-full"
-                            placeholder="Bohemia Cloud"
-                            value={data.hosting}
-                            onChange={(e) => setData('hosting', e.target.value)}
-                        />
+                        <select
+                            className="mt-1 block w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                            value={data.hosting_id}
+                            onChange={(e) => setData('hosting_id', e.target.value)}
+                        >
+                            <option
+                                disabled
+                                hidden
+                                value={""}
+                            >
+                                Select hosting
+                            </option>
+
+                            {hostings.map((hosting) => (
+                                <option
+                                    key={hosting.id}
+                                    value={hosting.id}
+                                >
+                                    {hosting.name}
+                                </option>
+                            ))}
+                        </select>
 
                         <InputError
                             className="mt-2"
-                            message={errors.hosting}
+                            message={errors.hosting_id}
                         />
                     </div>
 

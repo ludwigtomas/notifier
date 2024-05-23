@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Git;
 use Inertia\Response;
+use App\Models\Repository;
 use Illuminate\Support\Str;
 use App\Http\Resources\GitResource;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\Gits\UpdateGitRequest;
 
 class GitController extends Controller
@@ -17,16 +19,9 @@ class GitController extends Controller
             ->withCount(['gitGroups', 'repositories'])
             ->get();
 
-        // count all repositories
-        $repositories = $gits->reduce(function ($carry, $git) {
-            return $carry + $git->repositories->count();
-        }, 0);
-
-        // dd($repositories);
-
         return inertia('Gits/Index', [
             'gits' => GitResource::collection($gits),
-            'repositories' => $repositories,
+            'repositories' => RepositoryResource::collection(Repository::all()),
         ]);
     }
 

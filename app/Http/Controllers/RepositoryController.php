@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRepositoryRequest;
 use Carbon\Carbon;
 use Inertia\Response;
 use App\Models\Client;
+use App\Models\Hosting;
 use App\Models\Repository;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\GitlabService;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
 
@@ -22,15 +24,15 @@ class RepositoryController extends Controller
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with('clients')
-            ->withCount('clients', 'database_backups', 'hosting')
+            ->with('clients', 'hosting_repository')
+            ->withCount('clients', 'database_backups')
             ->when($request->search, function ($query, $search) {
                 $query->whereAny([
                     'name',
                     'slug'
                 ], 'like', '%' . $search . '%');
             })
-            ->when($request->trashed, function ($query, $trashed) {
+            ->when($request->trashed === "true", function ($query, $trashed) {
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')
@@ -65,7 +67,8 @@ class RepositoryController extends Controller
             ->get();
 
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository->load('clients', 'hosting')),
+            'repository' => new RepositoryResource($repository->load('clients', 'hosting_repository', 'hosting')),
+            'hostings' => HostingResource::collection(Hosting::all()),
             'clients' => ClientResource::collection($clients),
         ]);
     }

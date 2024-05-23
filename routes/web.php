@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GitController;
 use App\Http\Controllers\GitGroupController;
 use App\Http\Controllers\HostingController;
+use App\Http\Controllers\HostingRepositoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
@@ -93,6 +94,13 @@ route::middleware('auth:sanctum')->group(function () {
         //* STORE ---> api.php
     });
 
+    // 🔺 HOSTINGS REPOSITORY
+    route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
+        route::put('/{hosting_repository}', [HostingRepositoryController::class, 'update'])->name('update');
+        route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
+        route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
+    });
+
     // 🔺 HOSTINGS
     route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function () {
         route::get('/', [HostingController::class, 'index'])->name('index');
@@ -114,6 +122,4 @@ require __DIR__ . '/auth.php';
 
 
 // DELETE IN PRODUCTION
-if (app()->isLocal()) {
-    route::get('/test', [TestController::class, 'index']);
-}
+    Route::get('/test/{hosting_repository}', [TestController::class, 'index'])->name('test.index');

@@ -7,22 +7,21 @@ import { ClockIcon } from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
-export default function Show({ repository, className = "" }) {
+export default function Show({ hostings, hosting, hosting_repository, className = "" }) {
     const { data, setData, put, errors, processing, recentlySuccessful } =
         useForm({
-            id: repository.relationships.hosting.id ?? 0,
-            name: repository.relationships.hosting.name ?? "",
-            hosting: repository.relationships.hosting.hosting ?? "",
-            ip_address: repository.relationships.hosting.ip_address ?? "",
-            ip_port: repository.relationships.hosting.ip_port ?? "",
-            login_user: repository.relationships.hosting.login_user ?? "",
-            login_password: repository.relationships.hosting.login_password ?? "",
+            hosting_id: hosting_repository.hosting_id ?? "",
+
+            ip_address: hosting_repository.ip_address ?? "",
+            ip_port: hosting_repository.ip_port ?? "",
+            login_user: hosting_repository.login_user ?? "",
+            login_password: hosting_repository.login_password ?? "",
         });
 
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("hostings.update", data.id), {
+        put(route("hosting-repository.update", hosting_repository.id), {
             preserveScroll: true,
 
         });
@@ -47,40 +46,35 @@ export default function Show({ repository, className = "" }) {
                 <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
-                            htmlFor="name"
-                            value="Název"
-                        />
-
-                        <TextInput
-                            type="text"
-                            id="name"
-                            className="mt-1 block w-full"
-                            placeholder="name"
-                            value={data.name}
-                            onChange={(e) => setData("name", e.target.value)}
-                        />
-
-                        <InputError className="mt-2" message={errors.name} />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            htmlFor="hosting"
+                            htmlFor="hosting_id"
                             value="Hosting"
                         />
 
-                        <TextInput
-                            type="text"
-                            id="hosting"
-                            className="mt-1 block w-full"
-                            placeholder="Bohemia Cloud"
-                            value={data.hosting}
-                            onChange={(e) => setData("hosting", e.target.value)}
+                        <select
+                            id="hosting_id"
+                            className="mt-1 block w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                            value={data.hosting_id}
+                            onChange={(e) => setData("hosting_id", e.target.value)}
+                        >
+                            <option value="">
+                                Vyberte hosting
+                            </option>
+
+                            {hostings.map((hosting) => (
+                                <option
+                                    key={hosting.id}
+                                    value={hosting.id}
+                                >
+                                    {hosting.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        <InputError
+                            className="mt-2"
+                            message={errors.hosting_id}
                         />
-
-                        <InputError className="mt-2" message={errors.hosting} />
                     </div>
-
 
                     <div className="pt-10">
                         <InputLabel
@@ -180,11 +174,11 @@ export default function Show({ repository, className = "" }) {
                         as="button"
                         method="DELETE"
                         preserveScroll
-                        href={route("hostings.destroy", data.id)}
+                        href={route("hosting-repository.destroy", hosting_repository.id)}
                         className="flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-bold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     >
                         <TrashIcon className="size-5 mr-2 text-white" />
-                        
+
                         Smazat
                     </Link>
 

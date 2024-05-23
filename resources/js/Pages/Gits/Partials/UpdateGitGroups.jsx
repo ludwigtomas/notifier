@@ -12,7 +12,7 @@ import {
     EyeIcon,
 } from "@heroicons/react/24/outline";
 
-export default function ({ git_groups, className = "" }) {
+export default function ({ className = "", git_groups, repositories }) {
     const [toggleUpdateModal, setToggleUpdateModal] = useState(false);
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [gitInformations, setGitInformations] = useState(null);
@@ -215,11 +215,11 @@ export default function ({ git_groups, className = "" }) {
                         </h2>
 
                         { gitInformations && (
-                            <div className="mt-4 grid grid-cols-12">
+                            <div className="mt-4 grid grid-cols-12 gap-2">
 
-                                <div className="col-span-4">
+                                <div className="col-span-4  bg-stone-700 p-2 rounded-xl border border-stone-800 h-full">
                                     <div className="grid grid-cols-1 gap-4 text-center">
-                                        <div className="col-span-1 border-b border-zinc-700">
+                                        <div className="col-span-1 border-b border-zinc-900">
                                             <p className="text-sm text-zinc-400">
                                                 ID
                                             </p>
@@ -281,9 +281,8 @@ export default function ({ git_groups, className = "" }) {
                                     </div>
                                 </div>
 
-                                <div className="col-span-8 grid gap-y-5">
-
-                                    <div className="grid h-[20rem] overflow-y-auto px-2">
+                                <div className="col-span-8 grid gap-y-2">
+                                    <div className="grid h-[20rem] overflow-y-auto">
                                         <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
                                             <div className="flex justify-center items-center">
                                                 <p className="text-xl text-zinc-200 pb-2">
@@ -368,8 +367,6 @@ export default function ({ git_groups, className = "" }) {
                                                                 </td>
 
                                                                 <td className="px-4 py-4">
-
-
                                                                     <button
                                                                         className="px-4 py-2 rounded-md bg-green-500 text-white hover:bg-green-600"
                                                                         onClick={() => storeProject(gitInformations.id, project.id)}
@@ -391,7 +388,7 @@ export default function ({ git_groups, className = "" }) {
                                         </div>
                                     </div>
 
-                                    <div className="grid h-[20rem] overflow-y-auto px-2">
+                                    <div className="grid h-[20rem] overflow-y-auto">
                                         <div className="bg-stone-700 p-2 rounded-xl border border-stone-800">
                                             <div className="flex justify-center items-center">
                                                 <p className="text-xl text-zinc-200 pb-2">
@@ -509,10 +506,10 @@ export default function ({ git_groups, className = "" }) {
 
                         <div className="mt-4 flex justify-end space-x-4">
                             <button
-                                className="px-4 py-2 rounded-md bg-sky-500 text-zinc-100 hover:bg-sky-600"
+                                className="px-4 py-2 rounded-md bg-stone-700 text-zinc-100 hover:bg-stone-600"
                                 onClick={() => setToggleUpdateModal(false)}
                             >
-                                Cancel
+                                Close
                             </button>
                         </div>
                     </div>
