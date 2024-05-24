@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\HostingRepository;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\HostingRepository\StoreHostingRepositoryRequest;
+use App\Http\Resources\HostingRepositoryResource;
 
 class HostingRepositoryController extends Controller
 {
@@ -42,5 +43,14 @@ class HostingRepositoryController extends Controller
         $hosting_repository->delete();
 
         return back();
+    }
+
+    public function vpsConnect(HostingRepository $hosting_repository)
+    {
+        $hosting_repository->load('repository');
+
+        return inertia('HostingRepository/VpsConnect', [
+            'hosting_repository' => new HostingRepositoryResource($hosting_repository),
+        ]);
     }
 }

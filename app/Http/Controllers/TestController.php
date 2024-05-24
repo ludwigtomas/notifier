@@ -14,7 +14,7 @@ class TestController extends Controller
 {
     public function index(HostingRepository $hosting_repository)
     {
-        return inertia('SSHClient', [
+        return inertia('HostingRepository/VpsConnect', [
             'host' => $hosting_repository->ip_address,
             'port' => $hosting_repository->ip_port,
             'username' => $hosting_repository->login_user,

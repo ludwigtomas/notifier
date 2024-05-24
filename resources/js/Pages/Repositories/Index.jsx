@@ -372,12 +372,12 @@ export default function Index({ auth, repositories, filters }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center space-x-2">
+                                                    <div className="grid grid-cols-4 place-items-center">
 
                                                         {repository.relationships.hosting_repository ? (
                                                             <>
                                                                 <Link
-                                                                    href={route("test.index", repository.relationships.hosting_repository.id)}
+                                                                    href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
                                                                 >
                                                                     <CommandLineIcon className="size-6 text-orange-400" />

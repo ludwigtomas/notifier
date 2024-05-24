@@ -99,6 +99,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{hosting_repository}', [HostingRepositoryController::class, 'update'])->name('update');
         route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
         route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
+        route::get('/{hosting_repository}/vps-connect', [HostingRepositoryController::class, 'vpsConnect'])->name('vps-connect');
     });
 
     // 🔺 HOSTINGS
