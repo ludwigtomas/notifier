@@ -81,13 +81,18 @@ class RepositoryController extends Controller
         return to_route('repositories.edit', $repository);
     }
 
-    public function destroy(Repository $repository): RedirectResponse
+    public function destroy($repository, Request $request): RedirectResponse
     {
-        Storage::deleteDirectory($repository->slug);
+        $repository = Repository::withTrashed()->findOrFail($repository);
 
-        $repository->delete();
+        if ($repository->trashed()) {
+            Storage::deleteDirectory($repository->slug);
+            $repository->forceDelete();
+        } else {
+            $repository->delete();
+        }
 
-        return to_route('repositories.index');
+        return back();
     }
 
     public function store(StoreRepositoryRequest $request)

@@ -46,7 +46,7 @@ export default function Index({ auth, repositories, filters }) {
             onSuccess: () => {
                 setToggleDeleteModal(false);
             },
-        });
+        })
     };
 
     const debouncedSearch = debounce((value) => {
