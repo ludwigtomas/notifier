@@ -47,7 +47,7 @@ class RepositoryController extends Controller
     public function show(Repository $repository): Response
     {
         $repository->loadCount('clients', 'database_backups');
-        $repository->load('hosting');
+        $repository->load('hosting', 'hosting_repository');
 
         $clients = $repository->clients()->paginate(10);
 

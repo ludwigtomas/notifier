@@ -112,7 +112,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositorylastCommit($repository): void
+    public static function getRepositorylastCommit(Repository $repository): void
     {
         $gitlab = Git::whereSlug('gitlab')->first();
 
@@ -121,7 +121,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'projects/' . $repository->id . '/repository/commits', [
+            $response = $client->request('GET', 'projects/' . $repository->repository_id . '/repository/commits', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
@@ -158,7 +158,7 @@ class GitlabService
                     'base_uri' => 'https://gitlab.com/api/v4/',
                 ]);
 
-                $response = $client->request('GET', 'projects/' . $repository->id . '/avatar', [
+                $response = $client->request('GET', 'projects/' . $repository->repository_id . '/avatar', [
                     'headers' => [
                         'Authorization' => 'Bearer ' . $gitlab->api_token,
                     ],

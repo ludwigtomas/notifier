@@ -10,8 +10,9 @@ import {
     UsersIcon,
     ClipboardIcon,
     ServerIcon,
+    CommandLineIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
 import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
@@ -114,6 +115,19 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                         <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                     </Link>
+
+                                    { repository.relationships.hosting_repository && repository.relationships.hosting_repository.id && (
+                                        <Link
+                                            className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-orange-500"
+                                            href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
+                                        >
+                                            <span className="text-gray-200">
+                                                Hosting
+                                            </span>
+
+                                            <CommandLineIcon className="size-6 text-orange-500" />
+                                        </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>
