@@ -18,6 +18,7 @@ use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
+use App\Jobs\RepositoriesLastCommitJob;
 
 class RepositoryController extends Controller
 {
@@ -123,8 +124,8 @@ class RepositoryController extends Controller
         dd($repository);
     }
 
-    public function syncWithGit(Request $request)
+    public function syncWithGit()
     {
-        dd('Asd');
+        RepositoriesLastCommitJob::dispatch();
     }
 }

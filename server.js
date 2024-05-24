@@ -50,7 +50,8 @@ io.on("connection", (socket) => {
         host,
         port,
         username,
-        password,
+        privateKey: readFileSync("privatekey.txt"),
+
     });
 
     socket.on("disconnect", () => {

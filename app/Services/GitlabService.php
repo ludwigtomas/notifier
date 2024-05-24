@@ -41,7 +41,7 @@ class GitlabService
         }
     }
 
-    public static function downloadAvatar($gitlab): void
+    public static function downloadAvatar(Git $gitlab): void
     {
         $client = new GuzzleClient([
             'base_uri' => 'https://gitlab.com/api/v4/',
@@ -80,29 +80,17 @@ class GitlabService
             $repositories_api = json_decode($response->getBody()->getContents());
 
             foreach ($repositories_api as $repository_api) {
-                $repository = Repository::query()
-                    ->withTrashed()
-                    ->find($repository_api->id);
 
-                if ($repository) {
-
-                    $repository->update([
+                $repository = Repository::updateOrCreate(
+                    ['repository_id' => $repository_api->id],
+                    [
                         'name' => $repository_api->name,
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
 
                         'repository_created_at' => Carbon::parse($repository_api->created_at),
-                    ]);
-                } else {
-                    $repository = $gitlab->repositories()->create([
-                        'id' => $repository_api->id,
-                        'name' => $repository_api->name,
-                        'slug' => Str::slug($repository_api->name),
-                        'repository_url' => $repository_api->web_url,
-
-                        'repository_created_at' => Carbon::parse($repository_api->created_at),
-                    ]);
-                }
+                    ]
+                );
 
                 self::getRepositorylastCommit($repository);
                 self::downloadRepositoryAvatar($repository, $repository_api, $gitlab);
@@ -142,6 +130,15 @@ class GitlabService
             ]);
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repository last commit error', ['repository' => $repository]);
+        }
+    }
+
+    public static function getRepositoriesLastCommit(): void
+    {
+        $repositories = Repository::all();
+
+        foreach ($repositories as $repository) {
+            self::getRepositorylastCommit($repository);
         }
     }
 

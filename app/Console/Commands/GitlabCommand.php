@@ -13,7 +13,7 @@ class GitlabCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'gitlab:repositories';
+    protected $signature = 'gitlab:repositories-last-commit-update';
 
     /**
      * The console command description.

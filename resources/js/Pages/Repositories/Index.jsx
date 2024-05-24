@@ -442,7 +442,9 @@ export default function Index({ auth, repositories, filters }) {
 
                 {/* Another options */}
                 <div className="fixed right-10 bottom-10">
-                    <Dropdown>
+                    <Dropdown
+                        maxWidth="md"
+                    >
                         <Dropdown.Trigger>
                             <div className="flex items-center space-x-2">
                                 <div className="group inline-flex rounded-xl bg-sky-500 ">
@@ -458,9 +460,12 @@ export default function Index({ auth, repositories, filters }) {
                             </div>
                         </Dropdown.Trigger>
 
-                        <Dropdown.Content direction="up">
+                        <Dropdown.Content
+                            direction="up"
+                            width="64"
+                        >
                             <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
-                                Odeslání emailu
+                                SYNC + EMAIL
                             </h3>
 
                             <Link
@@ -468,9 +473,22 @@ export default function Index({ auth, repositories, filters }) {
                                 preserveScroll
                                 className="flex items-center justify-center py-2 text-center text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                             >
-                                <code className="p-1 w-full">gitlab:repositories</code>
+                                <code className="p-1 w-full">Repositories last commit</code>
+                            </Link>
+
+                            <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
+                                SYNC without email
+                            </h3>
+
+                            <Link
+                                href={route("repositories.sync")}
+                                preserveScroll
+                                className="flex items-center justify-center py-2 text-center text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            >
+                                <code className="p-1 w-full">Repositories last commit</code>
                             </Link>
                         </Dropdown.Content>
+
                     </Dropdown>
                 </div>
             </div>

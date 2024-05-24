@@ -212,7 +212,7 @@ nano notifier.conf
 
 ```sh
 [group:notifier]
-programs=laravel_horizon,pulse_check,pulse_work, schedule_work
+programs=laravel_horizon,pulse_check,pulse_work, schedule_work, queue_work
 
 [program:laravel_horizon]
 process_name=%(program_name)s
@@ -257,6 +257,17 @@ user=www-data
 stopwaitsecs=3600
 stderr_logfile=/var/www/html/storage/logs/schedule_work.log
 stdout_logfile=/var/www/html/storage/logs/schedule_work.log
+
+[program:queue_work]
+process_name=%(program_name)s
+command=php /var/www/html/artisan queue:work
+directory=/var/www/html
+autostart=true
+autorestart=true
+user=www-data
+stopwaitsecs=3600
+stderr_logfile=/var/www/html/storage/logs/queue_work.log
+stdout_logfile=/var/www/html/storage/logs/queue_work.log
 ```
 
 - Save the file and exit <code>( ctrl + x, ctrl + y, enter)</code>

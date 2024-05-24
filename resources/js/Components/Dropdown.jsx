@@ -36,16 +36,12 @@ const Content = ({ align = 'right', width = '48', direction = '', contentClasses
     let alignmentClasses = 'origin-bottom';
 
     if (align === 'left') {
-        alignmentClasses = 'ltr:origin-bottom-left rtl:origin-bottom-right start-0';
+        alignmentClasses = 'start-0';
     } else if (align === 'right') {
-        alignmentClasses = 'ltr:origin-bottom-right rtl:origin-bottom-left end-0';
+        alignmentClasses = 'end-0';
     }
 
-    let widthClasses = '';
-
-    if (width === '48') {
-        widthClasses = 'w-48';
-    }
+    let widthClasses = "w-" + width;
 
     let directionClasses = 'mt-2';
 
