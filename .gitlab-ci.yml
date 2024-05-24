@@ -8,9 +8,9 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -p $VPS_PORT $VPS_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ssh -p $VPS_PORT $VPS_USER@$VPS_IP 'cd /var/www/html && git pull && npm install && npm run build'
+    - ssh -p $VPS_PORT $VPS_USER@$VPS_IP 'cd /var/www/html && git pull && npm install && npm run build && pm2 restart server'
     - echo "Deploying to production server"
-    - pm2 restart server
+
   only:
     - main
   tags:
