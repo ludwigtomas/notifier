@@ -54,6 +54,7 @@ export default function Index({ auth, repositories, filters }) {
 
         router.get(route("repositories.index"),{
                 search: value,
+                trashed: trashed,
             },
             {
                 preserveScroll: true,
@@ -61,6 +62,20 @@ export default function Index({ auth, repositories, filters }) {
             }
         );
     }, 500);
+
+    const handleSetTrashed = (value) => {
+        setTrashed(value);
+
+        router.get(route("repositories.index"), {
+                search: search,
+                trashed: value,
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
+    }
 
     return (
         <AuthenticatedLayout
@@ -113,18 +128,7 @@ export default function Index({ auth, repositories, filters }) {
                                             ? true
                                             : false
                                     }
-                                    onChange={(e) => {
-                                        setTrashed(e.target.checked);
-
-                                        router.get(route("repositories.index"), {
-                                                trashed: e.target.checked,
-                                            },
-                                            {
-                                                preserveScroll: true,
-                                                preserveState: true,
-                                            }
-                                        );
-                                    }}
+                                    onChange={(e) => { handleSetTrashed(e.target.checked) }}
                                 />
 
                                 <span className="ml-4 text-base text-gray-300">
