@@ -23,13 +23,13 @@ export default function UpdateClientInformationForm({ client, className }) {
     const detachSubmit = (e) => {
         e.preventDefault();
 
-        delete route("client.repository.detach", repository.id);
+        delete route("client-repository.detach", repository.repository_id);
     };
 
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('client.repository.update', [client.id, selectedRepository]), {
+        patch(route('client-repository.update', [client.id, selectedRepository]), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedRepository(null);
@@ -59,7 +59,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                     return (
                         <div
                             className="col-span-12 sm:col-span-6 lg:col-span-4"
-                            key={repository.id}
+                            key={repository.repository_id}
                         >
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
                                 <div className="flex items-center space-x-4">
@@ -69,7 +69,7 @@ export default function UpdateClientInformationForm({ client, className }) {
 
                                     <div>
                                         <Link
-                                            href={route("repositories.show", repository.id)}
+                                            href={route("repositories.show", repository.repository_id)}
                                             className="text-lg font-semibold text-gray-100"
                                         >
                                             {repository.name}
@@ -79,7 +79,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                                             {client.email ?? "N/A"}
                                         </p>
 
-                                        {selectedRepository == repository.id ? (
+                                        {selectedRepository == repository.repository_id ? (
                                             <>
                                                 <TextInput
                                                     id="client_email"
@@ -106,7 +106,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                                 </div>
 
                                 <div className="flex flex-col space-y-2">
-                                    {selectedRepository === repository.id ? (
+                                    {selectedRepository === repository.repository_id ? (
                                         <>
                                             <button
                                                 type="button"
@@ -129,7 +129,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                                                 <button
                                                     type="button"
                                                     onClick={() => {
-                                                        setSelectedRepository(repository.id);
+                                                        setSelectedRepository(repository.repository_id);
                                                         setData("client_email", repository.client_email ?? "");
                                                     }}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
@@ -142,7 +142,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                                                     method="DELETE"
                                                     preserveScroll
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('client.repository.detach', {client: client.id, repository: repository.id})}
+                                                    href={route('client-repository.detach', {client: client.id, repository: repository.repository_id})}
                                                 >
                                                     <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
                                                 </Link>

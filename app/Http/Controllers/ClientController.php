@@ -67,7 +67,7 @@ class ClientController extends Controller
         $client->load('repositories');
 
         $repositories = Repository::query()
-            ->whereNotIn('id', $client->repositories->pluck('id'))
+            ->whereNotIn('repository_id', $client->repositories->pluck('repository_id'))
             ->get();
 
         return inertia('Clients/Edit', [

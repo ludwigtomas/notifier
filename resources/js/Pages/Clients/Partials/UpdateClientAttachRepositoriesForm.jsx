@@ -21,7 +21,7 @@ export default function Show({ client, repositories, className = "" }) {
     const attachClientSubmit = (e) => {
         e.preventDefault();
 
-        put(route('client.repository.attach', client.id));
+        put(route('client-repository.attach', client.id));
 
     }
 
@@ -45,7 +45,7 @@ export default function Show({ client, repositories, className = "" }) {
                     return (
                         <div
                             className="col-span-12 sm:col-span-6 lg:col-span-4"
-                            key={repository.id}
+                            key={repository.repository_id}
                         >
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
                                 <div className="flex items-center space-x-4">
@@ -55,7 +55,7 @@ export default function Show({ client, repositories, className = "" }) {
 
                                     <div>
                                         <Link
-                                            href={route('repositories.show', repository.id)}
+                                            href={route('repositories.show', repository.repository_id)}
                                             className="text-lg font-semibold text-gray-100"
                                         >
                                             {repository.name}
@@ -74,7 +74,7 @@ export default function Show({ client, repositories, className = "" }) {
                                         preserveScroll
                                         preserveState
                                         className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
-                                        href={route('client.repository.attach', {client: client.id, repository: repository.id})}
+                                        href={route('client-repository.attach', {client: client.id, repository: repository.repository_id})}
                                     >
                                         <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
                                     </Link>

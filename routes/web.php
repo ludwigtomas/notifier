@@ -78,7 +78,7 @@ route::middleware('auth:sanctum')->group(function () {
     });
 
     // 🔺 CLIENT REPOSITORY - relationship
-    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client.repository.'], function () {
+    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client-repository.'], function () {
         route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
         route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
         route::patch('update', [ClientRepositoryController::class, 'update'])->name('update');

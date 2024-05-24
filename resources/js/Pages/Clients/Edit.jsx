@@ -1,47 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
-    PlusIcon,
-    XMarkIcon,
-    ChevronRightIcon,
-    PhotoIcon,
-    UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { Head, Link } from '@inertiajs/react';
 import UpdateClientInformationForm from "@/Pages/Clients/Partials/UpdateClientInformationForm";
 import UpdateClientDetachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientDetachRepositoriesForm";
 import UpdateClientAttachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientAttachRepositoriesForm";
 
 export default function Edit({ auth, client, repositories }) {
-
-    const { data, setData, put, processing, errors } = useForm({
-        name: client.name ?? '',
-        email: client.email ?? '',
-        phone: client.phone ?? '',
-        ico: client.ico ?? '',
-        repositories: [...client.relationships.repositories.map((repository) => repository.id)],
-    });
-
-    // define new variable
-    const [test, setTest] = useState(false);
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        put(route('clients.update', client.id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                alert('Klient byl úspěšně upraven.');
-            },
-        });
-    };
 
     return (
         <AuthenticatedLayout

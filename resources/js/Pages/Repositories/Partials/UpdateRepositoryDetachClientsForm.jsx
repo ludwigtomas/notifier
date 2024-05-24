@@ -21,13 +21,13 @@ export default function Show({ repository, className = "" }) {
     const detachSubmit = (e) => {
         e.preventDefault();
 
-        delete(route('client.repository.detach', [selectedClient, repository.repository_id]));
+        delete(route('client-repository.detach', [selectedClient, repository.repository_id]));
     };
 
     const updateSubmit = (e) => {
         e.preventDefault();
 
-        patch(route('client.repository.update', [selectedClient, repository.repository_id]), {
+        patch(route('client-repository.update', [selectedClient, repository.repository_id]), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedClient(null);
@@ -127,7 +127,7 @@ export default function Show({ repository, className = "" }) {
                                                     method="DELETE"
                                                     preserveScroll
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('client.repository.detach', {
+                                                    href={route('client-repository.detach', {
                                                         client: client.id,
                                                         repository: repository.repository_id}
                                                     )}

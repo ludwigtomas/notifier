@@ -375,16 +375,14 @@ export default function Index({ auth, repositories, filters }) {
                                                     <div className="grid grid-cols-4 place-items-center">
 
                                                         {repository.relationships.hosting_repository ? (
-                                                            <>
-                                                                <Link
-                                                                    href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
-                                                                >
-                                                                    <CommandLineIcon className="size-6 text-orange-400" />
-                                                                </Link>
-                                                            </>
+                                                            <Link
+                                                                href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
+                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                            >
+                                                                <CommandLineIcon className="size-6 text-orange-400" />
+                                                            </Link>
                                                         ): (
-                                                            'nic'
+                                                            <span className=""/>
                                                         )}
 
                                                         <Link
