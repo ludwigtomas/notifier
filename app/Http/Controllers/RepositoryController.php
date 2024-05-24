@@ -9,6 +9,7 @@ use App\Models\Hosting;
 use App\Models\Repository;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
@@ -18,7 +19,6 @@ use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
-use App\Jobs\RepositoriesLastCommitJob;
 
 class RepositoryController extends Controller
 {
@@ -126,6 +126,6 @@ class RepositoryController extends Controller
 
     public function syncWithGit()
     {
-        RepositoriesLastCommitJob::dispatch();
+        RepositoriesJob::dispatch();
     }
 }

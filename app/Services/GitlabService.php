@@ -93,7 +93,7 @@ class GitlabService
                 );
 
                 self::getRepositorylastCommit($repository);
-                self::downloadRepositoryAvatar($repository, $repository_api, $gitlab);
+                self::getRepositoryAvatar($repository, $repository_api, $gitlab);
             }
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repositories error', ['gitlab' => $gitlab]);
@@ -139,6 +139,7 @@ class GitlabService
 
         foreach ($repositories as $repository) {
             self::getRepositorylastCommit($repository);
+            self::getRepositoryAvatar($repository);
         }
     }
 
@@ -147,32 +148,30 @@ class GitlabService
         RepositoryNotifierJob::dispatch($repository, $commit_message);
     }
 
-    private static function downloadRepositoryAvatar(Repository $repository, $repository_api, Git $gitlab): void
+    private static function getRepositoryAvatar(Repository $repository): void
     {
-        if ($repository_api->user_avatar_url) {
-            try {
-                $client = new GuzzleClient([
-                    'base_uri' => 'https://gitlab.com/api/v4/',
-                ]);
+        try {
+            $client = new GuzzleClient([
+                'base_uri' => 'https://gitlab.com/api/v4/',
+            ]);
 
-                $response = $client->request('GET', 'projects/' . $repository->repository_id . '/avatar', [
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $gitlab->api_token,
-                    ],
-                ]);
+            $response = $client->request('GET', 'projects/' . $repository->repository_id . '/avatar', [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                ],
+            ]);
 
-                $body = $response->getBody();
+            $body = $response->getBody();
 
-                $path = 'avatars/' . $repository->slug . '.png';
+            $path = 'avatars/' . $repository->slug . '.png';
 
-                $repository->update([
-                    'avatar' => $repository->slug . '.png',
-                ]);
+            $repository->update([
+                'avatar' => $repository->slug . '.png',
+            ]);
 
-                Storage::disk('public')->put($path, $body);
-            } catch (Throwable $th) {
-                Log::error($th->getMessage() . 'download repository avatar error', ['repository' => $repository]);
-            }
+            Storage::disk('public')->put($path, $body);
+        } catch (Throwable $th) {
+            Log::error($th->getMessage() . 'download repository avatar error', ['repository' => $repository]);
         }
     }
 
@@ -256,7 +255,6 @@ class GitlabService
             $repository_api = json_decode($response->getBody()->getContents(), true);
 
             return $repository_api;
-
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repository error');
 
