@@ -8,14 +8,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new SocketIoServer(server, {
     cors: {
-        origin: "http://127.0.0.1:8000",
+        origin: "https://notifier.ludwigtomas.cz",
         methods: ["GET", "POST"],
     },
     allowEIO3: true,
 });
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8000");
+    res.header("Access-Control-Allow-Origin", "https://notifier.ludwigtomas.cz");
     res.header("Access-Control-Allow-Methods", "GET, POST");
     next();
 });
