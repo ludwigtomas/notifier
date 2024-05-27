@@ -75,7 +75,7 @@ export default function RepositoryClientsTable({ clients }) {
 
                                 <td className="px-4 py-4 whitespace-nowrap">
                                     <span className="text-sm text-zinc-400">
-                                        {client.client_email}
+                                        {client.email}
                                     </span>
                                 </td>
 
