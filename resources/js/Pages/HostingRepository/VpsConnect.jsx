@@ -128,6 +128,8 @@ export default function SshClient({auth, hosting_repository}) {
                 </header>
             }
         >
+            <Head title="VPS" />
+
             <div className="grid gap-5">
                 <div className="grid grid-cols-1 gap-8 xl:gap-4 md:grid-cols-2 xl:grid-cols-3">
                     <div className="group relative p-4 grid border-2 bg-stone-900 hover:border-stone-600 border-stone-700 rounded-3xl">
