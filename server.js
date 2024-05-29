@@ -6,16 +6,25 @@ import { readFileSync } from "fs";
 
 const app = express();
 const server = http.createServer(app);
+const dotenv = require("dotenv");
+
+
+
+const origin = process.env.NODE_ENV
+
 const io = new SocketIoServer(server, {
     cors: {
-        origin: "https://notifier.ludwigtomas.cz",
+        origin: origin,
         methods: ["GET", "POST"],
     },
     allowEIO3: true,
 });
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://notifier.ludwigtomas.cz");
+app.use((res, next) => {
+    res.header(
+        "Access-Control-Allow-Origin",
+        origin
+    );
     res.header("Access-Control-Allow-Methods", "GET, POST");
     next();
 });
@@ -23,7 +32,7 @@ app.use((req, res, next) => {
 io.on("connection", (socket) => {
     const conn = new Client();
 
-    const { host, port, username, password } = socket.handshake.query;
+    const { host, port, username } = socket.handshake.query;
 
     conn.on("ready", () => {
         socket.emit("data", "\r\n*** SSH CONNECTION ESTABLISHED ***\r\n");
