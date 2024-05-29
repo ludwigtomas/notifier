@@ -1,24 +1,15 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import React, { useEffect } from "react";
-import { usePage } from "@inertiajs/react";
 import io from "socket.io-client";
 import { Terminal } from "@xterm/xterm";
 import "@xterm/xterm/css/xterm.css";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import {
     PencilSquareIcon,
-    TrashIcon,
     EyeIcon,
-    CheckIcon,
-    XMarkIcon,
     ChevronRightIcon,
     LinkIcon,
-    BackspaceIcon,
-    CommandLineIcon,
-    ClipboardIcon,
 } from "@heroicons/react/24/outline";
-import { motion } from "framer-motion";
-
 
 export default function SshClient({auth, hosting_repository}) {
 
