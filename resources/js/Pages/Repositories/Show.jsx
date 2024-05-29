@@ -51,7 +51,11 @@ export default function Show({ auth, repository, database_backups, clients }) {
     };
 
     const copySSHToClipboard = () => {
-        let ssh_code = "ssh " + repository.relationships.hosting.login_user + "@" + repository.relationships.hosting.ip_address + " -p " + repository.relationships.hosting.ip_port;
+        if (!repository.relationships.hosting_repository) {
+            return;
+        }
+
+        let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + repository.relationships.hosting_repository.ip_port;
 
         navigator.clipboard.writeText(ssh_code);
     }
@@ -198,26 +202,28 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                                                 id="code-area"
                                                                 className="p-5 space-y-3"
                                                             >
-                                                                <div className="text-base text-center">
-                                                                    <span className="text-yellow-300">
-                                                                        ssh
-                                                                    </span>{" "}
-                                                                    <span className="text-purple-400">
-                                                                        { repository.relationships.hosting_repository?.login_user }
-                                                                    </span>
-                                                                    <span className="text-green-300">
-                                                                        @
-                                                                    </span>
-                                                                    <span className="text-purple-400">
-                                                                        { repository.relationships.hosting_repository?.ip_address }
-                                                                    </span>{" "}
-                                                                    <span className="text-green-300">
-                                                                        -p
-                                                                    </span>{" "}
-                                                                    <span className="text-purple-400">
-                                                                        { repository.relationships.hosting_repository?.ip_port }
-                                                                    </span>
-                                                                </div>
+                                                                {repository.relationships.hosting_repository && (
+                                                                    <div className="text-base text-center">
+                                                                        <span className="text-yellow-300">
+                                                                            ssh
+                                                                        </span>{" "}
+                                                                        <span className="text-purple-400">
+                                                                            { repository.relationships.hosting_repository?.login_user }
+                                                                        </span>
+                                                                        <span className="text-green-300">
+                                                                            @
+                                                                        </span>
+                                                                        <span className="text-purple-400">
+                                                                            { repository.relationships.hosting_repository?.ip_address }
+                                                                        </span>{" "}
+                                                                        <span className="text-green-300">
+                                                                            -p
+                                                                        </span>{" "}
+                                                                        <span className="text-purple-400">
+                                                                            { repository.relationships.hosting_repository?.ip_port }
+                                                                        </span>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>
