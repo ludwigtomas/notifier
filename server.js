@@ -10,7 +10,7 @@ const dotenv = require("dotenv");
 
 
 
-const origin = process.env.NODE_ENV
+const origin = process.env.VITE_NODE_ENV
 
 const io = new SocketIoServer(server, {
     cors: {
