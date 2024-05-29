@@ -3,14 +3,13 @@ import http from "http";
 import { Server as SocketIoServer } from "socket.io";
 import { Client } from "ssh2";
 import { readFileSync } from "fs";
+import dotenv from "dotenv";
 
 const app = express();
 const server = http.createServer(app);
-const dotenv = require("dotenv");
+dotenv.config();
 
-
-
-const origin = process.env.VITE_NODE_ENV
+const origin = process.env.VITE_NODE_URL
 
 const io = new SocketIoServer(server, {
     cors: {
