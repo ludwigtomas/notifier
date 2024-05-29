@@ -3,27 +3,19 @@ import http from "http";
 import { Server as SocketIoServer } from "socket.io";
 import { Client } from "ssh2";
 import { readFileSync } from "fs";
-import dotenv from "dotenv";
 
 const app = express();
 const server = http.createServer(app);
-dotenv.config();
-
-const origin = process.env.VITE_NODE_URL
-
 const io = new SocketIoServer(server, {
     cors: {
-        origin: origin,
+        origin: "https://notifier.ludwigtomas.cz",
         methods: ["GET", "POST"],
     },
     allowEIO3: true,
 });
 
-app.use((res, next) => {
-    res.header(
-        "Access-Control-Allow-Origin",
-        origin
-    );
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://notifier.ludwigtomas.cz");
     res.header("Access-Control-Allow-Methods", "GET, POST");
     next();
 });
@@ -31,7 +23,7 @@ app.use((res, next) => {
 io.on("connection", (socket) => {
     const conn = new Client();
 
-    const { host, port, username } = socket.handshake.query;
+    const { host, port, username, password } = socket.handshake.query;
 
     conn.on("ready", () => {
         socket.emit("data", "\r\n*** SSH CONNECTION ESTABLISHED ***\r\n");
