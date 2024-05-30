@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Jobs\RepositoryNotifierJob;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Storage;
 
 class GitlabService
@@ -67,7 +68,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'groups/64297613/projects', [
+            $response = $client->get('groups/64297613/projects', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
@@ -109,7 +110,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'projects/' . $repository->repository_id . '/repository/commits', [
+            $response = $client->get('projects/' . $repository->repository_id . '/repository/commits', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $gitlab->api_token,
                 ],
@@ -148,16 +149,16 @@ class GitlabService
         RepositoryNotifierJob::dispatch($repository, $commit_message);
     }
 
-    private static function getRepositoryAvatar(Repository $repository): void
+    public static function getRepositoryAvatar(Repository $repository, $repository_api = null, $gitlab = null)
     {
-        try {
-            $client = new GuzzleClient([
-                'base_uri' => 'https://gitlab.com/api/v4/',
-            ]);
+        $client = new GuzzleClient([
+            'base_uri' => 'https://gitlab.com/api/v4/',
+        ]);
 
-            $response = $client->request('GET', 'projects/' . $repository->repository_id . '/avatar', [
+        try {
+            $response = $client->get('projects/' . $repository->repository_id . '/avatar', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer ' . ($gitlab ? $gitlab->api_token : self::getGitlab()->api_token),
                 ],
             ]);
 
@@ -165,13 +166,14 @@ class GitlabService
 
             $path = 'avatars/' . $repository->slug . '.png';
 
-            $repository->update([
-                'avatar' => $repository->slug . '.png',
-            ]);
 
             Storage::disk('public')->put($path, $body);
-        } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'download repository avatar error', ['repository' => $repository]);
+
+            if ($response->getStatusCode() === 200) {
+                // Avatar found, do something with it
+            }
+        } catch (ClientException $e) {
+            // TODO: Handle 404 error
         }
     }
 

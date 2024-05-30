@@ -123,4 +123,4 @@ require __DIR__ . '/auth.php';
 
 
 // DELETE IN PRODUCTION
-    Route::get('/test/{hosting_repository}', [TestController::class, 'index'])->name('test.index');
+    Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');

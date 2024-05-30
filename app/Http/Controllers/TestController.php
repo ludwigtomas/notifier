@@ -12,14 +12,9 @@ use Spatie\Analytics\Facades\Analytics;
 
 class TestController extends Controller
 {
-    public function index(HostingRepository $hosting_repository)
+    public function index(Repository $repository)
     {
-        return inertia('HostingRepository/VpsConnect', [
-            'host' => $hosting_repository->ip_address,
-            'port' => $hosting_repository->ip_port,
-            'username' => $hosting_repository->login_user,
-            'password' => $hosting_repository->login_password,
-        ]);
+        GitlabService::getRepositoryAvatar($repository);
     }
 }
 

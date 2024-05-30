@@ -36,8 +36,6 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
 
                 <p className="mt-1 text-sm text-gray-400">
                     Create hosting information for this repository.
-
-                    {console.log(errors)}
                 </p>
             </header>
 
@@ -66,9 +64,6 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
                             message={errors.name}
                         />
                     </div> */}
-
-                    {console.log(hosting_repository)}
-
                     <div>
                         <InputLabel
                             htmlFor="hosting"

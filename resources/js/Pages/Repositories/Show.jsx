@@ -363,9 +363,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                             {/* Database */}
                             <div
-                                onClick={handleShowRepositoryRelation(
-                                    "databases"
-                                )}
+                                onClick={handleShowRepositoryRelation("databases")}
                                 className={
                                     "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
                                     (showRelationship === "databases"
@@ -389,10 +387,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                                 <div className="text-center space-x-4">
                                     <span className="text-gray-200 font-bold text-xl">
-                                        {
-                                            repository.relationships
-                                                .database_backups_count
-                                        }
+                                        { repository.relationships.database_backups_count }
                                     </span>
 
                                     <span className="text-gray-400 text-xs">
@@ -474,16 +469,12 @@ export default function Show({ auth, repository, database_backups, clients }) {
                         </div>
 
                         {showRelationship === "databases" ? (
-                            <RepositoryDatabaseTable
-                                database_backups={database_backups}
-                            />
+                            <RepositoryDatabaseTable database_backups={database_backups}/>
                         ) : showRelationship === "clients" ? (
                             <RepositoryClientsTable clients={clients} />
-                        ) : showRelationship === "hosting" ? (
-                            <RepositoryHostingTable
-                                hosting={repository.relationships.hosting}
-                            />
-                        ) : null}
+                        ) : showRelationship === "hosting" && repository.relationships.hosting && (
+                            <RepositoryHostingTable hosting={repository.relationships.hosting}/>
+                        )}
                     </div>
                 </div>
             </AuthenticatedLayout>

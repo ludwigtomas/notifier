@@ -52,8 +52,6 @@ export default function ({ auth, git_group}) {
 
                 setToggleSubgroupsModal(true);
 
-                console.log(response.data.data)
-
                 setSubgroups(response.data.data);
 
                 setIsLoading(false);
