@@ -1,7 +1,7 @@
 <x-mail::message>
 
 <x-mail::headline>
-{{ $repository->name }}
+{{ $repository->name }} - Aktualizace
 </x-mail::headline>
 
 <p>

@@ -75,6 +75,10 @@ img {
 }
 
 /* Layout */
+.textos-center {
+    color: black;
+    text-align: center;
+}
 
 .wrapper {
     -premailer-cellpadding: 0;
@@ -194,6 +198,8 @@ img {
     border-bottom: 1px solid #edeff2;
     margin: 0;
     padding-bottom: 8px;
+    text-transform: capitalize;
+    color: black;
 }
 
 .table td {
@@ -301,6 +307,15 @@ img {
     margin: 21px 0;
 }
 
+.percentage-text-center p{
+    text-align: center !important;
+}
+
+.percentage-text-center-red {
+    color: #e53e3e;
+}
+
+
 .panel-content-green {
     background-color: #C1FFD9;
     color: #718096;
@@ -317,11 +332,14 @@ img {
     color: #718096;
 }
 
+.percentage-text-center,
 .panel-item {
     padding: 0;
-    color: rgb(46, 46, 46);
+    color: rgb(255, 0, 0);
+    align-items: center;
 }
 
+.percentage-text-center p,
 .panel-item p:last-of-type {
     margin-bottom: 0;
     padding-bottom: 0;

@@ -5,6 +5,7 @@ use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GitController;
 use App\Http\Controllers\GitGroupController;
+use App\Http\Controllers\GoogleAnalyticsController;
 use App\Http\Controllers\HostingController;
 use App\Http\Controllers\HostingRepositoryController;
 use App\Http\Controllers\ProfileController;
@@ -124,3 +125,5 @@ require __DIR__ . '/auth.php';
 
 // DELETE IN PRODUCTION
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
+
+    route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
