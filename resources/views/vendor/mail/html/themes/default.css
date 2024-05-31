@@ -141,7 +141,7 @@ img {
     -premailer-width: 570px;
     background-color: #ffffff;
     border-color: #e8e5ef;
-    border-radius: 2px;
+    border-radius: 20px;
     border-width: 1px;
     box-shadow: 0 2px 0 rgba(0, 0, 150, 0.025), 2px 4px 0 rgba(0, 0, 150, 0.015);
     margin: 0 auto;
@@ -307,12 +307,87 @@ img {
     margin: 21px 0;
 }
 
-.percentage-text-center p{
-    text-align: center !important;
+/* paragraph */
+
+.paragraph {
+    margin-top: 20px;
+}
+
+.paragraph p {
+    font-size: 16px;
+    line-height: 1.5em;
+    margin-top: 0;
+    text-align: left;
+}
+
+
+/* PERCENTAGE */
+.percentage {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    text-align: center;
+}
+
+.percentage-content {
+    border-radius: 10px;
+    background-color: #edf2f7;
+    color: #718096;
+    padding: 16px;
+}
+
+.percentage-content-red {
+    border: 2px solid #fc8787;
+    background-color: #ffdada !important;
+}
+
+.percentage-content-green {
+    border: 2px solid #2bb866;
+    background-color: #C1FFD9 !important;
+}
+
+.percentage-text-center {
+    padding: 0;
+    align-items: center;
 }
 
 .percentage-text-center-red {
     color: #e53e3e;
+}
+
+.percentage-text-center-green {
+    color: #2bb866;
+}
+
+.percentage-text-center p {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    text-align: center !important;
+}
+
+.percentage-text-center p:last-child {
+    font-weight: 100;
+    font-size: 13px;
+}
+
+percentage-text-center p > a {
+    color: #2bb866;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: large;
+}
+
+
+
+/* PANEL ITEM */
+.panel-item {
+    padding: 0;
+    align-items: center;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 
@@ -332,21 +407,7 @@ img {
     color: #718096;
 }
 
-.percentage-text-center,
-.panel-item {
-    padding: 0;
-    color: rgb(255, 0, 0);
-    align-items: center;
-}
-
-.percentage-text-center p,
-.panel-item p:last-of-type {
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
 /* Utilities */
-
 .break-all {
     word-break: break-all;
 }

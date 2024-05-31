@@ -15,10 +15,12 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\HostingResource;
 use Illuminate\Support\Facades\Storage;
+use App\Services\GoogleAnalyticsService;
 use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
+use App\Jobs\GoogleAnalyticsJob;
 
 class RepositoryController extends Controller
 {
@@ -124,9 +126,9 @@ class RepositoryController extends Controller
         return to_route('repositories.edit', $repository);
     }
 
-    public function googleAnalytics(Repository $repository): RedirectResponse
+    public function googleAnalytics(Repository $repository)
     {
-        dd($repository);
+        GoogleAnalyticsJob::dispatch($repository);
     }
 
     public function syncWithGit()

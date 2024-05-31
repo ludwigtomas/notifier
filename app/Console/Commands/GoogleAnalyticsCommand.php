@@ -2,18 +2,16 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Git;
-use App\Services\GitlabService;
 use Illuminate\Console\Command;
 
-class GitlabCommand extends Command
+class GoogleAnalyticsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'gitlab:repositories-sync';
+    protected $signature = 'google:analytics';
 
     /**
      * The console command description.
@@ -27,6 +25,6 @@ class GitlabCommand extends Command
      */
     public function handle()
     {
-        GitlabService::getRepositoriesLastCommit();
+        
     }
 }

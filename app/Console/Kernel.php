@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('gitlab:repositories-last-commit-update')->dailyAt('00:00');
+        $schedule->command('gitlab:repositories-sync')->dailyAt('00:00');
+        $schedule->command('google:analytics')->monthlyOn(2, '04:00');
     }
 
     /**
@@ -20,7 +21,6 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-
         $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');

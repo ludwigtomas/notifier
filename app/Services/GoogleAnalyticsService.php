@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
+use App\Mail\GoogleAnalyticsMail;
 use Carbon\Carbon;
 use App\Models\Repository;
 use Illuminate\Mail\Markdown;
@@ -9,14 +10,27 @@ use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Illuminate\Support\Facades\Mail;
 
-class GoogleAnalyticsController extends Controller
+class GoogleAnalyticsService
 {
-    public function googleAnalytics(Repository $repository)
-    {
-        $current_month = $this->currentMonthStats($repository->analytics_property_id);
 
-        $previous_month = $this->previousMonthStats($repository->analytics_property_id);
+    public static function googleAnalyticsForRepositories()
+    {
+        $repositories = Repository::query()
+            ->whereNotNull('analytics_property_id')
+            ->get();
+
+        foreach ($repositories as $repository) {
+            self::googleAnalyticsForRepository($repository);
+        }
+    }
+
+    public static function googleAnalyticsForRepository(Repository $repository)
+    {
+        $current_month = self::currentMonthStats($repository->analytics_property_id);
+
+        $previous_month = self::previousMonthStats($repository->analytics_property_id);
 
         $percentage = ($current_month['visitors'] - $previous_month['visitors']) / $previous_month['visitors'] * 100;
 
@@ -28,16 +42,27 @@ class GoogleAnalyticsController extends Controller
             'visit_difference' => $current_month['visitors'] - $previous_month['visitors'],
         ];
 
-        $markdown = new Markdown(view(), config('mail.markdown'));
+        $clients = $repository->clients;
+
+        foreach ($clients as $client) {
+            Mail::to($client->pivot->client_email ?? $client->email)->send(new GoogleAnalyticsMail(
+                $repository,
+                $compare,
+                $client,
+            ));
+        }
 
 
-        return $markdown->render('mail.google.google_analytics', [
-            'data' => $compare,
-            'repository' => $repository,
-        ]);
+
+        // $markdown = new Markdown(view(), config('mail.markdown'));
+
+        // return $markdown->render('mail.google.google_analytics', [
+        //     'data' => $compare,
+        //     'repository' => $repository,
+        // ]);
     }
 
-    private function currentMonthStats(string $analytic_id = null)
+    private static function currentMonthStats(string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 
@@ -84,10 +109,9 @@ class GoogleAnalyticsController extends Controller
         }
 
         return $data;
-
     }
 
-    private function previousMonthStats(string $analytic_id = null)
+    private static function previousMonthStats(string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 

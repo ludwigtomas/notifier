@@ -208,8 +208,11 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                 </div>
                             </Dropdown.Trigger>
 
-                            <Dropdown.Content direction="up">
-                                <h3 className="text-center text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
+                            <Dropdown.Content
+                                direction="up"
+                                width="64"
+                            >
+                                <h3 className="text-center w-64 text-white font-bold uppercase p-2 mb-2 px border-b border-zinc-800">
                                     Odeslání emailu
                                 </h3>
 
