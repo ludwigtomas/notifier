@@ -11,7 +11,7 @@ Dobrý den,
 </x-mail::paragraph>
 
 <x-mail::paragraph>
-za měsíc <b>{{ $data['current_month']['month'] }}</b> bylo na webu {{ $repository->name }} zaznamenáno <b>{{ $data['current_month']['visitors'] }}</b> návštěv.  Oproti předchozímu měsíci <b>{{ $data['previous_month']['month'] }}</b> to představuje <b>{{ $data['visit_percentage'] }}%</b> nárůst.
+za měsíc <b>{{ $data['current_month']['month'] }}</b> bylo na webu {{ $repository->name }} zaznamenáno <b>{{ $data['current_month']['visitors'] }}</b> návštěv.  Oproti předchozímu měsíci <b>{{ $data['previous_month']['month'] }}</b> to představuje <b>{{ $data['visit_percentage'] }}%</b> {{ $data['visit_percentage'] >= 0 ? 'nárůst' : 'pokles' }}.
 </x-mail::paragraph>
 
 <x-mail::paragraph>
