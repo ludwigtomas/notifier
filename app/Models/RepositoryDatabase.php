@@ -20,6 +20,12 @@ class RepositoryDatabase extends Model
         'updated_at',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+    
     public function repository(): BelongsTo
     {
         return $this->belongsTo(Repository::class);

@@ -35,6 +35,12 @@ class GitGroup extends Model
         'parent_id' => 'integer',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+    
     public function git(): BelongsTo
     {
         return $this->belongsTo(Git::class);

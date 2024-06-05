@@ -22,6 +22,12 @@ class Git extends Model
         'user_avatar_url',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+    
     public function gitGroups(): HasMany
     {
         return $this->hasMany(GitGroup::class, 'git_id', 'id');

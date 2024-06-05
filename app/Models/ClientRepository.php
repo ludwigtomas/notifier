@@ -24,6 +24,13 @@ class ClientRepository extends Model
         'is_database_backup_interested',  // automatically - database backup (daily)
     ];
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);

@@ -33,6 +33,12 @@ class HostingRepository extends Model
         'password_type' => HostingRepositoryEnum::class,
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+
     public function hosting(): BelongsTo
     {
         return $this->belongsTo(Hosting::class, 'hosting_id', 'id');

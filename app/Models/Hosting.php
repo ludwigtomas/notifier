@@ -15,6 +15,12 @@ class Hosting extends Model
         'hosting_url',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+    
     public function repositories()
     {
         return $this->hasMany(Repository::class, 'hosting_id');
