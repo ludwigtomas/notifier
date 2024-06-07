@@ -33,6 +33,7 @@ class HostingRepository extends Model
         'password_type' => HostingRepositoryEnum::class,
     ];
 
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

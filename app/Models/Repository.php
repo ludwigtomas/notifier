@@ -48,12 +48,13 @@ class Repository extends Model
 
     ];
 
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-    
+
     public function git_group(): BelongsTo
     {
         return $this->belongsTo(GitGroup::class, 'group_id', 'group_id');

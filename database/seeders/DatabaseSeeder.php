@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GitSeeder::class,
             AdminSeeder::class,
-            // RepositorySeeder::class,
             ClientSeeder::class,
             HostingSeeder::class,
         ]);
