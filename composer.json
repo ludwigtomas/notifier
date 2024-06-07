@@ -18,7 +18,7 @@
         "opcodesio/log-viewer": "^3.1",
         "predis/predis": "^2.2",
         "spatie/laravel-analytics": "^5.2",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
