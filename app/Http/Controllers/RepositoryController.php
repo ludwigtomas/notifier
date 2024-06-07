@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
+use App\Jobs\GoogleAnalyticsJob;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\HostingResource;
@@ -20,7 +22,6 @@ use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
-use App\Jobs\GoogleAnalyticsJob;
 
 class RepositoryController extends Controller
 {

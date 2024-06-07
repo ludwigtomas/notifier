@@ -15,16 +15,9 @@ class GitGroupController extends Controller
     public function index(Request $request)
     {
         $git_groups = GitGroup::query()
-            ->whereNull('parent_id')
-            ->when($request->search, function ($query, $search) {
-                $query->whereAny([
-                    'group_id',
-                    'name',
-                ], 'like', '%' . $search . '%');
-            })
+            ->parentGroups($request->search)
             ->withCount(['childrens', 'allRepositories'])
             ->get();
-
 
         if ($request->has('group_id')) {
             $group_details = GitGroup::findOrFail($request->group_id);

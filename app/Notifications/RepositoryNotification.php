@@ -2,21 +2,20 @@
 
 namespace App\Notifications;
 
+use App\Models\Repository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class GoogleAnalyticsNotification extends Notification
+class RepositoryNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public Repository $repository,
+        public string $action,
+    ) {
     }
 
     public function via(object $notifiable): array
@@ -24,10 +23,15 @@ class GoogleAnalyticsNotification extends Notification
         return ['database'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     */
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Google Analytics data has been updated.',
+            'repository' => [$this->repository],
+            'action' => $this->action,
+            'message' => 'Repository has been updated.',
         ];
     }
 

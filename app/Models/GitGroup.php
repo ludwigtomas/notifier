@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Git;
 use App\Models\Repository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,5 +68,38 @@ class GitGroup extends Model
     public function allRepositories(): HasManyThrough
     {
         return $this->hasManyThrough(Repository::class, GitGroup::class, 'parent_id', 'group_id', 'group_id', 'group_id');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPE
+    |--------------------------------------------------------------------------
+    */
+
+    public function scopeParentGroups($query, string $search = null)
+    {
+        return $query->whereNull('parent_id')
+            ->when($search, function ($query, $search) {
+                $query->whereAny([
+                    'group_id',
+                    'name',
+                ], 'like', '%' . $search . '%');
+            })
+            ->whereNull('parent_id');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public function countDB(): int
+    {
+        return Cache::remember('git_groups_count', 60, function () {
+            return DB::table('gits')->count();
+        });
     }
 }

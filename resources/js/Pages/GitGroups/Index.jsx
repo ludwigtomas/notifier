@@ -6,6 +6,9 @@ import {
     ChevronRightIcon,
     FireIcon,
     EyeIcon,
+    RocketLaunchIcon,
+    UserGroupIcon,
+    FolderOpenIcon,
 } from "@heroicons/react/24/outline";
 import {
     ChildrensTable,
@@ -117,9 +120,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
 
                                                 <div className="text-center">
                                                     <p className="text-lg font-bold text-zinc-200">
-                                                        {
-                                                            group.all_repositories_count
-                                                        }
+                                                        { group.all_repositories_count }
                                                     </p>
 
                                                     <p className="text-xs text-zinc-400">
@@ -142,17 +143,13 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                                             : "bg-red-950 hover:bg-red-900")
                                                     }
                                                     preserveScroll
-                                                    href={route(
-                                                        "git-groups.index",
-                                                        {
-                                                            group_id:
-                                                                group.group_id,
-                                                            relationship:
-                                                                "childrens",
+                                                    href={route( "git-groups.index",{
+                                                            group_id: group.group_id,
+                                                            relationship: "childrens",
                                                         }
                                                     )}
                                                 >
-                                                    <EyeIcon
+                                                    <FolderOpenIcon
                                                         className={
                                                             "size-8 " +
                                                             (filters?.relationship ==
@@ -186,7 +183,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                                     )}
                                                     preserveScroll
                                                 >
-                                                    <EyeIcon
+                                                    <RocketLaunchIcon
                                                         className={
                                                             "size-8 " +
                                                             (filters?.relationship ==
@@ -238,7 +235,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                     ) : (
                         <div className="py-5 absolute left-1/2 -translate-x-1/2">
                             <h3 className="text-xl font-semibold text-zinc-200">
-                                No data available
+                                Select group to see details
                             </h3>
                         </div>
                     )}

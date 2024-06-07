@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Models\Hosting;
 use App\Models\Repository;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\HostingRepository\HostingRepositoryEnum;
@@ -48,5 +50,19 @@ class HostingRepository extends Model
     public function repository(): BelongsTo
     {
         return $this->belongsTo(Repository::class, 'repository_id', 'repository_id');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public static function countDB(): int
+    {
+        return Cache::remember('hosting_repository_count', 60, function () {
+            return DB::table('hosting_repository')->count();
+        });
     }
 }

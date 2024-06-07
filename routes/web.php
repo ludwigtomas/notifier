@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ClientRepositoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GitController;
-use App\Http\Controllers\GitGroupController;
-use App\Http\Controllers\GoogleAnalyticsController;
-use App\Http\Controllers\HostingController;
-use App\Http\Controllers\HostingRepositoryController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\RepositoryDatabaseController;
-use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GitController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HostingController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GitGroupController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\GoogleAnalyticsController;
+use App\Http\Controllers\ClientRepositoryController;
+use App\Http\Controllers\HostingRepositoryController;
+use App\Http\Controllers\RepositoryDatabaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +112,13 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
         route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
     });
+
+    // 🔺 NOTIFICATIONS
+    route::group(['prefix' => '/dashboard/notifications', 'as' => 'notifications.'], function () {
+        route::get('/', [NotificationController::class, 'index'])->name('index');
+        route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
+        route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
+    });
 });
 
 Route::middleware('auth')->group(function () {
@@ -122,5 +130,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 // DELETE IN PRODUCTION
-    Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
-    route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
+Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
+route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');

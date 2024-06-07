@@ -1,14 +1,17 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import {
     PresentationChartBarIcon,
-    BugAntIcon,
     ArchiveBoxIcon,
     UsersIcon,
     ServerStackIcon,
     ChevronDownIcon,
+    BellAlertIcon,
+    FolderOpenIcon,
+    GlobeAltIcon,
+    RocketLaunchIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
@@ -16,7 +19,7 @@ export default function Authenticated({ user, header, children }) {
         <main className="flex flex-row items-start justify-start min-h-screen">
             <aside className="min-h-screen relative grid w-[6.6rem] lg:w-[16rem]">
                 <nav className="bg-zinc-900 border-r border-neutral-700 fixed lg:w-56 h-full left-0 top-0 py-20 ">
-                    <div className="flex flex-col items-center justify-between h-full">
+                    <div className="relative flex flex-col items-center justify-between h-full">
                         <div className="flex flex-col items-center space-y-5">
                             <Link href="/">
                                 <ApplicationLogo className="bg-zinc-950 size-20 p-1.5 rounded-xl" />
@@ -62,7 +65,7 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("dashboard.*")}
                                 className="gap-4 w-full"
                             >
-                                <PresentationChartBarIcon className="size-6"/>
+                                <PresentationChartBarIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Dashboard
@@ -74,10 +77,14 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("gits.*")}
                                 className="gap-4 w-full"
                             >
-                                <BugAntIcon className="size-6"/>
+                                <GlobeAltIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Git
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.gits ?? 0 }
                                 </span>
                             </NavLink>
 
@@ -86,10 +93,14 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("git-groups.*")}
                                 className="gap-4 w-full"
                             >
-                                <BugAntIcon className="size-6"/>
+                                <FolderOpenIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Git groups
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.git_groups ?? 0 }
                                 </span>
                             </NavLink>
 
@@ -98,10 +109,14 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("repositories.*")}
                                 className="gap-4 w-full"
                             >
-                                <ArchiveBoxIcon className="size-6"/>
+                                <RocketLaunchIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Repozitáře
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.repositories ?? 0 }
                                 </span>
                             </NavLink>
 
@@ -110,10 +125,14 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("clients.*")}
                                 className="gap-4 w-full"
                             >
-                                <UsersIcon className="size-6"/>
+                                <UsersIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Klienti
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.clients ?? 0 }
                                 </span>
                             </NavLink>
 
@@ -122,10 +141,14 @@ export default function Authenticated({ user, header, children }) {
                                 active={route().current("hostings.*")}
                                 className="gap-4 w-full"
                             >
-                                <ServerStackIcon className="size-6"/>
+                                <ServerStackIcon className="size-10" />
 
                                 <span className="w-full hidden xl:block">
                                     Hostingy
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.hosting ?? 0 }
                                 </span>
                             </NavLink>
                         </div>
@@ -141,7 +164,7 @@ export default function Authenticated({ user, header, children }) {
 
                                 <a
                                     className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                    href='/dashboard/pulse'
+                                    href="/dashboard/pulse"
                                 >
                                     Pulse
                                 </a>
@@ -152,8 +175,22 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Log Viewer
                                 </a>
-
                             </div>
+                        </div>
+
+                        <div className="absolute left-1/2 -translate-x-1/2 -bottom-14">
+                            <div className="bg-zinc-700 p-2 rounded-xl relative">
+                                <Link className="absolute size-5 bg-red-500 left-full bottom-full -translate-x-3 translate-y-3 rounded-full flex items-center justify-center">
+                                    <span className="text-xs text-white font-bold">
+                                        10
+                                    </span>
+                                </Link>
+
+                                <BellAlertIcon className="size-6 text-zinc-400 hover:text-zinc-200" />
+
+                                <Link href="/notifications" className="absolute inset-0 z-20"/>
+                            </div>
+
                         </div>
                     </div>
                 </nav>
@@ -168,9 +205,7 @@ export default function Authenticated({ user, header, children }) {
                     </header>
                 )}
 
-                <div className="max-w-[100rem] py-8 mx-auto">
-                    {children}
-                </div>
+                <div className="max-w-[100rem] py-8 mx-auto">{children}</div>
             </section>
         </main>
     );

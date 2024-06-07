@@ -4,11 +4,15 @@ namespace App\Models;
 
 use App\Models\Hosting;
 use App\Models\HostingRepository;
+use Illuminate\Support\Facades\DB;
 use App\Observers\RepositoryObserver;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -18,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable, HasEvents;
 
     protected $table = 'repositories';
 
@@ -87,5 +91,18 @@ class Repository extends Model
             'repository_id',
             'hosting_id'
         );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public static function countDB(): int
+    {
+        return Cache::remember('hosting_repository_count', 60, function () {
+            return DB::table('hosting_repository')->count();
+        });
     }
 }

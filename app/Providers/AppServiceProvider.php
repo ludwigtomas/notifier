@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Repository;
+use App\Observers\RepositoryObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;

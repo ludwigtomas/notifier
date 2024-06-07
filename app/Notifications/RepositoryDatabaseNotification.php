@@ -3,11 +3,11 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class GoogleAnalyticsNotification extends Notification
+class RepositoryDatabaseNotification extends Notification
 {
     use Queueable;
 
@@ -19,15 +19,23 @@ class GoogleAnalyticsNotification extends Notification
         //
     }
 
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
         return ['database'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     */
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Google Analytics data has been updated.',
+            'message' => 'Repository database has been updated.',
         ];
     }
 
