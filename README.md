@@ -53,8 +53,11 @@ The main purpose of this website is:
 -   Supervisor
 
 ## :point_right: Important
--   Supervisor - for running queue, scheduler
--   php pcntl (extension for running queue - Horizon)
+-   **Supervisor** - for running queue, scheduler, pulse, etc.
+-   **Redis** - for storing cache, sessions
+-   **SSH connection** - for connecting to VPS
+-   **Google Cloud Platform** - for monthly reports from Google Analytics
+-   **php pcntl** (extension for running queue - Horizon)
 
 ## :point_right: Packages
 ### Composer
