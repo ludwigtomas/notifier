@@ -22,7 +22,7 @@ class UpdateRepositoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'analytics_property_id' => ['nullable', 'unique:repositories,analytics_property_id,' . $this->repository->repository_id . ',repository_id'],
+            'analytics_property_id' => ['nullable', 'max:9', 'unique:repositories,analytics_property_id,' . $this->repository->repository_id . ',repository_id'],
             'website_url' => ['nullable', 'url'],
             'repository_url' => ['nullable', 'url'],
             'last_commit_at' => ['nullable', 'date'],
@@ -30,5 +30,23 @@ class UpdateRepositoryRequest extends FormRequest
         ];
     }
 
-    
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'analytics_property_id.max' => 'The Google Analytics Property ID must not be greater than 9 characters.',
+            'analytics_property_id.unique' => 'The Google Analytics Property ID has already been taken.',
+
+            'website_url.url' => 'The Website URL must be a valid URL.',
+            'repository_url.url' => 'The Repository URL must be a valid URL.',
+
+            'last_commit_at.date' => 'The Last Commit At must be a valid date.',
+
+            'description.string' => 'The Description must be a string.',
+        ];
+    }
 }

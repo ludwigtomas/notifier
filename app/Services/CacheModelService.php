@@ -7,17 +7,48 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheModelService
 {
-    public static function GitCount(): int
+    public static function gitCount(): int
     {
-        return Cache::remember('gits_count', 60, function () {
-            return DB::table('gits')->count();
-        });
+        return Cache::remember('gits_count', 60, fn () => DB::table('gits')->count());
     }
 
-    public static function GitGroupCount(): int
+    public static function gitGroupCount(): int
     {
-        return Cache::remember('git_groups_count', 60, function () {
-            return DB::table('git_groups')->count();
-        });
+        return Cache::remember('git_groups_count', 60, fn () => DB::table('git_groups')->count());
+    }
+
+    public static function gitGroupParentCount(): int
+    {
+        return Cache::remember('git_groups_parent_count', 60, fn () => DB::table('git_groups')->whereNotNull('parent_id')->count());
+    }
+
+    public static function gitGroupChildCount(): int
+    {
+        return Cache::remember('git_groups_child_count', 60, fn () => DB::table('git_groups')->whereNull('parent_id')->count());
+    }
+
+    public static function repositoryCount(): int
+    {
+        return Cache::remember('repositories_count', 60, fn () => DB::table('repositories')->count());
+    }
+
+    public static function repositoryDatabasesCount(): int
+    {
+        return Cache::remember('repositories_databases_count', 60, fn () => DB::table('repositories')->where('type', 'database')->count());
+    }
+
+    public static function clientCount(): int
+    {
+        return Cache::remember('clients_count', 60, fn () => DB::table('clients')->count());
+    }
+
+    public static function hostingCount(): int
+    {
+        return Cache::remember('hosting_count', 60, fn () => DB::table('hostings')->count());
+    }
+
+    public static function notificationCount(): int
+    {
+        return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')->count());
     }
 }

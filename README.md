@@ -19,13 +19,21 @@
     - [Clone project](#clone-project)
     - [Setup ENV file](#setup-env-file)
     - [Start project](#point_right-start-project)
+    - [Google Credentials](#point_right-google-credentials)
 - [Supervisor setup](#point_right-supervisor-setup)
     - [Supervisor config](#point_right-supervisor-config)
     - [Supervisor start](#point_right-supervisor-start)
+- [SSH connection](#point_right-ssh-connection)
+
 
 ## :point_right: Description
-The main purpose of this website is to store database backups, VPS information (IP, Port, username, password),
-catch updates pushed into Gitlab and depending on this, send email to "client" or "clients". 
+The main purpose of this website is: 
+- Sync repositories from Gitlab ( ✅ )
+- connect via SSH connection to VPS (IP, Port, username, password) ( ✅)
+- send daily notifications to the client/clients if on their website is a new commit ( ✅ )
+- send monthly reports to the client/clients from Google Analytics ( ✅ )
+- store daily database backups for repositories ( ✅ )
+- store weekly storage backups for repositories (🛠️ in progress)
 
 ## :point_right: Frameworks
 -   Laravel 11.x
@@ -50,6 +58,7 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 
 ## :point_right: Packages
 ### Composer
+-   <a href="https://github.com/googleapis/php-analytics-data">Google Analytics Data API</a>
 -   <a href="https://docs.guzzlephp.org/en/stable/">Guzzle HTTP</a>
 -   <a href="https://inertiajs.com/">Inertia</a>
 -   <a href="https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia">Laravel Breeze</a>
@@ -58,13 +67,17 @@ catch updates pushed into Gitlab and depending on this, send email to "client" o
 -   <a href="https://log-viewer.opcodes.io/">LogViewer</a>
 -   <a href="https://github.com/predis/predis">Predis/Predis</a>
 -   <a href="https://github.com/tighten/ziggy">Ziggy</a>
--   <a href="https://github.com/spatie/laravel-sitemap">Spatie - sitemap</a>
 -   <a href="https://github.com/barryvdh/laravel-debugbar">Laravel debugbar</a>
 
 ### NPM
+-   <a href="https://axios-http.com/">Axios</a>
 -   <a href="https://headlessui.com/">Headless UI</a>
 -   <a href="https://heroicons.com/">Heroicons</a>
 -   <a href="https://lodash.com/">Loadash</a>
+-  <a href="https://www.framer.com/motion/">Framer Motion</a>
+-  <a href="https://xtermjs.org/">Xterm.js</a>
+-  <a href="https://socket.io/">Socket.io</a>
+-  <a href="https://expressjs.com/">Express</a>
 
 ## :point_right: Project setup
 ### Clone project
@@ -141,11 +154,11 @@ MAIL_FROM_NAME="${APP_NAME}"
 ## :point_right: Start project
 
 ```sh
-composer install
+composer i
 ```
 
 ```sh
-npm install
+npm i
 ```
 
 ```sh
@@ -168,7 +181,15 @@ php artisan serve
 php run dev
 ```
 
-<br>
+## :point_right: Google Credentials
+- for monthly Google Analytics reports you need to create new project in Google Cloud Platform
+- then you need to create new service account and download the credentials
+- then you need to rename the credentials to `credentials.json` and move it somewhere in your local machine / VPS
+- then you need to update the path to the credentials in the `.env` file
+
+```sh
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials.json
+```
 
 ## :point_right: Supervisor setup
 There are 4 different processes that need to be run by supervisor
@@ -288,6 +309,11 @@ supervisorctl update
 ```sh
 supervisorctl start notifier:*
 ```
+
+
+## :point_right: SSH connection
+- in progress ...
+
 <br>
 <br>
 <br>

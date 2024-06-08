@@ -3,10 +3,11 @@
 namespace App\Http\Middleware;
 
 use App\Models\Git;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Inertia\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Services\CacheModelService;
+use Illuminate\Support\Facades\Cache;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -39,56 +40,15 @@ class HandleInertiaRequests extends Middleware
             ],
 
             'global' => [
-                'gits' => 0,
-                'git_groups' => $this->getGitGroups(),
-                'repositories' => $this->getRepositories(),
-                'clients' => $this->getClients(),
-                'hosting' => $this->getHosting(),
-
-                'notifications' => $this->getNotifications(),
+                'gits_count' => CacheModelService::gitCount(),
+                'git_groups_count' => CacheModelService::gitGroupCount(),
+                'git_group_parent_count' => CacheModelService::gitGroupParentCount(),
+                'git_group_child_count' => CacheModelService::gitGroupChildCount(),
+                'repositories_count' => CacheModelService::repositoryCount(),
+                'clients_count' => CacheModelService::clientCount(),
+                'hosting_count' => CacheModelService::hostingCount(),
+                'notifications_count' => CacheModelService::notificationCount(),
             ]
         ];
-    }
-
-    private function getGits(): int
-    {
-        return Cache::remember('gits_count', 60, function () {
-            return DB::table('gits')->count();
-        });
-    }
-
-    private function getGitGroups(): int
-    {
-        return Cache::remember('git_groups_count', 60, function () {
-            return DB::table('git_groups')->count();
-        });
-    }
-
-    private function getRepositories(): int
-    {
-        return Cache::remember('repositories_count', 60, function () {
-            return DB::table('repositories')->count();
-        });
-    }
-
-    private function getClients(): int
-    {
-        return Cache::remember('clients_count', 60, function () {
-            return DB::table('clients')->count();
-        });
-    }
-
-    private function getHosting(): int
-    {
-        return Cache::remember('hosting_count', 60, function () {
-            return DB::table('hostings')->count();
-        });
-    }
-
-    private function getNotifications(): int
-    {
-        return Cache::remember('notifications_count', 60, function () {
-            return DB::table('notifications')->count();
-        });
     }
 }

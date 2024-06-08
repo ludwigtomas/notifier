@@ -1,19 +1,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import {
     FireIcon,
     ArrowRightCircleIcon,
-    ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Dashboard({
-    auth,
-    git_groups_parent_count,
-    git_groups_childrens_count,
-    repositories_count,
-    databases_count,
-    clients_count,
-}) {
+export default function Dashboard({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -64,8 +56,14 @@ export default function Dashboard({
                                         </div>
 
                                         <div className="absolute left-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tr-xl">
-                                            {git_groups_parent_count}
+                                            { usePage().props.global.git_group_parent_count }
                                         </div>
+                                    </div>
+
+                                    <div className="absolute bottom-0 left-1/2 translate-x-[-100%]">
+                                        <span className="size-8 bg-zinc-700 flex items-center justify-center text-sky-500 text-lg font-bold rounded-t-md">
+                                            { usePage().props.global.git_groups_count }
+                                        </span>
                                     </div>
 
                                     <div className="text-center">
@@ -89,7 +87,7 @@ export default function Dashboard({
                                         </div>
 
                                         <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                            {git_groups_childrens_count}
+                                            { usePage().props.global.git_group_child_count }
                                         </div>
                                     </div>
 
@@ -127,7 +125,7 @@ export default function Dashboard({
                                 />
 
                                 <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                    {repositories_count}
+                                    { usePage().props.global.repositories_count }
                                 </div>
                             </div>
 
@@ -157,7 +155,7 @@ export default function Dashboard({
                                 />
 
                                 <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                    {databases_count}
+                                    { usePage().props.global.repositories_count }
                                 </div>
                             </div>
 
@@ -187,7 +185,7 @@ export default function Dashboard({
                                 />
 
                                 <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                    {clients_count}
+                                    { usePage().props.global.clients_count }
                                 </div>
                             </div>
                         </div>

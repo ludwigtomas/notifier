@@ -84,7 +84,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.gits ?? 0 }
+                                    { usePage().props.global.gits_count }
                                 </span>
                             </NavLink>
 
@@ -100,7 +100,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.git_groups ?? 0 }
+                                    { usePage().props.global.git_groups_count }
                                 </span>
                             </NavLink>
 
@@ -116,7 +116,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.repositories ?? 0 }
+                                    { usePage().props.global.repositories_count }
                                 </span>
                             </NavLink>
 
@@ -132,7 +132,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.clients ?? 0 }
+                                    { usePage().props.global.clients_count }
                                 </span>
                             </NavLink>
 
@@ -148,7 +148,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.hosting ?? 0 }
+                                    { usePage().props.global.hosting_count }
                                 </span>
                             </NavLink>
                         </div>
