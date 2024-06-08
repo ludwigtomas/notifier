@@ -131,7 +131,7 @@ export default function Index({ auth, clients, filters }) {
                                             scope="col"
                                             className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                         >
-                                            Počet repositářů
+                                            Repozitáře
                                         </th>
 
                                         <th

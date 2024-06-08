@@ -4,7 +4,6 @@ import NavLink from "@/Components/NavLink";
 import { Link, usePage } from "@inertiajs/react";
 import {
     PresentationChartBarIcon,
-    ArchiveBoxIcon,
     UsersIcon,
     ServerStackIcon,
     ChevronDownIcon,
@@ -12,6 +11,7 @@ import {
     FolderOpenIcon,
     GlobeAltIcon,
     RocketLaunchIcon,
+    BellIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Authenticated({ user, header, children }) {
@@ -100,7 +100,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.git_groups_count }
+                                    { usePage().props.global.git_group_parent_count }
                                 </span>
                             </NavLink>
 
@@ -148,9 +148,26 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.hosting_count }
+                                    { usePage().props.global.hostings_count }
                                 </span>
                             </NavLink>
+
+                            <NavLink
+                                href={route("notifications.index")}
+                                active={route().current("notifications.*")}
+                                className="gap-4 w-full"
+                            >
+                                <BellIcon className="size-10" />
+
+                                <span className="w-full hidden xl:block">
+                                    Notifikace
+                                </span>
+
+                                <span>
+                                    { usePage().props.global.notifications_count }
+                                </span>
+                            </NavLink>
+
                         </div>
 
                         <div className="flex items-center flex-col">

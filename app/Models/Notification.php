@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
 {
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'type',
         'data',
         'read_at',
@@ -18,6 +19,7 @@ class Notification extends Model
     ];
 
     protected $casts = [
+        'id' => 'string',
         'data' => 'array',
         'read_at' => 'datetime',
     ];

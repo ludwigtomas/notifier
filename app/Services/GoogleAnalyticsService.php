@@ -51,15 +51,6 @@ class GoogleAnalyticsService
                 $client,
             ));
         }
-
-
-
-        // $markdown = new Markdown(view(), config('mail.markdown'));
-
-        // return $markdown->render('mail.google.google_analytics', [
-        //     'data' => $compare,
-        //     'repository' => $repository,
-        // ]);
     }
 
     private static function currentMonthStats(string $analytic_id = null)

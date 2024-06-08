@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'git_group_child_count' => CacheModelService::gitGroupChildCount(),
                 'repositories_count' => CacheModelService::repositoryCount(),
                 'clients_count' => CacheModelService::clientCount(),
-                'hosting_count' => CacheModelService::hostingCount(),
+                'hostings_count' => CacheModelService::hostingCount(),
                 'notifications_count' => CacheModelService::notificationCount(),
             ]
         ];

@@ -117,6 +117,7 @@ route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => '/dashboard/notifications', 'as' => 'notifications.'], function () {
         route::get('/', [NotificationController::class, 'index'])->name('index');
         route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
+        route::patch('/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
         route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
     });
 });
