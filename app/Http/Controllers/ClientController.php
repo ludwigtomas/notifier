@@ -17,12 +17,14 @@ class ClientController extends Controller
     public function index(Request $request): Response
     {
         $clients = Client::query()
-            ->with('repositories')
-            ->withCount('repositories')
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('email', 'like', '%'.$search.'%');
+                $query->whereAny([
+                    'name',
+                    'email',
+                    'phone',
+                ], 'like', '%' . $search . '%');
             })
+            ->with('repositories')
             ->orderBy('name')
             ->paginate(10);
 

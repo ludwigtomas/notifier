@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Notification extends Model
@@ -24,14 +25,39 @@ class Notification extends Model
         'read_at' => 'datetime',
     ];
 
-    public function notifiable()
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONSHIPS
+    |--------------------------------------------------------------------------
+    */
+    
+    public function notifiable(): MorphTo
     {
         return $this->morphTo();
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
 
     public function markAsRead()
     {
         $this->read_at = now();
         $this->save();
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPE
+    |--------------------------------------------------------------------------
+    */
+
+
+
+
 }

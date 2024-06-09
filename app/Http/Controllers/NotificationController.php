@@ -11,7 +11,7 @@ class NotificationController extends Controller
 {
     public function index(): Response
     {
-        return inertia('notifications/index');
+        return inertia('Notifications/Index');
     }
 
     public function markAsRead(Notification $notification): RedirectResponse

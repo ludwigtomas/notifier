@@ -150,7 +150,12 @@ export default function Index({ auth, repositories, filters }) {
                                             #
                                         </th>
 
-                                        <th scope="col"></th>
+                                        <th
+                                            scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Logo
+                                        </th>
 
                                         <th
                                             scope="col"
@@ -190,28 +195,24 @@ export default function Index({ auth, repositories, filters }) {
 
                                             <ul className="grid grid-cols-4 mt-2 w-full">
                                                 <li
-                                                    scope="col"
                                                     className="text-sm font-normal text-center text-zinc-400"
                                                 >
                                                     Gitlab
                                                 </li>
 
                                                 <li
-                                                    scope="col"
                                                     className="text-sm font-normal text-center text-zinc-400"
                                                 >
                                                     Web
                                                 </li>
 
                                                 <li
-                                                    scope="col"
                                                     className="text-sm font-normal text-center text-zinc-400"
                                                 >
                                                     Hosting
                                                 </li>
 
                                                 <li
-                                                    scope="col"
                                                     className="text-sm font-normal text-center text-zinc-400"
                                                 >
                                                     Analytics
@@ -285,8 +286,7 @@ export default function Index({ auth, repositories, filters }) {
 
                                                                 {repository.relationships.clients_count > 2 && (
                                                                     <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
-                                                                        +{" "}
-                                                                        {repository.relationships.clients_count - 2}
+                                                                        +{" "}{repository.relationships.clients_count - 2}
                                                                     </span>
                                                                 )}
                                                             </div>

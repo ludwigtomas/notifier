@@ -49,7 +49,6 @@ class Repository extends Model
         'created_at',                  // automatically - api
 
         'subscription_to',             //! manually added
-
     ];
 
 
@@ -93,16 +92,10 @@ class Repository extends Model
         );
     }
 
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
-    public static function countDB(): int
-    {
-        return Cache::remember('hosting_repository_count', 60, function () {
-            return DB::table('hosting_repository')->count();
-        });
-    }
 }

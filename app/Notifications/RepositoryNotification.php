@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Repository;
+use App\Services\CacheModelService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,9 +30,9 @@ class RepositoryNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'repository' => [$this->repository],
+            'data' => [$this->repository],
             'action' => $this->action,
-            'message' => 'Repository has been updated.',
+            'type' => 'repository',
         ];
     }
 

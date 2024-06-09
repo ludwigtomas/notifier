@@ -70,6 +70,10 @@ export default function Authenticated({ user, header, children }) {
                                 <span className="w-full hidden xl:block">
                                     Dashboard
                                 </span>
+
+                                <span>
+                                    { usePage().props.global.notifications_count }
+                                </span>
                             </NavLink>
 
                             <NavLink

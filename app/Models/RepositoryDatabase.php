@@ -30,7 +30,6 @@ class RepositoryDatabase extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-
     public function repository(): BelongsTo
     {
         return $this->belongsTo(Repository::class);

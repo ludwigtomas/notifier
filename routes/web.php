@@ -109,6 +109,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/', [HostingController::class, 'index'])->name('index');
         route::get('/create', [HostingController::class, 'create'])->name('create');
         route::post('/', [HostingController::class, 'store'])->name('store');
+        route::get('/{hosting}/edit', [HostingController::class, 'edit'])->name('edit');
         route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
         route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
     });

@@ -29,14 +29,28 @@ export default function Dashboard({ auth, notifications }) {
             <div className="sm:px-6 lg:px-8 grid grid-cols-1 gap-y-10">
                 <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
                     <div className="p-6">
-                        <div className="mb-2">
-                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                Nové notifikace
-                            </h1>
+                        <div className="mb-2 flex items-center space-x-4">
+                            <div className="flex">
+                                <Link
+                                    href={route("notifications.index")}
+                                    className="p-2 rounded-lg bg-zinc-700 hover:bg-zinc-800 faster-animation"
+                                >
+                                    <EyeIcon className="size-10 text-neutral-400"/>
+                                </Link>
+                            </div>
 
-                            <p className="text-zinc-400">
-                                Zde se nachází všechny notifikace, co se událo.
-                            </p>
+                            <div>
+                                <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                    Nové notifikace
+                                </h1>
+
+                                <p className="text-zinc-400">
+                                    Zde se nachází všechny notifikace, co se událo.
+                                </p>
+                            </div>
+
+
+
                         </div>
 
                         {notifications && notifications.length > 0 ? (

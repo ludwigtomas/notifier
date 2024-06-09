@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Observers\HostingObserver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+#[ObservedBy(HostingObserver::class)]
 class Hosting extends Model
 {
     use HasFactory;
@@ -23,10 +28,22 @@ class Hosting extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-
-    public function repositories()
+    
+    public function hosting_repositories(): HasMany
     {
-        return $this->hasMany(Repository::class, 'hosting_id');
+        return $this->hasMany(HostingRepository::class);
+    }
+
+    public function repositories(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Repository::class,
+            HostingRepository::class,
+            'hosting_id',
+            'repository_id',
+            'id',
+            'repository_id'
+        );
     }
 
 
@@ -42,4 +59,12 @@ class Hosting extends Model
             return DB::table('hostings')->count();
         });
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPE
+    |--------------------------------------------------------------------------
+    */
+
+
 }

@@ -14,6 +14,15 @@ class HostingResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'hosting_url' => $this->hosting_url,
+            
+            'relationships' => [
+                'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),
+                'repositories_count' => $this->repositories_count ?? 0,
+            ],
+        ];
     }
 }

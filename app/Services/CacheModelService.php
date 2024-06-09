@@ -7,6 +7,12 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheModelService
 {
+    /*
+    |--------------------------------------------------------------------------
+    | COUNT MODELS
+    |--------------------------------------------------------------------------
+    */
+
     public static function gitCount(): int
     {
         return Cache::remember('gits_count', 60, fn () => DB::table('gits')->count());
@@ -44,11 +50,27 @@ class CacheModelService
 
     public static function hostingCount(): int
     {
-        return Cache::remember('hosting_count', 60, fn () => DB::table('hostings')->count());
+        return Cache::remember('hostings_count', 60, fn () => DB::table('hostings')->count());
     }
 
-    public static function notificationCount(): int
+    public static function notificationCount($reload = false): int
     {
-        return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')->count());
+        if ($reload) {
+            Cache::forget('notifications_count');
+        }
+
+        return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')
+            ->orderBy('created_at', 'desc')
+            ->whereNull('read_at')
+            ->count());
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | REFRESH MODEL COUNTS
+    |--------------------------------------------------------------------------
+    */
+
+
 }

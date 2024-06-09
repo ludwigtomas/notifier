@@ -52,17 +52,15 @@ class HostingRepository extends Model
         return $this->belongsTo(Repository::class, 'repository_id', 'repository_id');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPE
+    |--------------------------------------------------------------------------
+    */
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
-    public static function countDB(): int
-    {
-        return Cache::remember('hosting_repository_count', 60, function () {
-            return DB::table('hosting_repository')->count();
-        });
-    }
 }

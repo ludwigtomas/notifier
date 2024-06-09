@@ -5,13 +5,16 @@ namespace App\Models;
 use App\Models\Git;
 use App\Models\Repository;
 use Illuminate\Support\Facades\DB;
+use App\Observers\GitGroupObserver;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+#[ObservedBy(GitGroupObserver::class)]
 class GitGroup extends Model
 {
     use HasFactory;
@@ -73,6 +76,13 @@ class GitGroup extends Model
 
     /*
     |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+    
+
+    /*
+    |--------------------------------------------------------------------------
     | SCOPE
     |--------------------------------------------------------------------------
     */
@@ -89,17 +99,4 @@ class GitGroup extends Model
             ->whereNull('parent_id');
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function countDB(): int
-    {
-        return Cache::remember('git_groups_count', 60, function () {
-            return DB::table('gits')->count();
-        });
-    }
 }

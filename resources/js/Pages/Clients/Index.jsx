@@ -136,6 +136,13 @@ export default function Index({ auth, clients, filters }) {
 
                                         <th
                                             scope="col"
+                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                        >
+                                            Repozitáře
+                                        </th>
+
+                                        <th
+                                            scope="col"
                                             className="relative py-3.5 px-4"
                                         >
                                             <span className="sr-only">Edit</span>
@@ -155,11 +162,11 @@ export default function Index({ auth, clients, filters }) {
                                                 </span>
                                             </td>
                                             <td className="px-12 py-4 text-sm font-medium text-zinc-400">
-                                                {client.email ?? <XMarkIcon className="w-6 h-6 text-red-500"/>}
+                                                {client.email ?? <XMarkIcon className="size-6 text-red-500"/>}
                                             </td>
 
                                             <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
-                                                {client.phone ?? <XMarkIcon className="w-6 h-6 text-red-500"/>}
+                                                {client.phone ?? <XMarkIcon className="size-6 text-red-500"/>}
                                             </td>
 
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -174,20 +181,27 @@ export default function Index({ auth, clients, filters }) {
                                                     ))}
 
                                                     <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
-                                                        { client.relationships.repositories_count > 2
-                                                            ? (
+                                                        { client.relationships.repositories.length > 2 ? (
                                                                 <span>
-                                                                    + {client.relationships.repositories_count - 2}
+                                                                    + {" "} {client.relationships.repositories.length - 2}
                                                                 </span>
-                                                            )
-                                                            : (
+                                                            ):(
                                                                 <span>
-                                                                    <XMarkIcon className="w-6 h-6 text-zinc-600 group-hover:text-zinc-900 faster-animation"/>
+                                                                    <XMarkIcon className="size-6 text-zinc-600 group-hover:text-zinc-900 faster-animation"/>
                                                                 </span>
                                                             )
                                                         }
                                                     </span>
                                                 </div>
+                                            </td>
+
+                                            <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
+                                                    {client.relationships.repositories
+                                                        ? client.relationships.repositories.length
+                                                        : <XMarkIcon className="size-6 text-red-500"/>
+                                                    }
+                                                </span>
                                             </td>
 
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -196,15 +210,15 @@ export default function Index({ auth, clients, filters }) {
                                                         href={route("clients.edit", client.id)}
                                                         className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                     >
-                                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                        <PencilSquareIcon className="size-6 text-green-500" />
                                                     </Link>
 
-                                                    <Link
+                                                    {/* <Link
                                                         href={route("clients.show",client.id)}
                                                         className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                     >
-                                                        <EyeIcon className="w-6 h-6 text-sky-500" />
-                                                    </Link>
+                                                        <EyeIcon className="size-6 text-sky-500" />
+                                                    </Link> */}
 
                                                     <Link
                                                         as="button"
@@ -213,7 +227,7 @@ export default function Index({ auth, clients, filters }) {
                                                         href={route("clients.destroy", client.id)}
                                                         className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
                                                     >
-                                                        <TrashIcon className="w-6 h-6 text-red-500" />
+                                                        <TrashIcon className="size-6 text-red-500" />
                                                     </Link>
                                                 </div>
                                             </td>
