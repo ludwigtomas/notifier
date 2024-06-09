@@ -12,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -22,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
 {
-    use HasFactory, SoftDeletes, Notifiable, HasEvents;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $table = 'repositories';
 

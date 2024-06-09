@@ -14,7 +14,6 @@ class RepositoryNotification extends Notification
     use Queueable;
 
     public function __construct(
-        public Repository $repository,
         public string $action,
     ) {
     }
@@ -30,9 +29,16 @@ class RepositoryNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'data' => [$this->repository],
+            'data' => [
+                'id' => $notifiable->id,
+                'repository_id' => $notifiable->repository_id,
+                'name' => $$notifiable->name,
+                'size' => $notifiable->size,
+                'path' => $notifiable->path,
+                'created_at' => $notifiable->created_at,
+                'updated_at' => $notifiable->updated_at,
+            ],
             'action' => $this->action,
-            'type' => 'repository',
         ];
     }
 

@@ -44,7 +44,7 @@ class RepositoryDatabaseJob implements ShouldQueue
     {
         return [
             'database',
-            'repository:'.$this->repository->id,
+            'repository:'.$this->repository->repository_id,
         ];
     }
 }

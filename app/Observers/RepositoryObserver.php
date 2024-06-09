@@ -21,7 +21,7 @@ class RepositoryObserver
      */
     public function updated(Repository $repository): void
     {
-        $repository->notify(new RepositoryNotification($repository, 'updated'));
+        $repository->notify(new RepositoryNotification('updated'));
     }
 
     /**

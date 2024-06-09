@@ -14,32 +14,33 @@ class RepositoryDatabaseController extends Controller
 {
     public function store(Request $request, Repository $repository): JsonResponse
     {
-            $this->checkPassword($request->password, $repository);
+        $this->checkPassword($request->password, $repository);
 
-            $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
+        $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
 
-            $backup_name = now()->format('Y-m-d') . '.sql';
+        $backup_name = now()->format('Y-m-d') . '.sql';
 
-            $this->checkIfBackupExists($path, $backup_name, $repository);
+        $this->checkIfBackupExists($path, $backup_name, $repository);
 
-            $this->checkIfDatabaseExists($backup_name, $repository);
+        $this->checkIfDatabaseExists($backup_name, $repository);
 
-            $file = $request->file('backup_file');
 
-            $database_backup = $repository->database_backups()->create([
-                'name' => $backup_name,
-                'size' => $file->getSize() / 1000,
-                'path' => $path,
-            ]);
+        $file = $request->file('backup_file');
 
-            Storage::putFileAs($path, $file, $database_backup->name);
+        $database_backup = $repository->database_backups()->create([
+            'name' => $backup_name,
+            'size' => $file->getSize() / 1000,
+            'path' => $path,
+        ]);
 
-            $this->sendMail($repository, 'success', 'Database backup uploaded successfully');
+        Storage::putFileAs($path, $file, $database_backup->name);
 
-            return response()->json([
-                'type' => 'success',
-                'message' => 'Database backup uploaded successfully',
-            ], 201);
+        $this->sendMail($repository, 'success', 'Database backup uploaded successfully');
+
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Database backup uploaded successfully',
+        ], 201);
     }
 
     private function checkPassword(string $password, Repository $repository)
@@ -55,7 +56,9 @@ class RepositoryDatabaseController extends Controller
     {
         $all_files = Storage::allFiles($path);
 
-        if(in_array($path . '/' . $backup_name, $all_files)){
+
+
+        if (in_array($path . '/' . $backup_name, $all_files)) {
             $this->sendMail($repository, 'failed', 'Database backup -- FILE -- (' . $backup_name . ') already exists');
 
             abort(403, 'Database backup -- FILE -- (' . $backup_name . ') already exists');
@@ -64,7 +67,7 @@ class RepositoryDatabaseController extends Controller
 
     private function checkIfDatabaseExists(string $backup_name, Repository $repository)
     {
-        if($repository->database_backups()->whereName($backup_name)->exists()){
+        if ($repository->database_backups()->whereName($backup_name)->exists()) {
             $this->sendMail($repository, 'failed', 'Database backup -- RECORD -- (' . $backup_name . ') already exists');
 
             abort(403, 'Database backup -- RECORD -- (' . $backup_name . ') already exists');

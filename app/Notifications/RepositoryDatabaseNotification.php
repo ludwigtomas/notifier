@@ -2,9 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\Repository;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 class RepositoryDatabaseNotification extends Notification
@@ -14,8 +13,9 @@ class RepositoryDatabaseNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
-    {
+    public function __construct(
+        public string $action,
+    ) {
         //
     }
 
@@ -35,7 +35,9 @@ class RepositoryDatabaseNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Repository database has been updated.',
+            'data' => [$notifiable],
+            'action' => $this->action,
+            'model' => 'repository_database',
         ];
     }
 

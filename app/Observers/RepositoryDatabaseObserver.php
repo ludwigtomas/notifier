@@ -12,7 +12,7 @@ class RepositoryDatabaseObserver
      */
     public function created(RepositoryDatabase $repository_database): void
     {
-        $repository_database->notify(new RepositoryDatabaseNotification());
+        $repository_database->notify(new RepositoryDatabaseNotification('updated'));
     }
 
     /**

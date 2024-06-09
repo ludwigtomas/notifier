@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, usePage, router } from "@inertiajs/react";
 import {
     FireIcon,
     ArrowRightCircleIcon,
@@ -7,8 +7,34 @@ import {
     EyeIcon,
     BookmarkIcon,
 } from "@heroicons/react/24/outline";
+import { useState, useEffect } from "react";
 
-export default function Dashboard({ auth, notifications }) {
+
+export default function Dashboard({ auth, notifications, models, filters }) {
+
+    const [selectedModel, setSelectedModel] = useState(filters.model || [])
+
+    const handleModel = (model) => {
+        if (selectedModel.includes(model)) {
+            setSelectedModel(selectedModel.filter((item) => item !== model));
+        } else {
+            setSelectedModel([...selectedModel, model]);
+        }
+
+        // router.get(route('dashboard.index', {
+        //     model: selectedModel
+        // }));
+    }
+
+    // useEffect(() => {
+    //     if (selectedModel.length > 0) {
+    //         router.get(route('dashboard.index', {
+    //             model: selectedModel
+    //         }));
+    //     }
+
+    // }, [handleModel]);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -27,30 +53,67 @@ export default function Dashboard({ auth, notifications }) {
 
 
             <div className="sm:px-6 lg:px-8 grid grid-cols-1 gap-y-10">
-                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
+                <section className="bg-zinc-900 shadow-sm sm:rounded-3xl">
                     <div className="p-6">
-                        <div className="mb-2 flex items-center space-x-4">
-                            <div className="flex">
-                                <Link
-                                    href={route("notifications.index")}
-                                    className="p-2 rounded-lg bg-zinc-700 hover:bg-zinc-800 faster-animation"
-                                >
-                                    <EyeIcon className="size-10 text-neutral-400"/>
-                                </Link>
+
+                        <div className="mb-2 flex items-center justify-between space-x-4">
+                            <div className="flex space-x-2">
+                                <div className="grid">
+                                    <Link
+                                        href={route("notifications.index")}
+                                        className="p-2 rounded-lg bg-zinc-700 hover:bg-zinc-800 faster-animation"
+                                    >
+                                        <EyeIcon className="size-10 text-neutral-400"/>
+                                    </Link>
+                                </div>
+
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Nové notifikace
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Zde se nachází všechny notifikace, co se událo.
+                                    </p>
+                                </div>
                             </div>
 
                             <div>
-                                <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                    Nové notifikace
-                                </h1>
+                                <div className="group relative">
+                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 px-4 py-2 rounded-xl">
+                                        <h3 className="text-gray-300">
+                                            Vybrané modely
+                                        </h3>
 
-                                <p className="text-zinc-400">
-                                    Zde se nachází všechny notifikace, co se událo.
-                                </p>
+                                        <div className="text-white font-bold">
+                                            {selectedModel.length}
+                                        </div>
+                                    </div>
+
+                                    <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
+                                        <div className="z-40 h-64 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {models.map((model, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => handleModel(model)}
+                                                            className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
+                                                            (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
+                                                        >
+                                                            <BookmarkIcon className={"size-10 text-neutral-400 mb-3 " +
+                                                            (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                            }/>
+
+                                                            { model }
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
-
-
                         </div>
 
                         {notifications && notifications.length > 0 ? (
