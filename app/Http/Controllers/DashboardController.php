@@ -18,14 +18,13 @@ class DashboardController extends Controller
 {
     public function index(Request $request): Response
     {
+        // get latest notifications 10 records
         $notifications = Notification::query()
-            ->orderBy('created_at', 'desc')
             ->whereNull('read_at')
             ->with('notifiable')
+            ->latest()
             ->limit(10)
             ->get();
-
-        dd($notifications);
 
         $path = app_path('Models');
 

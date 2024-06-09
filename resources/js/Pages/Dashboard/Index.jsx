@@ -118,7 +118,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
 
                         {notifications && notifications.length > 0 ? (
                             <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                <thead className="bg-zinc-800 text-nowrap">
+                                <thead className="bg-zinc-800 text-nowrap border-l-8 border-zinc-800">
                                     <tr>
                                         <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Event
@@ -145,29 +145,33 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                 <tbody className="divide-y divide-zinc-800 bg-zinc-700">
                                     {notifications.map((notification) => (
                                         <tr
-                                            className="group hover:bg-zinc-800"
+                                            className={"group hover:bg-zinc-800 text-white border-l-8 " +
+                                                (notification.data.action === 'created' ? 'border-green-500' : '') + ' ' +
+                                                (notification.data.action === 'updated' ? 'border-yellow-500' : '') + ' ' +
+                                                (notification.data.action === 'deleted' ? 'border-red-500' : '')
+                                            }
                                             key={notification.id}
                                         >
                                             <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
+                                                <span className="text-sm font-medium">
                                                     {notification.type}
                                                 </span>
                                             </td>
 
                                             <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
+                                                <span className="text-sm font-medium">
                                                     {notification.notifiable_type}
                                                 </span>
                                             </td>
 
                                             <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
+                                                <span className="text-sm font-medium">
                                                     {notification.notifiable_id}
                                                 </span>
                                             </td>
 
                                             <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
+                                                <span className="text-sm font-medium">
                                                     {notification.created_at_formatted}
                                                 </span>
                                             </td>
