@@ -5,7 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 
-class RepositoryNotification extends Notification
+class GitGroupNotification extends Notification
 {
     use Queueable;
 

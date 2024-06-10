@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Hosting;
 use Illuminate\Support\Facades\Cache;
+use App\Notifications\RepositoryNotification;
 
 class HostingObserver
 {
@@ -13,6 +14,8 @@ class HostingObserver
     public function created(Hosting $hosting): void
     {
         Cache::forget('hostings_count');
+
+        Cache::forget('notifications_count');
     }
 
     /**
@@ -20,6 +23,9 @@ class HostingObserver
      */
     public function updated(Hosting $hosting): void
     {
+        $hosting->notify(new RepositoryNotification('updated'));
+
+        Cache::forget('notifications_count');
     }
 
     /**
@@ -43,7 +49,6 @@ class HostingObserver
      */
     public function forceDeleted(Hosting $hosting): void
     {
-        dd('Asd');
-        //
+        Cache::forget('hostings_count');
     }
 }

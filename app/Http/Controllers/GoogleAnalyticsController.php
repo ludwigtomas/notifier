@@ -30,7 +30,6 @@ class GoogleAnalyticsController extends Controller
 
         $markdown = new Markdown(view(), config('mail.markdown'));
 
-
         return $markdown->render('mail.google.google_analytics', [
             'data' => $compare,
             'repository' => $repository,

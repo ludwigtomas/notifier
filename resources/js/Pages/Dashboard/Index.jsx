@@ -21,19 +21,11 @@ export default function Dashboard({ auth, notifications, models, filters }) {
             setSelectedModel([...selectedModel, model]);
         }
 
-        // router.get(route('dashboard.index', {
-        //     model: selectedModel
-        // }));
+        router.get(route('dashboard.index', {
+            model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
+        }));
     }
 
-    // useEffect(() => {
-    //     if (selectedModel.length > 0) {
-    //         router.get(route('dashboard.index', {
-    //             model: selectedModel
-    //         }));
-    //     }
-
-    // }, [handleModel]);
 
     return (
         <AuthenticatedLayout
@@ -101,9 +93,11 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                             className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
                                                             (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
                                                         >
-                                                            <BookmarkIcon className={"size-10 text-neutral-400 mb-3 " +
-                                                            (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
-                                                            }/>
+                                                            <BookmarkIcon
+                                                                className={"size-10 text-neutral-400 mb-3 " +
+                                                                    (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                                }
+                                                            />
 
                                                             { model }
                                                         </div>
@@ -117,9 +111,13 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                         </div>
 
                         {notifications && notifications.length > 0 ? (
-                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                            <table className="min-w-full divide-y divide-zinc-700 rounded-md">
                                 <thead className="bg-zinc-800 text-nowrap border-l-8 border-zinc-800">
                                     <tr>
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                                            Metoda
+                                        </th>
+
                                         <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Event
                                         </th>
@@ -145,22 +143,38 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                 <tbody className="divide-y divide-zinc-800 bg-zinc-700">
                                     {notifications.map((notification) => (
                                         <tr
-                                            className={"group hover:bg-zinc-800 text-white border-l-8 " +
-                                                (notification.data.action === 'created' ? 'border-green-500' : '') + ' ' +
-                                                (notification.data.action === 'updated' ? 'border-yellow-500' : '') + ' ' +
-                                                (notification.data.action === 'deleted' ? 'border-red-500' : '')
-                                            }
                                             key={notification.id}
+                                            className={"text-white " +
+                                                (notification.data.action === 'created' ? 'bg-green-500/5 hover:bg-green-500/15' : '') + ' ' +
+                                                (notification.data.action === 'updated' ? 'bg-yellow-500/5 hover:bg-yellow-500/15' : '') + ' ' +
+                                                (notification.data.action === 'deleted' ? 'bg-purple-500/5 hover:bg-purple-500/15' : '') + ' ' +
+                                                (notification.data.action === 'restored' ? 'bg-blue-500/5 hover:bg-blue-500/15' : '') + ' ' +
+                                                (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 shadow-red-500/15' : '')
+                                            }
                                         >
                                             <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium">
-                                                    {notification.type}
+                                                <span
+                                                     className={"group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
+                                                        (notification.data.action === 'created' ? 'bg-green-500 shadow-green-50 border-b-green-900' : '') + ' ' +
+                                                        (notification.data.action === 'updated' ? 'bg-yellow-500 shadow-yellow-50 border-b-yellow-900' : '') + ' ' +
+                                                        (notification.data.action === 'deleted' ? 'bg-purple-500 shadow-purple-50 border-b-purple-900' : '') + ' ' +
+                                                        (notification.data.action === 'restored' ? 'bg-blue-500 shadow-blue-50 border-b-blue-900' : '') + ' ' +
+                                                        (notification.data.action === 'forceDeleted' ? 'bg-red-500 shadow-red-50 border-b-red-900' : '')
+                                                    }
+                                                >
+                                                    {notification.data.action}
                                                 </span>
                                             </td>
 
                                             <td className="px-4 py-4 ">
                                                 <span className="text-sm font-medium">
-                                                    {notification.notifiable_type}
+                                                    {notification.type_formatted}
+                                                </span>
+                                            </td>
+
+                                            <td className="px-4 py-4 ">
+                                                <span className="text-sm font-medium">
+                                                    {notification.notifiable_type_formatted}
                                                 </span>
                                             </td>
 

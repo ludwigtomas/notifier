@@ -2,19 +2,20 @@
 
 namespace App\Services;
 
-use App\Mail\GoogleAnalyticsMail;
 use Carbon\Carbon;
 use App\Models\Repository;
+use App\Models\Notification;
 use Illuminate\Mail\Markdown;
+use App\Mail\GoogleAnalyticsMail;
+use Illuminate\Support\Facades\Mail;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
+use App\Notifications\GoogleAnalyticsNotification;
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
-use Illuminate\Support\Facades\Mail;
 
 class GoogleAnalyticsService
 {
-
     public static function googleAnalyticsForRepositories()
     {
         $repositories = Repository::query()
@@ -23,6 +24,8 @@ class GoogleAnalyticsService
 
         foreach ($repositories as $repository) {
             self::googleAnalyticsForRepository($repository);
+
+            $repository->notify(new GoogleAnalyticsNotification($repository));
         }
     }
 

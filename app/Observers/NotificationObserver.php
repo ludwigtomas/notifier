@@ -20,7 +20,7 @@ class NotificationObserver
      */
     public function updated(Notification $notification): void
     {
-        //
+        Cache::forget('notifications_count');
     }
 
     /**

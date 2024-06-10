@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\GoogleAnalyticsService;
 use Illuminate\Console\Command;
 
 class GoogleAnalyticsCommand extends Command
@@ -25,6 +26,6 @@ class GoogleAnalyticsCommand extends Command
      */
     public function handle()
     {
-        
+        GoogleAnalyticsService::googleAnalyticsForRepositories();
     }
 }

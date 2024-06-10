@@ -20,8 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-
 route::group(['prefix' => 'v1'], function () {
     route::group(['prefix' => 'repositories'], function () {
         route::post('/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');

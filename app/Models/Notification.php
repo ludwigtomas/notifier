@@ -21,7 +21,7 @@ class Notification extends Model
 
     protected $casts = [
         'id' => 'string',
-        'data' => 'array',
+        'data' => 'json',
         'read_at' => 'datetime',
     ];
 
@@ -31,7 +31,7 @@ class Notification extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-    
+
     public function notifiable(): MorphTo
     {
         return $this->morphTo();
@@ -50,14 +50,9 @@ class Notification extends Model
         $this->save();
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | SCOPE
     |--------------------------------------------------------------------------
     */
-
-
-
-
 }

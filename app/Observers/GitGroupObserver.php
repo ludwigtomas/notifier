@@ -4,15 +4,18 @@ namespace App\Observers;
 
 use App\Models\GitGroup;
 use Illuminate\Support\Facades\Cache;
+use App\Notifications\GitGroupNotification;
 
 class GitGroupObserver
 {
     /**
      * Handle the GitGroup "created" event.
      */
-    public function created(GitGroup $gitGroup): void
+    public function created(GitGroup $git_group): void
     {
         Cache::forget('git_groups_count');
+
+        $git_group->notify(new GitGroupNotification('created'));
     }
 
     /**
@@ -20,7 +23,7 @@ class GitGroupObserver
      */
     public function updated(GitGroup $gitGroup): void
     {
-        //
+        $gitGroup->notify(new GitGroupNotification('updated'));
     }
 
     /**
@@ -28,7 +31,7 @@ class GitGroupObserver
      */
     public function deleted(GitGroup $gitGroup): void
     {
-        //
+        Cache::forget('git_groups_count');
     }
 
     /**
@@ -36,7 +39,7 @@ class GitGroupObserver
      */
     public function restored(GitGroup $gitGroup): void
     {
-        //
+        Cache::forget('git_groups_count');
     }
 
     /**
@@ -44,6 +47,6 @@ class GitGroupObserver
      */
     public function forceDeleted(GitGroup $gitGroup): void
     {
-        //
+        Cache::forget('git_groups_count');
     }
 }

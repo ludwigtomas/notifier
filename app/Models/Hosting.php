@@ -6,6 +6,7 @@ use App\Observers\HostingObserver;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 #[ObservedBy(HostingObserver::class)]
 class Hosting extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'id',
@@ -28,7 +29,7 @@ class Hosting extends Model
     | RELATIONSHIPS
     |--------------------------------------------------------------------------
     */
-    
+
     public function hosting_repositories(): HasMany
     {
         return $this->hasMany(HostingRepository::class);

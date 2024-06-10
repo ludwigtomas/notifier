@@ -28,7 +28,7 @@ class ClientObserver
      */
     public function deleted(Client $client): void
     {
-        //
+        Cache::forget('clients_count');
     }
 
     /**
@@ -36,7 +36,7 @@ class ClientObserver
      */
     public function restored(Client $client): void
     {
-        //
+        Cache::forget('clients_count');
     }
 
     /**
@@ -44,6 +44,6 @@ class ClientObserver
      */
     public function forceDeleted(Client $client): void
     {
-        //
+        Cache::forget('clients_count');
     }
 }

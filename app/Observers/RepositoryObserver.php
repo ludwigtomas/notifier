@@ -3,17 +3,28 @@
 namespace App\Observers;
 
 use App\Models\Repository;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 use App\Notifications\RepositoryNotification;
 use App\Notifications\RepositoryDatabaseNotification;
 
+
 class RepositoryObserver
 {
-    /**
-     * Handle the Repository "created" event.
-     */
+    public function __construct()
+    {
+        Cache::forget('notifications_count');
+    }
+
+    public function creating(Repository $repository): void
+    {
+        $repository->database_verification_code = Str::uuid();
+    }
+
     public function created(Repository $repository): void
     {
+        $repository->notify(new RepositoryNotification('created'));
     }
 
     /**
@@ -29,6 +40,7 @@ class RepositoryObserver
      */
     public function deleted(Repository $repository): void
     {
+        $repository->notify(new RepositoryNotification('deleted'));
     }
 
     /**
@@ -36,6 +48,7 @@ class RepositoryObserver
      */
     public function restored(Repository $repository): void
     {
+        $repository->notify(new RepositoryNotification('restored'));
     }
 
     /**
@@ -43,5 +56,6 @@ class RepositoryObserver
      */
     public function forceDeleted(Repository $repository): void
     {
+        $repository->notify(new RepositoryNotification('forceDeleted'));
     }
 }

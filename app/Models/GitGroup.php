@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Observers\GitGroupObserver;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 #[ObservedBy(GitGroupObserver::class)]
 class GitGroup extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $table = 'git_groups';
 
@@ -79,7 +80,7 @@ class GitGroup extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    
+
 
     /*
     |--------------------------------------------------------------------------

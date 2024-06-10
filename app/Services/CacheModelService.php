@@ -25,12 +25,16 @@ class CacheModelService
 
     public static function gitGroupParentCount(): int
     {
-        return Cache::remember('git_groups_parent_count', 60, fn () => DB::table('git_groups')->whereNull('parent_id')->count());
+        return Cache::remember('git_groups_parent_count', 60, fn () => DB::table('git_groups')
+            ->whereNull('parent_id')
+            ->count());
     }
 
     public static function gitGroupChildCount(): int
     {
-        return Cache::remember('git_groups_child_count', 60, fn () => DB::table('git_groups')->whereNotNull('parent_id')->count());
+        return Cache::remember('git_groups_child_count', 60, fn () => DB::table('git_groups')
+            ->whereNotNull('parent_id')
+            ->count());
     }
 
     public static function repositoryCount(): int
@@ -40,7 +44,9 @@ class CacheModelService
 
     public static function repositoryDatabasesCount(): int
     {
-        return Cache::remember('repositories_databases_count', 60, fn () => DB::table('repositories')->where('type', 'database')->count());
+        return Cache::remember('repositories_databases_count', 60, fn () => DB::table('repositories')
+            ->where('type', 'database')
+            ->count());
     }
 
     public static function clientCount(): int
@@ -53,14 +59,9 @@ class CacheModelService
         return Cache::remember('hostings_count', 60, fn () => DB::table('hostings')->count());
     }
 
-    public static function notificationCount($reload = false): int
+    public static function notificationCount(): int
     {
-        if ($reload) {
-            Cache::forget('notifications_count');
-        }
-
         return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')
-            ->orderBy('created_at', 'desc')
             ->whereNull('read_at')
             ->count());
     }
@@ -71,6 +72,4 @@ class CacheModelService
     | REFRESH MODEL COUNTS
     |--------------------------------------------------------------------------
     */
-
-
 }

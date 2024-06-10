@@ -12,12 +12,10 @@ use Illuminate\Http\Request;
 use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
 use App\Jobs\GoogleAnalyticsJob;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\HostingResource;
 use Illuminate\Support\Facades\Storage;
-use App\Services\GoogleAnalyticsService;
 use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
@@ -51,6 +49,7 @@ class RepositoryController extends Controller
     public function show(Repository $repository): Response
     {
         $repository->loadCount('clients', 'database_backups');
+
         $repository->load('hosting', 'hosting_repository');
 
         $clients = $repository->clients()->paginate(10);
