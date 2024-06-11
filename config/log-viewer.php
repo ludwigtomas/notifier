@@ -152,7 +152,22 @@ return [
     */
 
     'exclude_files' => [
-        // 'my_secret.log'
+        '*.gz',
+        '*.zip',
+        '*.rar',
+        '*.tar',
+        '*.tar.gz',
+        '*.tar.xz',
+        '*.tar.bz2',
+        '*.tar.lzma',
+        '*.tar.Z',
+        '*.tar.zst',
+        '*.tar.zstd',
+        '*.tar.sz',
+        '*.tar.lz4',
+        '*.tar.lzop',
+        '*.tar.lzo',
+        '*/*/*/access.log.*',
     ],
 
     /*
