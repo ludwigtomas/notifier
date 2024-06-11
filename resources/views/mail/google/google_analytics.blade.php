@@ -28,10 +28,10 @@ Nejvíce návštěvníků přišlo z těchto měst:
 
 <table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
 <tr>
-<td align="center">
+<td align="center" style="color: black">
 {{ $data['previous_month']['visitors'] }}
 </td>
-<td align="center">
+<td align="center" style="color: black">
 {{ $data['current_month']['visitors'] }}
 </td>
 </tr>
