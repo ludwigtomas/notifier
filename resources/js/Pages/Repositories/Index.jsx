@@ -102,7 +102,7 @@ export default function Index({ auth, repositories, filters }) {
                 </header>
             }
         >
-            <Head title="Repozitáče" />
+            <Head title="Repozitáře" />
 
             {/* TABLE */}
             <div className="py-12">
