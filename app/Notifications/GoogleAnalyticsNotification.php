@@ -9,12 +9,9 @@ class GoogleAnalyticsNotification extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public string $action,
+    ) {
     }
 
     public function via(object $notifiable): array
@@ -25,19 +22,8 @@ class GoogleAnalyticsNotification extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Google Analytics data has been updated.',
-        ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
+            'action' => $this->action,
+            'model' => $notifiable,
         ];
     }
 }
