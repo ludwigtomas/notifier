@@ -8,6 +8,8 @@ use DirectoryIterator;
 use App\Models\Hosting;
 use App\Models\GitGroup;
 use App\Models\Repository;
+use app\Helpers\ModelHelper;
+use App\Helpers\OrderHelper;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 
@@ -19,6 +21,8 @@ class DashboardController extends Controller
 {
     public function index(Request $request): Response
     {
+        dd(OrderHelper::testingos());
+
         $models = [];
 
         if ($request->model) {
@@ -32,7 +36,8 @@ class DashboardController extends Controller
             ->when($models, function ($query, $models) {
                 $query->whereIn('notifiable_type', $models);
             })
-            ->whereJsonContains('data->action', 'updated')
+            ->whereNull('read_at')
+            ->whereJsonContains('data->action', 'created')
             ->with('notifiable')
             ->latest()
             ->limit(10)

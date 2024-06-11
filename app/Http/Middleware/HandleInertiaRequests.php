@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'repositories_count' => CacheModelService::repositoryCount(),
                 'clients_count' => CacheModelService::clientCount(),
                 'hostings_count' => CacheModelService::hostingCount(),
+                'new_notifications_count' => CacheModelService::newNotificationCount(),
                 'notifications_count' => CacheModelService::notificationCount(),
             ]
         ];

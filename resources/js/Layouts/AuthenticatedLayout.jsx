@@ -72,7 +72,7 @@ export default function Authenticated({ user, header, children }) {
                                 </span>
 
                                 <span>
-                                    { usePage().props.global.notifications_count }
+                                    { usePage().props.global.new_notifications_count }
                                 </span>
                             </NavLink>
 

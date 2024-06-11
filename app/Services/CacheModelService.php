@@ -59,17 +59,17 @@ class CacheModelService
         return Cache::remember('hostings_count', 60, fn () => DB::table('hostings')->count());
     }
 
-    public static function notificationCount(): int
+    public static function newNotificationCount(): int
     {
-        return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')
+        return Cache::remember('new_notifications_count', 60, fn () => DB::table('notifications')
             ->whereNull('read_at')
+            ->whereJsonContains('data', ['action' => 'created'])
             ->count());
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | REFRESH MODEL COUNTS
-    |--------------------------------------------------------------------------
-    */
+    public static function notificationCount(): int
+    {
+        return Cache::remember('notifications_count', 60, fn () => DB::table('notifications')
+            ->count());
+    }
 }

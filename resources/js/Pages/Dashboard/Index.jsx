@@ -111,8 +111,8 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                         </div>
 
                         {notifications && notifications.length > 0 ? (
-                            <table className="min-w-full divide-y divide-zinc-700 rounded-md">
-                                <thead className="bg-zinc-800 text-nowrap border-l-8 border-zinc-800">
+                            <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+                                <thead className="bg-zinc-800 text-nowrap">
                                     <tr>
                                         <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Metoda
