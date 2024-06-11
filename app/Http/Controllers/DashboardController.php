@@ -21,8 +21,6 @@ class DashboardController extends Controller
 {
     public function index(Request $request): Response
     {
-        dd(OrderHelper::testingos());
-
         $models = [];
 
         if ($request->model) {
