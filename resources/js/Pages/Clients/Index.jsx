@@ -97,6 +97,7 @@ export default function Index({ auth, clients, filters }) {
                             placeholder="Hledat klienta"
                             type="text"
                             className="w-72"
+                            value={search}
                             onChange={(e) => debouncedSearch(e.target.value)}
                         />
                     </div>

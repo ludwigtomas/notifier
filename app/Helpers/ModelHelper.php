@@ -4,17 +4,33 @@ namespace App\Helpers;
 
 class ModelHelper extends Helper
 {
-    public static function allTestingos()
+    public static function getModels()
     {
-        return 'TEst';
-        // $models = [];
-        // $path = app_path('Models');
-        // $files = scandir($path);
-        // foreach ($files as $file) {
-        //     if (is_file($path . '/' . $file)) {
-        //         $models[] = str_replace('.php', '', $file);
-        //     }
-        // }
-        // return $models;
+        $models = [];
+        $path = app_path('Models');
+        $files = scandir($path);
+        foreach ($files as $file) {
+            if (is_file($path . '/' . $file)) {
+                $models[] = str_replace('.php', '', $file);
+            }
+        }
+        return $models;
     }
+
+    // $path = app_path('Models');
+
+    // $models = [];
+
+    // foreach (new DirectoryIterator($path) as $file) {
+
+    //     if ($file->isDot() || $file->isDir()) {
+    //         continue;
+    //     }
+
+    //     $filename = $file->getFilename();
+
+    //     $model = pathinfo($filename, PATHINFO_FILENAME);
+
+    //     $models[] = $model;
+    // }
 }

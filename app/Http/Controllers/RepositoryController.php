@@ -34,7 +34,7 @@ class RepositoryController extends Controller
                     'slug',
                 ], 'like', '%'.$search.'%');
             })
-            ->when($request->trashed === 'true', function ($query, $trashed) {
+            ->when($request->trashed == 'true', function ($query, $trashed) {
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')

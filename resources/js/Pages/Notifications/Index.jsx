@@ -14,15 +14,21 @@ import { useState, useEffect } from "react";
 import Dropdown from "@/Components/Dropdown";
 import debounce from "lodash/debounce";
 
-export default function Index({ auth, notifications, filters }) {
+export default function Index({ auth, notifications, models, actions, filters }) {
 
-    const [search, setSearch] = useState(filters?.search || "");
+    const [search, setSearch] = useState(filters.search || "");
+    const [isRead, setIsRead] = useState(filters.read_at || false);
+    const [selectedModel, setSelectedModel] = useState(filters.model || [])
+    const [selectedAction, setSelectedAction] = useState(filters.action || "")
 
     const debouncedSearch = debounce((value) => {
         setSearch(value);
 
         router.get(route("notifications.index"),{
                 search: value,
+                read_at: isRead,
+                model: selectedModel,
+                action: selectedAction
             },
             {
                 preserveScroll: true,
@@ -31,6 +37,38 @@ export default function Index({ auth, notifications, filters }) {
         );
     }, 500);
 
+    const handleModel = (model) => {
+        if (selectedModel.includes(model)) {
+            setSelectedModel(selectedModel.filter((item) => item !== model));
+        } else {
+            setSelectedModel([...selectedModel, model]);
+        }
+
+        router.get(route('notifications.index', {
+            search: search,
+            read_at: isRead,
+            action: selectedAction,
+            model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
+
+        }));
+    }
+
+    const handleSetIsRead = (value) => {
+
+        setIsRead(value);
+
+        router.get(route("notifications.index"), {
+                search: search,
+                read_at: value,
+                model: selectedModel,
+                action: selectedAction
+            },
+            {
+                preserveScroll: true,
+                preserveState: true,
+            }
+        );
+    }
 
     return (
         <AuthenticatedLayout
@@ -63,15 +101,132 @@ export default function Index({ auth, notifications, filters }) {
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
-                    <div className="mb-2 flex items-center space-x-10">
-                        <TextInput
-                            label="Hledat"
-                            name="search"
-                            placeholder="Hledat notifikaci"
-                            type="text"
-                            className="w-72"
-                            onChange={(e) => debouncedSearch(e.target.value)}
-                        />
+                    <div className="mb-5 bg-zinc-900 px-2 rounded-2xl">
+                        <div className="grid grid-cols-4 items-center">
+                            <div>
+                                <TextInput
+                                    label="Hledat"
+                                    name="search"
+                                    placeholder="Hledat notifikaci"
+                                    type="text"
+                                    className="w-72"
+                                    onChange={(e) => debouncedSearch(e.target.value)}
+                                />
+                            </div>
+
+                            <div>
+                                <label
+                                    htmlFor="read_at"
+                                    className="flex items-center justify-center cursor-pointer bg-zinc-900 px-6 py-4 rounded-xl"
+                                >
+                                    <input
+                                        label="Již Přečtené"
+                                        name="read_at"
+                                        type="checkbox"
+                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-900 checked:bg-sky-900 checked:before:bg-sky-900 hover:before:opacity-10"
+                                        checked={isRead}
+                                        onChange={(e) => handleSetIsRead(e.target.checked)}
+                                    />
+
+                                    <span className="ml-4 text-base text-gray-300">
+                                        Již Přečtené
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <select
+                                    name="action"
+                                    className="w-72"
+                                    value={selectedAction} // set the value to the state variable
+                                    onChange={(e) => {
+                                        setSelectedAction(e.target.value);
+                                        router.get(route("notifications.index"), {
+                                                search: search,
+                                                read_at: isRead,
+                                                action: e.target.value,
+                                                model: selectedModel
+                                            },
+                                            {
+                                                preserveScroll: true,
+                                                preserveState: true,
+                                            }
+                                        );
+                                    }}
+                                >
+                                    <option value="">Vyberte akci</option>
+                                    {actions.map((action, index) => (
+                                        <option
+                                            key={index}
+                                            value={action}
+                                        >
+                                            {action}
+                                        </option>
+                                    ))}
+
+                                </select>
+                            </div>
+
+                            <div>
+                                <div className="group relative">
+                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 px-4 py-2 rounded-xl">
+                                        <h3 className="text-gray-300">
+                                            Vybrané modely
+                                        </h3>
+
+                                        <div className="text-white font-bold">
+                                            {selectedModel.length}
+                                        </div>
+                                    </div>
+
+                                    <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
+                                        <div className="z-40 h-64 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {selectedModel.length === 0 ? (
+                                                    <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
+                                                        <div className="text-center text-gray-200 ">
+                                                            <p className="text-lg font-semibold">
+                                                                Nejsou vybrané žádné modely
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ):(
+                                                    <div
+                                                        onClick={() => handleModel('clear_all')}
+                                                        className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
+                                                    >
+                                                        <div className="text-center text-white">
+                                                            <p className="text-lg font-semibold">
+                                                                Vyčistit vše
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {models.map((model, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => handleModel(model)}
+                                                            className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
+                                                            (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
+                                                        >
+                                                            <BookmarkIcon
+                                                                className={"size-10 text-neutral-400 mb-3 " +
+                                                                    (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                                }
+                                                            />
+
+                                                            { model }
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
@@ -99,6 +254,11 @@ export default function Index({ auth, notifications, filters }) {
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                                 Vytvořeno dne
                                             </th>
+
+                                            <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                                                Stav notifikace
+                                            </th>
+
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                                 Akce
@@ -156,6 +316,23 @@ export default function Index({ auth, notifications, filters }) {
                                                     </span>
                                                 </td>
 
+                                                <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium">
+                                                        {notification.read_at ? (
+                                                            <span className="text-xs font-semibold text-green-500">
+                                                                Přečteno
+                                                            </span>
+
+                                                        ): (
+                                                            <span className="text-xs font-semibold text-red-500">
+                                                                Nepřečteno
+                                                            </span>
+                                                        )
+                                                        }
+                                                    </span>
+                                                </td>
+
+
                                                 <td className="px-4 py-4">
                                                     <div className="flex">
                                                         <Link
@@ -164,7 +341,7 @@ export default function Index({ auth, notifications, filters }) {
                                                             href={route("notifications.mark-as-read", notification.id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                         >
-                                                            <BookmarkIcon className="size-6 text-sky-500" />
+                                                            <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-sky-500 fill-sky-500' : 'text-red-500 fill-red-500')} />
                                                         </Link>
                                                     </div>
                                                 </td>

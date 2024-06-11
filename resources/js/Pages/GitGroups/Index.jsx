@@ -69,6 +69,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                         placeholder="Hledat hlavní skupinu..."
                         type="text"
                         className="w-full"
+                        value={search}
                         onChange={(e) => debouncedSearch(e.target.value)}
                     />
                 </div>
