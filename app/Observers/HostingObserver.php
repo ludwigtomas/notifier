@@ -3,8 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Hosting;
-use Illuminate\Support\Facades\Cache;
 use App\Notifications\RepositoryNotification;
+use Illuminate\Support\Facades\Cache;
 
 class HostingObserver
 {

@@ -67,7 +67,7 @@ class ClientSeeder extends Seeder
                 'phone' => '+420 607 247 034',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
         ]);
     }
 }

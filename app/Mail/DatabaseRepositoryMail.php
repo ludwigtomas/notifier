@@ -33,7 +33,7 @@ class DatabaseRepositoryMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Notifier - (' . $this->repository->name . ') - ' . strtoupper($this->status),
+            subject: 'Notifier - ('.$this->repository->name.') - '.strtoupper($this->status),
         );
     }
 

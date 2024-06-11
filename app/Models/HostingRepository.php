@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Hosting;
-use App\Models\Repository;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\HostingRepository\HostingRepositoryEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class HostingRepository extends Model
 {
@@ -34,7 +30,6 @@ class HostingRepository extends Model
     protected $casts = [
         'password_type' => HostingRepositoryEnum::class,
     ];
-
 
     /*
     |--------------------------------------------------------------------------

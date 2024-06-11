@@ -3,12 +3,12 @@
 namespace App\Jobs;
 
 use App\Models\Repository;
-use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
 use App\Services\GoogleAnalyticsService;
-use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class GoogleAnalyticsJob implements ShouldQueue
 {
@@ -19,8 +19,7 @@ class GoogleAnalyticsJob implements ShouldQueue
      */
     public function __construct(
         protected Repository $repository,
-    )
-    {
+    ) {
     }
 
     /**

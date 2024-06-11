@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Helpers\OrderHelper;
-use App\Models\Notification;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\NotificationResource;
+use App\Models\Notification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class NotificationController extends Controller
 {
@@ -20,10 +19,9 @@ class NotificationController extends Controller
                     'type',
                     'notifiable_type',
                     'notifiable_id',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->get();
-
 
         return inertia('Notifications/Index', [
             'notifications' => NotificationResource::collection($notifications),

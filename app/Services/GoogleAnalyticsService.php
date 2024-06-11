@@ -2,17 +2,15 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use App\Models\Repository;
-use App\Models\Notification;
-use Illuminate\Mail\Markdown;
 use App\Mail\GoogleAnalyticsMail;
-use Illuminate\Support\Facades\Mail;
-use Google\Analytics\Data\V1beta\Metric;
+use App\Models\Repository;
+use App\Notifications\GoogleAnalyticsNotification;
+use Carbon\Carbon;
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
-use App\Notifications\GoogleAnalyticsNotification;
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\Metric;
+use Illuminate\Support\Facades\Mail;
 
 class GoogleAnalyticsService
 {
@@ -56,7 +54,7 @@ class GoogleAnalyticsService
         }
     }
 
-    private static function currentMonthStats(string $analytic_id = null)
+    private static function currentMonthStats(?string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 
@@ -74,7 +72,7 @@ class GoogleAnalyticsService
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],
@@ -105,7 +103,7 @@ class GoogleAnalyticsService
         return $data;
     }
 
-    private static function previousMonthStats(string $analytic_id = null)
+    private static function previousMonthStats(?string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 
@@ -123,7 +121,7 @@ class GoogleAnalyticsService
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],

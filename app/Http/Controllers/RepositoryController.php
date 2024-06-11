@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Inertia\Response;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\DatabaseBackupResource;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryResource;
+use App\Jobs\GoogleAnalyticsJob;
+use App\Jobs\RepositoriesJob;
 use App\Models\Client;
 use App\Models\Hosting;
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
-use App\Jobs\GoogleAnalyticsJob;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\HostingResource;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Resources\RepositoryResource;
-use App\Http\Requests\StoreRepositoryRequest;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\DatabaseBackupResource;
+use Illuminate\Support\Str;
+use Inertia\Response;
 
 class RepositoryController extends Controller
 {
@@ -31,10 +31,10 @@ class RepositoryController extends Controller
             ->when($request->search, function ($query, $search) {
                 $query->whereAny([
                     'name',
-                    'slug'
-                ], 'like', '%' . $search . '%');
+                    'slug',
+                ], 'like', '%'.$search.'%');
             })
-            ->when($request->trashed === "true", function ($query, $trashed) {
+            ->when($request->trashed === 'true', function ($query, $trashed) {
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')

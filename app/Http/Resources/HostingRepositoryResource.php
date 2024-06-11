@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\RepositoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class HostingRepositoryResource extends JsonResource

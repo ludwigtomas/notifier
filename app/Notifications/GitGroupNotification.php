@@ -23,7 +23,7 @@ class GitGroupNotification extends Notification
     {
         return [
             'action' => $this->action,
-            'model' => $notifiable
+            'model' => $notifiable,
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\HostingRepository;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\HostingRepository\StoreHostingRepositoryRequest;
 use App\Http\Resources\HostingRepositoryResource;
+use App\Models\HostingRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class HostingRepositoryController extends Controller
 {

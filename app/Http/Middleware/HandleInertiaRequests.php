@@ -2,12 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Git;
-use Inertia\Middleware;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Services\CacheModelService;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
+use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -49,7 +46,7 @@ class HandleInertiaRequests extends Middleware
                 'hostings_count' => CacheModelService::hostingCount(),
                 'new_notifications_count' => CacheModelService::newNotificationCount(),
                 'notifications_count' => CacheModelService::notificationCount(),
-            ]
+            ],
         ];
     }
 }

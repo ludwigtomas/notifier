@@ -2,18 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\Git;
-use App\Models\Repository;
-use Illuminate\Support\Facades\DB;
 use App\Observers\GitGroupObserver;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy(GitGroupObserver::class)]
 class GitGroup extends Model
@@ -40,7 +36,6 @@ class GitGroup extends Model
         'web_url' => 'string',
         'parent_id' => 'integer',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -74,13 +69,11 @@ class GitGroup extends Model
         return $this->hasManyThrough(Repository::class, GitGroup::class, 'parent_id', 'group_id', 'group_id', 'group_id');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
 
     /*
     |--------------------------------------------------------------------------
@@ -88,16 +81,15 @@ class GitGroup extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function scopeParentGroups($query, string $search = null)
+    public function scopeParentGroups($query, ?string $search = null)
     {
         return $query->whereNull('parent_id')
             ->when($search, function ($query, $search) {
                 $query->whereAny([
                     'group_id',
                     'name',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->whereNull('parent_id');
     }
-
 }

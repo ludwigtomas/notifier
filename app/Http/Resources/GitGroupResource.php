@@ -31,7 +31,7 @@ class GitGroupResource extends JsonResource
                 'repositories' => $this->whenLoaded('repositories'),
 
                 'parent' => $this->whenLoaded('parent'),
-                
+
                 'childrens' => $this->whenLoaded('childrens'),
             ],
         ];

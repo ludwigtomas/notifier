@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Helpers\Helper;
-
 class ModelHelper extends Helper
 {
     public static function allTestingos()

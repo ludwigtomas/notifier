@@ -7,9 +7,8 @@ use App\Models\Repository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
 class GoogleAnalyticsMail extends Mailable
 {
@@ -32,7 +31,7 @@ class GoogleAnalyticsMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Měsíční report - Google Analytics (' . $this->repository->name . ')',
+            subject: 'Měsíční report - Google Analytics ('.$this->repository->name.')',
         );
     }
 

@@ -3,12 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 use App\Notifications\RepositoryNotification;
-use App\Notifications\RepositoryDatabaseNotification;
-
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class RepositoryObserver
 {

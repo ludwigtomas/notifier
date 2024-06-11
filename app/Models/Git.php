@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\GitGroup;
-use App\Services\CacheModelService;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Git extends Model
@@ -22,7 +20,6 @@ class Git extends Model
         'user_id',
         'user_avatar_url',
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -40,14 +37,12 @@ class Git extends Model
         return $this->hasManyThrough(Repository::class, GitGroup::class, 'git_id', 'group_id', 'id', 'group_id');
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
 
-    
     /*
     |--------------------------------------------------------------------------
     | SCOPE

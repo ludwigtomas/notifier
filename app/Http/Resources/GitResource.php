@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\GitGroupResource;
-use App\Http\Resources\RepositoryResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class GitResource extends JsonResource

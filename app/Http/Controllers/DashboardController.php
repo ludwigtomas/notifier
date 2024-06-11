@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Models\Client;
-use DirectoryIterator;
-use App\Models\Hosting;
-use App\Models\GitGroup;
-use App\Models\Repository;
-use app\Helpers\ModelHelper;
-use App\Helpers\OrderHelper;
-use App\Models\Notification;
-use Illuminate\Http\Request;
-
-use App\Models\ClientRepository;
-use App\Models\RepositoryDatabase;
 use App\Http\Resources\NotificationResource;
+use App\Models\Notification;
+use DirectoryIterator;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
@@ -25,7 +16,7 @@ class DashboardController extends Controller
 
         if ($request->model) {
             $models = array_map(function ($model) {
-                return 'App\\Models\\' . $model;
+                return 'App\\Models\\'.$model;
             }, $request->model);
         }
 
@@ -41,14 +32,15 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-
         $path = app_path('Models');
 
         $models = [];
 
         foreach (new DirectoryIterator($path) as $file) {
 
-            if ($file->isDot() || $file->isDir()) continue;
+            if ($file->isDot() || $file->isDir()) {
+                continue;
+            }
 
             $filename = $file->getFilename();
 
@@ -60,7 +52,7 @@ class DashboardController extends Controller
         return inertia('Dashboard/Index', [
             'notifications' => NotificationResource::collection($notifications),
             'models' => $models,
-            'filters' => $request->only('model')
+            'filters' => $request->only('model'),
 
         ]);
     }

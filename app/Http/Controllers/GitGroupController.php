@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\GitGroupResource;
 use App\Models\Git;
-use Inertia\Response;
 use App\Models\GitGroup;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class GitGroupController extends Controller
 {

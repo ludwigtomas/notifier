@@ -2,26 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\Hosting;
-use App\Models\HostingRepository;
-use Illuminate\Support\Facades\DB;
 use App\Observers\RepositoryObserver;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
 {
-    use HasFactory, SoftDeletes, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $table = 'repositories';
 
@@ -49,7 +45,6 @@ class Repository extends Model
 
         'subscription_to',             //! manually added
     ];
-
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +85,6 @@ class Repository extends Model
             'hosting_id'
         );
     }
-
 
     /*
     |--------------------------------------------------------------------------

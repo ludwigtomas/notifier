@@ -18,7 +18,7 @@ class HostingResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'hosting_url' => $this->hosting_url,
-            
+
             'relationships' => [
                 'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),
                 'repositories_count' => $this->repositories_count ?? 0,

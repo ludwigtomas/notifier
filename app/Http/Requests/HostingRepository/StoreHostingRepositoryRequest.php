@@ -33,7 +33,6 @@ class StoreHostingRepositoryRequest extends FormRequest
         ];
     }
 
-
     /**
      * Get the validation messages that apply to the request.
      *

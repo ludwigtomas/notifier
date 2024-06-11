@@ -3,8 +3,8 @@
 namespace App\Observers;
 
 use App\Models\GitGroup;
-use Illuminate\Support\Facades\Cache;
 use App\Notifications\GitGroupNotification;
+use Illuminate\Support\Facades\Cache;
 
 class GitGroupObserver
 {

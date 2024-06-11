@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Git;
 use App\Services\GitlabService;
 use Illuminate\Console\Command;
 

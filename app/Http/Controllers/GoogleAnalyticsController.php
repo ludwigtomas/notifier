@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\Repository;
-use Illuminate\Mail\Markdown;
-use Google\Analytics\Data\V1beta\Metric;
+use Carbon\Carbon;
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\Metric;
+use Illuminate\Mail\Markdown;
 
 class GoogleAnalyticsController extends Controller
 {
@@ -36,7 +36,7 @@ class GoogleAnalyticsController extends Controller
         ]);
     }
 
-    private function currentMonthStats(string $analytic_id = null)
+    private function currentMonthStats(?string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 
@@ -54,7 +54,7 @@ class GoogleAnalyticsController extends Controller
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],
@@ -86,7 +86,7 @@ class GoogleAnalyticsController extends Controller
 
     }
 
-    private function previousMonthStats(string $analytic_id = null)
+    private function previousMonthStats(?string $analytic_id = null)
     {
         $client = new BetaAnalyticsDataClient();
 
@@ -104,7 +104,7 @@ class GoogleAnalyticsController extends Controller
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],

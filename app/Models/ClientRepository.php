@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ClientRepository extends Model
 {
@@ -23,7 +23,6 @@ class ClientRepository extends Model
         'is_monthly_overview_interested', // automatically - monthly overview
         'is_database_backup_interested',  // automatically - database backup (daily)
     ];
-
 
     /*
     |--------------------------------------------------------------------------
