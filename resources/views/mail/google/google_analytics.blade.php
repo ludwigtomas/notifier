@@ -64,7 +64,6 @@ Kontaktní informace:
 <a href='tel:+420730681670'>+420 730 681 670</a>
 <br>
 <a href='https://www.ludwigtomas.cz'>www.ludwigtomas.cz</a>
-
 </x-mail::percentage>
 
 </x-mail::message>
