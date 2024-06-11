@@ -4,6 +4,7 @@ import {
     EyeIcon,
     ChevronRightIcon,
     BookmarkIcon,
+    TrashIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -334,7 +335,7 @@ export default function Index({ auth, notifications, models, actions, filters })
 
 
                                                 <td className="px-4 py-4">
-                                                    <div className="flex">
+                                                    <div className="flex space-x-2">
                                                         <Link
                                                             as="button"
                                                             method="PATCH"
@@ -342,6 +343,15 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                         >
                                                             <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-sky-500 fill-sky-500' : 'text-red-500 fill-red-500')} />
+                                                        </Link>
+
+                                                        <Link
+                                                            as="button"
+                                                            method="DELETE"
+                                                            href={route("notifications.destroy", notification.id)}
+                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        >
+                                                            <TrashIcon className="size-6 text-red-500" />
                                                         </Link>
                                                     </div>
                                                 </td>

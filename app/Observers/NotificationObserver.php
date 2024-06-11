@@ -28,7 +28,7 @@ class NotificationObserver
      */
     public function deleted(Notification $notification): void
     {
-        //
+        Cache::forget('notifications_count');
     }
 
     /**

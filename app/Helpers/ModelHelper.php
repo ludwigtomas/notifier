@@ -17,6 +17,13 @@ class ModelHelper extends Helper
         return $models;
     }
 
+    public static function modelsPath(array $models)
+    {
+        return array_map(function ($model) {
+            return 'App\\Models\\' . $model;
+        }, $models);
+    }
+
     // $path = app_path('Models');
 
     // $models = [];

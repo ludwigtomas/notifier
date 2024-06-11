@@ -15,11 +15,7 @@ class NotificationController extends Controller
     {
         $requsted_models = [];
 
-        if ($request->model) {
-            $requsted_models = array_map(function ($model) {
-                return 'App\\Models\\' . $model;
-            }, $request->model);
-        }
+        $request->model ? $requsted_models = ModelHelper::modelsPath($request->model) : null;
 
         $notifications = Notification::query()
             ->when($request->search, function ($query, $search) {
@@ -60,6 +56,13 @@ class NotificationController extends Controller
     public function markAsRead(Notification $notification): RedirectResponse
     {
         $notification->markAsRead();
+
+        return redirect()->back();
+    }
+
+    public function destroy(Notification $notification): RedirectResponse
+    {
+        $notification->delete();
 
         return redirect()->back();
     }
