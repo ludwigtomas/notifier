@@ -20,7 +20,7 @@ class RepositoryDatabaseObserver
      */
     public function updated(RepositoryDatabase $repository_database): void
     {
-        //
+        $repository_database->notify(new RepositoryDatabaseNotification('updated'));
     }
 
     /**
@@ -28,7 +28,7 @@ class RepositoryDatabaseObserver
      */
     public function deleted(RepositoryDatabase $repository_database): void
     {
-        //
+        $repository_database->notify(new RepositoryDatabaseNotification('deleted'));
     }
 
     /**
