@@ -14,6 +14,7 @@ class ModelHelper extends Helper
                 $models[] = str_replace('.php', '', $file);
             }
         }
+
         return $models;
     }
 

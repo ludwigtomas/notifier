@@ -25,8 +25,8 @@ class NotificationResource extends JsonResource
             'notifiable_type_formatted' => explode('App\\Models\\', $this->notifiable_type)[1],
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'created_at_formatted' => date_format($this->created_at, 'd.m.Y'),
-            'updated_at_formatted' => date_format($this->updated_at, 'd.m.Y'),
+            'created_at_formatted' => date_format($this->created_at, 'd.m.Y H:i:s'),
+            'updated_at_formatted' => date_format($this->updated_at, 'd.m.Y H:i:s'),
 
             'relationships' => [
                 'notifiable' => $this->whenLoaded('notifiable'),

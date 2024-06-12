@@ -39,19 +39,31 @@ export default function Index({ auth, notifications, models, actions, filters })
     }, 500);
 
     const handleModel = (model) => {
-        if (selectedModel.includes(model)) {
-            setSelectedModel(selectedModel.filter((item) => item !== model));
+
+        if(model === 'clear_all') {
+            setSelectedModel([]);
+
+            router.get(route('notifications.index', {
+                search: search,
+                read_at: isRead,
+                action: selectedAction,
+                model: []
+            }));
         } else {
-            setSelectedModel([...selectedModel, model]);
+            if (selectedModel.includes(model)) {
+                setSelectedModel(selectedModel.filter((item) => item !== model));
+            } else {
+                setSelectedModel([...selectedModel, model]);
+            }
+
+            router.get(route('notifications.index', {
+                search: search,
+                read_at: isRead,
+                action: selectedAction,
+                model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
+            }));
         }
 
-        router.get(route('notifications.index', {
-            search: search,
-            read_at: isRead,
-            action: selectedAction,
-            model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
-
-        }));
     }
 
     const handleSetIsRead = (value) => {
@@ -102,43 +114,44 @@ export default function Index({ auth, notifications, models, actions, filters })
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
-                    <div className="mb-5 bg-zinc-900 px-2 rounded-2xl">
-                        <div className="grid grid-cols-4 items-center">
+                    <div className="mb-5 bg-zinc-900 border border-zinc-700 p-2 rounded-xl">
+                        <div className="grid grid-cols-5 gap-2 items-center">
                             <div>
                                 <TextInput
                                     label="Hledat"
                                     name="search"
                                     placeholder="Hledat notifikaci"
                                     type="text"
-                                    className="w-72"
+                                    className="w-full"
                                     onChange={(e) => debouncedSearch(e.target.value)}
                                 />
                             </div>
 
                             <div>
-                                <label
-                                    htmlFor="read_at"
-                                    className="flex items-center justify-center cursor-pointer bg-zinc-900 px-6 py-4 rounded-xl"
-                                >
-                                    <input
-                                        label="Již Přečtené"
-                                        name="read_at"
-                                        type="checkbox"
-                                        className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-900 checked:bg-sky-900 checked:before:bg-sky-900 hover:before:opacity-10"
-                                        checked={isRead}
-                                        onChange={(e) => handleSetIsRead(e.target.checked)}
-                                    />
+                                <div className="bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                    <label
+                                        htmlFor="read_at"
+                                        className="flex items-center justify-center cursor-pointer"
+                                    >
+                                        <input
+                                            label="read_at"
+                                            type="checkbox"
+                                            className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-500 checked:bg-sky-500 checked:before:bg-sky-500 hover:before:opacity-10"
+                                            checked={isRead}
+                                            onChange={(e) => handleSetIsRead(e.target.checked)}
+                                        />
 
-                                    <span className="ml-4 text-base text-gray-300">
-                                        Již Přečtené
-                                    </span>
-                                </label>
+                                        <span className="ml-4 text-base text-gray-300">
+                                            Již Přečtené
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
 
                             <div>
                                 <select
                                     name="action"
-                                    className="w-72"
+                                    className="w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
                                     value={selectedAction} // set the value to the state variable
                                     onChange={(e) => {
                                         setSelectedAction(e.target.value);
@@ -169,8 +182,68 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
-                                <div className="group relative">
-                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 px-4 py-2 rounded-xl">
+                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
+                                        <h3 className="text-gray-300">
+                                            Vybrané Eventy
+                                        </h3>
+
+                                        <div className="text-white font-bold">
+                                            {selectedModel.length}
+                                        </div>
+                                    </div>
+
+                                    <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
+                                        <div className="z-40 h-80 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {selectedModel.length === 0 ? (
+                                                    <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
+                                                        <div className="text-center text-gray-200 ">
+                                                            <p className="text-lg font-semibold">
+                                                                Nejsou vybrané žádné modely
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ):(
+                                                    <div
+                                                        onClick={() => handleModel('clear_all')}
+                                                        className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
+                                                    >
+                                                        <div className="text-center text-white">
+                                                            <p className="text-lg font-semibold">
+                                                                Vyčistit vše
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {models.map((model, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            onClick={() => handleModel(model)}
+                                                            className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
+                                                            (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
+                                                        >
+                                                            <BookmarkIcon
+                                                                className={"size-10 text-neutral-400 mb-3 " +
+                                                                    (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                                }
+                                                            />
+
+                                                            { model }
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
                                         <h3 className="text-gray-300">
                                             Vybrané modely
                                         </h3>
@@ -276,7 +349,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     (notification.data.action === 'updated' ? 'bg-yellow-500/5 hover:bg-yellow-500/15' : '') + ' ' +
                                                     (notification.data.action === 'deleted' ? 'bg-purple-500/5 hover:bg-purple-500/15' : '') + ' ' +
                                                     (notification.data.action === 'restored' ? 'bg-blue-500/5 hover:bg-blue-500/15' : '') + ' ' +
-                                                    (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 shadow-red-500/15' : '')
+                                                    (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 hover:bg-red-500/15' : '')
                                                 }
                                             >
                                                 <td className="px-4 py-4 ">
@@ -340,9 +413,9 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                             as="button"
                                                             method="PATCH"
                                                             href={route("notifications.mark-as-read", notification.id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
-                                                            <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-sky-500 fill-sky-500' : 'text-red-500 fill-red-500')} />
+                                                            <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-green-500 fill-green-500' : 'text-red-500 group-hover:text-green-500 group-hover:fill-green-500')} />
                                                         </Link>
 
                                                         <Link
@@ -350,6 +423,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                             method="DELETE"
                                                             href={route("notifications.destroy", notification.id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                            preserveScroll
                                                         >
                                                             <TrashIcon className="size-6 text-red-500" />
                                                         </Link>

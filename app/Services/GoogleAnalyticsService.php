@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use App\Mail\GoogleAnalyticsMail;
-use App\Models\Repository;
-use App\Notifications\GoogleAnalyticsNotification;
 use Carbon\Carbon;
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use App\Models\Repository;
+use App\Models\Notification;
+use App\Mail\GoogleAnalyticsMail;
+use Illuminate\Support\Facades\Mail;
+use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
-use Google\Analytics\Data\V1beta\Metric;
-use Illuminate\Support\Facades\Mail;
+use App\Notifications\GoogleAnalyticsNotification;
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 
 class GoogleAnalyticsService
 {
@@ -44,6 +45,8 @@ class GoogleAnalyticsService
         ];
 
         $clients = $repository->clients;
+
+        $repository->notify(new GoogleAnalyticsNotification('created'));
 
         foreach ($clients as $client) {
             Mail::to($client->pivot->client_email ?? $client->email)->send(new GoogleAnalyticsMail(

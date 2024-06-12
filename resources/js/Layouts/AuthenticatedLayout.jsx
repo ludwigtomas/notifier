@@ -201,15 +201,18 @@ export default function Authenticated({ user, header, children }) {
 
                         <div className="absolute left-1/2 -translate-x-1/2 -bottom-14">
                             <div className="bg-zinc-700 p-2 rounded-xl relative">
-                                <Link className="absolute size-5 bg-red-500 left-full bottom-full -translate-x-3 translate-y-3 rounded-full flex items-center justify-center">
+                                <div className="absolute size-5 bg-red-500 left-full bottom-full -translate-x-3 translate-y-3 rounded-full flex items-center justify-center">
                                     <span className="text-xs text-white font-bold">
-                                        10
+                                        { usePage().props.global.notifications_count }
                                     </span>
-                                </Link>
+                                </div>
 
                                 <BellAlertIcon className="size-6 text-zinc-400 hover:text-zinc-200" />
 
-                                <Link href="/notifications" className="absolute inset-0 z-20"/>
+                                <Link
+                                    href={route('notifications.index')}
+                                    className="absolute inset-0 z-20"
+                                />
                             </div>
 
                         </div>
