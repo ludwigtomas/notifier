@@ -34,6 +34,7 @@ class NotificationController extends Controller
             ->when($request->action, function ($query, $action) {
                 $query->whereJsonContains('data->action', $action);
             })
+            ->orderBy('created_at', 'desc')
             ->with('notifiable')
             ->get();
 

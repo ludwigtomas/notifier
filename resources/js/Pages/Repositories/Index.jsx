@@ -10,6 +10,7 @@ import {
     LinkIcon,
     BackspaceIcon,
     CommandLineIcon,
+    ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -376,33 +377,26 @@ export default function Index({ auth, repositories, filters }) {
                                                 </td>
 
                                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="grid grid-cols-4 place-items-center">
+                                                    <div className="flex items-center justify-end space-x-2">
 
-                                                        {repository.relationships.hosting_repository ? (
+                                                        {repository.relationships.hosting_repository && (
                                                             <Link
                                                                 href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
                                                                 className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
                                                             >
                                                                 <CommandLineIcon className="size-6 text-orange-400" />
                                                             </Link>
-                                                        ): (
-                                                            <span className=""/>
                                                         )}
-
-                                                        <Link
-                                                            href={route("repositories.edit", repository.repository_id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                        >
-                                                            <PencilSquareIcon className="size-6 text-green-500" />
-                                                        </Link>
 
                                                         {repository.deleted_at ? (
                                                             <>
                                                                 <Link
-                                                                    href={route("repositories.show", repository.repository_id)}
+                                                                    method="PATCH"
+                                                                    as="button"
+                                                                    href={route("repositories.restore", repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                                 >
-                                                                    <EyeIcon className="size-6 text-sky-500" />
+                                                                    <ArrowPathIcon className="size-6 text-sky-500" />
                                                                 </Link>
 
                                                                 <button
@@ -414,6 +408,13 @@ export default function Index({ auth, repositories, filters }) {
                                                             </>
                                                         ) : (
                                                             <>
+                                                                <Link
+                                                                    href={route("repositories.edit", repository.repository_id)}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                >
+                                                                    <PencilSquareIcon className="size-6 text-green-500" />
+                                                                </Link>
+
                                                                 <Link
                                                                     href={route("repositories.show",repository.repository_id)}
                                                                     className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
@@ -515,20 +516,40 @@ export default function Index({ auth, repositories, filters }) {
                             {selectedRepository.name}
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-400">
+                        <p className="mt-1 text-sm text-gray-400 text-center">
                             Chystáš se smazat repozitář společně se všemi
                             databázemi a klienty. Tato akce je nevratná.
                         </p>
 
                         <div className="flex justify-center space-x-4">
-                            <DangerButton
-                                type="submit"
-                                onClick={deleteRepository}
-                            >
-                                <TrashIcon className="size-6 mr-2" />
+                            { selectedRepository.deleted_at ? (
+                                <div>
+                                    <Link
+                                        onClick={closeModal}
+                                        as="button"
+                                        method="DELETE"
+                                        href={route("repositories.force-delete", selectedRepository.repository_id)}
+                                        className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                                    >
 
-                                {selectedRepository.name}
-                            </DangerButton>
+                                        <TrashIcon className="size-6 mr-2" />
+
+                                        Smazat trvale
+                                    </Link>
+
+                                </div>
+                            ): (
+                                <div>
+                                    <DangerButton
+                                        type="submit"
+                                        onClick={deleteRepository}
+                                    >
+                                        <TrashIcon className="size-6 mr-2" />
+
+                                        {selectedRepository.name}
+                                    </DangerButton>
+                                </div>
+                            )}
 
                             <SecondaryButton onClick={closeModal}>
                                 Zavřít

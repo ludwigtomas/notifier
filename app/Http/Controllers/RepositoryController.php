@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRepositoryRequest;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\DatabaseBackupResource;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\RepositoryResource;
-use App\Jobs\GoogleAnalyticsJob;
-use App\Jobs\RepositoriesJob;
+use Carbon\Carbon;
+use Inertia\Response;
 use App\Models\Client;
 use App\Models\Hosting;
 use App\Models\Repository;
-use App\Services\GitlabService;
-use Carbon\Carbon;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Jobs\RepositoriesJob;
+use App\Services\GitlabService;
+use App\Jobs\GoogleAnalyticsJob;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\DatabaseBackupResource;
 
 class RepositoryController extends Controller
 {
@@ -32,7 +32,7 @@ class RepositoryController extends Controller
                 $query->whereAny([
                     'name',
                     'slug',
-                ], 'like', '%'.$search.'%');
+                ], 'like', '%' . $search . '%');
             })
             ->when($request->trashed == 'true', function ($query, $trashed) {
                 $query->withTrashed();
@@ -83,20 +83,6 @@ class RepositoryController extends Controller
         return to_route('repositories.edit', $repository);
     }
 
-    public function destroy($repository, Request $request): RedirectResponse
-    {
-        $repository = Repository::withTrashed()->findOrFail($repository);
-
-        if ($repository->trashed()) {
-            Storage::deleteDirectory($repository->slug);
-            $repository->forceDelete();
-        } else {
-            $repository->delete();
-        }
-
-        return back();
-    }
-
     public function store(StoreRepositoryRequest $request)
     {
         $repository = GitlabService::getRepository($request->repository_id);
@@ -117,6 +103,35 @@ class RepositoryController extends Controller
 
             'repository_created_at' => Carbon::parse($repository['created_at']),
         ]);
+    }
+
+    public function restore($repository): RedirectResponse
+    {
+        $repository = Repository::withTrashed()->findOrFail($repository);
+
+        $repository->restore();
+
+        return back();
+    }
+
+    public function destroy(Repository $repository): RedirectResponse
+    {
+        $repository->delete();
+
+        return back();
+    }
+
+    public function forceDelete($repository): RedirectResponse
+    {
+        // TODO: Before deleting database, send them my email in ZIP format
+        // TODO: Delete database backups
+        // TODO: Delete repository avatar
+
+        $repository = Repository::withTrashed()->findOrFail($repository);
+
+        $repository->forceDelete();
+
+        return back();
     }
 
     public function lastCommit(Repository $repository): RedirectResponse

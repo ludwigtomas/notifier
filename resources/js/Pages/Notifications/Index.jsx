@@ -181,7 +181,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     </div>
 
                                     <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
-                                        <div className="z-40 h-64 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                        <div className="z-40 h-80 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
                                             <div className="grid grid-cols-3 gap-4">
                                                 {selectedModel.length === 0 ? (
                                                     <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
