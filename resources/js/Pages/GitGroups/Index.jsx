@@ -223,9 +223,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
 
                             <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
                                 {filters.relationship === "repositories" ? (
-                                    <RepositoriesTable
-                                        repositories={group_details}
-                                    />
+                                    <RepositoriesTable repositories={group_details} />
                                 ) : (
                                     <ChildrensTable childrens={group_details} />
                                 )}
@@ -234,7 +232,16 @@ export default function ({ auth, git_groups, group_details, filters }) {
                     ) : (
                         <div className="py-5 absolute left-1/2 -translate-x-1/2">
                             <h3 className="text-xl font-semibold text-zinc-200">
-                                Select group to see details
+                                {group_details && group_details.length === 0 ? (
+                                    <div>
+                                        Selected <u>{filters.relationship}</u> is empty
+                                    </div>
+
+                                ): (
+                                    <div>
+                                        Select icons to see data
+                                    </div>
+                                )}
                             </h3>
                         </div>
                     )}

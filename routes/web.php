@@ -92,9 +92,10 @@ route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
         route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
         route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+        route::delete('/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
 
-        route::delete('/bulk/destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
-        route::get('/bulk', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
+        route::get('/{repository_database}/download', [RepositoryDatabaseController::class, 'download'])->name('download');
+        route::get('/bulk-download', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
         //* STORE ---> api.php
     });
 

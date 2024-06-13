@@ -6,6 +6,7 @@ import {
     ServerStackIcon,
     EyeIcon,
     BookmarkIcon,
+    PresentationChartBarIcon,
 } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 
@@ -48,7 +49,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                 <section className="bg-zinc-900 shadow-sm sm:rounded-3xl">
                     <div className="p-6">
 
-                        <div className="mb-2 flex items-center justify-between space-x-4">
+                        <div className="mb-6 flex items-center justify-between space-x-4">
                             <div className="flex space-x-2">
                                 <div className="grid">
                                     <Link
@@ -221,14 +222,28 @@ export default function Dashboard({ auth, notifications, models, filters }) {
 
                 <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
                     <div className="p-6">
-                        <div className="mb-2">
-                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                Dahboard
-                            </h1>
+                        <div className="mb-6 flex items-center justify-between space-x-4">
 
-                            <p className="text-zinc-400">
-                                Zde se nachází všechny informace o vašem účtu.
-                            </p>
+                            <div className="flex space-x-2">
+                                <div className="grid">
+                                    <Link
+                                        href={route("dashboard.index")}
+                                        className="p-2 rounded-lg bg-zinc-700 hover:bg-zinc-800 faster-animation"
+                                    >
+                                        <PresentationChartBarIcon className="size-10 text-neutral-400"/>
+                                    </Link>
+                                </div>
+
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Dashboard
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Zde se nachází všechny notifikace, co se událo.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="grid grid-cols-1 gap-8 xl:gap-2 md:grid-cols-2 xl:grid-cols-3">

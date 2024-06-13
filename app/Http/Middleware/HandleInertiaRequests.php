@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Services\CacheModelService;
-use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Http\Request;
+use App\Services\CacheModelService;
 
 class HandleInertiaRequests extends Middleware
 {

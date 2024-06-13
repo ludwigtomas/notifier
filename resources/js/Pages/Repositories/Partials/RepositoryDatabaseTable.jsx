@@ -199,13 +199,12 @@ export default function RepositoryDatabaseTable({ database_backups }) {
 
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
                                     <div className="flex items-center space-x-2">
-                                        <a
-                                            download
-                                            href={ "/storage/" + database.path + "/" + database.name}
+                                        <Link
+                                            href={route("databases.download", database.id)}
                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                         >
                                             <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />
-                                        </a>
+                                        </Link>
 
                                         <button
                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
@@ -241,15 +240,21 @@ export default function RepositoryDatabaseTable({ database_backups }) {
             >
                 {selectedDatabase && (
                     <div className="p-4 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-medium text-gray-800 text-center">
+                        <h2 className="text-2xl font-medium text-gray-200 text-center">
                             {selectedDatabase.name}
                         </h2>
 
-                        <p className="mt-1 text-sm text-gray-600">
+                        <p className="mt-1 text-sm text-gray-400 text-center">
                             Chystáš se smazat repozitář společně se všemi databázemi a klienty. Tato akce je nevratná.
                         </p>
 
                         <div className="flex justify-center space-x-4">
+                            <SecondaryButton
+                                onClick={closeModal}
+                            >
+                                Zavřít
+                            </SecondaryButton>
+
                             <DangerButton
                                 type="submit"
                                 onClick={deleteRepository}
@@ -258,12 +263,6 @@ export default function RepositoryDatabaseTable({ database_backups }) {
 
                                 {selectedDatabase.name}
                             </DangerButton>
-
-                            <SecondaryButton
-                                onClick={closeModal}
-                            >
-                                Zavřít
-                            </SecondaryButton>
                         </div>
                     </div>
                 )}

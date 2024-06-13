@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Jobs\RepositoryDatabaseJob;
-use App\Models\Repository;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Throwable;
+use App\Models\Repository;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Models\RepositoryDatabase;
+use App\Jobs\RepositoryDatabaseJob;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ApiDatabaseRequest;
+use Exception;
 
 class RepositoryDatabaseController extends Controller
 {
-    public function store(Request $request, Repository $repository): JsonResponse
+    public function store(ApiDatabaseRequest $request, Repository $repository): JsonResponse
     {
         try {
-            $this->checkPassword($request->password, $repository);
-
-            $path = $repository->slug.'/databases/'.now()->format('Y').'/'.now()->format('m');
-
-            $backup_name = now()->format('Y-m-d').'.sql';
-
-            $this->checkIfBackupExists($path, $backup_name, $repository);
-
-            $this->checkIfDatabaseExists($backup_name, $repository);
+            $password = $request->password;
 
             $file = $request->file('backup_file');
 
-            $database_backup = $repository->database_backups()->create([
+            $this->checkPassword($password, $repository);
+
+            $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
+
+            $backup_name = now()->format('d') . '-' . uniqid() . '.sql';
+
+            // $this->checkIfBackupExists($path, $backup_name, $repository);
+
+            // $this->checkIfDatabaseExists($backup_name, $repository);
+
+            $database_backup = RepositoryDatabase::create([
+                'repository_id' => $repository->repository_id,
                 'name' => $backup_name,
                 'size' => $file->getSize() / 1000,
                 'path' => $path,
@@ -41,7 +47,7 @@ class RepositoryDatabaseController extends Controller
                 'type' => 'success',
                 'message' => 'Database backup uploaded successfully',
             ], 201);
-        } catch (Throwable $e) {
+        } catch (Exception $e) {
             $this->sendMail($repository, 'failed', 'Database backup failed to upload');
 
             return response()->json([
@@ -61,25 +67,27 @@ class RepositoryDatabaseController extends Controller
         }
     }
 
-    private function checkIfBackupExists(string $path, string $backup_name, Repository $repository)
-    {
-        $all_files = Storage::allFiles($path);
+    // private function checkIfBackupExists(string $path, string $backup_name, Repository $repository)
+    // {
+    //     dd($backup_name);
 
-        if (in_array($path.'/'.$backup_name, $all_files)) {
-            $this->sendMail($repository, 'failed', 'Database backup -- FILE -- ('.$backup_name.') already exists');
+    //     $all_files = Storage::allFiles($path);
 
-            abort(403, 'Database backup -- FILE -- ('.$backup_name.') already exists');
-        }
-    }
+    //     if (in_array($path . '/' . $backup_name, $all_files)) {
+    //         $this->sendMail($repository, 'failed', 'Database backup -- FILE -- (' . $backup_name . ') already exists');
 
-    private function checkIfDatabaseExists(string $backup_name, Repository $repository)
-    {
-        if ($repository->database_backups()->whereName($backup_name)->exists()) {
-            $this->sendMail($repository, 'failed', 'Database backup -- RECORD -- ('.$backup_name.') already exists');
+    //         abort(403, 'Database backup -- FILE -- (' . $backup_name . ') already exists');
+    //     }
+    // }
 
-            abort(403, 'Database backup -- RECORD -- ('.$backup_name.') already exists');
-        }
-    }
+    // private function checkIfDatabaseExists(string $backup_name, Repository $repository)
+    // {
+    //     if ($repository->database_backups()->whereName($backup_name)->exists()) {
+    //         $this->sendMail($repository, 'failed', 'Database backup -- RECORD -- (' . $backup_name . ') already exists');
+
+    //         abort(403, 'Database backup -- RECORD -- (' . $backup_name . ') already exists');
+    //     }
+    // }
 
     private function sendMail(Repository $repository, string $status, string $message): void
     {

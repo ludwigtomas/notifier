@@ -2,13 +2,10 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
     PencilSquareIcon,
-    EyeIcon,
-    EyeSlashIcon,
     ChevronRightIcon,
     CircleStackIcon,
     CalendarDaysIcon,
     UsersIcon,
-    ClipboardIcon,
     ServerIcon,
     CommandLineIcon,
 } from "@heroicons/react/24/outline";
