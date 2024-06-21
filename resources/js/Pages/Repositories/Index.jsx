@@ -115,7 +115,6 @@ export default function Index({ auth, repositories, filters }) {
                             placeholder="Hledat repozitář"
                             type="text"
                             className="w-72"
-                            value={search}
                             onChange={(e) => debouncedSearch(e.target.value)}
                         />
 

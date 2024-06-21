@@ -48,6 +48,9 @@ export default function Index({ auth, notifications, models, actions, filters })
                 read_at: isRead,
                 action: selectedAction,
                 model: []
+            }, {
+                preserveScroll: true,
+                preserveState: true,
             }));
         } else {
             if (selectedModel.includes(model)) {
@@ -61,6 +64,9 @@ export default function Index({ auth, notifications, models, actions, filters })
                 read_at: isRead,
                 action: selectedAction,
                 model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
+            }, {
+                preserveScroll: true,
+                preserveState: true,
             }));
         }
 
@@ -122,13 +128,13 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     name="search"
                                     placeholder="Hledat notifikaci"
                                     type="text"
-                                    className="w-full"
+                                    className="w-full !border-zinc-600 "
                                     onChange={(e) => debouncedSearch(e.target.value)}
                                 />
                             </div>
 
                             <div>
-                                <div className="bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                <div className="bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <label
                                         htmlFor="read_at"
                                         className="flex items-center justify-center cursor-pointer"
@@ -153,8 +159,8 @@ export default function Index({ auth, notifications, models, actions, filters })
                             <div>
                                 <select
                                     name="action"
-                                    className="w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
-                                    value={selectedAction} // set the value to the state variable
+                                    className="w-full bg-zinc-700 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                                    value={selectedAction}
                                     onChange={(e) => {
                                         setSelectedAction(e.target.value);
                                         router.get(route("notifications.index"), {
@@ -184,7 +190,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
-                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
                                         <h3 className="text-gray-300">
                                             Vybrané Eventy
@@ -244,7 +250,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
-                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
                                         <h3 className="text-gray-300">
                                             Vybrané modely
@@ -416,6 +422,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                             method="PATCH"
                                                             href={route("notifications.mark-as-read", notification.id)}
                                                             className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                            preserveScroll
                                                         >
                                                             <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-green-500 fill-green-500' : 'text-red-500 group-hover:text-green-500 group-hover:fill-green-500')} />
                                                         </Link>

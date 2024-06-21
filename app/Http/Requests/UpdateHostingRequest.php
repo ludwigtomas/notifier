@@ -24,6 +24,7 @@ class UpdateHostingRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'max:255'],
             'hosting' => ['nullable', 'string', 'max:255'],
+            'hosting_url' => ['nullable', 'string', 'max:255'],
             'ip_address' => ['nullable', 'string', 'max:255'],
             'ip_port' => ['nullable', 'string', 'max:255'],
             'login_user' => ['nullable', 'string', 'max:255'],

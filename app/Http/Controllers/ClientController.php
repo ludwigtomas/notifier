@@ -22,7 +22,7 @@ class ClientController extends Controller
                     'name',
                     'email',
                     'phone',
-                ], 'like', '%'.$search.'%');
+                ], 'like', '%' . $search . '%');
             })
             ->with('repositories')
             ->orderBy('name')
@@ -61,7 +61,7 @@ class ClientController extends Controller
 
         $client->repositories()->sync($request->repositories);
 
-        return to_route('clients.edit', $client->id);
+        return to_route('clients.edit', $client);
     }
 
     public function edit(Client $client): Response
@@ -89,7 +89,7 @@ class ClientController extends Controller
 
         $client->repositories()->sync($request->repositories);
 
-        return to_route('clients.edit', $client->id);
+        return to_route('clients.edit', $client);
     }
 
     public function destroy(Client $client): RedirectResponse

@@ -15,6 +15,7 @@ class GitGroupObserver
     {
         Cache::forget('git_groups_count');
 
+
         $git_group->notify(new GitGroupNotification('created'));
     }
 

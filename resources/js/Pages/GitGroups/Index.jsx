@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
@@ -19,11 +19,8 @@ export default function ({ auth, git_groups, group_details, filters }) {
     const [search, setSearch] = useState(filters.search || "");
 
     const debouncedSearch = debounce((value) => {
-        setSearch(value);
 
-        router.get(
-            route("git-groups.index"),
-            {
+        router.get(route("git-groups.index"), {
                 search: value,
             },
             {
@@ -69,7 +66,6 @@ export default function ({ auth, git_groups, group_details, filters }) {
                         placeholder="Hledat hlavní skupinu..."
                         type="text"
                         className="w-full"
-                        value={search}
                         onChange={(e) => debouncedSearch(e.target.value)}
                     />
                 </div>
