@@ -39,6 +39,8 @@ const Content = ({ align = 'right', width = '48', direction = '', contentClasses
         alignmentClasses = 'start-0';
     } else if (align === 'right') {
         alignmentClasses = 'end-0';
+    } else if (align === 'center') {
+        alignmentClasses = 'left-1/2 -translate-x-1/2';
     }
 
     let widthClasses = "w-" + width;

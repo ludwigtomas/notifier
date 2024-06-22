@@ -87,7 +87,7 @@ class ClientController extends Controller
             'ico' => $request->ico,
         ]);
 
-        $client->repositories()->sync($request->repositories);
+        // $client->repositories()->sync($request->repositories);
 
         return to_route('clients.edit', $client);
     }

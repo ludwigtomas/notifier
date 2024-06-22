@@ -81,7 +81,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
     });
 
-    // 🔺 CLIENT REPOSITORY - relationship
+    // 🔺 CLIENT REPOSITORY
     route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client-repository.'], function () {
         route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
         route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
@@ -100,10 +100,19 @@ route::middleware('auth:sanctum')->group(function () {
     });
 
     // 🔺 HOSTINGS REPOSITORY
+
     route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
-        route::put('/{hosting_repository}', [HostingRepositoryController::class, 'update'])->name('update');
-        route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
         route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
+
+        route::post('/hosting/{hosting}/repository/{repository}/attach', [HostingRepositoryController::class, 'attach'])->name('attach');
+        route::delete('/hosting/{hosting}/repository/{repository}/detach', [HostingRepositoryController::class, 'detach'])->name('detach');
+    });
+
+
+    route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
+        route::put('/{hosting_repository}/update', [HostingRepositoryController::class, 'update'])->name('update');
+
+        route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
         route::get('/{hosting_repository}/vps-connect', [HostingRepositoryController::class, 'vpsConnect'])->name('vps-connect');
     });
 

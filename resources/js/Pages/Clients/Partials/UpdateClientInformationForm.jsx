@@ -5,7 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import GoBackLink from "@/Components/GoBackLink";
 
-export default function UpdateClientInformationForm({
+export default function UpdateClientRepositoriesForm({
     client,
     className = "",
 }) {
@@ -19,7 +19,9 @@ export default function UpdateClientInformationForm({
     const submit = (e) => {
         e.preventDefault();
 
-        put(route("clients.update", client.id));
+        put(route("clients.update", client.id), {
+            preserveScroll: true,
+        });
     };
 
     return (
@@ -40,20 +42,22 @@ export default function UpdateClientInformationForm({
 
             <form
                 onSubmit={submit}
-                className="mt-6 w-8/12"
+                className="mt-6 w-6/12"
             >
                 <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div>
                         <InputLabel
+                            isRequired
                             htmlFor="name"
                             value="Klient"
                         />
 
                         <TextInput
-                            type="text"
                             id="name"
-                            className="mt-1 block w-full"
+                            type="text"
+                            name="name"
                             placeholder="ludwig tomáš"
+                            className="mt-1 block w-full"
                             value={data.name}
                             onChange={(e) => setData('name', e.target.value)}
                         />
@@ -66,6 +70,7 @@ export default function UpdateClientInformationForm({
 
                     <div>
                         <InputLabel
+                            isRequired
                             htmlFor="email"
                             value="Email"
                         />
@@ -135,15 +140,9 @@ export default function UpdateClientInformationForm({
                             className="w-full"
                             disabled={processing}
                         >
-                            Update
+                            Aktualizovat
                         </PrimaryButton>
                     </div>
-
-                    {recentlySuccessful && (
-                        <p className="text-green-500">
-                            Repository information has been updated!
-                        </p>
-                    )}
 
                     <div>
                         <GoBackLink
@@ -152,6 +151,13 @@ export default function UpdateClientInformationForm({
                             Zpátky
                         </GoBackLink>
                     </div>
+
+                    {recentlySuccessful && (
+                        <p className="text-green-500">
+                            Client information has been updated!
+                        </p>
+                    )}
+
                 </div>
             </form>
         </section>

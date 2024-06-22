@@ -2,8 +2,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { Head, Link } from '@inertiajs/react';
 import UpdateClientInformationForm from "@/Pages/Clients/Partials/UpdateClientInformationForm";
-import UpdateClientDetachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientDetachRepositoriesForm";
-import UpdateClientAttachRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientAttachRepositoriesForm";
+import UpdateClientAttachedRepositoriesForm from "@/Pages/Clients/Partials/UpdateClientAttachedRepositoriesForm";
+import AttachClientRepositoriesForm from "@/Pages/Clients/Partials/AttachClientRepositoriesForm";
 
 export default function Edit({ auth, client, repositories }) {
 
@@ -65,13 +65,13 @@ export default function Edit({ auth, client, repositories }) {
                     </div>
 
                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateClientDetachRepositoriesForm
+                        <UpdateClientAttachedRepositoriesForm
                             client={client}
                         />
                     </div>
 
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateClientAttachRepositoriesForm
+                        <AttachClientRepositoriesForm
                             client={client}
                             repositories={repositories}
                         />

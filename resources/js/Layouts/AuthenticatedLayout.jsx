@@ -40,14 +40,19 @@ export default function Authenticated({ user, header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
 
-                                    <Dropdown.Content align="left">
+                                    <Dropdown.Content
+                                        align="center"
+                                        width="40"
+                                    >
                                         <Dropdown.Link
                                             href={route("profile.edit")}
+                                            className="justify-center"
                                         >
                                             Profile
                                         </Dropdown.Link>
 
                                         <Dropdown.Link
+                                            className="justify-center"
                                             href={route("logout")}
                                             method="post"
                                             as="button"

@@ -242,11 +242,6 @@ apt install supervisor
 cd /etc/supervisor/conf.d/
 ```
 
--   or
-
-```sh
-cd /etc/supervisor/supervisord.conf
-```
 
 -   Then you need to create new file with <b>.conf</b> extension and paste the following code
 -   So for example lets create new file called <b>notifier.conf</b> (becase of the project name)

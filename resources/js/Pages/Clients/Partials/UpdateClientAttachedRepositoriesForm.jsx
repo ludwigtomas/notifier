@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
-export default function UpdateClientInformationForm({ client, className }) {
+export default function UpdateClientAttachedRepositoriesForm({ client, className }) {
 
     const [selectedRepository, setSelectedRepository] = useState(null)
 
@@ -19,12 +19,6 @@ export default function UpdateClientInformationForm({ client, className }) {
         client_email: "",
         relationship: "client_repository",
     });
-
-    const detachSubmit = (e) => {
-        e.preventDefault();
-
-        delete route("client-repository.detach", repository.repository_id);
-    };
 
     const updateSubmit = (e) => {
         e.preventDefault();
@@ -51,10 +45,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                 </p>
             </header>
 
-            <form
-                onSubmit={detachSubmit}
-                className="mt-6 grid grid-cols-12 gap-5"
-            >
+            <div className="mt-6 grid grid-cols-12 gap-5">
                 {client.relationships.repositories.map((repository) => {
                     return (
                         <div
@@ -155,7 +146,7 @@ export default function UpdateClientInformationForm({ client, className }) {
                         </div>
                     );
                 })}
-            </form>
+            </div>
         </section>
     );
 }

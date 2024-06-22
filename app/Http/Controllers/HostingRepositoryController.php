@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HostingRepository\StoreHostingRepositoryRequest;
 use App\Http\Resources\HostingRepositoryResource;
+use App\Models\Hosting;
 use App\Models\HostingRepository;
+use App\Models\Repository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,20 @@ class HostingRepositoryController extends Controller
             'login_user' => $request->login_user,
             'login_password' => $request->login_password,
         ]);
+
+        return back();
+    }
+
+    public function attach(Hosting $hosting, Repository $repository)
+    {
+        $hosting->repositories()->attach($repository);
+
+        return back();
+    }
+
+    public function detach(Hosting $hosting, Repository $repository)
+    {
+        $hosting->repositories()->detach($repository);
 
         return back();
     }

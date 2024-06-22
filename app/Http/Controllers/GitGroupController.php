@@ -41,18 +41,22 @@ class GitGroupController extends Controller
 
     public function attach(Request $request): RedirectResponse
     {
-        $gitlab = Git::whereSlug('gitlab')->first();
+        $gitlab = Git::query()
+            ->whereSlug('gitlab')
+            ->first();
 
         if ($request->type == 'parent') {
-            $gitGroup = GitGroup::where('group_id', $request->data['id'])->first();
+            $git_group = GitGroup::query()
+                ->where('group_id', $request->data['id'])
+                ->first();
 
-            if ($gitGroup) {
+            if ($git_group) {
                 return back()->with('error', 'This group is already in the database');
             }
 
             GitGroup::create([
-                'group_id' => $request->data['id'],
                 'git_id' => $gitlab->id,
+                'group_id' => $request->data['id'],
                 'name' => $request->data['name'],
                 'web_url' => $request->data['web_url'],
                 'parent_id' => null,
@@ -60,15 +64,17 @@ class GitGroupController extends Controller
         }
 
         if ($request->type == 'child') {
-            $gitGroup = GitGroup::where('group_id', $request->subgroup['id'])->first();
+            $git_group = GitGroup::query()
+                ->where('group_id', $request->subgroup['id'])
+                ->first();
 
-            if ($gitGroup) {
+            if ($git_group) {
                 return back()->with('error', 'This group is already in the database');
             }
 
             GitGroup::create([
-                'group_id' => $request->subgroup['id'],
                 'git_id' => $gitlab->id,
+                'group_id' => $request->subgroup['id'],
                 'name' => $request->subgroup['name'],
                 'web_url' => $request->subgroup['web_url'],
                 'parent_id' => $request->subgroup['parent_id'],

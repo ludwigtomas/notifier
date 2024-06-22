@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActionTypeHelper;
 use Inertia\Response;
 use App\Helpers\ModelHelper;
 use App\Models\Notification;
@@ -31,25 +32,17 @@ class NotificationController extends Controller
             ->when($request->read_at == 'true', function ($query) {
                 $query->whereNotNull('read_at');
             })
-            ->when($request->action, function ($query, $action) {
-                $query->whereJsonContains('data->action', $action);
+            ->when($request->action && $request->action != 'everything', function ($query) use ($request) {
+                $query->whereJsonContains('data->action', $request->action);
             })
             ->orderBy('created_at', 'desc')
             ->with('notifiable')
             ->get();
 
-        $actions = [
-            'created',
-            'updated',
-            'deleted',
-            'restored',
-            'forceDeleted',
-        ];
-
         return inertia('Notifications/Index', [
             'notifications' => NotificationResource::collection($notifications),
             'models' => ModelHelper::getModels(),
-            'actions' => $actions,
+            'actions' => ActionTypeHelper::getActions(),
             'filters' => $request->only('search', 'read_at', 'model', 'action'),
         ]);
     }

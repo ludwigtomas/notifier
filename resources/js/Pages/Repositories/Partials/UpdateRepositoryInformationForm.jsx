@@ -217,15 +217,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                         </div>
                     </div>
 
-                    <div className=" flex items-center space-x-4">
-                        <div>
-                            <GoBackLink
-                                href={route('repositories.index')}
-                                className="w-full"
-                            >
-                                Zpátky
-                            </GoBackLink>
-                        </div>
+                    <div className="mt-6 col-span-12 flex items-center space-x-4">
 
                         <div>
                             <PrimaryButton
@@ -235,6 +227,14 @@ export default function UpdateRepositoryInformationForm({repository, className =
                             >
                                 Update
                             </PrimaryButton>
+                        </div>
+
+                        <div>
+                            <GoBackLink
+                                href={route('repositories.index')}
+                            >
+                                Zpátky
+                            </GoBackLink>
                         </div>
 
                         {recentlySuccessful && (

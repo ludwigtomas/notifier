@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreHostingRequest;
 use App\Http\Requests\UpdateHostingRequest;
 use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryResource;
 use App\Models\Hosting;
 use App\Models\Repository;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,7 @@ class HostingController extends Controller
     {
         $hostings = Hosting::query()
             ->when($request->search, function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%');
+                $query->where('name', 'like', '%' . $search . '%');
             })
             ->withCount('repositories')
             ->get();
@@ -42,7 +43,11 @@ class HostingController extends Controller
 
     public function edit(Hosting $hosting): Response
     {
-        $repositories = Repository::all();
+        $hosting->load('repositories');
+
+        $repositories = Repository::query()
+            ->whereNotIn('repository_id', $hosting->repositories->pluck('repository_id'))
+            ->get();
 
         return inertia('Hostings/Edit', [
             'hosting' => new HostingResource($hosting),

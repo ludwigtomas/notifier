@@ -15,8 +15,11 @@ import {
     ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton";
+import AttachHostingRepositoriesForm from "@/Pages/Hostings/Partials/AttachHostingRepositoriesForm";
+import UpdateHostingAttachedRepositoriesForm from "@/Pages/Hostings/Partials/UpdateHostingAttachedRepositoriesForm";
+import UpdateHostingInformationForm from "@/Pages/Hostings/Partials/UpdateHostingInformationForm";
 
-export default function Index({ auth, hosting }) {
+export default function Index({ auth, hosting, repositories }) {
 
     const { data, setData, put, processing, errors, recentlySuccessful } = useForm({
         name: hosting.name,
@@ -51,7 +54,7 @@ export default function Index({ auth, hosting }) {
                         className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
                         href={route("hostings.index")}
                     >
-                        Hostingy
+                        Klienti
                     </Link>
 
                     <span>
@@ -62,7 +65,7 @@ export default function Index({ auth, hosting }) {
                         className="font-semibold text-lg leading-tight text-sky-500 slower-animation"
                         href={route("hostings.edit", hosting.id)}
                     >
-                        { hosting.name }
+                        {hosting.name}
                     </Link>
 
                     <span>
@@ -70,7 +73,7 @@ export default function Index({ auth, hosting }) {
                     </span>
 
                     <Link
-                        className="font-semibold text-lg leading-tight text-sky-500 slower-animation"
+                        className="font-semibold text-lg leading-tight text-sky-500"
                         href={route("hostings.edit", hosting.id)}
                     >
                         Edit
@@ -84,81 +87,24 @@ export default function Index({ auth, hosting }) {
         <div className="py-12">
             <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <header>
-                        <h1 className="text-center text-xl font-bold text-gray-200">
-                            {hosting.name}
-                        </h1>
-                    </header>
-
-                    <form
-                        onSubmit={submit}
-                        className="mt-6 grid grid-cols-12 gap-10 items-start"
-                    >
-                        <div className="col-span-7 flex flex-col space-y-4 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                            <div>
-                                <InputLabel
-                                    isRequired
-                                    htmlFor="name"
-                                    value="Název"
-                                />
-
-                                <TextInput
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    placeholder="Bohemia Cloud"
-                                    value={data.name}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) => setData("name", e.target.value)}
-                                />
-
-                                <InputError
-                                    message={errors.name}
-                                    htmlFor="name"
-                                />
-                            </div>
-
-                            <div>
-                                <InputLabel
-                                    htmlFor="hosting_url"
-                                    value="URL"
-                                />
-
-                                <TextInput
-                                    id="hosting_url"
-                                    type="text"
-                                    name="hosting_url"
-                                    placeholder="www.bohemia-cloud.cz"
-                                    value={data.hosting_url}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) => setData("hosting_url", e.target.value)}
-                                />
-
-                                <InputError
-                                    message={errors.hosting_url}
-                                    htmlFor="hosting_url"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="mt-6 col-span-12 flex items-center space-x-4">
-                            <PrimaryButton
-                                typeOfButton='submit'
-                                disabled={processing}
-                            >
-                                <ServerStackIcon className="size-6 mr-4"/>
-
-                                Aktualizovat
-                            </PrimaryButton>
-
-                            {recentlySuccessful && (
-                                <p className="text-green-500">
-                                    Repository information has been updated!
-                                </p>
-                            )}
-                        </div>
-                    </form>
+                    <UpdateHostingInformationForm
+                        hosting={hosting}
+                    />
                 </div>
+
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <UpdateHostingAttachedRepositoriesForm
+                        hosting={hosting}
+                    />
+                </div>
+
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <AttachHostingRepositoriesForm
+                        hosting={hosting}
+                        repositories={repositories}
+                    />
+                </div>
+
             </div>
         </div>
 

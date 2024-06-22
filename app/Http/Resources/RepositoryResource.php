@@ -17,7 +17,7 @@ class RepositoryResource extends JsonResource
     {
         return [
             'repository_id' => $this->repository_id,
-            'analytics_property_id' => $this->analytics_property_id,
+            'analytics_property_id' => $this->analytics_property_id ?? null,
 
             'name' => $this->name,
             'slug' => $this->slug,

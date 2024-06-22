@@ -24,21 +24,4 @@ class ModelHelper extends Helper
             return 'App\\Models\\' . $model;
         }, $models);
     }
-
-    // $path = app_path('Models');
-
-    // $models = [];
-
-    // foreach (new DirectoryIterator($path) as $file) {
-
-    //     if ($file->isDot() || $file->isDir()) {
-    //         continue;
-    //     }
-
-    //     $filename = $file->getFilename();
-
-    //     $model = pathinfo($filename, PATHINFO_FILENAME);
-
-    //     $models[] = $model;
-    // }
 }

@@ -11,18 +11,16 @@ import {
     UserIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Show({ client, repositories, className = "" }) {
+export default function AttachClientRepositoriesForm({ hosting, repositories, className = "" }) {
 
     const { data, setData, put, processing, errors } = useForm({
         repositories: []
     });
 
-
     const attachClientSubmit = (e) => {
         e.preventDefault();
 
-        put(route('client-repository.attach', client.id));
-
+        put(route('client-repository.attach', hosting.id));
     }
 
     return (
@@ -74,7 +72,7 @@ export default function Show({ client, repositories, className = "" }) {
                                         preserveScroll
                                         preserveState
                                         className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
-                                        href={route('client-repository.attach', {client: client.id, repository: repository.repository_id})}
+                                        href={route('hosting-repository.attach', {hosting: hosting.id, repository: repository.repository_id})}
                                     >
                                         <PlusIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
                                     </Link>

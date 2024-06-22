@@ -258,7 +258,10 @@ export default function Index({ auth, clients, filters }) {
                         </div>
                     </Dropdown.Trigger>
 
-                    <Dropdown.Content direction="up">
+                    <Dropdown.Content
+                        direction="up"
+                        width="64"
+                    >
                         <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
                             Možnosti
                         </h3>

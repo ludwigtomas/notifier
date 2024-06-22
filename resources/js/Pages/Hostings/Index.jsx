@@ -127,7 +127,7 @@ export default function Index({ auth, hostings, filters }) {
                                         scope="col"
                                         className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                                     >
-                                        Počet repozitářů
+                                        Počet projektů
                                     </th>
 
                                     <th
@@ -234,7 +234,7 @@ export default function Index({ auth, hostings, filters }) {
 
                 <Dropdown.Content
                     direction="up"
-                    width="56"
+                    width="64"
                 >
                     <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
                         Možnosti
