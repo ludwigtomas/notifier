@@ -10,7 +10,8 @@ import {
     BackspaceIcon,
     CommandLineIcon,
     ArrowPathIcon,
-    RocketLaunchIcon
+    RocketLaunchIcon,
+    ChevronRightIcon
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -93,7 +94,7 @@ export default function Index({ auth, repositories, filters }) {
                     </Link>
 
                     <span>
-                        <RocketLaunchIcon className="size-5" />
+                        <ChevronRightIcon className="size-5" />
                     </span>
 
                     <Link
