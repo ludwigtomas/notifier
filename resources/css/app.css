@@ -6,6 +6,16 @@
     scroll-behavior: smooth;
 }
 
+.xterm-screen {
+    width: 99% !important;
+}
+
+
+.xterm-rows>div {
+    width: 100wa% !important;
+    overflow: hidden;
+}
+
 
 @layer components {
     .card {

@@ -41,7 +41,6 @@ export default function SshClient({auth, hosting_repository}) {
 
 
     return (
-
         <AuthenticatedLayout
             user={auth.user}
             header={
