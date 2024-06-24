@@ -100,19 +100,13 @@ route::middleware('auth:sanctum')->group(function () {
     });
 
     // 🔺 HOSTINGS REPOSITORY
-
     route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
-        route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
-
         route::post('/hosting/{hosting}/repository/{repository}/attach', [HostingRepositoryController::class, 'attach'])->name('attach');
         route::delete('/hosting/{hosting}/repository/{repository}/detach', [HostingRepositoryController::class, 'detach'])->name('detach');
-    });
-
-
-    route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
-        route::put('/{hosting_repository}/update', [HostingRepositoryController::class, 'update'])->name('update');
 
         route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
+        route::put('/{hosting_repository}/update', [HostingRepositoryController::class, 'update'])->name('update');
+        route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
         route::get('/{hosting_repository}/vps-connect', [HostingRepositoryController::class, 'vpsConnect'])->name('vps-connect');
     });
 
@@ -130,6 +124,8 @@ route::middleware('auth:sanctum')->group(function () {
     route::group(['prefix' => '/dashboard/notifications', 'as' => 'notifications.'], function () {
         route::get('/', [NotificationController::class, 'index'])->name('index');
         route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
+        route::get('/{notification}/edit', [NotificationController::class, 'edit'])->name('edit');
+        route::put('/{notification}', [NotificationController::class, 'update'])->name('update');
         route::patch('/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
         route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
     });

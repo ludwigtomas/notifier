@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    scroll-behavior: smooth;
+}
+
 
 @layer components {
+    .card {
+        @apply bg-zinc-900 border border-zinc-700 p-2 rounded-xl;
+    }
+
     .slower-animation {
         @apply duration-300 ease-linear transition-all;
     }

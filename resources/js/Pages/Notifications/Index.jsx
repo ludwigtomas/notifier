@@ -5,15 +5,18 @@ import {
     ChevronRightIcon,
     BookmarkIcon,
     TrashIcon,
+    Square2StackIcon,
+    PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
-import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import { useState, useEffect } from "react";
 import Dropdown from "@/Components/Dropdown";
 import debounce from "lodash/debounce";
+import InputLabel from '@/Components/InputLabel';
+import TextInput from "@/Components/TextInput";
 
 export default function Index({ auth, notifications, models, actions, filters }) {
 
@@ -119,13 +122,18 @@ export default function Index({ auth, notifications, models, actions, filters })
 
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-
-                    <div className="mb-5 bg-zinc-900 border border-zinc-700 p-2 rounded-xl">
+                    <section className="mb-5 card">
                         <div className="grid grid-cols-5 gap-2 items-center">
                             <div>
+                                <InputLabel
+                                    className="mb-1"
+                                    htmlFor="search"
+                                    value="Vyhledat"
+                                />
+
                                 <TextInput
-                                    label="Hledat"
                                     name="search"
+                                    id="search"
                                     placeholder="Hledat notifikaci"
                                     type="text"
                                     className="w-full !border-zinc-600 "
@@ -134,30 +142,36 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
-                                <div className="bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
-                                    <label
-                                        htmlFor="read_at"
-                                        className="flex items-center justify-center cursor-pointer"
-                                    >
-                                        <input
-                                            label="read_at"
-                                            name="read_at"
-                                            id="read_at"
-                                            type="checkbox"
-                                            className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-500 checked:bg-sky-500 checked:before:bg-sky-500 hover:before:opacity-10"
-                                            checked={isRead}
-                                            onChange={(e) => handleSetIsRead(e.target.checked)}
-                                        />
+                                <InputLabel
+                                    className="mb-1"
+                                    htmlFor="read_at"
+                                    value="Stav notifikace"
+                                />
 
-                                        <span className="ml-4 text-base text-gray-300">
-                                            Již Přečtené
-                                        </span>
-                                    </label>
-                                </div>
+                                <button
+                                    id="read_at"
+                                    name="read_at"
+                                    className="w-full bg-zinc-700 py-2 border-2 border-zinc-600 text-zinc-200 rounded-md shadow-sm"
+                                    onClick={(e) => handleSetIsRead(!isRead)}
+                                >
+                                    <span className="text-xs text-zinc-400">
+                                        aktuálně: &nbsp;
+                                    </span>
+                                    <span className="text-zinc-200">
+                                        {isRead ? 'Přečtené' : 'Všechny'}
+                                    </span>
+                                </button>
                             </div>
 
                             <div>
+                                <InputLabel
+                                    className="mb-1"
+                                    htmlFor="action"
+                                    value="Metoda"
+                                />
+
                                 <select
+                                    id="action"
                                     name="action"
                                     className="w-full bg-zinc-700 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
                                     value={selectedAction}
@@ -176,7 +190,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                         );
                                     }}
                                 >
-                                    <option value="">Vyberte akci</option>
+                                    <option value="">Vyberte metodu</option>
                                     {actions.map((action, index) => (
                                         <option
                                             key={index}
@@ -190,6 +204,11 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
+                                <InputLabel
+                                    className="mb-1"
+                                    value="Eventy"
+                                />
+
                                 <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
                                         <h3 className="text-gray-300">
@@ -250,6 +269,11 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
+                                <InputLabel
+                                    className="mb-1"
+                                    value="Model"
+                                />
+
                                 <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
                                         <h3 className="text-gray-300">
@@ -309,10 +333,10 @@ export default function Index({ auth, notifications, models, actions, filters })
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
+                    <section className="card">
+                        <div className="divide-y divide-zinc-800 ">
                             {notifications && notifications.length > 0 ? (
                                 <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
                                     <thead className="bg-zinc-800 text-nowrap">
@@ -399,32 +423,30 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium">
-                                                        {notification.read_at ? (
-                                                            <span className="text-xs font-semibold text-green-500">
-                                                                Přečteno
-                                                            </span>
-
-                                                        ): (
-                                                            <span className="text-xs font-semibold text-red-500">
-                                                                Nepřečteno
-                                                            </span>
-                                                        )
-                                                        }
+                                                    <span
+                                                        className={"text-xs font-semibold " + (notification.read_at ? 'text-green-500' : 'text-red-500')}
+                                                    >
+                                                        {notification.read_at ? 'Přečteno' : 'Nepřečteno'}
                                                     </span>
                                                 </td>
-
 
                                                 <td className="px-4 py-4">
                                                     <div className="flex space-x-2">
                                                         <Link
+                                                            href={route("notifications.edit", notification.id)}
+                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        >
+                                                            <PencilSquareIcon className="size-6 text-green-500"/>
+                                                        </Link>
+
+                                                        <Link
                                                             as="button"
                                                             method="PATCH"
                                                             href={route("notifications.mark-as-read", notification.id)}
-                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
                                                             preserveScroll
                                                         >
-                                                            <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-green-500 fill-green-500' : 'text-red-500 group-hover:text-green-500 group-hover:fill-green-500')} />
+                                                            <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-yellow-500 fill-yellow-500' : 'text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500')} />
                                                         </Link>
 
                                                         <Link
@@ -452,7 +474,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
 

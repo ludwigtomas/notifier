@@ -21,6 +21,8 @@ class RepositoryObserver
 
     public function created(Repository $repository): void
     {
+        Cache::forget('repositories_count');
+
         $repository->notify(new RepositoryNotification('created'));
     }
 

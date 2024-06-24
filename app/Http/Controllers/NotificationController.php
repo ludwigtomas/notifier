@@ -47,6 +47,16 @@ class NotificationController extends Controller
         ]);
     }
 
+    public function edit(Notification $notification): Response
+    {
+        $notification->load('notifiable');
+
+        return inertia('Notifications/Edit', [
+            'notification' => new NotificationResource($notification),
+        ]);
+    }
+
+
     public function markAsRead(Notification $notification): RedirectResponse
     {
         $notification->markAsRead();

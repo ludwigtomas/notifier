@@ -2,6 +2,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
     ChevronRightIcon,
+    GlobeAltIcon,
 } from "@heroicons/react/24/outline";
 import {
     EditButton,
@@ -37,84 +38,78 @@ export default function Index({ auth, gits }) {
         >
             <Head title="Gits Index" />
 
-            <div className="sm:px-6 lg:px-8">
-                <section className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-3xl">
-                    <div className="">
+            <div className="py-12">
+                <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1">
 
-                        <div className="mb-2 px-6 pt-6">
-                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                Gits index
-                            </h1>
+                        <div className="card">
+                            <div className="flex space-x-4">
+                                <div className="flex items-center justify-center">
+                                    <Link
+                                        href={route("gits.index")}
+                                        className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
+                                    >
+                                        <GlobeAltIcon className="size-10 text-sky-500"/>
+                                    </Link>
+                                </div>
+
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Gity
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Seznam všech dostupných gitových služeb.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                <thead className="bg-zinc-950">
+                        <section className="mt-2 card">
+                            <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+                                <thead className="bg-zinc-800 text-nowrap">
                                     <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Avatar
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Git služba
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             slug
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Uživatelské jméno
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Token
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Počet skupin
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                             Počet repozitářů
                                         </th>
 
-                                        <th
-                                            scope="col"
-                                            className="relative py-3.5 px-4"
-                                        >
-                                            <span className="sr-only">
-                                                Edit
-                                            </span>
+                                        <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                                            Akce
                                         </th>
                                     </tr>
                                 </thead>
 
-                                <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+                                <tbody className="divide-y divide-zinc-800 bg-zinc-700">
                                     {gits.map((git) => {
                                         return (
-                                            <tr key={git.id}>
+                                            <tr
+                                                key={git.id}
+                                                className="group text-white transition-colors duration-200 hover:bg-zinc-800"
+                                            >
                                                 <td className="px-4 py-4">
                                                     <img
                                                         className="w-10 h-10 rounded-lg"
@@ -124,38 +119,38 @@ export default function Index({ auth, gits }) {
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                    <span className="text-sm font-medium">
                                                         {git.name}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                    <span className="text-sm font-medium">
                                                         {git.slug}
                                                     </span>
                                                 </td>
 
-                                                <td className="px-12 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                <td className="px-4 py-4">
+                                                    <span className="text-sm font-medium">
                                                         {git.username}
                                                     </span>
                                                 </td>
 
-                                                <td className="px-12 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400">
+                                                <td className="px-4 py-4">
+                                                    <span className="blur hover:blur-0 text-sm font-medium text-zinc-400">
                                                         {git.api_token}
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    <div className="bg-stone-800 text-center py-1 px-2 text-gray-200 rounded-lg ">
+                                                    <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
                                                         {git.relationships.git_groups_count}
                                                     </div>
                                                 </td>
 
 
                                                 <td className="px-4 py-4">
-                                                    <div className="bg-stone-800 text-center py-1 px-2 text-gray-200 rounded-lg ">
+                                                    <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
                                                         {git.relationships.repositories_count}
                                                     </div>
                                                 </td>
@@ -163,18 +158,21 @@ export default function Index({ auth, gits }) {
                                                 <td className="px-4 py-4">
                                                     <div className="flex space-x-2">
                                                         <EditButton href={route("gits.edit", git.id)}/>
-                                                        <ShowButton href={route("gits.show", git.id)}/>
-                                                        <DeleteButton as="button" method="DELETE" href={route("gits.destroy", git.id)}/>
+                                                        {/* <ShowButton href={route("gits.show", git.id)}/> */}
+                                                        {/* <DeleteButton as="button" method="DELETE" href={route("gits.destroy", git.id)}/> */}
                                                     </div>
                                                 </td>
+
                                             </tr>
-                                        );
+                                        )
                                     })}
+
                                 </tbody>
+
                             </table>
-                        </div>
+                        </section>
                     </div>
-                </section>
+                </div>
             </div>
         </AuthenticatedLayout>
     );

@@ -27,7 +27,7 @@ export default function AttachClientRepositoriesForm({ hosting, repositories, cl
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-100">
-                    Attach new <b>Repositories</b>
+                    Attach hosting <u>Repositories</u>
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">

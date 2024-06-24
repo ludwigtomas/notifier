@@ -40,7 +40,7 @@ export default function UpdateHostingAttachedRepositoriesForm({
                 </h1>
 
                 <h2 className="text-lg font-medium text-gray-100">
-                    Detach repositories
+                    Update hosting <u>Repositories</u>
                 </h2>
 
                 <p className="mt-1 text-sm text-gray-400">

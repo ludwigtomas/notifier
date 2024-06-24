@@ -316,8 +316,16 @@ export default function ({ auth, git_group}) {
                     <div className="p-4 sm:rounded-3xl bg-zinc-900">
                         <section className="grid grid-cols-12">
                             <div className="col-span-4 my-auto">
-                                <h2 className="text-lg underline underline-offset-8 font-medium text-zinc-200 mb-2">
-                                    Repositories
+                                <h2 className="text-lg font-medium text-zinc-200 mb-2 space-x-2">
+                                    <span className="underline underline-offset-8">
+                                        Repositories
+                                    </span>
+                                    <span>
+                                        attached to
+                                    </span>
+                                    <span className="underline underline-offset-8">
+                                        {git_group.name}
+                                    </span>
                                 </h2>
 
                                 <div className="mt-5 text-zinc-400 space-y-2">

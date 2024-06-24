@@ -6,8 +6,8 @@ import {
 
 const ChildrensTable = (childrens) => {
     return (
-        <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-            <thead className="bg-zinc-950">
+        <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+            <thead className="bg-zinc-800 text-nowrap">
                 <tr>
                     <th
                         scope="col"
@@ -47,12 +47,13 @@ const ChildrensTable = (childrens) => {
                     </th>
                 </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+
+            <tbody className="divide-y divide-zinc-800 bg-zinc-700">
                 {childrens.childrens && childrens.childrens.map((group, index) => {
                     return (
                         <tr
                             key={index}
-                            className='hover:bg-zinc-800'
+                            className="group text-white transition-colors duration-200 hover:bg-zinc-800"
                         >
                             <td className="px-4 py-4">
                                 <span className="text-sm font-medium text-zinc-200">
@@ -99,8 +100,8 @@ const ChildrensTable = (childrens) => {
 
 const RepositoriesTable = (repositories) => {
     return (
-        <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-            <thead className="bg-zinc-950">
+        <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+            <thead className="bg-zinc-800 text-nowrap">
                 <tr>
                     <th
                         scope="col"
@@ -140,12 +141,13 @@ const RepositoriesTable = (repositories) => {
                     </th>
                 </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+
+            <tbody className="divide-y divide-zinc-800 bg-zinc-700">
                 {repositories.repositories && repositories.repositories.map((repository) => {
                     return (
                         <tr
                             key={repository.repository_id}
-                            className='hover:bg-zinc-800'
+                            className="group text-white transition-colors duration-200 hover:bg-zinc-800"
                         >
                             <td className="px-4 py-4">
                                 <span className="text-sm font-medium text-zinc-200">

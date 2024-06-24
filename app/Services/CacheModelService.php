@@ -42,13 +42,6 @@ class CacheModelService
         return Cache::remember('repositories_count', 60, fn () => DB::table('repositories')->count());
     }
 
-    public static function repositoryDatabasesCount(): int
-    {
-        return Cache::remember('repositories_databases_count', 60, fn () => DB::table('repositories')
-            ->where('type', 'database')
-            ->count());
-    }
-
     public static function clientCount(): int
     {
         return Cache::remember('clients_count', 60, fn () => DB::table('clients')->count());

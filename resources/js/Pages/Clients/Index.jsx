@@ -10,15 +10,18 @@ import {
     ChevronRightIcon,
     LinkIcon,
     ArchiveBoxArrowDownIcon,
+    UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
-import TextInput from "@/Components/TextInput";
 import SecondaryButton from "@/Components/SecondaryButton";
 import Pagination from "@/Components/Pagination";
 import debounce from 'lodash/debounce';
 import Dropdown from "@/Components/Dropdown";
+import ResetFilters from "@/Components/ResetFilters";
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
 
 export default function Index({ auth, clients, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -89,152 +92,207 @@ export default function Index({ auth, clients, filters }) {
 
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1">
 
-                    <div className="mb-2">
-                        <TextInput
-                            label="Hledat"
-                            name="search"
-                            placeholder="Hledat klienta"
-                            type="text"
-                            className="w-72"
-                            onChange={(e) => debouncedSearch(e.target.value)}
-                        />
-                    </div>
+                        <section className="mb-10 card">
+                            <div className="grid grid-cols-5 gap-2 items-center">
+                                <div>
+                                    <InputLabel
+                                        className="mb-1"
+                                        htmlFor="search"
+                                        value="Vyhledat"
+                                    />
 
-                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                <thead className="bg-zinc-950">
-                                    <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Klient
-                                        </th>
+                                    <TextInput
+                                        label="Hledat"
+                                        name="search"
+                                        placeholder="Vyhledat klienta ..."
+                                        type="text"
+                                        className="w-full !border-zinc-600 "
+                                        onChange={(e) => debouncedSearch(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </section>
 
-                                        <th
-                                            scope="col"
-                                            className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Email
-                                        </th>
+                        <section className="card">
+                            <div className="flex space-x-4">
+                                <div className="flex items-center justify-center">
+                                    <Link
+                                        href={route("clients.index")}
+                                        className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
+                                    >
+                                        <UserGroupIcon className="size-10 text-sky-500"/>
+                                    </Link>
+                                </div>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Telefon
-                                        </th>
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Klienti
+                                    </h1>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Repozitáře
-                                        </th>
+                                    <p className="text-zinc-400">
+                                        Seznam všech klientů.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Repozitáře
-                                        </th>
+                        <main className="mt-2">
+                            {clients && clients.data.length > 1 ? (
+                                <>
+                                    <section className="card">
+                                        <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+                                            <thead className="bg-zinc-800 text-nowrap">
+                                                <tr>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </section>
+                                </>
+                            ):(
+                                <ResetFilters href={route("repositories.index")}>
+                                    Nebyly nalezeny žádné repozitáře.
+                                </ResetFilters>
+                            )}
+                        </main>
 
-                                        <th
-                                            scope="col"
-                                            className="relative py-3.5 px-4"
-                                        >
-                                            <span className="sr-only">Edit</span>
-                                        </th>
-                                    </tr>
-                                </thead>
 
-                                <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                    {clients.data.map((client) => (
-                                        <tr
-                                            key={client.id}
-                                            className="group hover:bg-zinc-800"
-                                        >
-                                            <td className="px-4 py-4 ">
-                                                <span className="text-sm font-medium text-zinc-400">
-                                                    {client.name}
-                                                </span>
-                                            </td>
-                                            <td className="px-12 py-4 text-sm font-medium text-zinc-400">
-                                                {client.email ?? <XMarkIcon className="size-6 text-red-500"/>}
-                                            </td>
+                        <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
+                                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                                    <thead className="bg-zinc-950">
+                                        <tr>
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Klient
+                                            </th>
 
-                                            <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
-                                                {client.phone ?? <XMarkIcon className="size-6 text-red-500"/>}
-                                            </td>
+                                            <th
+                                                scope="col"
+                                                className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Email
+                                            </th>
 
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center gap-x-2 ">
-                                                    {client.relationships.repositories.slice(0,2).map((repository) => (
-                                                        <p
-                                                            key={repository.id}
-                                                            className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
-                                                        >
-                                                            {repository.name}
-                                                        </p>
-                                                    ))}
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Telefon
+                                            </th>
 
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Repozitáře
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                            >
+                                                Repozitáře
+                                            </th>
+
+                                            <th
+                                                scope="col"
+                                                className="relative py-3.5 px-4"
+                                            >
+                                                <span className="sr-only">Edit</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody className="divide-y divide-zinc-700 bg-zinc-900">
+                                        {clients.data.map((client) => (
+                                            <tr
+                                                key={client.id}
+                                                className="group hover:bg-zinc-800"
+                                            >
+                                                <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium text-zinc-400">
+                                                        {client.name}
+                                                    </span>
+                                                </td>
+                                                <td className="px-12 py-4 text-sm font-medium text-zinc-400">
+                                                    {client.email ?? <XMarkIcon className="size-6 text-red-500"/>}
+                                                </td>
+
+                                                <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
+                                                    {client.phone ?? <XMarkIcon className="size-6 text-red-500"/>}
+                                                </td>
+
+                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                    <div className="flex items-center gap-x-2 ">
+                                                        {client.relationships.repositories.slice(0,2).map((repository) => (
+                                                            <p
+                                                                key={repository.id}
+                                                                className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
+                                                            >
+                                                                {repository.name}
+                                                            </p>
+                                                        ))}
+
+                                                        <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
+                                                            { client.relationships.repositories.length > 2 ? (
+                                                                    <span>
+                                                                        + {" "} {client.relationships.repositories.length - 2}
+                                                                    </span>
+                                                                ):(
+                                                                    <span>
+                                                                        <XMarkIcon className="size-6 text-zinc-600 group-hover:text-zinc-900 faster-animation"/>
+                                                                    </span>
+                                                                )
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
                                                     <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
-                                                        { client.relationships.repositories.length > 2 ? (
-                                                                <span>
-                                                                    + {" "} {client.relationships.repositories.length - 2}
-                                                                </span>
-                                                            ):(
-                                                                <span>
-                                                                    <XMarkIcon className="size-6 text-zinc-600 group-hover:text-zinc-900 faster-animation"/>
-                                                                </span>
-                                                            )
+                                                        {client.relationships.repositories
+                                                            ? client.relationships.repositories.length
+                                                            : <XMarkIcon className="size-6 text-red-500"/>
                                                         }
                                                     </span>
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                            <td className="px-4 py-4 text-sm text-zinc-300 whitespace-nowrap">
-                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-700 faster-animation">
-                                                    {client.relationships.repositories
-                                                        ? client.relationships.repositories.length
-                                                        : <XMarkIcon className="size-6 text-red-500"/>
-                                                    }
-                                                </span>
-                                            </td>
+                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                    <div className="flex items-center space-x-2">
+                                                        <Link
+                                                            href={route("clients.edit", client.id)}
+                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        >
+                                                            <PencilSquareIcon className="size-6 text-green-500" />
+                                                        </Link>
 
-                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div className="flex items-center space-x-2">
-                                                    <Link
-                                                        href={route("clients.edit", client.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                    >
-                                                        <PencilSquareIcon className="size-6 text-green-500" />
-                                                    </Link>
+                                                        {/* <Link
+                                                            href={route("clients.show",client.id)}
+                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                        >
+                                                            <EyeIcon className="size-6 text-sky-500" />
+                                                        </Link> */}
 
-                                                    {/* <Link
-                                                        href={route("clients.show",client.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                    >
-                                                        <EyeIcon className="size-6 text-sky-500" />
-                                                    </Link> */}
-
-                                                    <Link
-                                                        as="button"
-                                                        method="delete"
-                                                        preserveScroll
-                                                        href={route("clients.destroy", client.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                    >
-                                                        <TrashIcon className="size-6 text-red-500" />
-                                                    </Link>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                                                        <Link
+                                                            as="button"
+                                                            method="delete"
+                                                            preserveScroll
+                                                            href={route("clients.destroy", client.id)}
+                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        >
+                                                            <TrashIcon className="size-6 text-red-500" />
+                                                        </Link>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

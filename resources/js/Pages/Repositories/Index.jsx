@@ -6,19 +6,21 @@ import {
     EyeIcon,
     CheckIcon,
     XMarkIcon,
-    ChevronRightIcon,
     LinkIcon,
     BackspaceIcon,
     CommandLineIcon,
     ArrowPathIcon,
+    RocketLaunchIcon
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
 import SecondaryButton from "@/Components/SecondaryButton";
+import ResetFilters from "@/Components/ResetFilters";
 import Pagination from "@/Components/Pagination";
 import debounce from "lodash/debounce";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
 
 export default function Index({ auth, repositories, filters }) {
@@ -91,7 +93,7 @@ export default function Index({ auth, repositories, filters }) {
                     </Link>
 
                     <span>
-                        <ChevronRightIcon className="size-5" />
+                        <RocketLaunchIcon className="size-5" />
                     </span>
 
                     <Link
@@ -108,339 +110,384 @@ export default function Index({ auth, repositories, filters }) {
             {/* TABLE */}
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                    <div className="mb-2 flex items-center space-x-10">
-                        <TextInput
-                            label="Hledat"
-                            name="search"
-                            placeholder="Hledat repozitář"
-                            type="text"
-                            className="w-72"
-                            onChange={(e) => debouncedSearch(e.target.value)}
-                        />
+                    <div className="grid grid-cols-1">
+                        <section className="mb-10 card">
+                            <div className="grid grid-cols-5 gap-2 items-center">
+                                <div>
+                                    <InputLabel
+                                        className="mb-1"
+                                        htmlFor="search"
+                                        value="Vyhledat"
+                                    />
 
-                        <div>
-                            <label className="flex items-center justify-center cursor-pointer bg-zinc-900 px-6 py-4 rounded-xl">
-                                <input
-                                    label="Smazané"
-                                    name="trashed"
-                                    type="checkbox"
-                                    className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-sky-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-sky-500 before:opacity-0 before:transition-opacity checked:border-sky-900 checked:bg-sky-900 checked:before:bg-sky-900 hover:before:opacity-10"
-                                    checked={ trashed === "true" || trashed === true
-                                            ? true
-                                            : false
-                                    }
-                                    onChange={(e) => { handleSetTrashed(e.target.checked) }}
-                                />
+                                    <TextInput
+                                        label="Hledat"
+                                        name="search"
+                                        placeholder="Hledat hlavní skupinu..."
+                                        type="text"
+                                        className="w-full !border-zinc-600 "
+                                        onChange={(e) => debouncedSearch(e.target.value)}
+                                    />
+                                </div>
 
-                                <span className="ml-4 text-base text-gray-300">
-                                    Smazané
-                                </span>
-                            </label>
-                        </div>
-                    </div>
+                                <div>
+                                    <InputLabel
+                                        className="mb-1"
+                                        htmlFor="trashed"
+                                        value="Smazané"
+                                    />
 
-                    <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                            <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
-                                <thead className="bg-zinc-950 text-nowrap">
-                                    <tr>
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            #
-                                        </th>
+                                    <button
+                                        id="trashed"
+                                        name="trashed"
+                                        className="w-full bg-zinc-700 py-2 border-2 border-zinc-600 text-zinc-200 rounded-md shadow-sm"
+                                        onClick={(e) => handleSetTrashed(!trashed)}
+                                    >
+                                        <span className="text-xs text-zinc-400">
+                                            aktuálně: &nbsp;
+                                        </span>
+                                        <span className="text-zinc-200">
+                                            {trashed ? "Smazané" : "Aktivní"}
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Logo
-                                        </th>
+                        <section className="card">
+                            <div className="flex space-x-4">
+                                <div className="flex items-center justify-center">
+                                    <Link
+                                        href={route("repositories.index")}
+                                        className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
+                                    >
+                                        <RocketLaunchIcon className="size-10 text-sky-500"/>
+                                    </Link>
+                                </div>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Repozitář
-                                        </th>
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Repositories
+                                    </h1>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Slug
-                                        </th>
+                                    <p className="text-zinc-400">
+                                        Seznam všech dostupných repozitářů.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Počet klientů
-                                        </th>
+                        <main className="mt-2">
+                            {repositories && repositories.data.length > 0 ? (
+                                <>
+                                    <section className="card">
+                                        <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
+                                            <thead className="bg-zinc-800 text-nowrap">
+                                                <tr>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        #
+                                                    </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Počet databází
-                                        </th>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Logo
+                                                    </th>
 
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal"
-                                        >
-                                            <div className="text-white">
-                                                Nastavení
-                                            </div>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Repozitář
+                                                    </th>
 
-                                            <ul className="grid grid-cols-4 mt-2 w-full">
-                                                <li
-                                                    className="text-sm font-normal text-center text-zinc-400"
-                                                >
-                                                    Gitlab
-                                                </li>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Slug
+                                                    </th>
 
-                                                <li
-                                                    className="text-sm font-normal text-center text-zinc-400"
-                                                >
-                                                    Web
-                                                </li>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Počet klientů
+                                                    </th>
 
-                                                <li
-                                                    className="text-sm font-normal text-center text-zinc-400"
-                                                >
-                                                    Hosting
-                                                </li>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Počet databází
+                                                    </th>
 
-                                                <li
-                                                    className="text-sm font-normal text-center text-zinc-400"
-                                                >
-                                                    Analytics
-                                                </li>
-                                            </ul>
-                                        </th>
-
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            Nejnovější commit
-                                        </th>
-
-                                        <th
-                                            scope="col"
-                                            className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                        >
-                                            <span className="sr-only">
-                                                Edit
-                                            </span>
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                    {repositories.data.map((repository) => {
-                                        return (
-                                            <tr
-                                                key={repository.repository_id}
-                                                className="group hover:bg-zinc-800"
-                                            >
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400">
-                                                        {repository.repository_id}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-2 w-20">
-                                                    <img
-                                                        src={repository.avatar ? "/storage/avatars/" + repository.avatar : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"}
-                                                        alt="test"
-                                                        className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
-                                                    />
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                        {repository.name}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                        {repository.slug}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <div className="flex items-center gap-x-2 text-nowrap ">
-                                                        { repository.relationships.clients_count > 0 ? (
-                                                            <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                                {repository.relationships.clients.slice(0, 2).map((client) => (
-                                                                    <p
-                                                                        key={client.id}
-                                                                        className="text-xs text-zinc-400 pr-2"
-                                                                    >
-                                                                        {client.name}
-                                                                    </p>
-                                                                ))}
-
-                                                                {repository.relationships.clients_count > 2 && (
-                                                                    <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
-                                                                        +{" "}{repository.relationships.clients_count - 2}
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                        ): (
-                                                            <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                                0
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </td>
-
-                                                <td className="px-4 py-4 text-center ">
-                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                        {   repository.relationships.database_backups_count }
-                                                    </span>
-                                                </td>
-
-                                                <td className="grid grid-cols-4 py-3.5">
-                                                    <div className="flex items-center justify-center">
-                                                        {repository.repository_url ? (
-                                                            <a
-                                                                className="group bg-green-950 p-2 rounded-xl"
-                                                                href={repository.repository_url}
-                                                                target="_blank"
-                                                                rel="noreferrer noopener"
-                                                            >
-                                                                <LinkIcon className="text-green-500 w-6 h-6" />
-                                                            </a>
-                                                        ) : (
-                                                            <div className="bg-red-950 p-2 rounded-xl">
-                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="flex items-center justify-center">
-                                                        {repository.website_url ? (
-                                                            <a
-                                                                className="bg-green-950 p-2 rounded-xl"
-                                                                href={ repository.website_url }
-                                                                target="_blank"
-                                                            >
-                                                                <LinkIcon className="text-green-500 w-6 h-6" />
-                                                            </a>
-                                                        ) : (
-                                                            <div className="bg-red-950 p-2 rounded-xl">
-                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="flex items-center justify-center">
-                                                        <div
-                                                            className={ "p-2 rounded-xl " + (repository.relationships?.hosting_repository?.hosting_id
-                                                                ? "bg-green-950"
-                                                                : "bg-red-950")
-                                                        }>
-                                                            {repository.relationships?.hosting_repository?.hosting_id >= 1 ? (
-                                                                <CheckIcon className="w-6 h-6 text-green-500" />
-                                                            ) : (
-                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
-                                                            )}
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal"
+                                                    >
+                                                        <div className="text-white">
+                                                            Nastavení
                                                         </div>
-                                                    </div>
 
-                                                    <div className="flex items-center justify-center">
-                                                        <div
-                                                            className={"p-2 rounded-xl " + (repository.analytics_property_id
-                                                                ? "bg-green-950"
-                                                                : "bg-red-950")
-                                                            }
+                                                        <ul className="grid grid-cols-4 mt-2 w-full">
+                                                            <li
+                                                                className="text-sm font-normal text-center text-zinc-400"
+                                                            >
+                                                                Gitlab
+                                                            </li>
+
+                                                            <li
+                                                                className="text-sm font-normal text-center text-zinc-400"
+                                                            >
+                                                                Web
+                                                            </li>
+
+                                                            <li
+                                                                className="text-sm font-normal text-center text-zinc-400"
+                                                            >
+                                                                Hosting
+                                                            </li>
+
+                                                            <li
+                                                                className="text-sm font-normal text-center text-zinc-400"
+                                                            >
+                                                                Analytics
+                                                            </li>
+                                                        </ul>
+                                                    </th>
+
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        Nejnovější commit
+                                                    </th>
+
+                                                    <th
+                                                        scope="col"
+                                                        className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                                    >
+                                                        <span className="sr-only">
+                                                            Edit
+                                                        </span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody className="divide-y divide-zinc-800 bg-zinc-700">
+                                                {repositories.data.map((repository) => {
+                                                    return (
+                                                        <tr
+                                                            key={repository.repository_id}
+                                                            className="group text-white transition-colors duration-200 hover:bg-zinc-800"
                                                         >
-                                                            {repository.analytics_property_id ? (
-                                                                <CheckIcon className="w-6 h-6 text-green-500" />
-                                                            ) : (
-                                                                <XMarkIcon className="text-red-500 w-6 h-6" />
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                                            <td className="px-4 py-4 ">
+                                                                <span className="text-sm font-medium text-zinc-400">
+                                                                    {repository.repository_id}
+                                                                </span>
+                                                            </td>
 
-                                                <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400">
-                                                        { repository.last_commit_at_human ?? '-' }
-                                                    </span>
-                                                </td>
+                                                            <td className="px-4 py-2 w-20">
+                                                                <img
+                                                                    src={repository.avatar ? "/storage/avatars/" + repository.avatar : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"}
+                                                                    alt="test"
+                                                                    className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
+                                                                />
+                                                            </td>
 
-                                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div className="flex items-center justify-end space-x-2">
+                                                            <td className="px-4 py-4 ">
+                                                                <span className="text-sm font-medium text-zinc-400 text-nowrap">
+                                                                    {repository.name}
+                                                                </span>
+                                                            </td>
 
-                                                        {repository.relationships.hosting_repository && (
-                                                            <Link
-                                                                href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
-                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
-                                                            >
-                                                                <CommandLineIcon className="size-6 text-orange-400" />
-                                                            </Link>
-                                                        )}
+                                                            <td className="px-4 py-4 ">
+                                                                <span className="text-sm font-medium text-zinc-400 text-nowrap">
+                                                                    {repository.slug}
+                                                                </span>
+                                                            </td>
 
-                                                        {repository.deleted_at ? (
-                                                            <>
-                                                                <Link
-                                                                    method="PATCH"
-                                                                    as="button"
-                                                                    href={route("repositories.restore", repository.repository_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                                >
-                                                                    <ArrowPathIcon className="size-6 text-sky-500" />
-                                                                </Link>
+                                                            <td className="px-4 py-4 ">
+                                                                <div className="flex items-center gap-x-2 text-nowrap ">
+                                                                    { repository.relationships.clients_count > 0 ? (
+                                                                        <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                                            {repository.relationships.clients.slice(0, 2).map((client) => (
+                                                                                <p
+                                                                                    key={client.id}
+                                                                                    className="text-xs text-zinc-400 pr-2"
+                                                                                >
+                                                                                    {client.name}
+                                                                                </p>
+                                                                            ))}
 
-                                                                <button
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                                    onClick={() => toggleModal(repository)}
-                                                                >
-                                                                    <BackspaceIcon className="size-6 text-red-500" />
-                                                                </button>
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <Link
-                                                                    href={route("repositories.edit", repository.repository_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                                >
-                                                                    <PencilSquareIcon className="size-6 text-green-500" />
-                                                                </Link>
+                                                                            {repository.relationships.clients_count > 2 && (
+                                                                                <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
+                                                                                    +{" "}{repository.relationships.clients_count - 2}
+                                                                                </span>
+                                                                            )}
+                                                                        </div>
+                                                                    ): (
+                                                                        <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                                            0
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </td>
 
-                                                                <Link
-                                                                    href={route("repositories.show",repository.repository_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                                >
-                                                                    <EyeIcon className="size-6 text-sky-500" />
-                                                                </Link>
+                                                            <td className="px-4 py-4 text-center ">
+                                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                                    {   repository.relationships.database_backups_count }
+                                                                </span>
+                                                            </td>
 
-                                                                <button
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                                    onClick={() => toggleModal(repository)}
-                                                                >
-                                                                    <TrashIcon className="size-6 text-red-500" />
-                                                                </button>
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                                            <td className="grid grid-cols-4 py-3.5">
+                                                                <div className="flex items-center justify-center">
+                                                                    {repository.repository_url ? (
+                                                                        <a
+                                                                            className="group bg-green-950 p-2 rounded-xl"
+                                                                            href={repository.repository_url}
+                                                                            target="_blank"
+                                                                            rel="noreferrer noopener"
+                                                                        >
+                                                                            <LinkIcon className="text-green-500 w-6 h-6" />
+                                                                        </a>
+                                                                    ) : (
+                                                                        <div className="bg-red-950 p-2 rounded-xl">
+                                                                            <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                                        </div>
+                                                                    )}
+                                                                </div>
 
-                    <div>
-                        <Pagination class="mt-6" links={repositories.meta} />
+                                                                <div className="flex items-center justify-center">
+                                                                    {repository.website_url ? (
+                                                                        <a
+                                                                            className="bg-green-950 p-2 rounded-xl"
+                                                                            href={ repository.website_url }
+                                                                            target="_blank"
+                                                                        >
+                                                                            <LinkIcon className="text-green-500 w-6 h-6" />
+                                                                        </a>
+                                                                    ) : (
+                                                                        <div className="bg-red-950 p-2 rounded-xl">
+                                                                            <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+
+                                                                <div className="flex items-center justify-center">
+                                                                    <div
+                                                                        className={ "p-2 rounded-xl " + (repository.relationships?.hosting_repository?.hosting_id
+                                                                            ? "bg-green-950"
+                                                                            : "bg-red-950")
+                                                                    }>
+                                                                        {repository.relationships?.hosting_repository?.hosting_id >= 1 ? (
+                                                                            <CheckIcon className="w-6 h-6 text-green-500" />
+                                                                        ) : (
+                                                                            <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="flex items-center justify-center">
+                                                                    <div
+                                                                        className={"p-2 rounded-xl " + (repository.analytics_property_id
+                                                                            ? "bg-green-950"
+                                                                            : "bg-red-950")
+                                                                        }
+                                                                    >
+                                                                        {repository.analytics_property_id ? (
+                                                                            <CheckIcon className="w-6 h-6 text-green-500" />
+                                                                        ) : (
+                                                                            <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <td className="px-4 py-4">
+                                                                <span className="text-sm font-medium text-zinc-400">
+                                                                    { repository.last_commit_at_human ?? '-' }
+                                                                </span>
+                                                            </td>
+
+                                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                <div className="flex items-center justify-end space-x-2">
+
+                                                                    {repository.relationships.hosting_repository && (
+                                                                        <Link
+                                                                            href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
+                                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                                        >
+                                                                            <CommandLineIcon className="size-6 text-orange-400" />
+                                                                        </Link>
+                                                                    )}
+
+                                                                    {repository.deleted_at ? (
+                                                                        <>
+                                                                            <Link
+                                                                                method="PATCH"
+                                                                                as="button"
+                                                                                href={route("repositories.restore", repository.repository_id)}
+                                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                                            >
+                                                                                <ArrowPathIcon className="size-6 text-sky-500" />
+                                                                            </Link>
+
+                                                                            <button
+                                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                                onClick={() => toggleModal(repository)}
+                                                                            >
+                                                                                <BackspaceIcon className="size-6 text-red-500" />
+                                                                            </button>
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <Link
+                                                                                href={route("repositories.edit", repository.repository_id)}
+                                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                            >
+                                                                                <PencilSquareIcon className="size-6 text-green-500" />
+                                                                            </Link>
+
+                                                                            <Link
+                                                                                href={route("repositories.show",repository.repository_id)}
+                                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                                            >
+                                                                                <EyeIcon className="size-6 text-sky-500" />
+                                                                            </Link>
+
+                                                                            <button
+                                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                                onClick={() => toggleModal(repository)}
+                                                                            >
+                                                                                <TrashIcon className="size-6 text-red-500" />
+                                                                            </button>
+                                                                        </>
+                                                                    )}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </section>
+
+                                    <div className="mt-5">
+                                        <Pagination  links={repositories.meta} />
+                                    </div>
+                                </>
+                            ):(
+                                <ResetFilters href={route("repositories.index")}>
+                                    Nebyly nalezeny žádné repozitáře.
+                                </ResetFilters>
+                            )}
+                        </main>
                     </div>
                 </div>
 
