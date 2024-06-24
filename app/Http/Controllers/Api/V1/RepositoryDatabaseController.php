@@ -15,12 +15,22 @@ use Exception;
 
 class RepositoryDatabaseController extends Controller
 {
-    public function store(ApiDatabaseRequest $request, Repository $repository): JsonResponse
+    public function store(Request $request, Repository $repository): JsonResponse
     {
         try {
-            $password = $request->password;
+            $validated = $request->validate([
+                'password' => ['required', 'string'],
+                'backup_file' => ['required', 'file'],
+            ], [
+                'password.required' => 'Password is required',
+                'password.string' => 'Password must be a string',
+                'backup_file.required' => 'Backup file is required',
+                'backup_file.file' => 'Backup file must be a file',
+            ]);
 
-            $file = $request->file('backup_file');
+            $password = $validated['password'];
+
+            $file = $validated['backup_file'];
 
             $this->checkPassword($password, $repository);
 

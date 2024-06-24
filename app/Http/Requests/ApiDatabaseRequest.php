@@ -26,4 +26,14 @@ class ApiDatabaseRequest extends FormRequest
             'backup_file' => ['required', 'file'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'password.required' => 'Password is required',
+            'password.string' => 'Password must be a string',
+            'backup_file.required' => 'Backup file is required',
+            'backup_file.file' => 'Backup file must be a file',
+        ];
+    }
 }

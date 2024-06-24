@@ -47,7 +47,7 @@ export default function RepositoryDatabaseTable({ database_backups }) {
 
     return (
         <>
-            <div className="mt-10 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
+            <div className="mt-10 mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
                 {selectedDatabases.length > 0 && (
                     <div className="fixed right-10 bottom-10">
                         <Dropdown>

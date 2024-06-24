@@ -480,7 +480,7 @@ export default function Index({ auth, repositories, filters }) {
                                     </section>
 
                                     <div className="mt-5">
-                                        <Pagination  links={repositories.meta} />
+                                        <Pagination links={repositories.meta} />
                                     </div>
                                 </>
                             ):(

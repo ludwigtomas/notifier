@@ -5,8 +5,14 @@ import {
     ChevronRightIcon,
     BookmarkIcon,
     TrashIcon,
-    Square2StackIcon,
     PencilSquareIcon,
+
+    GlobeAltIcon,
+    FolderOpenIcon,
+    RocketLaunchIcon,
+    UsersIcon,
+    ServerStackIcon,
+    CircleStackIcon,
 } from "@heroicons/react/24/outline";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -342,11 +348,10 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     <thead className="bg-zinc-800 text-nowrap">
                                         <tr>
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
-                                                Metoda
+                                                Model
                                             </th>
-
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
-                                                Event
+                                                Metoda
                                             </th>
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
@@ -354,7 +359,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                             </th>
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
-                                                Model_id
+                                                Model ID
                                             </th>
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
@@ -362,11 +367,15 @@ export default function Index({ auth, notifications, models, actions, filters })
                                             </th>
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                                                Notifikátor
+                                            </th>
+
+                                            <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                                 Stav notifikace
                                             </th>
 
 
-                                            <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                                            <th className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400">
                                                 Akce
                                             </th>
                                         </tr>
@@ -384,6 +393,18 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 hover:bg-red-500/15' : '')
                                                 }
                                             >
+
+                                                <td className="px-4 py-4">
+                                                    {{
+                                                        'Git': <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                        'GitGroup': <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                        'Repository': <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                        'User': <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                        'Hosting': <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                        'RepositoryDatabase': <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                                                    }[notification.notifiable_type_formatted] || <div>No Icon</div>}
+                                                </td>
+
                                                 <td className="px-4 py-4 ">
                                                     <span
                                                         className={"group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
@@ -395,12 +416,6 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                         }
                                                     >
                                                         {notification.data.action}
-                                                    </span>
-                                                </td>
-
-                                                <td className="px-4 py-4 ">
-                                                    <span className="text-sm font-medium">
-                                                        {notification.type_formatted}
                                                     </span>
                                                 </td>
 
@@ -423,6 +438,12 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
+                                                    <span className="text-sm font-medium">
+                                                        {notification.type_formatted}
+                                                    </span>
+                                                </td>
+
+                                                <td className="px-4 py-4 ">
                                                     <span
                                                         className={"text-xs font-semibold " + (notification.read_at ? 'text-green-500' : 'text-red-500')}
                                                     >
@@ -431,7 +452,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    <div className="flex space-x-2">
+                                                    <div className="flex justify-center space-x-2">
                                                         <Link
                                                             href={route("notifications.edit", notification.id)}
                                                             className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"

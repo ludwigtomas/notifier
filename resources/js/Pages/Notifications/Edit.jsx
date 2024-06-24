@@ -40,11 +40,32 @@ export default function Edit({ auth, notification }) {
 
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                    <div className="mb-5 bg-zinc-900 border border-zinc-700 p-2 rounded-xl">
+                    <section className="mb-5 card">
                         <h1 className="text-center text-white text-2xl font-bold tracking-wider">
                             {notification.type_formatted}
                         </h1>
-                    </div>
+                    </section>
+
+                    <section className="card">
+                        <ul className="text-center">
+
+                            <li className="space-x-2">
+                                <span className="text-white">
+                                    {notification.type_formatted}
+                                </span>
+                            </li>
+
+                            <li className="space-x-2">
+                                <span className="text-xs text-gray-400">
+                                    Notifikátor:
+                                </span>
+
+                                <span className="text-white">
+                                    {notification.type_formatted}
+                                </span>
+                            </li>
+                        </ul>
+                    </section>
                 </div>
             </div>
         </AuthenticatedLayout>
