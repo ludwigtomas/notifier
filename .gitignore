@@ -16,7 +16,7 @@ auth.json
 
 package-lock.json
 
-
+privatekey.txt
 
 npm-debug.log
 yarn-error.log
