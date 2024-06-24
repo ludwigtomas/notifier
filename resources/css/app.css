@@ -12,7 +12,7 @@
 
 
 .xterm-rows>div {
-    width: 100wa% !important;
+    width: 100% !important;
     overflow: hidden;
 }
 
