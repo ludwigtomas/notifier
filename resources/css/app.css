@@ -6,7 +6,7 @@
     scroll-behavior: smooth;
 }
 
-.xterm-screen {
+/* .xterm-screen {
     width: 99% !important;
 }
 
@@ -14,7 +14,7 @@
 .xterm-rows>div {
     width: 100% !important;
     overflow: hidden;
-}
+} */
 
 
 @layer components {
