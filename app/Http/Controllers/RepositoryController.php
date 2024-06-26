@@ -50,7 +50,9 @@ class RepositoryController extends Controller
     {
         $repository->loadCount('clients', 'database_backups');
 
-        $repository->load('hosting', 'hosting_repository');
+        $repository->load('hosting', 'hosting_repository', 'notifications');
+
+        // dd($repository);
 
         $clients = $repository->clients()->paginate(10);
 

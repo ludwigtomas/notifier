@@ -15,7 +15,7 @@ export default function ResetFilters ({href, children, className = ""}) {
                 <div className="mt-6">
                     <Link
                         href={href}
-                        className="bg-zinc-800 px-4 py-2 rounded-lg border border-zinc-700 hover:border-red-500 text-red-400 transition ease-in-out duration-150"
+                        className="bg-zinc-800 px-4 py-2 rounded-md border border-zinc-700 hover:border-red-500 text-red-400 transition ease-in-out duration-150"
                     >
                         Zrušit filtry
                     </Link>

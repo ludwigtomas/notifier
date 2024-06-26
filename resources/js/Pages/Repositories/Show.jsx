@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { motion } from "framer-motion";
 import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
+import RepositoryNotificationsTable from "@/Pages/Repositories/Partials/RepositoryNotificationsTable";
 import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
 import RepositoryHostingTable from "@/Pages/Repositories/Partials/RepositoryHostingTable";
 import RepositorySettingForApi from "@/Components/RepositorySettingForApi";
@@ -139,13 +140,16 @@ export default function Show({ auth, repository, database_backups, clients }) {
                 <Head title={repository.name + " - Show"} />
 
                 <div className="py-12">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div className="grid grid-cols-12 gap-x-8 relative">
+                    <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
+                        <div className="w-7/12 mx-auto">
                             <RepositorySettingForApi repository={repository}/>
+                        </div>
+
+                        <div className="grid grid-cols-5 gap-x-8 relative">
 
                             {/* Last commit */}
-                            <div className="col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
+                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
                                 <div className="flex justify-center overflow-hidden">
                                     <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
                                         <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
@@ -185,7 +189,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             <div
                                 onClick={handleShowRepositoryRelation("databases")}
                                 className={
-                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
                                     (showRelationship === "databases"
                                         ? " border-sky-500"
                                         : " border-transparent")
@@ -218,11 +222,9 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                             {/* Clients */}
                             <div
-                                onClick={handleShowRepositoryRelation(
-                                    "clients"
-                                )}
+                                onClick={handleShowRepositoryRelation("clients")}
                                 className={
-                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
                                     (showRelationship === "clients"
                                         ? " border-sky-500"
                                         : " border-transparent")
@@ -253,12 +255,47 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                 </div>
                             </div>
 
+                            {/* Notifications */}
                             <div
-                                onClick={handleShowRepositoryRelation(
-                                    "hosting"
-                                )}
+                                onClick={handleShowRepositoryRelation("notifications")}
                                 className={
-                                    "col-span-3 grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                    (showRelationship === "notifications"
+                                        ? " border-sky-500"
+                                        : " border-transparent")
+                                }
+                            >
+                                <div className="flex justify-center overflow-hidden">
+                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                            Notifikace
+                                        </span>
+
+                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                    </div>
+                                </div>
+
+                                <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                                <div className="text-center space-x-4">
+                                    <span className="text-gray-200 font-bold text-xl">
+                                        {repository.relationships.notifications.length}
+                                    </span>
+
+                                    <span className="text-gray-400 text-xs">
+                                        notifikací
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            {/* Hosting */}
+                            <div
+                                onClick={handleShowRepositoryRelation("hosting")}
+                                className={
+                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
                                     (showRelationship === "hosting"
                                         ? " border-sky-500"
                                         : " border-transparent")
@@ -269,7 +306,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                                         <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
 
                                         <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            hosting
+                                            Hosting
                                         </span>
 
                                         <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
@@ -288,13 +325,17 @@ export default function Show({ auth, repository, database_backups, clients }) {
                             </div>
                         </div>
 
-                        {showRelationship === "databases" ? (
-                            <RepositoryDatabaseTable database_backups={database_backups}/>
-                        ) : showRelationship === "clients" ? (
-                            <RepositoryClientsTable clients={clients} />
-                        ) : showRelationship === "hosting" && repository.relationships.hosting && (
-                            <RepositoryHostingTable hosting={repository.relationships.hosting}/>
-                        )}
+                        <div>
+                            {showRelationship === "databases" ? (
+                                <RepositoryDatabaseTable database_backups={database_backups}/>
+                            ) : showRelationship === "clients" ? (
+                                <RepositoryClientsTable clients={clients} />
+                            ) : showRelationship === "notifications" ? (
+                                <RepositoryNotificationsTable notifications={repository.relationships.notifications} />
+                            ) : showRelationship === "hosting" && repository.relationships.hosting && (
+                                <RepositoryHostingTable hosting={repository.relationships.hosting}/>
+                            )}
+                        </div>
                     </div>
                 </div>
             </AuthenticatedLayout>

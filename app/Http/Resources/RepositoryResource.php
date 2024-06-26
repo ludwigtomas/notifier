@@ -57,6 +57,9 @@ class RepositoryResource extends JsonResource
 
                 'hosting_repository' => $this->whenLoaded('hosting_repository'),
                 'hosting_repository_count' => $this->hosting_repository_count ?? 0,
+
+                'notifications' => NotificationResource::collection($this->whenLoaded('notifications')),
+                'notifications_count' => $this->notifications_count ?? 0,
             ],
         ];
     }

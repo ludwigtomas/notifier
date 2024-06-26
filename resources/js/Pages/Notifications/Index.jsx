@@ -23,6 +23,7 @@ import Dropdown from "@/Components/Dropdown";
 import debounce from "lodash/debounce";
 import InputLabel from '@/Components/InputLabel';
 import TextInput from "@/Components/TextInput";
+import ResetFilters from "@/Components/ResetFilters";
 
 export default function Index({ auth, notifications, models, actions, filters }) {
 
@@ -342,6 +343,29 @@ export default function Index({ auth, notifications, models, actions, filters })
                     </section>
 
                     <section className="card">
+                        <div className="flex space-x-4">
+                            <div className="flex flex-col items-center justify-center">
+                                <Link
+                                    href={route("dashboard.index")}
+                                    className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
+                                >
+                                    <EyeIcon className="size-10 text-sky-500"/>
+                                </Link>
+                            </div>
+
+                            <div>
+                                <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                    Notifikace
+                                </h1>
+
+                                <p className="text-zinc-400">
+                                    Zde se nachází všechny notifikace, co se událo.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="mt-2 card">
                         <div className="divide-y divide-zinc-800 ">
                             {notifications && notifications.length > 0 ? (
                                 <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
@@ -373,7 +397,6 @@ export default function Index({ auth, notifications, models, actions, filters })
                                             <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
                                                 Stav notifikace
                                             </th>
-
 
                                             <th className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400">
                                                 Akce
@@ -486,13 +509,9 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     </tbody>
                                 </table>
                             ):(
-                                <div className="p-4 text-center text-zinc-400">
-                                    <EyeIcon className="size-8 mx-auto" />
-
-                                    <p className="text-lg font-semibold">
-                                        Nejsou zde žádné nové notifikace.
-                                    </p>
-                                </div>
+                                <ResetFilters href={route("notifications.index")}>
+                                    Nebyly nalezeny žádné hostingy.
+                                </ResetFilters>
                             )}
                         </div>
                     </section>
