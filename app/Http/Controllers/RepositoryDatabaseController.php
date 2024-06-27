@@ -5,17 +5,41 @@ namespace App\Http\Controllers;
 use ZipArchive;
 use Illuminate\Http\Request;
 use App\Models\RepositoryDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class RepositoryDatabaseController extends Controller
 {
-    public function download(RepositoryDatabase $repository_database)
+    public function download(Request $request)
     {
-        $path = $repository_database->path . '/' . $repository_database->name;
+        $databases = RepositoryDatabase::query()
+            ->whereIn('id', $request->databases)
+            ->with('repository')
+            ->get();
 
-        return response()->download(storage_path('app/public/' . $path));
+        $repository_slug = $databases[0]->repository->slug;
+
+        $zip = new ZipArchive();
+
+        $zip_file_name = $repository_slug . '.zip';
+
+        $zip_path = storage_path('app/public/' . $zip_file_name);
+
+        if ($zip->open($zip_path, ZipArchive::CREATE) === TRUE) {
+            foreach ($databases as $database) {
+                $file_path = storage_path('app/public/' . $database->path . '/' . $database->name);
+                if (file_exists($file_path)) {
+                    $zip->addFile($file_path, basename($file_path));
+                }
+            }
+            $zip->close();
+        } else {
+            return response()->json(['error' => 'Cannot create zip file'], 500);
+        }
+
+        return response()->download($zip_path)->deleteFileAfterSend(true);
     }
 
     public function destroy(RepositoryDatabase $repository_database)
@@ -28,14 +52,12 @@ class RepositoryDatabaseController extends Controller
             $repository_database->delete();
         });
 
-
-
         return back();
     }
 
     public function bulkDownload(Request $request)
     {
-        dd('Asd');
+        dd($request->all());
 
         $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
 

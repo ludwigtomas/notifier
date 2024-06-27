@@ -220,7 +220,7 @@ export default function Index({ auth, clients, filters }) {
                                                                 <div className="flex items-center gap-x-2 ">
                                                                     {client.relationships.repositories.slice(0,2).map((repository) => (
                                                                         <p
-                                                                            key={repository.id}
+                                                                            key={repository.repository_id}
                                                                             className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation"
                                                                         >
                                                                             {repository.name}

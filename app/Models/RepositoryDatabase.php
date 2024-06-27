@@ -32,7 +32,11 @@ class RepositoryDatabase extends Model
     */
     public function repository(): BelongsTo
     {
-        return $this->belongsTo(Repository::class);
+        return $this->belongsTo(
+            Repository::class,
+            'repository_id',
+            'repository_id'
+        );
     }
 
     // notifications

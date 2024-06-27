@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\HostingController;
@@ -70,6 +71,15 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
     });
 
+    // 🔺 DATABASES
+    route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
+        route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+        route::delete('/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
+
+        route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
+        //* STORE ---> api.php
+    });
+
     // 🔺 CLIENTS
     route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
         route::get('/', [ClientController::class, 'index'])->name('index');
@@ -86,17 +96,6 @@ route::middleware('auth:sanctum')->group(function () {
         route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
         route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
         route::patch('update', [ClientRepositoryController::class, 'update'])->name('update');
-    });
-
-    // 🔺 DATABASES
-    route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
-        route::get('/', [RepositoryDatabaseController::class, 'index'])->name('index');
-        route::delete('/{repository_database}', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
-        route::delete('/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
-
-        route::get('/{repository_database}/download', [RepositoryDatabaseController::class, 'download'])->name('download');
-        route::get('/bulk-download', [RepositoryDatabaseController::class, 'bulkDownload'])->name('bulk.download');
-        //* STORE ---> api.php
     });
 
     // 🔺 HOSTINGS REPOSITORY
@@ -142,6 +141,13 @@ require __DIR__ . '/auth.php';
 // DELETE IN PRODUCTION
 if (env('APP_ENV') === 'local') {
 
+    route::get('/test', function () {
+        $file = Storage::get('databases_1719494018.zip');
+
+        return response()->streamDownload(function () use ($file) {
+            echo $file;
+        }, 'databases_1719494018.zip');
+    })->name('test');
 
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
     route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
