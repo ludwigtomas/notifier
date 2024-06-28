@@ -420,7 +420,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         </div>
                                     </div>
 
-                                    <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-lg overflow-hidden">
+                                    {/* <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-lg overflow-hidden">
                                         <span className="inline-block text-zinc-400">
                                             <FireIcon className="size-8" />
                                         </span>
@@ -447,7 +447,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
                                             { usePage().props.global.repositories_count }
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div className="group relative p-8 space-y-3 bg-zinc-800 border-2 border-zinc-700 hover:border-sky-500 rounded-lg overflow-hidden">
                                         <span className="inline-block text-zinc-400">
