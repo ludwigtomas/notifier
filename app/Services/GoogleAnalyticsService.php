@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Repository;
-use App\Models\Notification;
 use App\Mail\GoogleAnalyticsMail;
 use Illuminate\Support\Facades\Mail;
 use Google\Analytics\Data\V1beta\Metric;

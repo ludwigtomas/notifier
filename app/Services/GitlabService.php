@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use App\Jobs\RepositoryNotifierJob;
+use Throwable;
+use Carbon\Carbon;
 use App\Models\Git;
 use App\Models\Repository;
-use Carbon\Carbon;
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\ClientException;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Throwable;
+use App\Jobs\RepositoryNotifierJob;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Exception\ClientException;
 
 class GitlabService
 {
