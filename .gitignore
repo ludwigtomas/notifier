@@ -14,8 +14,6 @@ Homestead.json
 Homestead.yaml
 auth.json
 
-package-lock.json
-
 privatekey.txt
 
 npm-debug.log
