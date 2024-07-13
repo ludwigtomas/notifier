@@ -6,6 +6,7 @@ import {
     EyeIcon,
     BookmarkIcon,
     PresentationChartBarIcon,
+    PencilSquareIcon,
 
     GlobeAltIcon,
     FolderOpenIcon,
@@ -271,6 +272,13 @@ export default function Dashboard({ auth, notifications, models, filters }) {
 
                                                 <td className="px-4 py-4">
                                                     <div className="flex justify-center space-x-2">
+                                                        <Link
+                                                            href={route("notifications.edit", notification.id)}
+                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        >
+                                                            <PencilSquareIcon className="size-6 text-green-500"/>
+                                                        </Link>
+
                                                         <Link
                                                             as="button"
                                                             method="PATCH"
