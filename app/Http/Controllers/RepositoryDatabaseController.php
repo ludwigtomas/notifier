@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteDatabaseRequest;
+use App\Http\Requests\DownloadDatabaseRequest;
 use ZipArchive;
+use App\Models\Repository;
 use Illuminate\Http\Request;
 use App\Models\RepositoryDatabase;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
 class RepositoryDatabaseController extends Controller
 {
-    public function download(Request $request)
+    public function download(DownloadDatabaseRequest $request)
     {
         $databases = RepositoryDatabase::query()
             ->whereIn('id', $request->databases)
@@ -32,6 +35,8 @@ class RepositoryDatabaseController extends Controller
                 $file_path = storage_path('app/public/' . $database->path . '/' . $database->name);
                 if (file_exists($file_path)) {
                     $zip->addFile($file_path, basename($file_path));
+                } else {
+                    return back();
                 }
             }
             $zip->close();
@@ -42,60 +47,20 @@ class RepositoryDatabaseController extends Controller
         return response()->download($zip_path)->deleteFileAfterSend(true);
     }
 
-    public function destroy(RepositoryDatabase $repository_database)
+    public function destroy(DeleteDatabaseRequest $request)
     {
-        $path = $repository_database->path . '/' . $repository_database->name;
-
-        DB::transaction(function () use ($repository_database, $path) {
-            Storage::delete($path);
-
-            $repository_database->delete();
-        });
-
-        return back();
-    }
-
-    public function bulkDownload(Request $request)
-    {
-        dd($request->all());
-
-        $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
-
-        $file_name = explode('/', $databases[0]->path)[0] . '.zip';
-        $file_path = storage_path('app/' . $file_name);
-        $password = 'test';
-
-        $zip = new ZipArchive();
-
-        $zip_file = $zip->open($file_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-        if ($zip_file === true) {
-
-            // $zip->setPassword($password); (:  for some reason this doesn't work  :)
-
-            foreach ($databases as $file) {
-                $zip->addFile(storage_path('app/' . $file->path . '/' . $file->name), $file->name);
-
-                $zip->setEncryptionName($file->name, ZipArchive::EM_AES_256, $password);
-            }
-
-            $zip->close();
-
-            // Nyní odešlete soubor ke stažení
-            return response()->download($file_path)->deleteFileAfterSend(true);
-        } else {
-            return 'Failed to create the zip file.';
-        }
-    }
-
-    public function bulkDestroy(Request $request)
-    {
-        $databases = RepositoryDatabase::whereIn('id', $request->databases)->get();
+        $databases = RepositoryDatabase::query()
+            ->wherein('id', $request->databases)
+            ->get();
 
         foreach ($databases as $database) {
-            File::delete(storage_path('app/' . $database->path . '/' . $database->name));
+            $path = $database->path . '/' . $database->name;
 
-            $database->delete();
+            Storage::delete($path);
+
+            $database->forceDelete();
         }
+
+        return back();
     }
 }

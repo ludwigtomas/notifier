@@ -11,7 +11,7 @@ import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useState } from "react";
 
-export default function RepositoryDatabaseTable({ database_backups }) {
+export default function RepositoryDatabaseTable({ repository, database_backups }) {
     const [selectedDatabases, setSelectedDatabases] = useState([]);
     const [selectedDatabase, setSelectedDatabase] = useState(null);
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -30,7 +30,9 @@ export default function RepositoryDatabaseTable({ database_backups }) {
     };
 
     const deleteDatabase = () => {
-        let url = route("databases.destroy", selectedDatabase.id);
+        let url = route("databases.destroy", {
+            databases: [selectedDatabase.id],
+        });
 
         router.delete(url, {
             preserveScroll: true,
@@ -39,7 +41,7 @@ export default function RepositoryDatabaseTable({ database_backups }) {
     };
 
     const bulkDeleteRepositories = () => {
-        let url = route("databases.bulk.destroy", {
+        let url = route("databases.destroy", {
             databases: selectedDatabases,
         });
 

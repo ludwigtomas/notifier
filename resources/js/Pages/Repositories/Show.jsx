@@ -10,7 +10,6 @@ import {
     CommandLineIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import RepositoryClientsTable from "@/Pages/Repositories/Partials/RepositoryClientsTable";
 import RepositoryNotificationsTable from "@/Pages/Repositories/Partials/RepositoryNotificationsTable";
 import RepositoryDatabaseTable from "@/Pages/Repositories/Partials/RepositoryDatabaseTable";
@@ -18,46 +17,13 @@ import RepositoryHostingTable from "@/Pages/Repositories/Partials/RepositoryHost
 import RepositorySettingForApi from "@/Components/RepositorySettingForApi";
 
 export default function Show({ auth, repository, database_backups, clients }) {
-    const [showCode, setShowCode] = useState(false);
     const [showRelationship, setShowRelationship] = useState("databases");
-    const [selectFile, setSelectFile] = useState('ssh');
-
-    // Function to toggle the database_verification_code
-    function toggleShowCode() {
-        setShowCode(!showCode);
-    }
 
     const handleShowRepositoryRelation = (relation) => {
         return () => {
             setShowRelationship(relation);
         };
     };
-
-    const handleSelectFile = (file) => {
-        return () => {
-            setSelectFile(file);
-        };
-    }
-
-    // Function to copy the code to clipboard
-    const copyEnvToClipboard = () => {
-        let backup_code = repository.database_verification_code;
-
-        let backup_url = import.meta.env.VITE_APP_URL + "/api/v1/repositories/" + repository.slug;
-        let env_code = "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url;
-
-        navigator.clipboard.writeText(env_code);
-    };
-
-    const copySSHToClipboard = () => {
-        if (!repository.relationships.hosting_repository) {
-            return;
-        }
-
-        let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + repository.relationships.hosting_repository.ip_port;
-
-        navigator.clipboard.writeText(ssh_code);
-    }
 
     return (
         <section>
@@ -327,7 +293,10 @@ export default function Show({ auth, repository, database_backups, clients }) {
 
                         <div>
                             {showRelationship === "databases" ? (
-                                <RepositoryDatabaseTable database_backups={database_backups}/>
+                                <RepositoryDatabaseTable
+                                    repository={repository}
+                                    database_backups={database_backups}
+                                />
                             ) : showRelationship === "clients" ? (
                                 <RepositoryClientsTable clients={clients} />
                             ) : showRelationship === "notifications" ? (
