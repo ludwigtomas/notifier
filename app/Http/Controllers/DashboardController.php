@@ -32,6 +32,8 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
+            // dd($notifications[0]['notifiable']->getTableName());
+
         return inertia('Dashboard/Index', [
             'notifications' => NotificationResource::collection($notifications),
             'models' => ModelHelper::getModels(),

@@ -129,7 +129,7 @@ export default function Index({ auth, notifications, models, actions, filters })
 
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                    <section className="mb-5 card">
+                    <section className="mb-10 card">
                         <div className="grid grid-cols-5 gap-2 items-center">
                             <div>
                                 <InputLabel
