@@ -15,7 +15,6 @@ use App\Jobs\GoogleAnalyticsJob;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\HostingResource;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;

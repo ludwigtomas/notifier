@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Gits\UpdateGitRequest;
-use App\Http\Resources\GitResource;
-use App\Http\Resources\RepositoryResource;
 use App\Models\Git;
-use App\Models\Repository;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Inertia\Response;
+use App\Models\Repository;
+use Illuminate\Support\Str;
+use App\Http\Resources\GitResource;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\Gits\UpdateGitRequest;
 
 class GitController extends Controller
 {

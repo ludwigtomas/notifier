@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Inertia\Response;
-use DirectoryIterator;
 use App\Helpers\ModelHelper;
 use App\Models\Notification;
 use Illuminate\Http\Request;
