@@ -108,7 +108,7 @@ export default function Show({ auth, repository, database_backups, clients }) {
                 <div className="py-12">
                     <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
 
-                        <div className="w-7/12 mx-auto">
+                        <div className="w-9/12 mx-auto">
                             <RepositorySettingForApi repository={repository}/>
                         </div>
 

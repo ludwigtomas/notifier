@@ -105,42 +105,39 @@ const RepositorySettingForApi = ({repository}) => {
                                             id="code-area"
                                             className="p-5 space-y-3"
                                         >
-                                            {repository.relationships
-                                                .hosting_repository && (
+                                            {repository.relationships.hosting_repository && (
                                                 <div className="text-base text-center">
                                                     <span className="text-yellow-300">
                                                         ssh
-                                                    </span>{" "}
-                                                    <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting_repository
-                                                                ?.login_user
-                                                        }
                                                     </span>
+
+                                                    {" "}
+
+                                                    <span className="text-purple-400">
+                                                        { repository.relationships.hosting_repository?.login_user}
+                                                    </span>
+
                                                     <span className="text-green-300">
                                                         @
                                                     </span>
+
                                                     <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting_repository
-                                                                ?.ip_address
-                                                        }
-                                                    </span>{" "}
-                                                    <span className="text-green-300">
-                                                        -p
-                                                    </span>{" "}
-                                                    <span className="text-purple-400">
-                                                        {
-                                                            repository
-                                                                .relationships
-                                                                .hosting_repository
-                                                                ?.ip_port
-                                                        }
+                                                        { repository.relationships.hosting_repository?.ip_address}
                                                     </span>
+                                                    {" "}
+                                                    {repository.relationships.hosting_repository?.ip_port && (
+                                                        <span>
+                                                            <span className="text-green-300">
+                                                                -p
+                                                            </span>
+
+                                                            {" "}
+
+                                                            <span className="text-purple-400">
+                                                                { repository.relationships.hosting_repository.ip_port }
+                                                            </span>
+                                                        </span>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>

@@ -3,8 +3,6 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { ClockIcon } from "@heroicons/react/24/outline";
-import Dropdown from "@/Components/Dropdown";
 import { TrashIcon } from "@heroicons/react/24/outline";
 
 export default function Show({ hostings, hosting, hosting_repository, className = "" }) {

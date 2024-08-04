@@ -177,12 +177,17 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                                 <span className="text-purple-400">
                                                     { repository.relationships.hosting_repository?.ip_address }
                                                 </span>{" "}
-                                                <span className="text-green-300">
-                                                    -p
-                                                </span>{" "}
-                                                <span className="text-purple-400">
-                                                    { repository.relationships.hosting_repository?.ip_port }
-                                                </span>
+
+                                                {repository.relationships.hosting_repository?.ip_port && (
+                                                    <span>
+                                                        <span className="text-green-300">
+                                                            -p
+                                                        </span>{" "}
+                                                        <span className="text-purple-400">
+                                                            { repository.relationships.hosting_repository?.ip_port }
+                                                        </span>
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
