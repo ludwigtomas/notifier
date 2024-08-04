@@ -38,7 +38,7 @@ const RepositorySettingForApi = ({repository}) => {
                 return;
             }
 
-            let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + repository.relationships.hosting_repository.ip_port;
+            let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + repository.relationships.hosting_repository.ip_port ?? 22;
 
             navigator.clipboard.writeText(ssh_code);
         }
