@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ActionTypeHelper;
 use Inertia\Response;
 use App\Helpers\ModelHelper;
 use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Helpers\ActionTypeHelper;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\NotificationResource;
 
