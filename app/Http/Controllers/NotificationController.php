@@ -37,7 +37,7 @@ class NotificationController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->with('notifiable')
-            ->get();
+            ->paginate(20);
 
         return inertia('Notifications/Index', [
             'notifications' => NotificationResource::collection($notifications),
@@ -55,7 +55,6 @@ class NotificationController extends Controller
             'notification' => new NotificationResource($notification),
         ]);
     }
-
 
     public function markAsRead(Notification $notification): RedirectResponse
     {
