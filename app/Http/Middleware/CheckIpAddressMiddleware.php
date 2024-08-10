@@ -21,7 +21,10 @@ class CheckIpAddressMiddleware
         ];
 
         if (! in_array($request->ip(), $allowed_ips)) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return response()->json([
+                'message' => 'Unauthorized',
+                'IP' => $request->ip(),
+            ], 403);
         }
 
         return $next($request);
