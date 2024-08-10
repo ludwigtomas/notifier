@@ -21,7 +21,11 @@ class CheckIpAddressMiddleware
         $ipAddress = $request->header('X-Forwarded-For') ?? $request->ip();
 
         if ($ipAddress !== $allowedIp) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+            return response()->json([
+                'message' => 'Unauthorized',
+                'ip' => $request->ip(),
+                'header' => $request->header('X-Forwarded-For'),
+            ], 403);
         }
 
         return $next($request);
