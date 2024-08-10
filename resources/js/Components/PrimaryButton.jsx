@@ -6,7 +6,6 @@ export default function PrimaryButton({ className = '', disabled, typeOfButton, 
         buttonColor = 'bg-green-500 hover:bg-green-600 focus:bg-green-600 active:bg-green-700';
     }
 
-
     return (
         <button
             {...props}

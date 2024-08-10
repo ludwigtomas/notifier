@@ -47,11 +47,11 @@ class NotificationController extends Controller
         ]);
     }
 
-    public function edit(Notification $notification): Response
+    public function show(Notification $notification): Response
     {
         $notification->load('notifiable');
 
-        return inertia('Notifications/Edit', [
+        return inertia('Notifications/Show', [
             'notification' => new NotificationResource($notification),
         ]);
     }
