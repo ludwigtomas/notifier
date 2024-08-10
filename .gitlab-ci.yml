@@ -8,7 +8,7 @@ deploy:
     - chmod 700 ~/.ssh
     - ssh-keyscan -p $VPS_PORT $VPS_IP >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ssh -p $VPS_PORT $VPS_USER@$VPS_IP 'cd /var/www/html && git pull && composer i && npm i && npm run build && pm2 restart server && php artisan optimize:clear'
+    - ssh -p $VPS_PORT $VPS_USER@$VPS_IP 'cd /var/www/html && git pull && rm package-lock.json && rm composer.lock composer i && npm i && npm run build && pm2 restart server && php artisan optimize:clear'
     - echo "Deploying to production server"
 
   only:
