@@ -408,7 +408,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                             <div className="flex justify-center space-x-2">
                                                                 <Link
                                                                     href={route(
-                                                                        "notifications.edit",
+                                                                        "notifications.show",
                                                                         notification.id
                                                                     )}
                                                                     className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
