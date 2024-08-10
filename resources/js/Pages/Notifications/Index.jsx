@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
     EyeIcon,
@@ -6,7 +6,6 @@ import {
     BookmarkIcon,
     TrashIcon,
     PencilSquareIcon,
-
     GlobeAltIcon,
     FolderOpenIcon,
     RocketLaunchIcon,
@@ -16,26 +15,33 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import debounce from "lodash/debounce";
-import InputLabel from '@/Components/InputLabel';
+import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import ResetFilters from "@/Components/ResetFilters";
 import Pagination from "@/Components/Pagination";
 
-export default function Index({ auth, notifications, models, actions, filters }) {
-
+export default function Index({
+    auth,
+    notifications,
+    models,
+    actions,
+    filters,
+}) {
     const [search, setSearch] = useState(filters.search || "");
     const [isRead, setIsRead] = useState(filters.read_at || false);
-    const [selectedModel, setSelectedModel] = useState(filters.model || [])
-    const [selectedAction, setSelectedAction] = useState(filters.action || "")
+    const [selectedModel, setSelectedModel] = useState(filters.model || []);
+    const [selectedAction, setSelectedAction] = useState(filters.action || "");
 
     const debouncedSearch = debounce((value) => {
         setSearch(value);
 
-        router.get(route("notifications.index"),{
+        router.get(
+            route("notifications.index"),
+            {
                 search: value,
                 read_at: isRead,
                 model: selectedModel,
-                action: selectedAction
+                action: selectedAction,
             },
             {
                 preserveScroll: true,
@@ -45,56 +51,73 @@ export default function Index({ auth, notifications, models, actions, filters })
     }, 500);
 
     const handleModel = (model) => {
-
-        if(model === 'clear_all') {
+        if (model === "clear_all") {
             setSelectedModel([]);
 
-            router.get(route('notifications.index', {
-                search: search,
-                read_at: isRead,
-                action: selectedAction,
-                model: []
-            }, {
-                preserveScroll: true,
-                preserveState: true,
-            }));
+            router.get(
+                route(
+                    "notifications.index",
+                    {
+                        search: search,
+                        read_at: isRead,
+                        action: selectedAction,
+                        model: [],
+                    },
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                )
+            );
         } else {
             if (selectedModel.includes(model)) {
-                setSelectedModel(selectedModel.filter((item) => item !== model));
+                setSelectedModel(
+                    selectedModel.filter((item) => item !== model)
+                );
             } else {
                 setSelectedModel([...selectedModel, model]);
             }
 
-            router.get(route('notifications.index', {
-                search: search,
-                read_at: isRead,
-                action: selectedAction,
-                model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
-            }, {
-                preserveScroll: true,
-                preserveState: true,
-            }));
+            router.get(
+                route(
+                    "notifications.index",
+                    {
+                        search: search,
+                        read_at: isRead,
+                        action: selectedAction,
+                        model: selectedModel.includes(model)
+                            ? selectedModel.filter((item) => item !== model)
+                            : [...selectedModel, model],
+                    },
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                )
+            );
         }
-    }
+    };
 
     const handleSetIsRead = (value) => {
         setIsRead(value);
 
-        router.get(route("notifications.index"), {
+        router.get(
+            route("notifications.index"),
+            {
                 search: search,
                 read_at: value,
                 model: selectedModel,
-                action: selectedAction
+                action: selectedAction,
             },
             {
                 preserveScroll: true,
                 preserveState: true,
             }
         );
-    }
+    };
 
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -120,7 +143,6 @@ export default function Index({ auth, notifications, models, actions, filters })
         >
             <Head title="Notifikace" />
 
-
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                     <section className="mb-10 card">
@@ -138,7 +160,9 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     placeholder="Hledat notifikaci"
                                     type="text"
                                     className="w-full !border-zinc-600 "
-                                    onChange={(e) => debouncedSearch(e.target.value)}
+                                    onChange={(e) =>
+                                        debouncedSearch(e.target.value)
+                                    }
                                 />
                             </div>
 
@@ -159,7 +183,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                         aktuálně: &nbsp;
                                     </span>
                                     <span className="text-zinc-200">
-                                        {isRead ? 'Přečtené' : 'Všechny'}
+                                        {isRead ? "Přečtené" : "Všechny"}
                                     </span>
                                 </button>
                             </div>
@@ -178,11 +202,13 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     value={selectedAction}
                                     onChange={(e) => {
                                         setSelectedAction(e.target.value);
-                                        router.get(route("notifications.index"), {
+                                        router.get(
+                                            route("notifications.index"),
+                                            {
                                                 search: search,
                                                 read_at: isRead,
                                                 action: e.target.value,
-                                                model: selectedModel
+                                                model: selectedModel,
                                             },
                                             {
                                                 preserveScroll: true,
@@ -193,22 +219,15 @@ export default function Index({ auth, notifications, models, actions, filters })
                                 >
                                     <option value="">Vyberte metodu</option>
                                     {actions.map((action, index) => (
-                                        <option
-                                            key={index}
-                                            value={action}
-                                        >
+                                        <option key={index} value={action}>
                                             {action}
                                         </option>
                                     ))}
-
                                 </select>
                             </div>
 
                             <div>
-                                <InputLabel
-                                    className="mb-1"
-                                    value="Eventy"
-                                />
+                                <InputLabel className="mb-1" value="Eventy" />
 
                                 <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
@@ -228,13 +247,18 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
                                                         <div className="text-center text-gray-200 ">
                                                             <p className="text-lg font-semibold">
-                                                                Nejsou vybrané žádné modely
+                                                                Nejsou vybrané
+                                                                žádné modely
                                                             </p>
                                                         </div>
                                                     </div>
-                                                ):(
+                                                ) : (
                                                     <div
-                                                        onClick={() => handleModel('clear_all')}
+                                                        onClick={() =>
+                                                            handleModel(
+                                                                "clear_all"
+                                                            )
+                                                        }
                                                         className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
                                                     >
                                                         <div className="text-center text-white">
@@ -249,19 +273,34 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     return (
                                                         <div
                                                             key={index}
-                                                            onClick={() => handleModel(model)}
-                                                            className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
-                                                            (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
+                                                            onClick={() =>
+                                                                handleModel(
+                                                                    model
+                                                                )
+                                                            }
+                                                            className={
+                                                                "text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 " +
+                                                                (selectedModel.includes(
+                                                                    model
+                                                                )
+                                                                    ? " border-green-500"
+                                                                    : " border-zinc-600")
+                                                            }
                                                         >
                                                             <BookmarkIcon
-                                                                className={"size-10 text-neutral-400 mb-3 " +
-                                                                    (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                                className={
+                                                                    "size-10 text-neutral-400 mb-3 " +
+                                                                    (selectedModel.includes(
+                                                                        model
+                                                                    )
+                                                                        ? " fill-neutral-400"
+                                                                        : " border-zinc-600 bg-zinc-700")
                                                                 }
                                                             />
 
-                                                            { model }
+                                                            {model}
                                                         </div>
-                                                    )
+                                                    );
                                                 })}
                                             </div>
                                         </div>
@@ -270,10 +309,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                             </div>
 
                             <div>
-                                <InputLabel
-                                    className="mb-1"
-                                    value="Model"
-                                />
+                                <InputLabel className="mb-1" value="Model" />
 
                                 <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
                                     <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
@@ -293,13 +329,18 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
                                                         <div className="text-center text-gray-200 ">
                                                             <p className="text-lg font-semibold">
-                                                                Nejsou vybrané žádné modely
+                                                                Nejsou vybrané
+                                                                žádné modely
                                                             </p>
                                                         </div>
                                                     </div>
-                                                ):(
+                                                ) : (
                                                     <div
-                                                        onClick={() => handleModel('clear_all')}
+                                                        onClick={() =>
+                                                            handleModel(
+                                                                "clear_all"
+                                                            )
+                                                        }
                                                         className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
                                                     >
                                                         <div className="text-center text-white">
@@ -314,19 +355,34 @@ export default function Index({ auth, notifications, models, actions, filters })
                                                     return (
                                                         <div
                                                             key={index}
-                                                            onClick={() => handleModel(model)}
-                                                            className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
-                                                            (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
+                                                            onClick={() =>
+                                                                handleModel(
+                                                                    model
+                                                                )
+                                                            }
+                                                            className={
+                                                                "text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 " +
+                                                                (selectedModel.includes(
+                                                                    model
+                                                                )
+                                                                    ? " border-green-500"
+                                                                    : " border-zinc-600")
+                                                            }
                                                         >
                                                             <BookmarkIcon
-                                                                className={"size-10 text-neutral-400 mb-3 " +
-                                                                    (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                                className={
+                                                                    "size-10 text-neutral-400 mb-3 " +
+                                                                    (selectedModel.includes(
+                                                                        model
+                                                                    )
+                                                                        ? " fill-neutral-400"
+                                                                        : " border-zinc-600 bg-zinc-700")
                                                                 }
                                                             />
 
-                                                            { model }
+                                                            {model}
                                                         </div>
-                                                    )
+                                                    );
                                                 })}
                                             </div>
                                         </div>
@@ -343,7 +399,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     href={route("dashboard.index")}
                                     className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
                                 >
-                                    <EyeIcon className="size-10 text-sky-500"/>
+                                    <EyeIcon className="size-10 text-sky-500" />
                                 </Link>
                             </div>
 
@@ -353,7 +409,8 @@ export default function Index({ auth, notifications, models, actions, filters })
                                 </h1>
 
                                 <p className="text-zinc-400">
-                                    Zde se nachází všechny notifikace, co se událo.
+                                    Zde se nachází všechny notifikace, co se
+                                    událo.
                                 </p>
                             </div>
                         </div>
@@ -400,116 +457,231 @@ export default function Index({ auth, notifications, models, actions, filters })
                                         </thead>
 
                                         <tbody className="divide-y divide-zinc-800 bg-zinc-700">
-                                            {notifications.data.map((notification) => (
-                                                <tr
-                                                    key={notification.id}
-                                                    className={"text-white " +
-                                                        (notification.data.action === 'created' ? 'bg-green-500/5 hover:bg-green-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'updated' ? 'bg-yellow-500/5 hover:bg-yellow-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'deleted' ? 'bg-purple-500/5 hover:bg-purple-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'restored' ? 'bg-blue-500/5 hover:bg-blue-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 hover:bg-red-500/15' : '')
-                                                    }
-                                                >
+                                            {notifications.data.map(
+                                                (notification) => (
+                                                    <tr
+                                                        key={notification.id}
+                                                        className={
+                                                            "text-white " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "created"
+                                                                ? "bg-green-500/5 hover:bg-green-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "updated"
+                                                                ? "bg-yellow-500/5 hover:bg-yellow-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "deleted"
+                                                                ? "bg-purple-500/5 hover:bg-purple-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "restored"
+                                                                ? "bg-blue-500/5 hover:bg-blue-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "forceDeleted"
+                                                                ? "bg-red-500/5 hover:bg-red-500/15"
+                                                                : "")
+                                                        }
+                                                    >
+                                                        <td className="px-4 py-4">
+                                                            {{
+                                                                Git: (
+                                                                    <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                GitGroup: (
+                                                                    <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                Repository: (
+                                                                    <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                User: (
+                                                                    <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                Hosting: (
+                                                                    <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                RepositoryDatabase:
+                                                                    (
+                                                                        <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                    ),
+                                                            }[
+                                                                notification
+                                                                    .notifiable_type_formatted
+                                                            ] || (
+                                                                <div>
+                                                                    No Icon
+                                                                </div>
+                                                            )}
+                                                        </td>
 
-                                                    <td className="px-4 py-4">
-                                                        {{
-                                                            'Git': <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'GitGroup': <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'Repository': <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'User': <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'Hosting': <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'RepositoryDatabase': <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                        }[notification.notifiable_type_formatted] || <div>No Icon</div>}
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span
-                                                            className={"group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
-                                                                (notification.data.action === 'created' ? 'bg-green-500 shadow-green-50 border-b-green-900' : '') + ' ' +
-                                                                (notification.data.action === 'updated' ? 'bg-yellow-500 shadow-yellow-50 border-b-yellow-900' : '') + ' ' +
-                                                                (notification.data.action === 'deleted' ? 'bg-purple-500 shadow-purple-50 border-b-purple-900' : '') + ' ' +
-                                                                (notification.data.action === 'restored' ? 'bg-blue-500 shadow-blue-50 border-b-blue-900' : '') + ' ' +
-                                                                (notification.data.action === 'forceDeleted' ? 'bg-red-500 shadow-red-50 border-b-red-900' : '')
-                                                            }
-                                                        >
-                                                            {notification.data.action}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.notifiable_type_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.notifiable_id}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.created_at_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.type_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span
-                                                            className={"text-xs font-semibold " + (notification.read_at ? 'text-green-500' : 'text-red-500')}
-                                                        >
-                                                            {notification.read_at ? 'Přečteno' : 'Nepřečteno'}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4">
-                                                        <div className="flex justify-center space-x-2">
-                                                            <Link
-                                                                href={route("notifications.edit", notification.id)}
-                                                                className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        <td className="px-4 py-4 ">
+                                                            <span
+                                                                className={
+                                                                    "group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "created"
+                                                                        ? "bg-green-500 shadow-green-50 border-b-green-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "updated"
+                                                                        ? "bg-yellow-500 shadow-yellow-50 border-b-yellow-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "deleted"
+                                                                        ? "bg-purple-500 shadow-purple-50 border-b-purple-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "restored"
+                                                                        ? "bg-blue-500 shadow-blue-50 border-b-blue-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "forceDeleted"
+                                                                        ? "bg-red-500 shadow-red-50 border-b-red-900"
+                                                                        : "")
+                                                                }
                                                             >
-                                                                <PencilSquareIcon className="size-6 text-green-500"/>
-                                                            </Link>
+                                                                {
+                                                                    notification
+                                                                        .data
+                                                                        .action
+                                                                }
+                                                            </span>
+                                                        </td>
 
-                                                            <Link
-                                                                as="button"
-                                                                method="PATCH"
-                                                                href={route("notifications.mark-as-read", notification.id)}
-                                                                className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
-                                                                preserveScroll
-                                                            >
-                                                                <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-yellow-500 fill-yellow-500' : 'text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500')} />
-                                                            </Link>
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.notifiable_type_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
 
-                                                            <Link
-                                                                as="button"
-                                                                method="DELETE"
-                                                                href={route("notifications.destroy", notification.id)}
-                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                                preserveScroll
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.notifiable_id
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.created_at_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.type_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span
+                                                                className={
+                                                                    "text-xs font-semibold " +
+                                                                    (notification.read_at
+                                                                        ? "text-green-500"
+                                                                        : "text-red-500")
+                                                                }
                                                             >
-                                                                <TrashIcon className="size-6 text-red-500" />
-                                                            </Link>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                                {notification.read_at
+                                                                    ? "Přečteno"
+                                                                    : "Nepřečteno"}
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4">
+                                                            <div className="flex justify-center space-x-2">
+                                                                <Link
+                                                                    href={route(
+                                                                        "notifications.edit",
+                                                                        notification.id
+                                                                    )}
+                                                                    className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                >
+                                                                    <PencilSquareIcon className="size-6 text-green-500" />
+                                                                </Link>
+
+                                                                <Link
+                                                                    as="button"
+                                                                    method="PATCH"
+                                                                    href={route(
+                                                                        "notifications.mark-as-read",
+                                                                        notification.id
+                                                                    )}
+                                                                    className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
+                                                                    preserveScroll
+                                                                >
+                                                                    <BookmarkIcon
+                                                                        className={
+                                                                            "size-6 " +
+                                                                            (notification.read_at
+                                                                                ? "text-yellow-500 fill-yellow-500"
+                                                                                : "text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500")
+                                                                        }
+                                                                    />
+                                                                </Link>
+
+                                                                <Link
+                                                                    as="button"
+                                                                    method="DELETE"
+                                                                    href={route(
+                                                                        "notifications.destroy",
+                                                                        notification.id
+                                                                    )}
+                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                    preserveScroll
+                                                                >
+                                                                    <TrashIcon className="size-6 text-red-500" />
+                                                                </Link>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
                                         </tbody>
                                     </table>
 
                                     <div className="mt-5 pt-5">
-                                        <Pagination links={notifications.meta} />
+                                        <Pagination
+                                            links={notifications.meta}
+                                        />
                                     </div>
                                 </>
-                            ):(
-                                <ResetFilters href={route("notifications.index")}>
+                            ) : (
+                                <ResetFilters
+                                    href={route("notifications.index")}
+                                >
                                     Nebyly nalezeny žádné hostingy.
                                 </ResetFilters>
                             )}
@@ -517,7 +689,6 @@ export default function Index({ auth, notifications, models, actions, filters })
                     </section>
                 </div>
             </div>
-
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

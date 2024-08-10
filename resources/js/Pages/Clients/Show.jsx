@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
     PencilSquareIcon,
@@ -7,7 +7,7 @@ import {
 
 export default function Dashboard({ auth, client }) {
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -75,12 +75,10 @@ export default function Dashboard({ auth, client }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            clients
-                        </div>
+                        <div className="p-6 text-gray-900">clients</div>
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

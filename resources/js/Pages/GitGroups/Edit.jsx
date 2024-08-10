@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
     FireIcon,
@@ -14,9 +14,10 @@ import React, { useState, useEffect } from "react";
 import Modal from "@/Components/Modal";
 import { router } from "@inertiajs/react";
 
-export default function ({ auth, git_group}) {
+export default function ({ auth, git_group }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [toggleRepositoriesModal, setToggleRepositoriesModal] = useState(false);
+    const [toggleRepositoriesModal, setToggleRepositoriesModal] =
+        useState(false);
     const [toggleSubgroupsModal, setToggleSubgroupsModal] = useState(false);
     const [repositories, setRepositories] = useState([]);
     const [subgroups, setSubgroups] = useState([]);
@@ -29,7 +30,6 @@ export default function ({ auth, git_group}) {
         axios
             .get(url)
             .then((response) => {
-
                 setToggleRepositoriesModal(true);
 
                 setRepositories(response.data.data);
@@ -49,7 +49,6 @@ export default function ({ auth, git_group}) {
         axios
             .get(url)
             .then((response) => {
-
                 setToggleSubgroupsModal(true);
 
                 setSubgroups(response.data.data);
@@ -59,39 +58,45 @@ export default function ({ auth, git_group}) {
             .catch((error) => {
                 alert("Error: " + error);
             });
-    }
+    };
 
     const storeRepository = (repository_id) => {
-        let url = route('repositories.store');
+        let url = route("repositories.store");
 
-        router.post(url, {
-            group_id: git_group.group_id,
-            repository_id: repository_id
-        }, {
-            preserveScroll: true,
+        router.post(
+            url,
+            {
+                group_id: git_group.group_id,
+                repository_id: repository_id,
+            },
+            {
+                preserveScroll: true,
 
-            onError: () => {
-                alert('Error');
+                onError: () => {
+                    alert("Error");
+                },
             }
-        })
-    }
+        );
+    };
 
     const storeSubgroup = (group) => {
-        let url = route('git-groups.store');
+        let url = route("git-groups.store");
 
-        router.post(url, {group}, {
-            preserveScroll: true,
+        router.post(
+            url,
+            { group },
+            {
+                preserveScroll: true,
 
-            onError: () => {
-                alert('Error');
+                onError: () => {
+                    alert("Error");
+                },
             }
-        })
-    }
-
-
+        );
+    };
 
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -123,7 +128,6 @@ export default function ({ auth, git_group}) {
                     >
                         {git_group.name}
                     </Link>
-
                 </header>
             }
         >
@@ -131,8 +135,14 @@ export default function ({ auth, git_group}) {
 
             <div className="sm:px-6 lg:px-8">
                 <div className="container mx-auto space-y-6 ">
-
-                    <div className={"p-8 sm:rounded-3xl bg-zinc-900 border-l-8 border-y border-r " + (git_group.parent_id ? "border-red-500" : "border-green-500")}>
+                    <div
+                        className={
+                            "p-8 sm:rounded-3xl bg-zinc-900 border-l-8 border-y border-r " +
+                            (git_group.parent_id
+                                ? "border-red-500"
+                                : "border-green-500")
+                        }
+                    >
                         {git_group.parent_id ? (
                             <section className="relative gap-x-8">
                                 <div className="absolute top-1/2 -translate-y-1/2 col-span-4">
@@ -146,9 +156,16 @@ export default function ({ auth, git_group}) {
                                         Parent group is
                                         <Link
                                             className="ml-2 hover:underline font-bold text-lg"
-                                            href={route("git-groups.edit", git_group.relationships.parent.group_id)}
+                                            href={route(
+                                                "git-groups.edit",
+                                                git_group.relationships.parent
+                                                    .group_id
+                                            )}
                                         >
-                                            {git_group.relationships.parent.name}
+                                            {
+                                                git_group.relationships.parent
+                                                    .name
+                                            }
                                         </Link>
                                     </p>
                                 </div>
@@ -161,12 +178,18 @@ export default function ({ auth, git_group}) {
                                     <div className="flex items-center justify-center">
                                         <a
                                             className="inline-flex px-4 py-2 rounded-xl text-sm text-gray-200 bg-stone-800 hover:bg-stone-700"
-                                            href={git_group.relationships.parent.web_url}
+                                            href={
+                                                git_group.relationships.parent
+                                                    .web_url
+                                            }
                                             target="_blank"
                                         >
-                                            <LinkIcon className="size-5 mr-2"/>
+                                            <LinkIcon className="size-5 mr-2" />
 
-                                            { git_group.relationships.parent.web_url }
+                                            {
+                                                git_group.relationships.parent
+                                                    .web_url
+                                            }
                                         </a>
                                     </div>
                                 </div>
@@ -196,9 +219,9 @@ export default function ({ auth, git_group}) {
                                             href={git_group.web_url}
                                             target="_blank"
                                         >
-                                            <LinkIcon className="size-5 mr-2"/>
+                                            <LinkIcon className="size-5 mr-2" />
 
-                                            { git_group.web_url }
+                                            {git_group.web_url}
                                         </a>
                                     </div>
                                 </div>
@@ -214,7 +237,8 @@ export default function ({ auth, git_group}) {
                                 </h2>
 
                                 <p className="text-zinc-400">
-                                    {git_group.relationships.childrens.length} children groups.
+                                    {git_group.relationships.childrens.length}{" "}
+                                    children groups.
                                 </p>
                             </div>
 
@@ -267,45 +291,53 @@ export default function ({ auth, git_group}) {
                                         </thead>
 
                                         <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                            { git_group.relationships.childrens.map((group) => {
-                                                return (
-                                                    <tr
-                                                        key={group.group_id}
-                                                    >
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {group.group_id}
-                                                        </td>
+                                            {git_group.relationships.childrens.map(
+                                                (group) => {
+                                                    return (
+                                                        <tr
+                                                            key={group.group_id}
+                                                        >
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                                {group.group_id}
+                                                            </td>
 
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {group.name}
-                                                        </td>
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                                {group.name}
+                                                            </td>
 
-
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400">
-                                                            <a
-                                                                href={group.web_url}
-                                                                target="_blank"
-                                                                className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
-                                                            >
-                                                                <LinkIcon className="w-4 h-4" />
-
-                                                                {group.web_url}
-                                                            </a>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            <div className="flex items-center space-x-2">
-                                                                <Link
-                                                                    href={route("git-groups.edit", group.group_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400">
+                                                                <a
+                                                                    href={
+                                                                        group.web_url
+                                                                    }
+                                                                    target="_blank"
+                                                                    className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
                                                                 >
-                                                                    <PencilSquareIcon className="w-6 h-6 text-green-500" />
-                                                                </Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
+                                                                    <LinkIcon className="w-4 h-4" />
+
+                                                                    {
+                                                                        group.web_url
+                                                                    }
+                                                                </a>
+                                                            </td>
+
+                                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                <div className="flex items-center space-x-2">
+                                                                    <Link
+                                                                        href={route(
+                                                                            "git-groups.edit",
+                                                                            group.group_id
+                                                                        )}
+                                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                    >
+                                                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                                    </Link>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                }
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
@@ -320,21 +352,21 @@ export default function ({ auth, git_group}) {
                                     <span className="underline underline-offset-8">
                                         Repositories
                                     </span>
-                                    <span>
-                                        attached to
-                                    </span>
+                                    <span>attached to</span>
                                     <span className="underline underline-offset-8">
                                         {git_group.name}
                                     </span>
                                 </h2>
 
                                 <div className="mt-5 text-zinc-400 space-y-2">
-                                    <p>
-                                        Repositories attached to this group.
-                                    </p>
+                                    <p>Repositories attached to this group.</p>
 
                                     <p>
-                                        {git_group.relationships.repositories.length} repositories.
+                                        {
+                                            git_group.relationships.repositories
+                                                .length
+                                        }{" "}
+                                        repositories.
                                     </p>
                                 </div>
                             </div>
@@ -395,55 +427,71 @@ export default function ({ auth, git_group}) {
                                         </thead>
 
                                         <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                                            { git_group.relationships.repositories.map((repository) => {
-                                                return (
-                                                    <tr
-                                                        key={repository.repository_id}
-                                                    >
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {repository.repository_id}
-                                                        </td>
+                                            {git_group.relationships.repositories.map(
+                                                (repository) => {
+                                                    return (
+                                                        <tr
+                                                            key={
+                                                                repository.repository_id
+                                                            }
+                                                        >
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                                {
+                                                                    repository.repository_id
+                                                                }
+                                                            </td>
 
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {repository.name}
-                                                        </td>
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                                {
+                                                                    repository.name
+                                                                }
+                                                            </td>
 
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
-                                                            {repository.slug}
-                                                        </td>
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400 text-left">
+                                                                {
+                                                                    repository.slug
+                                                                }
+                                                            </td>
 
-                                                        <td className="px-4 py-3.5 text-sm text-zinc-400">
-                                                            <a
-                                                                href={repository.web_url}
-                                                                target="_blank"
-                                                                className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
-                                                            >
-                                                                <LinkIcon className="w-4 h-4" />
-
-                                                                {repository.repository_url}
-                                                            </a>
-                                                        </td>
-
-                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                            <div className="flex items-center space-x-2">
-                                                                <Link
-                                                                    href={route("repositories.edit", repository.repository_id)}
-                                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                            <td className="px-4 py-3.5 text-sm text-zinc-400">
+                                                                <a
+                                                                    href={
+                                                                        repository.web_url
+                                                                    }
+                                                                    target="_blank"
+                                                                    className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
                                                                 >
-                                                                    <PencilSquareIcon className="w-6 h-6 text-green-500" />
-                                                                </Link>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
+                                                                    <LinkIcon className="w-4 h-4" />
+
+                                                                    {
+                                                                        repository.repository_url
+                                                                    }
+                                                                </a>
+                                                            </td>
+
+                                                            <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                                                <div className="flex items-center space-x-2">
+                                                                    <Link
+                                                                        href={route(
+                                                                            "repositories.edit",
+                                                                            repository.repository_id
+                                                                        )}
+                                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                    >
+                                                                        <PencilSquareIcon className="w-6 h-6 text-green-500" />
+                                                                    </Link>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                }
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </section>
                     </div>
-
                 </div>
             </div>
 
@@ -505,61 +553,78 @@ export default function ({ auth, git_group}) {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-zinc-700 bg-zinc-800">
-                                            {repositories.map((repository, index) => (
-                                                <tr
-                                                    key={repository.id}
-                                                    className="bg-stone-700 p-4 rounded-md"
-                                                >
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium text-zinc-200">
-                                                            {index + 1}
-                                                        </span>
-                                                    </td>
+                                            {repositories.map(
+                                                (repository, index) => (
+                                                    <tr
+                                                        key={repository.id}
+                                                        className="bg-stone-700 p-4 rounded-md"
+                                                    >
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium text-zinc-200">
+                                                                {index + 1}
+                                                            </span>
+                                                        </td>
 
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium text-zinc-200">
-                                                            {repository.id}
-                                                        </span>
-                                                    </td>
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium text-zinc-200">
+                                                                {repository.id}
+                                                            </span>
+                                                        </td>
 
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium text-zinc-200">
-                                                            {repository.name}
-                                                        </span>
-                                                    </td>
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium text-zinc-200">
+                                                                {
+                                                                    repository.name
+                                                                }
+                                                            </span>
+                                                        </td>
 
-                                                    <td className="px-4 py-4 ">
-                                                        <a
-                                                            href={repository.web_url}
-                                                            target="_blank"
-                                                            className="text-sm font-medium text-zinc-200 hover:underline"
-                                                        >
-                                                            {repository.web_url}
-                                                        </a>
-                                                    </td>
-
-                                                    <td className="px-4 py-4">
-                                                        {git_group.relationships.repositories.find(repo => repo.repository_id === repository.id) ? (
-                                                            <button
-                                                                className="px-4 py-2 rounded-md bg-red-950 text-zinc-100"
-                                                                disabled
+                                                        <td className="px-4 py-4 ">
+                                                            <a
+                                                                href={
+                                                                    repository.web_url
+                                                                }
+                                                                target="_blank"
+                                                                className="text-sm font-medium text-zinc-200 hover:underline"
                                                             >
-                                                                Already attached
-                                                            </button>
-                                                        ) : (
-                                                            <button
-                                                                className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
-                                                                onClick={() => storeRepository(repository.id)}
-                                                            >
-                                                                Attach
-                                                            </button>
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                                {
+                                                                    repository.web_url
+                                                                }
+                                                            </a>
+                                                        </td>
+
+                                                        <td className="px-4 py-4">
+                                                            {git_group.relationships.repositories.find(
+                                                                (repo) =>
+                                                                    repo.repository_id ===
+                                                                    repository.id
+                                                            ) ? (
+                                                                <button
+                                                                    className="px-4 py-2 rounded-md bg-red-950 text-zinc-100"
+                                                                    disabled
+                                                                >
+                                                                    Already
+                                                                    attached
+                                                                </button>
+                                                            ) : (
+                                                                <button
+                                                                    className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
+                                                                    onClick={() =>
+                                                                        storeRepository(
+                                                                            repository.id
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Attach
+                                                                </button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
                                         </tbody>
                                     </table>
-                                ): (
+                                ) : (
                                     <div className="text-center py-2">
                                         <p className="text-sm text-red-500">
                                             No <b>projects</b> found.
@@ -580,7 +645,6 @@ export default function ({ auth, git_group}) {
                     </div>
                 </div>
             </Modal>
-
 
             <Modal
                 show={toggleSubgroupsModal}
@@ -647,7 +711,6 @@ export default function ({ auth, git_group}) {
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium text-zinc-200">
                                                         {index + 1}
-
                                                     </span>
                                                 </td>
 
@@ -665,7 +728,9 @@ export default function ({ auth, git_group}) {
 
                                                 <td className="px-4 py-4 ">
                                                     <a
-                                                        href={repository.web_url}
+                                                        href={
+                                                            repository.web_url
+                                                        }
                                                         target="_blank"
                                                         className="text-sm font-medium text-zinc-200 hover:underline"
                                                     >
@@ -674,7 +739,11 @@ export default function ({ auth, git_group}) {
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    {git_group.relationships.childrens.find(children => children.group_id === repository.id) ? (
+                                                    {git_group.relationships.childrens.find(
+                                                        (children) =>
+                                                            children.group_id ===
+                                                            repository.id
+                                                    ) ? (
                                                         <button
                                                             className="px-4 py-2 rounded-md bg-red-950 text-zinc-100"
                                                             disabled
@@ -684,7 +753,11 @@ export default function ({ auth, git_group}) {
                                                     ) : (
                                                         <button
                                                             className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
-                                                            onClick={() => storeSubgroup(repository)}
+                                                            onClick={() =>
+                                                                storeSubgroup(
+                                                                    repository
+                                                                )
+                                                            }
                                                         >
                                                             Attach
                                                         </button>
@@ -694,7 +767,7 @@ export default function ({ auth, git_group}) {
                                         ))}
                                     </tbody>
                                 </table>
-                            ): (
+                            ) : (
                                 <div className="text-center py-2">
                                     <p className="text-sm text-red-500">
                                         No <b>subgroups</b> found.
@@ -714,8 +787,6 @@ export default function ({ auth, git_group}) {
                     </div>
                 </div>
             </Modal>
-
-
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

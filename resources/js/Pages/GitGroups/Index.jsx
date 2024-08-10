@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
     PencilSquareIcon,
@@ -22,8 +22,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
     const [search, setSearch] = useState(filters.search || "");
 
     const debouncedSearch = debounce((value) => {
-
-        router.get(route("git-groups.index"), {
+        router.get(
+            route("git-groups.index"),
+            {
                 search: value,
             },
             {
@@ -35,7 +36,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
     }, 500);
 
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -79,9 +80,10 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                         placeholder="Hledat hlavní skupinu..."
                                         type="text"
                                         className="w-full !border-zinc-600 "
-                                        onChange={(e) => debouncedSearch(e.target.value)}
+                                        onChange={(e) =>
+                                            debouncedSearch(e.target.value)
+                                        }
                                     />
-
                                 </div>
                             </div>
                         </section>
@@ -93,7 +95,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                         href={route("git-groups.index")}
                                         className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
                                     >
-                                        <FolderOpenIcon className="size-10 text-sky-500"/>
+                                        <FolderOpenIcon className="size-10 text-sky-500" />
                                     </Link>
                                 </div>
 
@@ -139,7 +141,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                                         <div className="grid grid-cols-2 place-items-center">
                                                             <div className="text-center">
                                                                 <p className="text-lg font-bold text-zinc-200">
-                                                                    {group.childrens_count}
+                                                                    {
+                                                                        group.childrens_count
+                                                                    }
                                                                 </p>
 
                                                                 <p className="text-xs text-zinc-400">
@@ -149,7 +153,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
 
                                                             <div className="text-center">
                                                                 <p className="text-lg font-bold text-zinc-200">
-                                                                    { group.all_repositories_count }
+                                                                    {
+                                                                        group.all_repositories_count
+                                                                    }
                                                                 </p>
 
                                                                 <p className="text-xs text-zinc-400">
@@ -172,9 +178,13 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                                                         : "bg-red-950 hover:bg-red-900")
                                                                 }
                                                                 preserveScroll
-                                                                href={route( "git-groups.index",{
-                                                                        group_id: group.group_id,
-                                                                        relationship: "childrens",
+                                                                href={route(
+                                                                    "git-groups.index",
+                                                                    {
+                                                                        group_id:
+                                                                            group.group_id,
+                                                                        relationship:
+                                                                            "childrens",
                                                                     }
                                                                 )}
                                                             >
@@ -241,7 +251,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                             );
                                         })}
                                     </div>
-                                ):(
+                                ) : (
                                     <ResetFilters
                                         className="col-span-3"
                                         href={route("git-groups.index")}
@@ -262,27 +272,35 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                     </div>
 
                                     <div className="border-4 border-zinc-900 divide-y divide-zinc-800 ">
-                                        {filters.relationship === "repositories" ? (
-                                            <RepositoriesTable repositories={group_details} />
+                                        {filters.relationship ===
+                                        "repositories" ? (
+                                            <RepositoriesTable
+                                                repositories={group_details}
+                                            />
                                         ) : (
-                                            <ChildrensTable childrens={group_details} />
+                                            <ChildrensTable
+                                                childrens={group_details}
+                                            />
                                         )}
                                     </div>
                                 </div>
                             ) : (
                                 <div className="py-5">
                                     <h3 className="text-xl font-semibold text-zinc-200">
-                                        {group_details && group_details.length === 0 ? (
+                                        {group_details &&
+                                        group_details.length === 0 ? (
                                             <div>
-                                                Selected <u>{filters.relationship}</u> is empty
+                                                Selected{" "}
+                                                <u>{filters.relationship}</u> is
+                                                empty
                                             </div>
-
-                                        ): (
+                                        ) : (
                                             <div className="col-span-3 p-4 text-center text-zinc-400">
                                                 <EyeIcon className="size-8 mx-auto" />
 
                                                 <p className="text-lg font-semibold">
-                                                    Need to select a <u>relationship</u>
+                                                    Need to select a{" "}
+                                                    <u>relationship</u>
                                                 </p>
                                             </div>
                                         )}
@@ -290,10 +308,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                 </div>
                             )}
                         </section>
-
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

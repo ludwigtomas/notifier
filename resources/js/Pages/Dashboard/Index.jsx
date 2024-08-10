@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, usePage, router } from "@inertiajs/react";
 import {
     FireIcon,
@@ -7,7 +7,6 @@ import {
     BookmarkIcon,
     PresentationChartBarIcon,
     PencilSquareIcon,
-
     GlobeAltIcon,
     FolderOpenIcon,
     RocketLaunchIcon,
@@ -16,40 +15,53 @@ import {
     CircleStackIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import InputLabel from '@/Components/InputLabel';
+import InputLabel from "@/Components/InputLabel";
 
 export default function Dashboard({ auth, notifications, models, filters }) {
-
-    const [selectedModel, setSelectedModel] = useState(filters.model || [])
+    const [selectedModel, setSelectedModel] = useState(filters.model || []);
 
     const handleModel = (model) => {
-
-        if(model === 'clear_all') {
+        if (model === "clear_all") {
             setSelectedModel([]);
 
-            router.get(route('dashboard.index', {}, {
-                preserveScroll: true,
-                preserveState: true,
-            }));
+            router.get(
+                route(
+                    "dashboard.index",
+                    {},
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                )
+            );
         } else {
             if (selectedModel.includes(model)) {
-                setSelectedModel(selectedModel.filter((item) => item !== model));
+                setSelectedModel(
+                    selectedModel.filter((item) => item !== model)
+                );
             } else {
                 setSelectedModel([...selectedModel, model]);
             }
 
-            router.get(route('dashboard.index', {
-                model: selectedModel.includes(model) ? selectedModel.filter((item) => item !== model) : [...selectedModel, model]
-            }, {
-                preserveScroll: true,
-                preserveState: true,
-            }));
+            router.get(
+                route(
+                    "dashboard.index",
+                    {
+                        model: selectedModel.includes(model)
+                            ? selectedModel.filter((item) => item !== model)
+                            : [...selectedModel, model],
+                    },
+                    {
+                        preserveScroll: true,
+                        preserveState: true,
+                    }
+                )
+            );
         }
-    }
-
+    };
 
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -67,7 +79,6 @@ export default function Dashboard({ auth, notifications, models, filters }) {
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-y-20">
-
                         <main>
                             <section className="mb-10 card">
                                 <div className="grid grid-cols-5 gap-2 items-center">
@@ -92,45 +103,73 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                             <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
                                                 <div className="z-40 h-80 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
                                                     <div className="grid grid-cols-3 gap-4">
-                                                        {selectedModel.length === 0 ? (
+                                                        {selectedModel.length ===
+                                                        0 ? (
                                                             <div className="col-span-3  bg-zinc-700 rounded-lg p-4 border-2 border-zinc-600">
                                                                 <div className="text-center text-gray-200 ">
                                                                     <p className="text-lg font-semibold">
-                                                                        Nejsou vybrané žádné modely
+                                                                        Nejsou
+                                                                        vybrané
+                                                                        žádné
+                                                                        modely
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                        ):(
+                                                        ) : (
                                                             <div
-                                                                onClick={() => handleModel('clear_all')}
+                                                                onClick={() =>
+                                                                    handleModel(
+                                                                        "clear_all"
+                                                                    )
+                                                                }
                                                                 className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
                                                             >
                                                                 <div className="text-center text-white">
                                                                     <p className="text-lg font-semibold">
-                                                                        Vyčistit vše
+                                                                        Vyčistit
+                                                                        vše
                                                                     </p>
                                                                 </div>
                                                             </div>
                                                         )}
 
-                                                        {models.map((model, index) => {
-                                                            return (
-                                                                <div
-                                                                    key={index}
-                                                                    onClick={() => handleModel(model)}
-                                                                    className={'text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 ' +
-                                                                    (selectedModel.includes(model) ? ' border-green-500' : ' border-zinc-600')}
-                                                                >
-                                                                    <BookmarkIcon
-                                                                        className={"size-10 text-neutral-400 mb-3 " +
-                                                                            (selectedModel.includes(model) ? ' fill-neutral-400' : ' border-zinc-600 bg-zinc-700')
+                                                        {models.map(
+                                                            (model, index) => {
+                                                                return (
+                                                                    <div
+                                                                        key={
+                                                                            index
                                                                         }
-                                                                    />
+                                                                        onClick={() =>
+                                                                            handleModel(
+                                                                                model
+                                                                            )
+                                                                        }
+                                                                        className={
+                                                                            "text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 " +
+                                                                            (selectedModel.includes(
+                                                                                model
+                                                                            )
+                                                                                ? " border-green-500"
+                                                                                : " border-zinc-600")
+                                                                        }
+                                                                    >
+                                                                        <BookmarkIcon
+                                                                            className={
+                                                                                "size-10 text-neutral-400 mb-3 " +
+                                                                                (selectedModel.includes(
+                                                                                    model
+                                                                                )
+                                                                                    ? " fill-neutral-400"
+                                                                                    : " border-zinc-600 bg-zinc-700")
+                                                                            }
+                                                                        />
 
-                                                                    { model }
-                                                                </div>
-                                                            )
-                                                        })}
+                                                                        {model}
+                                                                    </div>
+                                                                );
+                                                            }
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,7 +185,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                             href={route("dashboard.index")}
                                             className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
                                         >
-                                            <EyeIcon className="size-10 text-sky-500"/>
+                                            <EyeIcon className="size-10 text-sky-500" />
                                         </Link>
                                     </div>
 
@@ -156,7 +195,8 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         </h1>
 
                                         <p className="text-zinc-400">
-                                            Zde se nachází všechny notifikace, co se událo.
+                                            Zde se nachází všechny notifikace,
+                                            co se událo.
                                         </p>
                                     </div>
                                 </div>
@@ -201,99 +241,208 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         </thead>
 
                                         <tbody className="divide-y divide-zinc-800 bg-zinc-700">
-                                            {notifications.map((notification) => (
-                                                <tr
-                                                    key={notification.id}
-                                                    className={"text-white " +
-                                                        (notification.data.action === 'created' ? 'bg-green-500/5 hover:bg-green-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'updated' ? 'bg-yellow-500/5 hover:bg-yellow-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'deleted' ? 'bg-purple-500/5 hover:bg-purple-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'restored' ? 'bg-blue-500/5 hover:bg-blue-500/15' : '') + ' ' +
-                                                        (notification.data.action === 'forceDeleted' ? 'bg-red-500/5 hover:bg-red-500/15' : '')
-                                                    }
-                                                >
-                                                    <td className="px-4 py-4">
-                                                        {{
-                                                            'Git': <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'GitGroup': <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'Repository': <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'User': <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'Hosting': <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                            'RepositoryDatabase': <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                                                        }[notification.notifiable_type_formatted] || <div>No Icon</div>}
-                                                    </td>
+                                            {notifications.map(
+                                                (notification) => (
+                                                    <tr
+                                                        key={notification.id}
+                                                        className={
+                                                            "text-white " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "created"
+                                                                ? "bg-green-500/5 hover:bg-green-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "updated"
+                                                                ? "bg-yellow-500/5 hover:bg-yellow-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "deleted"
+                                                                ? "bg-purple-500/5 hover:bg-purple-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "restored"
+                                                                ? "bg-blue-500/5 hover:bg-blue-500/15"
+                                                                : "") +
+                                                            " " +
+                                                            (notification.data
+                                                                .action ===
+                                                            "forceDeleted"
+                                                                ? "bg-red-500/5 hover:bg-red-500/15"
+                                                                : "")
+                                                        }
+                                                    >
+                                                        <td className="px-4 py-4">
+                                                            {{
+                                                                Git: (
+                                                                    <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                GitGroup: (
+                                                                    <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                Repository: (
+                                                                    <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                User: (
+                                                                    <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                Hosting: (
+                                                                    <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                ),
+                                                                RepositoryDatabase:
+                                                                    (
+                                                                        <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />
+                                                                    ),
+                                                            }[
+                                                                notification
+                                                                    .notifiable_type_formatted
+                                                            ] || (
+                                                                <div>
+                                                                    No Icon
+                                                                </div>
+                                                            )}
+                                                        </td>
 
-                                                    <td className="px-4 py-4 ">
-                                                        <span
-                                                            className={"group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
-                                                                (notification.data.action === 'created' ? 'bg-green-500 shadow-green-50 border-b-green-900' : '') + ' ' +
-                                                                (notification.data.action === 'updated' ? 'bg-yellow-500 shadow-yellow-50 border-b-yellow-900' : '') + ' ' +
-                                                                (notification.data.action === 'deleted' ? 'bg-purple-500 shadow-purple-50 border-b-purple-900' : '') + ' ' +
-                                                                (notification.data.action === 'restored' ? 'bg-blue-500 shadow-blue-50 border-b-blue-900' : '') + ' ' +
-                                                                (notification.data.action === 'forceDeleted' ? 'bg-red-500 shadow-red-50 border-b-red-900' : '')
-                                                            }
-                                                        >
-                                                            {notification.data.action}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.notifiable_type_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.notifiable_id}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.created_at_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span className="text-sm font-medium">
-                                                            {notification.type_formatted}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4 ">
-                                                        <span
-                                                            className={"text-xs font-semibold " + (notification.read_at ? 'text-green-500' : 'text-red-500')}
-                                                        >
-                                                            {notification.read_at ? 'Přečteno' : 'Nepřečteno'}
-                                                        </span>
-                                                    </td>
-
-                                                    <td className="px-4 py-4">
-                                                        <div className="flex justify-center space-x-2">
-                                                            <Link
-                                                                href={route("notifications.edit", notification.id)}
-                                                                className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                        <td className="px-4 py-4 ">
+                                                            <span
+                                                                className={
+                                                                    "group px-3 py-1 rounded-full font-extrabold text-md uppercase shadow-inner border-b-4 " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "created"
+                                                                        ? "bg-green-500 shadow-green-50 border-b-green-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "updated"
+                                                                        ? "bg-yellow-500 shadow-yellow-50 border-b-yellow-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "deleted"
+                                                                        ? "bg-purple-500 shadow-purple-50 border-b-purple-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "restored"
+                                                                        ? "bg-blue-500 shadow-blue-50 border-b-blue-900"
+                                                                        : "") +
+                                                                    " " +
+                                                                    (notification
+                                                                        .data
+                                                                        .action ===
+                                                                    "forceDeleted"
+                                                                        ? "bg-red-500 shadow-red-50 border-b-red-900"
+                                                                        : "")
+                                                                }
                                                             >
-                                                                <PencilSquareIcon className="size-6 text-green-500"/>
-                                                            </Link>
+                                                                {
+                                                                    notification
+                                                                        .data
+                                                                        .action
+                                                                }
+                                                            </span>
+                                                        </td>
 
-                                                            <Link
-                                                                as="button"
-                                                                method="PATCH"
-                                                                href={route("notifications.mark-as-read", notification.id)}
-                                                                className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
-                                                                preserveScroll
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.notifiable_type_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.notifiable_id
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.created_at_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span className="text-sm font-medium">
+                                                                {
+                                                                    notification.type_formatted
+                                                                }
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4 ">
+                                                            <span
+                                                                className={
+                                                                    "text-xs font-semibold " +
+                                                                    (notification.read_at
+                                                                        ? "text-green-500"
+                                                                        : "text-red-500")
+                                                                }
                                                             >
-                                                                <BookmarkIcon className={"size-6 " + (notification.read_at ? 'text-yellow-500 fill-yellow-500' : 'text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500')} />
-                                                            </Link>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            ))}
+                                                                {notification.read_at
+                                                                    ? "Přečteno"
+                                                                    : "Nepřečteno"}
+                                                            </span>
+                                                        </td>
+
+                                                        <td className="px-4 py-4">
+                                                            <div className="flex justify-center space-x-2">
+                                                                <Link
+                                                                    href={route(
+                                                                        "notifications.edit",
+                                                                        notification.id
+                                                                    )}
+                                                                    className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                                >
+                                                                    <PencilSquareIcon className="size-6 text-green-500" />
+                                                                </Link>
+
+                                                                <Link
+                                                                    as="button"
+                                                                    method="PATCH"
+                                                                    href={route(
+                                                                        "notifications.mark-as-read",
+                                                                        notification.id
+                                                                    )}
+                                                                    className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
+                                                                    preserveScroll
+                                                                >
+                                                                    <BookmarkIcon
+                                                                        className={
+                                                                            "size-6 " +
+                                                                            (notification.read_at
+                                                                                ? "text-yellow-500 fill-yellow-500"
+                                                                                : "text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500")
+                                                                        }
+                                                                    />
+                                                                </Link>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
                                         </tbody>
                                     </table>
-                                ):(
+                                ) : (
                                     <div className="p-4 text-center text-zinc-400">
                                         <EyeIcon className="size-8 mx-auto" />
 
@@ -313,7 +462,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                             href={route("dashboard.index")}
                                             className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
                                         >
-                                            <PresentationChartBarIcon className="size-10 text-sky-500"/>
+                                            <PresentationChartBarIcon className="size-10 text-sky-500" />
                                         </Link>
                                     </div>
 
@@ -323,7 +472,8 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         </h1>
 
                                         <p className="text-zinc-400">
-                                            Zde se nachází všechny notifikace, co se událo.
+                                            Zde se nachází všechny notifikace,
+                                            co se událo.
                                         </p>
                                     </div>
                                 </div>
@@ -343,8 +493,9 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                 </h1>
 
                                                 <p className="text-zinc-400">
-                                                    Správá git skupin (rodičů), zálohování a
-                                                    obnova databází.
+                                                    Správá git skupin (rodičů),
+                                                    zálohování a obnova
+                                                    databází.
                                                 </p>
 
                                                 <div className="pt-4">
@@ -354,13 +505,19 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                 </div>
 
                                                 <div className="absolute left-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tr-xl">
-                                                    { usePage().props.global.git_group_parent_count }
+                                                    {
+                                                        usePage().props.global
+                                                            .git_group_parent_count
+                                                    }
                                                 </div>
                                             </div>
 
                                             <div className="absolute bottom-0 left-1/2 translate-x-[-100%]">
                                                 <span className="size-8 bg-zinc-700 flex items-center justify-center text-sky-500 text-lg font-bold rounded-t-md">
-                                                    { usePage().props.global.git_groups_count }
+                                                    {
+                                                        usePage().props.global
+                                                            .git_groups_count
+                                                    }
                                                 </span>
                                             </div>
 
@@ -374,8 +531,9 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                 </h1>
 
                                                 <p className="text-zinc-400">
-                                                    Správá git skupin (dětí), zálohování a
-                                                    obnova databází.
+                                                    Správá git skupin (dětí),
+                                                    zálohování a obnova
+                                                    databází.
                                                 </p>
 
                                                 <div className="pt-4">
@@ -385,7 +543,10 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                                 </div>
 
                                                 <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                                    { usePage().props.global.git_group_child_count }
+                                                    {
+                                                        usePage().props.global
+                                                            .git_group_child_count
+                                                    }
                                                 </div>
                                             </div>
 
@@ -406,9 +567,9 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         </h1>
 
                                         <p className="text-zinc-400">
-                                            Správá repozitářů, přístupových údajů k VPS,
-                                            zálohování a obnova databází a mnoho
-                                            dalšího.
+                                            Správá repozitářů, přístupových
+                                            údajů k VPS, zálohování a obnova
+                                            databází a mnoho dalšího.
                                         </p>
 
                                         <div className="pt-4">
@@ -423,7 +584,10 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         />
 
                                         <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                            { usePage().props.global.repositories_count }
+                                            {
+                                                usePage().props.global
+                                                    .repositories_count
+                                            }
                                         </div>
                                     </div>
 
@@ -481,7 +645,10 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         />
 
                                         <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                            { usePage().props.global.clients_count }
+                                            {
+                                                usePage().props.global
+                                                    .clients_count
+                                            }
                                         </div>
                                     </div>
 
@@ -510,16 +677,18 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         />
 
                                         <div className="absolute right-0 bottom-0 size-14 bg-zinc-700 flex items-center justify-center text-sky-500 text-4xl font-bold rounded-tl-xl">
-                                            { usePage().props.global.hostings_count }
+                                            {
+                                                usePage().props.global
+                                                    .hostings_count
+                                            }
                                         </div>
                                     </div>
-
                                 </div>
                             </section>
                         </main>
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

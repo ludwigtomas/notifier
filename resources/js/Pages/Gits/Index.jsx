@@ -1,18 +1,15 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link } from "@inertiajs/react";
-import {
-    ChevronRightIcon,
-    GlobeAltIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 import {
     EditButton,
     ShowButton,
     DeleteButton,
-} from '@/Components/Buttons/ActionButtons';
+} from "@/Components/Buttons/ActionButtons";
 
 export default function Index({ auth, gits }) {
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -41,7 +38,6 @@ export default function Index({ auth, gits }) {
             <div className="py-12">
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1">
-
                         <div className="card">
                             <div className="flex space-x-4">
                                 <div className="flex items-center justify-center">
@@ -49,7 +45,7 @@ export default function Index({ auth, gits }) {
                                         href={route("gits.index")}
                                         className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
                                     >
-                                        <GlobeAltIcon className="size-10 text-sky-500"/>
+                                        <GlobeAltIcon className="size-10 text-sky-500" />
                                     </Link>
                                 </div>
 
@@ -113,7 +109,11 @@ export default function Index({ auth, gits }) {
                                                 <td className="px-4 py-4">
                                                     <img
                                                         className="w-10 h-10 rounded-lg"
-                                                        src={"/storage/avatars/" + git.username + ".png"}
+                                                        src={
+                                                            "/storage/avatars/" +
+                                                            git.username +
+                                                            ".png"
+                                                        }
                                                         alt={git.name}
                                                     />
                                                 </td>
@@ -144,36 +144,43 @@ export default function Index({ auth, gits }) {
 
                                                 <td className="px-4 py-4">
                                                     <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
-                                                        {git.relationships.git_groups_count}
+                                                        {
+                                                            git.relationships
+                                                                .git_groups_count
+                                                        }
                                                     </div>
                                                 </td>
 
-
                                                 <td className="px-4 py-4">
                                                     <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
-                                                        {git.relationships.repositories_count}
+                                                        {
+                                                            git.relationships
+                                                                .repositories_count
+                                                        }
                                                     </div>
                                                 </td>
 
                                                 <td className="px-4 py-4">
                                                     <div className="flex space-x-2">
-                                                        <EditButton href={route("gits.edit", git.id)}/>
+                                                        <EditButton
+                                                            href={route(
+                                                                "gits.edit",
+                                                                git.id
+                                                            )}
+                                                        />
                                                         {/* <ShowButton href={route("gits.show", git.id)}/> */}
                                                         {/* <DeleteButton as="button" method="DELETE" href={route("gits.destroy", git.id)}/> */}
                                                     </div>
                                                 </td>
-
                                             </tr>
-                                        )
+                                        );
                                     })}
-
                                 </tbody>
-
                             </table>
                         </section>
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

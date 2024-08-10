@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
@@ -17,7 +17,6 @@ import {
 import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ auth }) {
-
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         hosting_url: "",
@@ -30,9 +29,8 @@ export default function Index({ auth }) {
         post(route("hostings.store"));
     };
 
-
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -67,84 +65,88 @@ export default function Index({ auth }) {
                 </header>
             }
         >
+            <Head title="Dashboard" />
 
-        <Head title="Dashboard" />
+            <div className="py-12">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <header>
+                            <h1 className="text-center text-xl font-bold text-gray-200">
+                                Vytvořit Hosting
+                            </h1>
+                        </header>
 
-        <div className="py-12">
-            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <header>
-                        <h1 className="text-center text-xl font-bold text-gray-200">
-                            Vytvořit Hosting
-                        </h1>
-                    </header>
+                        <form
+                            onSubmit={submit}
+                            className="mt-6 grid grid-cols-12 gap-10 items-start"
+                        >
+                            <div className="col-span-7 flex flex-col space-y-4 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                                <div>
+                                    <InputLabel
+                                        isRequired
+                                        htmlFor="name"
+                                        value="Název"
+                                    />
 
-                    <form
-                        onSubmit={submit}
-                        className="mt-6 grid grid-cols-12 gap-10 items-start"
-                    >
-                        <div className="col-span-7 flex flex-col space-y-4 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                            <div>
-                                <InputLabel
-                                    isRequired
-                                    htmlFor="name"
-                                    value="Název"
-                                />
+                                    <TextInput
+                                        id="name"
+                                        type="text"
+                                        name="name"
+                                        placeholder="Bohemia Cloud"
+                                        value={data.name}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
+                                    />
 
-                                <TextInput
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    placeholder="Bohemia Cloud"
-                                    value={data.name}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) => setData("name", e.target.value)}
-                                />
+                                    <InputError
+                                        message={errors.name}
+                                        htmlFor="name"
+                                    />
+                                </div>
 
-                                <InputError
-                                    message={errors.name}
-                                    htmlFor="name"
-                                />
+                                <div>
+                                    <InputLabel
+                                        htmlFor="hosting_url"
+                                        value="URL"
+                                    />
+
+                                    <TextInput
+                                        id="hosting_url"
+                                        type="text"
+                                        name="hosting_url"
+                                        placeholder="www.bohemia-cloud.cz"
+                                        value={data.hosting_url}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData(
+                                                "hosting_url",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+
+                                    <InputError
+                                        message={errors.hosting_url}
+                                        htmlFor="hosting_url"
+                                    />
+                                </div>
                             </div>
 
-                            <div>
-                                <InputLabel
-                                    htmlFor="hosting_url"
-                                    value="URL"
-                                />
-
-                                <TextInput
-                                    id="hosting_url"
-                                    type="text"
-                                    name="hosting_url"
-                                    placeholder="www.bohemia-cloud.cz"
-                                    value={data.hosting_url}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) => setData("hosting_url", e.target.value)}
-                                />
-
-                                <InputError
-                                    message={errors.hosting_url}
-                                    htmlFor="hosting_url"
-                                />
+                            <div className="col-span-12">
+                                <PrimaryButton
+                                    typeOfButton="submit"
+                                    disabled={processing}
+                                >
+                                    <ServerStackIcon className="size-6 mr-4" />
+                                    Vytvořit
+                                </PrimaryButton>
                             </div>
-                        </div>
-
-                        <div className="col-span-12">
-                            <PrimaryButton
-                                typeOfButton='submit'
-                                disabled={processing}
-                            >
-                                <ServerStackIcon className="size-6 mr-4"/>
-                                Vytvořit
-                            </PrimaryButton>
-                        </div>
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

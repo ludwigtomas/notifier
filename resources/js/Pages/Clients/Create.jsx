@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
@@ -14,10 +14,7 @@ import {
     XMarkIcon,
     UsersIcon,
 } from "@heroicons/react/24/outline";
-export default function Dashboard({
-    auth,
-    repositories
-}) {
+export default function Dashboard({ auth, repositories }) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         email: "",
@@ -34,14 +31,17 @@ export default function Dashboard({
 
     const handleRepositories = (repositoryId) => {
         if (data.repositories.includes(repositoryId)) {
-            setData("repositories", data.repositories.filter((id) => id !== repositoryId));
+            setData(
+                "repositories",
+                data.repositories.filter((id) => id !== repositoryId)
+            );
         } else {
             setData("repositories", [...data.repositories, repositoryId]);
         }
-    }
+    };
 
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -73,7 +73,6 @@ export default function Dashboard({
                     >
                         Vytvořit
                     </Link>
-
                 </header>
             }
         >
@@ -82,7 +81,6 @@ export default function Dashboard({
             <div className="py-12">
                 <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-10 bg-zinc-900 sm:rounded-xl">
-
                         <header>
                             <h1 className="text-center text-xl font-bold text-gray-200">
                                 Vytvořit klienta
@@ -108,7 +106,9 @@ export default function Dashboard({
                                         placeholder="Tomáš Ludwig"
                                         value={data.name}
                                         className="mt-1 block w-full"
-                                        onChange={(e) => setData("name", e.target.value)}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
                                     />
 
                                     <InputError
@@ -118,10 +118,7 @@ export default function Dashboard({
                                 </div>
 
                                 <div>
-                                    <InputLabel
-                                        htmlFor="email"
-                                        value="email"
-                                    />
+                                    <InputLabel htmlFor="email" value="email" />
 
                                     <TextInput
                                         id="email"
@@ -130,7 +127,9 @@ export default function Dashboard({
                                         placeholder="info@ludwigtomas.cz"
                                         value={data.email}
                                         className="mt-1 block w-full"
-                                        onChange={(e) => setData("email", e.target.value)}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
                                     />
 
                                     <InputError
@@ -140,10 +139,7 @@ export default function Dashboard({
                                 </div>
 
                                 <div>
-                                    <InputLabel
-                                        htmlFor="phone"
-                                        value="phone"
-                                    />
+                                    <InputLabel htmlFor="phone" value="phone" />
 
                                     <TextInput
                                         id="phone"
@@ -152,7 +148,9 @@ export default function Dashboard({
                                         placeholder="+420 730 681 670"
                                         value={data.phone}
                                         className="mt-1 block w-full"
-                                        onChange={(e) => setData("phone", e.target.value)}
+                                        onChange={(e) =>
+                                            setData("phone", e.target.value)
+                                        }
                                     />
 
                                     <InputError
@@ -162,10 +160,7 @@ export default function Dashboard({
                                 </div>
 
                                 <div>
-                                    <InputLabel
-                                        htmlFor="ico"
-                                        value="ico"
-                                    />
+                                    <InputLabel htmlFor="ico" value="ico" />
 
                                     <TextInput
                                         id="ico"
@@ -174,7 +169,9 @@ export default function Dashboard({
                                         placeholder="19090901"
                                         value={data.ico}
                                         className="mt-1 block w-full"
-                                        onChange={(e) => setData("ico", e.target.value)}
+                                        onChange={(e) =>
+                                            setData("ico", e.target.value)
+                                        }
                                     />
 
                                     <InputError
@@ -188,8 +185,14 @@ export default function Dashboard({
                                 <div className="flex flex-col space-y-2">
                                     {repositories.map((repository) => (
                                         <div
-                                            className={'flex items-center justify-between rounded-lg p-4 border-2 bg-zinc-800' +
-                                            (data.repositories.includes(repository.id) ? ' border-green-700' : ' border-zinc-700')}
+                                            className={
+                                                "flex items-center justify-between rounded-lg p-4 border-2 bg-zinc-800" +
+                                                (data.repositories.includes(
+                                                    repository.id
+                                                )
+                                                    ? " border-green-700"
+                                                    : " border-zinc-700")
+                                            }
                                             key={repository.id}
                                         >
                                             <div className="flex items-center space-x-4">
@@ -207,21 +210,31 @@ export default function Dashboard({
                                                     </p>
                                                 </div>
                                             </div>
-                                            { data.repositories.includes(repository.id) ? (
+                                            {data.repositories.includes(
+                                                repository.id
+                                            ) ? (
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleRepositories(repository.id)}
+                                                    onClick={() =>
+                                                        handleRepositories(
+                                                            repository.id
+                                                        )
+                                                    }
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
                                                 >
-                                                    <XMarkIcon className="size-8 text-red-500 group-hover:text-red-100"/>
+                                                    <XMarkIcon className="size-8 text-red-500 group-hover:text-red-100" />
                                                 </button>
                                             ) : (
                                                 <button
                                                     type="button"
-                                                    onClick={() => handleRepositories(repository.id)}
+                                                    onClick={() =>
+                                                        handleRepositories(
+                                                            repository.id
+                                                        )
+                                                    }
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
                                                 >
-                                                    <PlusIcon className="size-8 text-green-500 group-hover:text-green-100"/>
+                                                    <PlusIcon className="size-8 text-green-500 group-hover:text-green-100" />
                                                 </button>
                                             )}
                                         </div>
@@ -236,10 +249,10 @@ export default function Dashboard({
 
                             <div className="col-span-12">
                                 <PrimaryButton
-                                    typeOfButton='submit'
+                                    typeOfButton="submit"
                                     disabled={processing}
                                 >
-                                    <UsersIcon className="size-6 mr-4"/>
+                                    <UsersIcon className="size-6 mr-4" />
                                     Vytvořit
                                 </PrimaryButton>
                             </div>
@@ -247,6 +260,6 @@ export default function Dashboard({
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

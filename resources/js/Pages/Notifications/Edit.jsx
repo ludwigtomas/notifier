@@ -1,5 +1,5 @@
 import React from "react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
     EyeIcon,
@@ -12,7 +12,7 @@ import {
 
 export default function Edit({ auth, notification }) {
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -48,7 +48,6 @@ export default function Edit({ auth, notification }) {
 
                     <section className="card">
                         <ul className="text-center">
-
                             <li className="space-x-2">
                                 <span className="text-white">
                                     {notification.type_formatted}
@@ -68,6 +67,6 @@ export default function Edit({ auth, notification }) {
                     </section>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

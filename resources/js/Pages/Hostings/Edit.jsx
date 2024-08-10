@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router, useForm } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
@@ -20,12 +20,12 @@ import UpdateHostingAttachedRepositoriesForm from "@/Pages/Hostings/Partials/Upd
 import UpdateHostingInformationForm from "@/Pages/Hostings/Partials/UpdateHostingInformationForm";
 
 export default function Index({ auth, hosting, repositories }) {
-
-    const { data, setData, put, processing, errors, recentlySuccessful } = useForm({
-        name: hosting.name,
-        hosting_url: hosting.hosting_url ?? "",
-        repositories: [],
-    });
+    const { data, setData, put, processing, errors, recentlySuccessful } =
+        useForm({
+            name: hosting.name,
+            hosting_url: hosting.hosting_url ?? "",
+            repositories: [],
+        });
 
     const submit = (e) => {
         e.preventDefault();
@@ -33,9 +33,8 @@ export default function Index({ auth, hosting, repositories }) {
         put(route("hostings.update", hosting.id));
     };
 
-
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -81,33 +80,28 @@ export default function Index({ auth, hosting, repositories }) {
                 </header>
             }
         >
+            <Head title="Dashboard" />
 
-        <Head title="Dashboard" />
+            <div className="py-12">
+                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateHostingInformationForm hosting={hosting} />
+                    </div>
 
-        <div className="py-12">
-            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <UpdateHostingInformationForm
-                        hosting={hosting}
-                    />
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <UpdateHostingAttachedRepositoriesForm
+                            hosting={hosting}
+                        />
+                    </div>
+
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                        <AttachHostingRepositoriesForm
+                            hosting={hosting}
+                            repositories={repositories}
+                        />
+                    </div>
                 </div>
-
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <UpdateHostingAttachedRepositoriesForm
-                        hosting={hosting}
-                    />
-                </div>
-
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <AttachHostingRepositoriesForm
-                        hosting={hosting}
-                        repositories={repositories}
-                    />
-                </div>
-
             </div>
-        </div>
-
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
 }

@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import AdminLayout from "@/Layouts/AdminLayout";
 import React, { useEffect } from "react";
 import io from "socket.io-client";
 import { Terminal } from "@xterm/xterm";
@@ -11,11 +11,18 @@ import {
     LinkIcon,
 } from "@heroicons/react/24/outline";
 
-export default function SshClient({auth, hosting_repository}) {
+export default function SshClient({ auth, hosting_repository }) {
+    let param =
+        "host=" +
+        hosting_repository.ip_address +
+        "&port=" +
+        hosting_repository.ip_port +
+        "&username=" +
+        hosting_repository.login_user +
+        "&password=" +
+        hosting_repository.login_password;
 
-    let param = 'host=' + hosting_repository.ip_address + '&port=' + hosting_repository.ip_port + '&username=' + hosting_repository.login_user + '&password=' + hosting_repository.login_password;
-
-    let url = import.meta.env.VITE_NODE_SERVER_URL + '?' + param;
+    let url = import.meta.env.VITE_NODE_SERVER_URL + "?" + param;
 
     useEffect(() => {
         const socket = io(url);
@@ -39,9 +46,8 @@ export default function SshClient({auth, hosting_repository}) {
         };
     }, [url]);
 
-
     return (
-        <AuthenticatedLayout
+        <AdminLayout
             user={auth.user}
             header={
                 <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
@@ -69,11 +75,14 @@ export default function SshClient({auth, hosting_repository}) {
 
                     <Link
                         className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route("repositories.edit", hosting_repository.relationships.repository.repository_id)}
+                        href={route(
+                            "repositories.edit",
+                            hosting_repository.relationships.repository
+                                .repository_id
+                        )}
                     >
                         {hosting_repository.relationships.repository.name}
                     </Link>
-
 
                     <span>
                         <ChevronRightIcon className="size-5" />
@@ -82,7 +91,11 @@ export default function SshClient({auth, hosting_repository}) {
                     <div className="relative group">
                         <Link
                             className="font-semibold text-lg leading-tight text-sky-500"
-                            href={route("repositories.show", hosting_repository.relationships.repository.repository_id)}
+                            href={route(
+                                "repositories.show",
+                                hosting_repository.relationships.repository
+                                    .repository_id
+                            )}
                         >
                             Edit
                         </Link>
@@ -91,7 +104,11 @@ export default function SshClient({auth, hosting_repository}) {
                             <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
                                 <Link
                                     className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-sky-500"
-                                    href={route("repositories.show", hosting_repository.relationships.repository.repository_id)}
+                                    href={route(
+                                        "repositories.show",
+                                        hosting_repository.relationships
+                                            .repository.repository_id
+                                    )}
                                 >
                                     <span className="text-gray-200">
                                         Zobrazit
@@ -102,7 +119,11 @@ export default function SshClient({auth, hosting_repository}) {
 
                                 <Link
                                     className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-green-500"
-                                    href={route("repositories.edit", hosting_repository.relationships.repository.repository_id)}
+                                    href={route(
+                                        "repositories.edit",
+                                        hosting_repository.relationships
+                                            .repository.repository_id
+                                    )}
                                 >
                                     <span className="text-gray-200">
                                         Editovat
@@ -110,11 +131,9 @@ export default function SshClient({auth, hosting_repository}) {
 
                                     <PencilSquareIcon className="w-6 h-6 text-green-500" />
                                 </Link>
-
                             </div>
                         </div>
                     </div>
-
                 </header>
             }
         >
@@ -126,7 +145,9 @@ export default function SshClient({auth, hosting_repository}) {
                         <div className="bg-white/5 rounded-xl py-2 overflow-hidden grid">
                             <div className="flex items-center justify-center flex-col">
                                 <p className="text-lg font-bold text-zinc-200">
-                                    {hosting_repository.ip_address + ':' + hosting_repository.ip_port}
+                                    {hosting_repository.ip_address +
+                                        ":" +
+                                        hosting_repository.ip_port}
                                 </p>
 
                                 <p className="text-xs text-zinc-400">
@@ -137,17 +158,20 @@ export default function SshClient({auth, hosting_repository}) {
                     </div>
 
                     <div className="group relative p-4 grid border-2 bg-stone-900 hover:border-stone-600 border-stone-700 rounded-3xl">
-
-                        { hosting_repository.relationships.repository.website_url && (
+                        {hosting_repository.relationships.repository
+                            .website_url && (
                             <>
                                 <div className="bg-white/5 rounded-xl py-2 overflow-hidden grid">
                                     <div className="flex items-center justify-center flex-col">
-                                        <LinkIcon className="size-12 text-zinc-200"/>
+                                        <LinkIcon className="size-12 text-zinc-200" />
                                     </div>
                                 </div>
 
                                 <a
-                                    href={hosting_repository.relationships.repository.website_url}
+                                    href={
+                                        hosting_repository.relationships
+                                            .repository.website_url
+                                    }
                                     target="_blank"
                                     className="absolute inset-0"
                                 />
@@ -162,9 +186,7 @@ export default function SshClient({auth, hosting_repository}) {
                                     {hosting_repository.login_user}
                                 </p>
 
-                                <p className="text-xs text-zinc-400">
-                                    user
-                                </p>
+                                <p className="text-xs text-zinc-400">user</p>
                             </div>
                         </div>
                     </div>
@@ -173,11 +195,12 @@ export default function SshClient({auth, hosting_repository}) {
                 <div className="w-full bg-stone-900 p-2 drop-shadow-2xl rounded-2xl overflow-hidden">
                     <div className="flex justify-between items-center relative">
                         <div className="absolute left-1/2 -translate-x-1/2">
-                            <span className="text-gray-400 mr-4">
-                                vps
-                            </span>
+                            <span className="text-gray-400 mr-4">vps</span>
                             <span className="text-white text-xl font-bold uppercase">
-                                {hosting_repository.relationships.repository.name }
+                                {
+                                    hosting_repository.relationships.repository
+                                        .name
+                                }
                             </span>
                         </div>
 
@@ -195,9 +218,8 @@ export default function SshClient({auth, hosting_repository}) {
                             className="w-full h-[410px] overflow-y-hidden"
                         />
                     </div>
-
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </AdminLayout>
     );
-};
+}
