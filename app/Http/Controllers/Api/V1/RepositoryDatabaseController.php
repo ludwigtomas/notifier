@@ -77,28 +77,6 @@ class RepositoryDatabaseController extends Controller
         }
     }
 
-    // private function checkIfBackupExists(string $path, string $backup_name, Repository $repository)
-    // {
-    //     dd($backup_name);
-
-    //     $all_files = Storage::allFiles($path);
-
-    //     if (in_array($path . '/' . $backup_name, $all_files)) {
-    //         $this->sendMail($repository, 'failed', 'Database backup -- FILE -- (' . $backup_name . ') already exists');
-
-    //         abort(403, 'Database backup -- FILE -- (' . $backup_name . ') already exists');
-    //     }
-    // }
-
-    // private function checkIfDatabaseExists(string $backup_name, Repository $repository)
-    // {
-    //     if ($repository->database_backups()->whereName($backup_name)->exists()) {
-    //         $this->sendMail($repository, 'failed', 'Database backup -- RECORD -- (' . $backup_name . ') already exists');
-
-    //         abort(403, 'Database backup -- RECORD -- (' . $backup_name . ') already exists');
-    //     }
-    // }
-
     private function sendMail(Repository $repository, string $status, string $message): void
     {
         RepositoryDatabaseJob::dispatch($repository, $status, $message);

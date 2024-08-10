@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\V1\GitlabController;
-use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\GitlabController;
+use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +30,5 @@ route::group(['prefix' => 'v1'], function () {
         route::get('/groups/{group}/subgroups', [GitlabController::class, 'subgroups'])->name('subgroups');
         route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
         route::get('/groups/{group_id}/repositories', [GitlabController::class, 'groupRepositories'])->name('group.repositories');
-    });
-
-    route::get('/test', function () {
-        return response()->json(['message' => 'Hello World!']);
     });
 });

@@ -15,6 +15,8 @@ class RepositoryDatabaseJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $queue = 'database';
+
     /**
      * Create a new job instance.
      */
@@ -22,8 +24,7 @@ class RepositoryDatabaseJob implements ShouldQueue
         protected Repository $repository,
         protected string $status,
         protected string $message,
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job.
@@ -44,7 +45,7 @@ class RepositoryDatabaseJob implements ShouldQueue
     {
         return [
             'database',
-            'repository:'.$this->repository->repository_id,
+            'repository:' . $this->repository->repository_id,
         ];
     }
 }
