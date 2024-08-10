@@ -15,6 +15,8 @@ return [
 
     'default' => env('MAIL_MAILER', 'smtp'),
 
+    'mail_from_address' => env('MAIL_FROM_ADDRESS', 'info@ludwigtomas.cz'),
+
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations
