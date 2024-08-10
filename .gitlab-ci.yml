@@ -14,8 +14,8 @@ deploy:
         rm package-lock.json
         rm composer.lock
         git pull
-        composer install
-        npm install
+        composer i
+        npm i
         npm run build
         pm2 restart server
         php artisan optimize:clear
