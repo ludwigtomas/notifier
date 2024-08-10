@@ -27,4 +27,14 @@ class RepositoriesJob implements ShouldQueue
     {
         GitlabService::getRepositoriesLastCommit();
     }
+
+    /**
+     * Tags
+     */
+    public function tags(): array
+    {
+        return [
+            'repositories',
+        ];
+    }
 }

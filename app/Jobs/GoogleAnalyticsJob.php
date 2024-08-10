@@ -19,8 +19,7 @@ class GoogleAnalyticsJob implements ShouldQueue
      */
     public function __construct(
         protected Repository $repository,
-    ) {
-    }
+    ) {}
 
     /**
      * Execute the job.
@@ -28,5 +27,16 @@ class GoogleAnalyticsJob implements ShouldQueue
     public function handle(): void
     {
         GoogleAnalyticsService::googleAnalyticsForRepository($this->repository);
+    }
+
+    /**
+     * Tags
+     */
+    public function tags(): array
+    {
+        return [
+            'google_analytics',
+            'repository:' . $this->repository->repository_id,
+        ];
     }
 }
