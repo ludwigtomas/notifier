@@ -15,7 +15,7 @@ class RepositoryDatabaseJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $queue = 'database';
+    // public $queue = 'database';
 
     /**
      * Create a new job instance.
