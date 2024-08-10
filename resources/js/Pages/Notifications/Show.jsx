@@ -46,7 +46,7 @@ export default function Edit({ auth, notification }) {
                         </h1>
                     </section>
 
-                    <div className="card overflow-x-scroll">
+                    <div className="card overflow-x-auto">
                         <table className="min-w-full divide-y divide-zinc-700">
                             <thead>
                                 <tr>
