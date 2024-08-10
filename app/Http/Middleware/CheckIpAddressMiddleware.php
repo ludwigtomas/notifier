@@ -15,16 +15,13 @@ class CheckIpAddressMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $allowed_ips = [
-            '109.80.147.80',
-            '127.0.0.1',
-        ];
+        $allowedIp = '109.80.147.80'; // Replace with your public IP address
 
-        if (! in_array($request->ip(), $allowed_ips)) {
-            return response()->json([
-                'message' => 'Unauthorized',
-                'IP' => $request->ip(),
-            ], 403);
+        // Check the X-Forwarded-For header for the public IP address
+        $ipAddress = $request->header('X-Forwarded-For') ?? $request->ip();
+
+        if ($ipAddress !== $allowedIp) {
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
 
         return $next($request);
