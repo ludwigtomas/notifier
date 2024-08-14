@@ -19,6 +19,7 @@ deploy:
         npm run build
         pm2 restart server
         php artisan optimize:clear
+        php artisan optimize
       EOF
 
   only:
