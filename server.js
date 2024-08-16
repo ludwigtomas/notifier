@@ -35,9 +35,11 @@ io.on("connection", (socket) => {
                 );
                 return;
             }
+
             socket.on("data", (data) => {
                 stream.write(data);
             });
+
             stream
                 .on("data", (data) => {
                     socket.emit("data", data.toString("binary"));

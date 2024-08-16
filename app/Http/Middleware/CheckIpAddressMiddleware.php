@@ -19,8 +19,6 @@ class CheckIpAddressMiddleware
             return $next($request);
         }
 
-
-        
         $allowed_ips = [
             '192.168.50.210',
         ];
