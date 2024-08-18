@@ -60,13 +60,13 @@ class NotificationController extends Controller
     {
         $notification->markAsRead();
 
-        return redirect()->back();
+        return to_route('notifications.index');
     }
 
     public function destroy(Notification $notification): RedirectResponse
     {
         $notification->delete();
 
-        return redirect()->back();
+        return to_route('notifications.index');
     }
 }
