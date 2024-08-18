@@ -105,8 +105,6 @@ class GitlabService
 
     public static function getRepositorylastCommit(Repository $repository): void
     {
-        $gitlab = Git::whereSlug('gitlab')->first();
-
         $client = new GuzzleClient([
             'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
@@ -114,7 +112,7 @@ class GitlabService
         try {
             $response = $client->get('projects/' . $repository->repository_id . '/repository/commits', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
                 ],
                 'query' => [
                     'per_page' => 1,
@@ -128,8 +126,11 @@ class GitlabService
 
             $repository->last_commit_at < Carbon::parse($repository_api[0]->committed_date) ? self::sendNotificationToClient($repository, $commit_message) : null;
 
+            // TODO: refactor
+            $create_date = Carbon::parse($repository_api[0]->created_at);
+
             $repository->update([
-                'last_commit_at' => Carbon::parse($repository_api[0]->created_at),
+                'last_commit_at' => $create_date,
             ]);
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repository last commit error', ['repository' => $repository]);
@@ -146,11 +147,6 @@ class GitlabService
         }
     }
 
-    private static function sendNotificationToClient(Repository $repository, $commit_message = null): void
-    {
-        RepositoryNotifierJob::dispatch($repository, $commit_message);
-    }
-
     public static function getRepositoryAvatar(Repository $repository, $repository_api = null, $gitlab = null)
     {
         $client = new GuzzleClient([
@@ -160,7 +156,7 @@ class GitlabService
         try {
             $response = $client->get('projects/' . $repository->repository_id . '/avatar', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . ($gitlab ? $gitlab->api_token : self::getGitlab()->api_token),
+                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
                 ],
             ]);
 
@@ -329,8 +325,13 @@ class GitlabService
         }
     }
 
-    private static function getGitlab()
+    private static function getGitlab(): Git
     {
         return Git::whereSlug('gitlab')->first();
+    }
+
+    private static function sendNotificationToClient(Repository $repository, $commit_message = null): void
+    {
+        RepositoryNotifierJob::dispatch($repository, $commit_message);
     }
 }
