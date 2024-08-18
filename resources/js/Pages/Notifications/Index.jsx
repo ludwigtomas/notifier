@@ -101,9 +101,7 @@ export default function Index({
     const handleSetIsRead = (value) => {
         setIsRead(value);
 
-        router.get(
-            route("notifications.index"),
-            {
+        router.get(route("notifications.index"),{
                 search: search,
                 read_at: value,
                 model: selectedModel,
@@ -115,6 +113,13 @@ export default function Index({
             }
         );
     };
+
+    const deleteNotification = (id) => {
+        router.delete(route("notifications.destroy", id), {
+            preserveScroll: true,
+            preserveState: true,
+        });
+    }
 
     return (
         <AdminLayout
@@ -568,6 +573,14 @@ export default function Index({
                                                                 />
                                                             </Link>
 
+                                                            <button
+                                                                onClick={() => deleteNotification(notification.id)}
+                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                                preserveScroll
+                                                            >
+                                                                <TrashIcon className="size-6 text-red-500" />
+                                                            </button>
+{/*
                                                             <Link
                                                                 as="button"
                                                                 method="DELETE"
@@ -576,7 +589,7 @@ export default function Index({
                                                                 preserveScroll
                                                             >
                                                                 <TrashIcon className="size-6 text-red-500" />
-                                                            </Link>
+                                                            </Link> */}
                                                         </div>
                                                     </td>
                                                 </tr>
