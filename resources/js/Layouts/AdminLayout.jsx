@@ -10,7 +10,7 @@ export default function Authenticated({ user, children }) {
             <section className="w-full">
                 <Breadcrumbs/>
 
-                <div className="max-w-[100rem] py-8 mx-auto">
+                <div className="max-w-[100rem] mt-14 mx-auto">
                     {children}
                 </div>
             </section>
