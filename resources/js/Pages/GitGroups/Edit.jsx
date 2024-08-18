@@ -145,51 +145,35 @@ export default function ({ auth, git_group }) {
                     >
                         {git_group.parent_id ? (
                             <section className="relative gap-x-8">
-                                <div className="absolute top-1/2 -translate-y-1/2 col-span-4">
-                                    <h2 className="text-lg font-medium text-red-800 mb-2">
-                                        <span className="bg-red-100 px-2 py-1 rounded-lg">
-                                            Children of
-                                        </span>
-                                    </h2>
-
-                                    <p className="text-gray-300">
-                                        Parent group is
-                                        <Link
-                                            className="ml-2 hover:underline font-bold text-lg"
-                                            href={route(
-                                                "git-groups.edit",
-                                                git_group.relationships.parent
-                                                    .group_id
-                                            )}
-                                        >
-                                            {
-                                                git_group.relationships.parent
-                                                    .name
-                                            }
-                                        </Link>
+                                <div className="absolute top-1/2 -translate-y-1/2 col-span-4 text-center">
+                                    <p className="text-gray-300 font-bold text-lg mb-2">
+                                        Parent is
                                     </p>
+
+                                    <Link
+                                        href={route("git-groups.edit", git_group.relationships.parent.group_id)}
+                                        className="bg-red-100 hover:bg-red-200 px-2 py-1 rounded-lg"
+                                    >
+                                        <span className="text-lg font-medium text-red-800">
+                                            { git_group.relationships.parent.name }
+                                        </span>
+                                    </Link>
                                 </div>
 
                                 <div className="text-center space-y-2">
                                     <h2 className="text-lg font-medium text-gray-100">
-                                        {git_group.relationships.parent.name}
+                                        {git_group.name}
                                     </h2>
 
                                     <div className="flex items-center justify-center">
                                         <a
                                             className="inline-flex px-4 py-2 rounded-xl text-sm text-gray-200 bg-stone-800 hover:bg-stone-700"
-                                            href={
-                                                git_group.relationships.parent
-                                                    .web_url
-                                            }
+                                            href={ git_group.web_url}
                                             target="_blank"
                                         >
                                             <LinkIcon className="size-5 mr-2" />
 
-                                            {
-                                                git_group.relationships.parent
-                                                    .web_url
-                                            }
+                                            { git_group.web_url }
                                         </a>
                                     </div>
                                 </div>
