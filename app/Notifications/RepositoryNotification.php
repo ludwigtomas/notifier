@@ -28,11 +28,11 @@ class RepositoryNotification extends Notification
             $new_data = $notifiable->getAttributes();
         }
 
-        if ($this->action === 'deleted' || $this->action === 'forceDeleted') {
+        if (in_array($this->action, ['deleted', 'forceDeleted'])) {
             $old_data = $notifiable->getAttributes();
         }
 
-        if ($this->action === 'restored' || $this->action === 'created') {
+        if (in_array($this->action, ['restored', 'created'])) {
             $new_data = $notifiable->getAttributes();
         }
 

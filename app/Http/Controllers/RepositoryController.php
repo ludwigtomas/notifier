@@ -29,6 +29,7 @@ class RepositoryController extends Controller
             ->withCount('clients', 'database_backups')
             ->when($request->search, function ($query, $search) {
                 $query->whereAny([
+                    'repository_id',
                     'name',
                     'slug',
                 ], 'like', '%' . $search . '%');
