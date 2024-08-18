@@ -146,9 +146,7 @@ export default function RepositoryNotificationsTable({ notifications }) {
 
                                     <td className="px-4 py-4 ">
                                         <span className="text-sm font-medium">
-                                            {
-                                                notification.notifiable_type_formatted
-                                            }
+                                            { notification.notifiable_type_formatted }
                                         </span>
                                     </td>
 
@@ -160,7 +158,7 @@ export default function RepositoryNotificationsTable({ notifications }) {
 
                                     <td className="px-4 py-4 ">
                                         <span className="text-sm font-medium">
-                                            {notification.created_at_formatted}
+                                            {notification.created_at_human}
                                         </span>
                                     </td>
 

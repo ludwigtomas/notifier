@@ -23,10 +23,14 @@ class NotificationResource extends JsonResource
             'notifiable_id' => $this->notifiable_id,
             'notifiable_type' => $this->notifiable_type,
             'notifiable_type_formatted' => explode('App\\Models\\', $this->notifiable_type)[1],
+
             'created_at' => $this->created_at,
+            'created_at_formatted' => $this->created_at->format('H:i:s d.m.Y'),
+            'created_at_human' => $this->created_at->diffForHumans(),
+
             'updated_at' => $this->updated_at,
-            'created_at_formatted' => date_format($this->created_at, 'd.m.Y H:i:s'),
-            'updated_at_formatted' => date_format($this->updated_at, 'd.m.Y H:i:s'),
+            'updated_at_formatted' => $this->updated_at->format('H:i:s d.m.Y'),
+            'updated_at_human' => $this->updated_at->diffForHumans(),
 
             'relationships' => [
                 'notifiable' => $this->whenLoaded('notifiable'),

@@ -136,10 +136,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
-
 // DELETE IN PRODUCTION
-if (env('APP_ENV') === 'local') {
+if (app()->isLocal()) {
 
     route::get('/test', function () {
         $file = Storage::get('databases_1719494018.zip');

@@ -517,8 +517,12 @@ export default function Index({
                                                         </span>
                                                     </td>
 
-                                                    <td className="px-4 py-4 ">
+                                                    <td className="px-4 py-4 flex flex-col">
                                                         <span className="text-sm font-medium">
+                                                            { notification.created_at_human }
+                                                        </span>
+
+                                                        <span className="text-xs text-gray-300">
                                                             { notification.created_at_formatted }
                                                         </span>
                                                     </td>

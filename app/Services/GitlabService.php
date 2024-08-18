@@ -83,7 +83,9 @@ class GitlabService
             foreach ($repositories_api as $repository_api) {
 
                 $repository = Repository::updateOrCreate(
-                    ['repository_id' => $repository_api->id],
+                    [
+                        'repository_id' => $repository_api->id
+                    ],
                     [
                         'name' => $repository_api->name,
                         'slug' => Str::slug($repository_api->name),

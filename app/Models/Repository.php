@@ -90,7 +90,8 @@ class Repository extends Model
 
     public function notifications(): MorphMany
     {
-        return $this->morphMany(Notification::class, 'notifiable');
+        return $this->morphMany(Notification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');;
     }
 
     /*
