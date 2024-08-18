@@ -100,7 +100,7 @@ export default function Index({ auth, gits }) {
                                 </thead>
 
                                 <tbody className="divide-y divide-zinc-800 bg-zinc-700">
-                                    {gits.map((git) => {
+                                    {gits && gits.length >= 1 && gits.map((git) => {
                                         return (
                                             <tr
                                                 key={git.id}
@@ -109,11 +109,7 @@ export default function Index({ auth, gits }) {
                                                 <td className="px-4 py-4">
                                                     <img
                                                         className="w-10 h-10 rounded-lg"
-                                                        src={
-                                                            "/storage/avatars/" +
-                                                            git.username +
-                                                            ".png"
-                                                        }
+                                                        src={ "/storage/avatars/" + git.username + ".png"}
                                                         alt={git.name}
                                                     />
                                                 </td>

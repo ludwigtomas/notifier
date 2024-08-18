@@ -61,19 +61,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
     };
 
     return (
-        <AdminLayout
-            user={auth.user}
-            header={
-                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
-                    <Link
-                        className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route("dashboard.index")}
-                    >
-                        Dashboard
-                    </Link>
-                </header>
-            }
-        >
+        <AdminLayout user={auth.user}>
             <Head title="Dashboard" />
 
             <div className="py-12">
