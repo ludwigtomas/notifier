@@ -1,13 +1,14 @@
 import React from "react";
 import AdminLayout from "@/Layouts/AdminLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import {
-    EyeIcon,
     ChevronRightIcon,
-    BookmarkIcon,
-    TrashIcon,
-    Square2StackIcon,
-    PencilSquareIcon,
+    GlobeAltIcon,
+    FolderOpenIcon,
+    RocketLaunchIcon,
+    UsersIcon,
+    ServerStackIcon,
+    CircleStackIcon,
 } from "@heroicons/react/24/outline";
 
 export default function Edit({ auth, notification }) {
@@ -46,6 +47,30 @@ export default function Edit({ auth, notification }) {
                         </h1>
                     </section>
 
+                    <div className="mb-5 ">
+                        {{
+                            Git: <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                            GitGroup: <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                            Repository: <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                            User: <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                            Hosting: <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                            RepositoryDatabase: <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        }[ notification.notifiable_type_formatted] || (
+                            <div>
+                                No Icon
+                            </div>
+                        )}
+
+                        {{
+                            'created': <span className="text-green-500">Vytvoření {notification.notifiable_type_formatted}</span>,
+                            'updated': <span className="text-yellow-500">Aktualizace {notification.notifiable_type_formatted}</span>,
+                            'deleted': <span className="text-red-500">Smazání {notification.notifiable_type_formatted}</span>,
+                            'restored': <span className="text-green-500">Obnovení {notification.notifiable_type_formatted}</span>,
+                            'forceDeleted': <span className="text-red-500">Trvalé smazání {notification.notifiable_type_formatted}</span>,
+                        }[notification.data.action]}
+
+                    </div>
+
                     <div className="card overflow-x-auto">
                         <table className="min-w-full divide-y divide-zinc-700">
                             <thead>
@@ -73,6 +98,15 @@ export default function Edit({ auth, notification }) {
 
                                     {notification.data && notification.data.new_data && !notification.data.old_data && (
                                         <>
+                                            {!notification.data.old_data && (
+                                                <th
+                                                    scope="col"
+                                                    className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                                >
+                                                    Metoda
+                                                </th>
+                                            )}
+
                                             {Object.keys(notification.data.new_data).map((key) => (
                                                 <th
                                                     scope="col"

@@ -254,11 +254,7 @@ export default function Index({
                                                     </div>
                                                 ) : (
                                                     <div
-                                                        onClick={() =>
-                                                            handleModel(
-                                                                "clear_all"
-                                                            )
-                                                        }
+                                                        onClick={() => handleModel("clear_all")}
                                                         className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
                                                     >
                                                         <div className="text-center text-white">
@@ -273,16 +269,10 @@ export default function Index({
                                                     return (
                                                         <div
                                                             key={index}
-                                                            onClick={() =>
-                                                                handleModel(
-                                                                    model
-                                                                )
-                                                            }
+                                                            onClick={() => handleModel(model)}
                                                             className={
                                                                 "text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 " +
-                                                                (selectedModel.includes(
-                                                                    model
-                                                                )
+                                                                (selectedModel.includes(model)
                                                                     ? " border-green-500"
                                                                     : " border-zinc-600")
                                                             }
@@ -290,9 +280,7 @@ export default function Index({
                                                             <BookmarkIcon
                                                                 className={
                                                                     "size-10 text-neutral-400 mb-3 " +
-                                                                    (selectedModel.includes(
-                                                                        model
-                                                                    )
+                                                                    (selectedModel.includes(model)
                                                                         ? " fill-neutral-400"
                                                                         : " border-zinc-600 bg-zinc-700")
                                                                 }
@@ -461,15 +449,26 @@ export default function Index({
                                                 <tr
                                                     key={notification.id}
                                                     className={
-                                                        "text-white " + (notification.data.action === "created" ?? "bg-green-500/5 hover:bg-green-500/15")
+                                                        "text-white " +
+                                                        (notification.data.action === "created"
+                                                            ? "bg-green-500/5 hover:bg-green-500/15"
+                                                            : "")
                                                         + " " +
-                                                        (notification.data.action === "updated" ?? "bg-yellow-500/5 hover:bg-yellow-500/15")
+                                                        (notification.data.action === "updated"
+                                                            ? "bg-yellow-500/5 hover:bg-yellow-500/15"
+                                                            : "")
                                                         + " " +
-                                                        (notification.data.action === "deleted" ?? "bg-purple-500/5 hover:bg-purple-500/15")
+                                                        (notification.data.action === "deleted"
+                                                            ? "bg-purple-500/5 hover:bg-purple-500/15"
+                                                            : "")
                                                         + " " +
-                                                        (notification.data.action === "restored" ?? "bg-blue-500/5 hover:bg-blue-500/15")
+                                                        (notification.data.action === "restored"
+                                                            ? "bg-blue-500/5 hover:bg-blue-500/15"
+                                                            : "")
                                                         + " " +
-                                                        (notification.data.action === "forceDeleted" ?? "bg-red-500/5 hover:bg-red-500/15")
+                                                        (notification.data.action === "forceDeleted"
+                                                            ? "bg-red-500/5 hover:bg-red-500/15"
+                                                            : "")
                                                     }
                                                 >
                                                     <td className="px-4 py-4">
