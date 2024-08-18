@@ -164,14 +164,16 @@ class GitlabService
                 ],
             ]);
 
-            $body = $response->getBody();
-
-            $path = 'avatars/' . $repository->slug . '.png';
-
-            Storage::disk('public')->put($path, $body);
-
             if ($response->getStatusCode() === 200) {
-                // Avatar found, do something with it
+                $body = $response->getBody();
+
+                $path = 'avatars/' . $repository->slug . '.png';
+
+                Storage::disk('public')->put($path, $body);
+
+                $repository->update([
+                    'avatar' => $repository->slug . '.png',
+                ]);
             }
         } catch (ClientException $e) {
             // TODO: Handle 404 error

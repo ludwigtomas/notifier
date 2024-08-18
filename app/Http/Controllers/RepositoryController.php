@@ -48,9 +48,8 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository): Response
     {
-        $repository->loadCount('clients', 'database_backups');
-
-        $repository->load('hosting', 'hosting_repository', 'notifications');
+        $repository->loadCount('clients', 'database_backups')
+            ->load('hosting', 'hosting_repository', 'notifications');
 
         $clients = $repository->clients()->paginate(10);
 
@@ -107,9 +106,10 @@ class RepositoryController extends Controller
 
     public function restore($repository): RedirectResponse
     {
-        $repository = Repository::withTrashed()->findOrFail($repository);
-
-        $repository->restore();
+        Repository::query()
+            ->withTrashed()
+            ->findOrFail($repository)
+            ->restore();
 
         return back();
     }
@@ -127,9 +127,10 @@ class RepositoryController extends Controller
         // TODO: Delete database backups
         // TODO: Delete repository avatar
 
-        $repository = Repository::withTrashed()->findOrFail($repository);
-
-        $repository->forceDelete();
+        Repository::query()
+            ->withTrashed()
+            ->findOrFail($repository)
+            ->forceDelete();
 
         return back();
     }
