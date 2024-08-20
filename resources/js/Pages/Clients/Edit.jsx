@@ -55,22 +55,20 @@ export default function Edit({ auth, client, repositories }) {
         >
             <Head title={client.name + " - Edit"} />
 
-            <div className="py-12">
-                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateClientInformationForm client={client} />
-                    </div>
+            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <UpdateClientInformationForm client={client} />
+                </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateClientAttachedRepositoriesForm client={client} />
-                    </div>
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <UpdateClientAttachedRepositoriesForm client={client} />
+                </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <AttachClientRepositoriesForm
-                            client={client}
-                            repositories={repositories}
-                        />
-                    </div>
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <AttachClientRepositoriesForm
+                        client={client}
+                        repositories={repositories}
+                    />
                 </div>
             </div>
         </AdminLayout>

@@ -121,230 +121,228 @@ export default function Show({ auth, repository, database_backups, clients }) {
             >
                 <Head title={repository.name + " - Show"} />
 
-                <div className="py-12">
-                    <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                        <div className="w-9/12 mx-auto">
-                            <RepositorySettingForApi repository={repository} />
-                        </div>
+                <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
+                    <div className="w-9/12 mx-auto">
+                        <RepositorySettingForApi repository={repository} />
+                    </div>
 
-                        <div className="grid grid-cols-5 gap-x-8 relative">
-                            {/* Last commit */}
-                            <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+                    <div className="grid grid-cols-5 gap-x-8 relative">
+                        {/* Last commit */}
+                        <div className="grid rounded-xl overflow-hidden bg-zinc-900 pb-5">
+                            <div className="flex justify-center overflow-hidden">
+                                <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
 
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Poslední commit
-                                        </span>
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Poslední commit
+                                    </span>
 
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="text-center">
-                                    <h3 className="text-gray-500 text-xs text-center">
-                                        {new Date(
-                                            repository.last_commit_at
-                                        ).toLocaleDateString("cs-CZ", {
-                                            day: "2-digit",
-                                            month: "2-digit",
-                                            year: "numeric",
-                                        })}
-                                    </h3>
-
-                                    <div className="text-gray-200 mt-2">
-                                        <h2 className="font-bold text-2xl">
-                                            {repository.last_commit_at_human}
-                                        </h2>
-
-                                        <h3 className="text-gray-400 text-xs">
-                                            Nejnovější commit
-                                        </h3>
-                                    </div>
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
                                 </div>
                             </div>
 
-                            {/* Database */}
-                            <div
-                                onClick={handleShowRepositoryRelation(
-                                    "databases"
-                                )}
-                                className={
-                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
-                                    (showRelationship === "databases"
-                                        ? " border-sky-500"
-                                        : " border-transparent")
-                                }
-                            >
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+                            <CalendarDaysIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Databáze
-                                        </span>
+                            <div className="text-center">
+                                <h3 className="text-gray-500 text-xs text-center">
+                                    {new Date(
+                                        repository.last_commit_at
+                                    ).toLocaleDateString("cs-CZ", {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric",
+                                    })}
+                                </h3>
 
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
+                                <div className="text-gray-200 mt-2">
+                                    <h2 className="font-bold text-2xl">
+                                        {repository.last_commit_at_human}
+                                    </h2>
+
+                                    <h3 className="text-gray-400 text-xs">
+                                        Nejnovější commit
+                                    </h3>
                                 </div>
+                            </div>
+                        </div>
 
-                                <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+                        {/* Database */}
+                        <div
+                            onClick={handleShowRepositoryRelation(
+                                "databases"
+                            )}
+                            className={
+                                "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                (showRelationship === "databases"
+                                    ? " border-sky-500"
+                                    : " border-transparent")
+                            }
+                        >
+                            <div className="flex justify-center overflow-hidden">
+                                <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
 
-                                <div className="text-center space-x-4">
-                                    <span className="text-gray-200 font-bold text-xl">
-                                        {
-                                            repository.relationships
-                                                .database_backups_count
-                                        }
-                                    </span>
-
-                                    <span className="text-gray-400 text-xs">
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
                                         Databáze
                                     </span>
+
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
                                 </div>
                             </div>
 
-                            {/* Clients */}
-                            <div
-                                onClick={handleShowRepositoryRelation(
-                                    "clients"
-                                )}
-                                className={
-                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
-                                    (showRelationship === "clients"
-                                        ? " border-sky-500"
-                                        : " border-transparent")
-                                }
-                            >
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+                            <CircleStackIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
 
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Klienti
-                                        </span>
+                            <div className="text-center space-x-4">
+                                <span className="text-gray-200 font-bold text-xl">
+                                    {
+                                        repository.relationships
+                                            .database_backups_count
+                                    }
+                                </span>
 
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <UsersIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="text-center space-x-4">
-                                    <span className="text-gray-200 font-bold text-xl">
-                                        {repository.relationships.clients_count}
-                                    </span>
-
-                                    <span className="text-gray-400 text-xs">
-                                        klienti
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Notifications */}
-                            <div
-                                onClick={handleShowRepositoryRelation(
-                                    "notifications"
-                                )}
-                                className={
-                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
-                                    (showRelationship === "notifications"
-                                        ? " border-sky-500"
-                                        : " border-transparent")
-                                }
-                            >
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
-
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Notifikace
-                                        </span>
-
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="text-center space-x-4">
-                                    <span className="text-gray-200 font-bold text-xl">
-                                        {
-                                            repository.relationships
-                                                .notifications.length
-                                        }
-                                    </span>
-
-                                    <span className="text-gray-400 text-xs">
-                                        notifikací
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Hosting */}
-                            <div
-                                onClick={handleShowRepositoryRelation(
-                                    "hosting"
-                                )}
-                                className={
-                                    "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
-                                    (showRelationship === "hosting"
-                                        ? " border-sky-500"
-                                        : " border-transparent")
-                                }
-                            >
-                                <div className="flex justify-center overflow-hidden">
-                                    <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
-                                        <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
-
-                                        <span className="text-zinc-100 text-xl font-bold tracking-wider">
-                                            Hosting
-                                        </span>
-
-                                        <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
-                                    </div>
-                                </div>
-
-                                <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
-
-                                <div className="text-center space-x-4 flex items-center justify-center ">
-                                    {repository.relationships.hosting ? (
-                                        <span className="bg-green-500 animate-pulse p-3 rounded-full" />
-                                    ) : (
-                                        <span className="bg-red-500 animate-pulse p-3 rounded-full" />
-                                    )}
-                                </div>
+                                <span className="text-gray-400 text-xs">
+                                    Databáze
+                                </span>
                             </div>
                         </div>
 
-                        <div>
-                            {showRelationship === "databases" ? (
-                                <RepositoryDatabaseTable
-                                    repository={repository}
-                                    database_backups={database_backups}
-                                />
-                            ) : showRelationship === "clients" ? (
-                                <RepositoryClientsTable clients={clients} />
-                            ) : showRelationship === "notifications" ? (
-                                <RepositoryNotificationsTable
-                                    notifications={
-                                        repository.relationships.notifications
+                        {/* Clients */}
+                        <div
+                            onClick={handleShowRepositoryRelation(
+                                "clients"
+                            )}
+                            className={
+                                "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                (showRelationship === "clients"
+                                    ? " border-sky-500"
+                                    : " border-transparent")
+                            }
+                        >
+                            <div className="flex justify-center overflow-hidden">
+                                <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Klienti
+                                    </span>
+
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                </div>
+                            </div>
+
+                            <UsersIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                            <div className="text-center space-x-4">
+                                <span className="text-gray-200 font-bold text-xl">
+                                    {repository.relationships.clients_count}
+                                </span>
+
+                                <span className="text-gray-400 text-xs">
+                                    klienti
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Notifications */}
+                        <div
+                            onClick={handleShowRepositoryRelation(
+                                "notifications"
+                            )}
+                            className={
+                                "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                (showRelationship === "notifications"
+                                    ? " border-sky-500"
+                                    : " border-transparent")
+                            }
+                        >
+                            <div className="flex justify-center overflow-hidden">
+                                <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Notifikace
+                                    </span>
+
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                </div>
+                            </div>
+
+                            <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                            <div className="text-center space-x-4">
+                                <span className="text-gray-200 font-bold text-xl">
+                                    {
+                                        repository.relationships
+                                            .notifications.length
+                                    }
+                                </span>
+
+                                <span className="text-gray-400 text-xs">
+                                    notifikací
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Hosting */}
+                        <div
+                            onClick={handleShowRepositoryRelation(
+                                "hosting"
+                            )}
+                            className={
+                                "grid rounded-xl overflow-hidden bg-zinc-900 pb-5 border-2 hover:border-sky-500 cursor-pointer" +
+                                (showRelationship === "hosting"
+                                    ? " border-sky-500"
+                                    : " border-transparent")
+                            }
+                        >
+                            <div className="flex justify-center overflow-hidden">
+                                <div className="relative w-72 bg-zinc-700 h-8 flex items-center justify-center">
+                                    <span className="absolute -left-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[40deg]" />
+
+                                    <span className="text-zinc-100 text-xl font-bold tracking-wider">
+                                        Hosting
+                                    </span>
+
+                                    <span className="absolute -right-10 bg-zinc-900 w-20 h-10 px-6 skew-x-[-40deg]" />
+                                </div>
+                            </div>
+
+                            <ServerIcon className="w-14 h-28 stroke-1 m-auto text-sky-500" />
+
+                            <div className="text-center space-x-4 flex items-center justify-center ">
+                                {repository.relationships.hosting ? (
+                                    <span className="bg-green-500 animate-pulse p-3 rounded-full" />
+                                ) : (
+                                    <span className="bg-red-500 animate-pulse p-3 rounded-full" />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        {showRelationship === "databases" ? (
+                            <RepositoryDatabaseTable
+                                repository={repository}
+                                database_backups={database_backups}
+                            />
+                        ) : showRelationship === "clients" ? (
+                            <RepositoryClientsTable clients={clients} />
+                        ) : showRelationship === "notifications" ? (
+                            <RepositoryNotificationsTable
+                                notifications={
+                                    repository.relationships.notifications
+                                }
+                            />
+                        ) : (
+                            showRelationship === "hosting" &&
+                            repository.relationships.hosting && (
+                                <RepositoryHostingTable
+                                    hosting={
+                                        repository.relationships.hosting
                                     }
                                 />
-                            ) : (
-                                showRelationship === "hosting" &&
-                                repository.relationships.hosting && (
-                                    <RepositoryHostingTable
-                                        hosting={
-                                            repository.relationships.hosting
-                                        }
-                                    />
-                                )
-                            )}
-                        </div>
+                            )
+                        )}
                     </div>
                 </div>
             </AdminLayout>

@@ -82,24 +82,22 @@ export default function Index({ auth, hosting, repositories }) {
         >
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateHostingInformationForm hosting={hosting} />
-                    </div>
+            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <UpdateHostingInformationForm hosting={hosting} />
+                </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <UpdateHostingAttachedRepositoriesForm
-                            hosting={hosting}
-                        />
-                    </div>
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <UpdateHostingAttachedRepositoriesForm
+                        hosting={hosting}
+                    />
+                </div>
 
-                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                        <AttachHostingRepositoriesForm
-                            hosting={hosting}
-                            repositories={repositories}
-                        />
-                    </div>
+                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <AttachHostingRepositoriesForm
+                        hosting={hosting}
+                        repositories={repositories}
+                    />
                 </div>
             </div>
         </AdminLayout>

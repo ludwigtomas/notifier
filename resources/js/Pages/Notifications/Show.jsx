@@ -39,206 +39,204 @@ export default function Edit({ auth, notification }) {
         >
             <Head title="Notifikace" />
 
-            <div className="py-12">
-                <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                    <section className="mb-5 card">
-                        <h1 className="text-center text-white text-2xl font-bold tracking-wider">
-                            {notification.notifiable_type_formatted}
-                        </h1>
-                    </section>
+            <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
+                <section className="mb-5 card">
+                    <h1 className="text-center text-white text-2xl font-bold tracking-wider">
+                        {notification.notifiable_type_formatted}
+                    </h1>
+                </section>
 
-                    <div className="mb-5 ">
-                        {{
-                            Git: <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                            GitGroup: <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                            Repository: <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                            User: <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                            Hosting: <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                            RepositoryDatabase: <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        }[ notification.notifiable_type_formatted] || (
-                            <div>
-                                No Icon
-                            </div>
-                        )}
+                <div className="mb-5 ">
+                    {{
+                        Git: <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        GitGroup: <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        Repository: <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        User: <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        Hosting: <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                        RepositoryDatabase: <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
+                    }[ notification.notifiable_type_formatted] || (
+                        <div>
+                            No Icon
+                        </div>
+                    )}
 
-                        {{
-                            'created': <span className="text-green-500">Vytvoření {notification.notifiable_type_formatted}</span>,
-                            'updated': <span className="text-yellow-500">Aktualizace {notification.notifiable_type_formatted}</span>,
-                            'deleted': <span className="text-red-500">Smazání {notification.notifiable_type_formatted}</span>,
-                            'restored': <span className="text-green-500">Obnovení {notification.notifiable_type_formatted}</span>,
-                            'forceDeleted': <span className="text-red-500">Trvalé smazání {notification.notifiable_type_formatted}</span>,
-                        }[notification.data.action]}
+                    {{
+                        'created': <span className="text-green-500">Vytvoření {notification.notifiable_type_formatted}</span>,
+                        'updated': <span className="text-yellow-500">Aktualizace {notification.notifiable_type_formatted}</span>,
+                        'deleted': <span className="text-red-500">Smazání {notification.notifiable_type_formatted}</span>,
+                        'restored': <span className="text-green-500">Obnovení {notification.notifiable_type_formatted}</span>,
+                        'forceDeleted': <span className="text-red-500">Trvalé smazání {notification.notifiable_type_formatted}</span>,
+                    }[notification.data.action]}
 
-                    </div>
+                </div>
 
-                    <div className="card overflow-x-auto">
-                        <table className="min-w-full divide-y divide-zinc-700">
-                            <thead>
-                                <tr>
-                                    {notification.data && notification.data.old_data && (
-                                        <>
+                <div className="card overflow-x-auto">
+                    <table className="min-w-full divide-y divide-zinc-700">
+                        <thead>
+                            <tr>
+                                {notification.data && notification.data.old_data && (
+                                    <>
+                                        <th
+                                            scope="col"
+                                            className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                        >
+                                            Metoda
+                                        </th>
+
+                                        {Object.keys(notification.data.old_data).map((key) => (
+                                            <th
+                                                scope="col"
+                                                className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                                key={key}
+                                            >
+                                                {key}
+                                            </th>
+                                        ))}
+                                    </>
+                                )}
+
+                                {notification.data && notification.data.new_data && !notification.data.old_data && (
+                                    <>
+                                        {!notification.data.old_data && (
                                             <th
                                                 scope="col"
                                                 className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
                                             >
                                                 Metoda
                                             </th>
+                                        )}
 
-                                            {Object.keys(notification.data.old_data).map((key) => (
-                                                <th
-                                                    scope="col"
-                                                    className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
-                                                    key={key}
-                                                >
-                                                    {key}
-                                                </th>
-                                            ))}
-                                        </>
-                                    )}
-
-                                    {notification.data && notification.data.new_data && !notification.data.old_data && (
-                                        <>
-                                            {!notification.data.old_data && (
-                                                <th
-                                                    scope="col"
-                                                    className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
-                                                >
-                                                    Metoda
-                                                </th>
-                                            )}
-
-                                            {Object.keys(notification.data.new_data).map((key) => (
-                                                <th
-                                                    scope="col"
-                                                    className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
-                                                    key={key}
-                                                >
-                                                    {key}
-                                                </th>
-                                            ))}
-                                        </>
-                                    )}
-                                </tr>
-                            </thead>
-
-                            <tbody className="divide-y divide-zinc-700 ">
-                                <tr className="space-x-4 mx-2">
-                                    {notification.data && notification.data.old_data && (
-                                        <>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
-                                                Stará data
-                                            </td>
-
-                                            {Object.values(notification.data.old_data).map((value, index) => (
-                                                <td
-                                                    key={index}
-                                                    className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
-                                                >
-                                                    {notification.data.new_data && notification.data.new_data[Object.keys(notification.data.old_data)[index]] !== value ? (
-                                                        <span className="text-red-500">
-                                                            {value}
-                                                        </span>
-                                                    ) : (
-                                                        <span>
-                                                            {value ?? "-"}
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            ))}
-                                        </>
-                                    )}
-                                </tr>
-
-                                <tr className="space-x-4 mx-2">
-                                    {notification.data && notification.data.new_data && (
-                                        <>
-                                            <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
-                                                Nová data
-                                            </td>
-                                            {Object.values(notification.data.new_data).map((value, index) => (
-                                                <td
-                                                    key={index}
-                                                    className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
-                                                >
-                                                    {notification.data.old_data && notification.data.old_data[Object.keys(notification.data.new_data)[index]] !== value ? (
-                                                        <span className="text-green-500">
-                                                            {value}
-                                                        </span>
-                                                    ) : (
-                                                        <span>
-                                                            {value ?? "-"}
-                                                        </span>
-                                                    )}
-                                                </td>
-                                            ))}
-                                        </>
-                                    )}
-                                </tr>
-                            </tbody>
-
-                        </table>
-                    </div>
-
-                    {/* <section className="card grid grid-cols-2">
-                        <div>
-                            {notification.data && notification.data.old_data && (
-                                <>
-                                    <h2 className="text-lg font-bold text-white">
-                                        Staré údaje
-                                    </h2>
-
-                                    <ul>
-                                        {Object.entries(notification.data.old_data).map(([key, value]) => (
-                                            <li
+                                        {Object.keys(notification.data.new_data).map((key) => (
+                                            <th
+                                                scope="col"
+                                                className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
                                                 key={key}
-                                                className="space-x-2"
-
                                             >
-                                                <span className="text-xs text-gray-400">
-                                                    {key}
-                                                </span>
+                                                {key}
+                                            </th>
+                                        ))}
+                                    </>
+                                )}
+                            </tr>
+                        </thead>
 
-                                                { notification.data.new_data && notification.data.new_data[key] !== value ? (
+                        <tbody className="divide-y divide-zinc-700 ">
+                            <tr className="space-x-4 mx-2">
+                                {notification.data && notification.data.old_data && (
+                                    <>
+                                        <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
+                                            Stará data
+                                        </td>
+
+                                        {Object.values(notification.data.old_data).map((value, index) => (
+                                            <td
+                                                key={index}
+                                                className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
+                                            >
+                                                {notification.data.new_data && notification.data.new_data[Object.keys(notification.data.old_data)[index]] !== value ? (
                                                     <span className="text-red-500">
-                                                        {value} <span className="text-xs">→ {notification.data.new_data[key]}</span>
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-white">
                                                         {value}
                                                     </span>
+                                                ) : (
+                                                    <span>
+                                                        {value ?? "-"}
+                                                    </span>
                                                 )}
-                                            </li>
+                                            </td>
                                         ))}
-                                    </ul>
-                                </>
-                            )}
-                        </div>
+                                    </>
+                                )}
+                            </tr>
 
-                        <div>
-                            {notification.data && notification.data.new_data && (
-                                <>
-                                    <h2 className="text-lg font-bold text-white">
-                                        Nové údaje
-                                    </h2>
+                            <tr className="space-x-4 mx-2">
+                                {notification.data && notification.data.new_data && (
+                                    <>
+                                        <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
+                                            Nová data
+                                        </td>
+                                        {Object.values(notification.data.new_data).map((value, index) => (
+                                            <td
+                                                key={index}
+                                                className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
+                                            >
+                                                {notification.data.old_data && notification.data.old_data[Object.keys(notification.data.new_data)[index]] !== value ? (
+                                                    <span className="text-green-500">
+                                                        {value}
+                                                    </span>
+                                                ) : (
+                                                    <span>
+                                                        {value ?? "-"}
+                                                    </span>
+                                                )}
+                                            </td>
+                                        ))}
+                                    </>
+                                )}
+                            </tr>
+                        </tbody>
 
-                                    <ul>
-                                        {Object.entries(notification.data.new_data).map(([key, value]) => (
-                                            <li key={key} className="space-x-2">
-                                                <span className="text-xs text-gray-400">
-                                                    {key}
+                    </table>
+                </div>
+
+                {/* <section className="card grid grid-cols-2">
+                    <div>
+                        {notification.data && notification.data.old_data && (
+                            <>
+                                <h2 className="text-lg font-bold text-white">
+                                    Staré údaje
+                                </h2>
+
+                                <ul>
+                                    {Object.entries(notification.data.old_data).map(([key, value]) => (
+                                        <li
+                                            key={key}
+                                            className="space-x-2"
+
+                                        >
+                                            <span className="text-xs text-gray-400">
+                                                {key}
+                                            </span>
+
+                                            { notification.data.new_data && notification.data.new_data[key] !== value ? (
+                                                <span className="text-red-500">
+                                                    {value} <span className="text-xs">→ {notification.data.new_data[key]}</span>
                                                 </span>
-
+                                            ) : (
                                                 <span className="text-white">
                                                     {value}
                                                 </span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </>
-                            )}
-                        </div>
-                    </section> */}
-                </div>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>
+
+                    <div>
+                        {notification.data && notification.data.new_data && (
+                            <>
+                                <h2 className="text-lg font-bold text-white">
+                                    Nové údaje
+                                </h2>
+
+                                <ul>
+                                    {Object.entries(notification.data.new_data).map(([key, value]) => (
+                                        <li key={key} className="space-x-2">
+                                            <span className="text-xs text-gray-400">
+                                                {key}
+                                            </span>
+
+                                            <span className="text-white">
+                                                {value}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>
+                </section> */}
             </div>
         </AdminLayout>
     );

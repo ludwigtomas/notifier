@@ -116,7 +116,7 @@ export default function Index({ auth, repositories, filters }) {
             <Head title="Repozitáře" />
 
             {/* TABLE */}
-            <div className="py-12">
+            <div>
                 <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1">
                         <section className="mb-10 card">
