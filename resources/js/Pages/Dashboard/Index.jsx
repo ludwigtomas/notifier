@@ -82,6 +82,97 @@ export default function Dashboard({ auth, notifications, models, filters }) {
         >
             <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-y-20">
+
+                    <main>
+                        <section className="card">
+                            <div className="flex space-x-4">
+                                <div className="flex items-center justify-center">
+                                    <Link
+                                        href={route("dashboard.index")}
+                                        className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
+                                    >
+                                        <ChartPieIcon className="size-10 text-sky-500" />
+                                    </Link>
+                                </div>
+
+                                <div>
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Laravel Ecosystem
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Zde se nachází Laravel Ecosystem, které jsou v aplikaci.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section className="my-2 grid grid-cols-3 gap-2">
+                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
+                                <Horizonicon className="size-20" />
+
+                                <figcaption className="text-left">
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Horizon
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Horizon je nástroj pro monitorování
+                                        fronty.
+                                    </p>
+                                </figcaption>
+
+                                <a
+                                    className="absolute inset-0"
+                                    target="_blank"
+                                    href={route("horizon.index")}
+                                />
+                            </figure>
+
+                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
+                                <PulseIcon className="size-20" />
+
+                                <figcaption className="text-left">
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Pulse
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Pulse je nástroj pro monitorování výkonu
+                                        aplikace a fronty.
+                                    </p>
+                                </figcaption>
+
+                                <a
+                                    className="absolute inset-0"
+                                    target="_blank"
+                                    href={route("pulse")}
+                                />
+                            </figure>
+
+                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
+                                <TelescopeIcon className="size-20" />
+
+                                <figcaption className="text-left">
+                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
+                                        Telescope
+                                    </h1>
+
+                                    <p className="text-zinc-400">
+                                        Telescope je nástroj pro debugování
+                                        aplikace.
+                                    </p>
+                                </figcaption>
+
+                                <a
+                                    className="absolute inset-0"
+                                    target="_blank"
+                                    href={route("telescope")}
+                                />
+                            </figure>
+                        </section>
+                    </main>
+
                     <main>
                         <section className="mb-10 card">
                             <div className="grid grid-cols-5 gap-2 items-center">
@@ -436,7 +527,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                         </section>
                     </main>
 
-                    <main>
+                    <main className="pb-10 mb-10">
                         <section className="card">
                             <div className="flex space-x-4">
                                 <div className="flex items-center justify-center">
@@ -658,96 +749,6 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </main>
-
-                    <main className="pb-10 mb-10">
-                        <section className="card">
-                            <div className="flex space-x-4">
-                                <div className="flex items-center justify-center">
-                                    <Link
-                                        href={route("dashboard.index")}
-                                        className="p-2 rounded-md bg-zinc-800 border border-zinc-700 hover:border-zinc-600 faster-animation"
-                                    >
-                                        <ChartPieIcon className="size-10 text-sky-500" />
-                                    </Link>
-                                </div>
-
-                                <div>
-                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                        Laravel Ecosystem
-                                    </h1>
-
-                                    <p className="text-zinc-400">
-                                        Zde se nachází Laravel Ecosystem, které jsou v aplikaci.
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section className="my-2 grid grid-cols-3 gap-2">
-                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
-                                <Horizonicon className="size-20" />
-
-                                <figcaption className="text-left">
-                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                        Horizon
-                                    </h1>
-
-                                    <p className="text-zinc-400">
-                                        Horizon je nástroj pro monitorování
-                                        fronty.
-                                    </p>
-                                </figcaption>
-
-                                <a
-                                    className="absolute inset-0"
-                                    target="_blank"
-                                    href={route("horizon.index")}
-                                />
-                            </figure>
-
-                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
-                                <PulseIcon className="size-20" />
-
-                                <figcaption className="text-left">
-                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                        Pulse
-                                    </h1>
-
-                                    <p className="text-zinc-400">
-                                        Pulse je nástroj pro monitorování výkonu
-                                        aplikace a fronty.
-                                    </p>
-                                </figcaption>
-
-                                <a
-                                    className="absolute inset-0"
-                                    target="_blank"
-                                    href={route("pulse")}
-                                />
-                            </figure>
-
-                            <figure className="relative card hover:border-zinc-600 min-h-40 flex items-center justify-center space-x-10 p-10">
-                                <TelescopeIcon className="size-20" />
-
-                                <figcaption className="text-left">
-                                    <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                        Telescope
-                                    </h1>
-
-                                    <p className="text-zinc-400">
-                                        Telescope je nástroj pro debugování
-                                        aplikace.
-                                    </p>
-                                </figcaption>
-
-                                <a
-                                    className="absolute inset-0"
-                                    target="_blank"
-                                    href={route("telescope")}
-                                />
-                            </figure>
                         </section>
                     </main>
                 </div>
