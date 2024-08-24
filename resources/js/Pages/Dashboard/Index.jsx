@@ -661,7 +661,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                         </section>
                     </main>
 
-                    <main>
+                    <main className="pb-10 mb-10">
                         <section className="card">
                             <div className="flex space-x-4">
                                 <div className="flex items-center justify-center">
