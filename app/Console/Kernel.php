@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gitlab:repositories-sync')->dailyAt('00:00');
         $schedule->command('database:backup')->dailyAt('01:00');
         $schedule->command('google:analytics')->monthlyOn(2, '04:00');
+        $schedule->command('telescope:prune --hours=48')->daily();
     }
 
     /**
@@ -22,7 +23,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
