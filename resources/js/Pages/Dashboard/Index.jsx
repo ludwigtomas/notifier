@@ -724,7 +724,7 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                 <a
                                     className="absolute inset-0"
                                     target="_blank"
-                                    href={route("horizon.index")}
+                                    href={route("pulse")}
                                 />
                             </figure>
 
@@ -733,12 +733,12 @@ export default function Dashboard({ auth, notifications, models, filters }) {
 
                                 <figcaption className="text-left">
                                     <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
-                                        Pulse
+                                        Telescope
                                     </h1>
 
                                     <p className="text-zinc-400">
-                                        Pulse je nástroj pro monitorování výkonu
-                                        aplikace a fronty.
+                                        Telescope je nástroj pro debugování
+                                        aplikace.
                                     </p>
                                 </figcaption>
 
