@@ -80,6 +80,8 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                 </header>
             }
         >
+            <Head title="Dashboard" />
+
             <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 gap-y-20">
 

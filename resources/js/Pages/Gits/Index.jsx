@@ -33,7 +33,7 @@ export default function Index({ auth, gits }) {
                 </header>
             }
         >
-            <Head title="Gits Index" />
+            <Head title="Gity" />
 
             <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1">
