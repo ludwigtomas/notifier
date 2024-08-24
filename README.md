@@ -5,7 +5,6 @@
     </a>
 </div>
 
-
 ### :notebook_with_decorative_cover: Summary
 
 -   [Description](#point_right-description)
@@ -67,28 +66,28 @@ The main purpose of this website is:
 
 ### Composer
 
--   <a href="https://github.com/googleapis/php-analytics-data">Google Analytics Data API</a>
--   <a href="https://docs.guzzlephp.org/en/stable/">Guzzle HTTP</a>
--   <a href="https://inertiajs.com/">Inertia</a>
--   <a href="https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia">Laravel Breeze</a>
--   <a href="https://laravel.com/docs/11.x/horizon">Laravel Horizon</a>
--   <a href="https://laravel.com/docs/11.x/pulse">Laravel Pulse</a>
--   <a href="https://log-viewer.opcodes.io/">LogViewer</a>
--   <a href="https://github.com/predis/predis">Predis/Predis</a>
--   <a href="https://github.com/tighten/ziggy">Ziggy</a>
--   <a href="https://github.com/barryvdh/laravel-debugbar">Laravel debugbar</a>
+-   [Google Analytics Data API](https://github.com/googleapis/php-analytics-data)
+-   [Guzzle HTTP](https://docs.guzzlephp.org/en/stable/)
+-   [Inertia](https://inertiajs.com/)
+-   [Laravel Breeze](https://laravel.com/docs/11.x/starter-kits#breeze-and-inertia)
+-   [Laravel Horizon](https://laravel.com/docs/11.x/horizon)
+-   [Laravel Pulse](https://laravel.com/docs/11.x/pulse)
+-   [LogViewer](https://log-viewer.opcodes.io/)
+-   [Predis/Predis](https://github.com/predis/predis)
+-   [Ziggy](https://github.com/tighten/ziggy)
+-   [Laravel debugbar](https://github.com/barryvdh/laravel-debugbar)
 
 ### NPM
 
--   <a href="https://axios-http.com/">Axios</a>
--   <a href="https://headlessui.com/">Headless UI</a>
--   <a href="https://heroicons.com/">Heroicons</a>
--   <a href="https://lodash.com/">Loadash</a>
--   <a href="https://www.framer.com/motion/">Framer Motion</a>
--   <a href="https://xtermjs.org/">Xterm.js</a>
--   <a href="https://socket.io/">Socket.io</a>
--   <a href="https://expressjs.com/">Express</a>
--   <a href="https://github.com/mscdex/ssh2">SSH2</a>
+-   [Axios](https://axios-http.com/)
+-   [Headless UI](https://headlessui.com/)
+-   [Heroicons](https://heroicons.com/)
+-   [Lodash](https://lodash.com/)
+-   [Framer Motion](https://www.framer.com/motion/)
+-   [Xterm.js](https://xtermjs.org/)
+-   [Socket.io](https://socket.io/)
+-   [Express](https://expressjs.com/)
+-   [SSH2](https://github.com/mscdex/ssh2)
 
 ## :point_right: Project setup
 
@@ -241,7 +240,6 @@ apt install supervisor
 ```sh
 cd /etc/supervisor/conf.d/
 ```
-
 
 -   Then you need to create new file with <b>.conf</b> extension and paste the following code
 -   So for example lets create new file called <b>notifier.conf</b> (becase of the project name)
