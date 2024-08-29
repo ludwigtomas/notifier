@@ -117,7 +117,6 @@ export default function Index({
     const deleteNotification = (id) => {
         router.delete(route("notifications.destroy", id), {
             preserveScroll: true,
-            preserveState: true,
         });
     }
 
