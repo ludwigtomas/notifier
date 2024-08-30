@@ -127,7 +127,7 @@ class GitlabService
             $repository->last_commit_at < Carbon::parse($repository_api[0]->committed_date) ? self::sendNotificationToClient($repository, $commit_message) : null;
 
             // TODO: refactor
-            $create_date = Carbon::parse($repository_api[0]->created_at);
+            $create_date = Carbon::parse($repository_api[0]->created_at)->setTimezone('UTC');
 
             $repository->update([
                 'last_commit_at' => $create_date,
