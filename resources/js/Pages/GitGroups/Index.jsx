@@ -111,9 +111,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
                     </section>
 
                     <section className="mt-2">
-                        <div className="grid gap-4 grid-cols-3 card">
+                        <div className="card">
                             {git_groups && git_groups.length > 0 ? (
-                                <div className="">
+                                <div className="grid gap-2 grid-cols-3">
                                     {git_groups.map((group) => {
                                         return (
                                             <div

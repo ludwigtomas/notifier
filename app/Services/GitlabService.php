@@ -302,21 +302,36 @@ class GitlabService
             'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
-        try {
-            $response = $client->request('GET', 'groups/' . $group_id . '/projects', [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
-                ],
-            ]);
+        $repositories = [];
+        $page = 1;
+        $per_page = 100; // Maximum allowed per page by GitLab API
 
-            $repositories_api = json_decode($response->getBody()->getContents(), true);
+        try {
+            do {
+                $response = $client->request('GET', 'groups/' . $group_id . '/projects', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    ],
+                    'query' => [
+                        'order_by' => 'updated_at',
+                        'sort' => 'desc',
+                        'page' => $page,
+                        'per_page' => $per_page,
+                    ],
+                ]);
+
+                $repositories_api = json_decode($response->getBody()->getContents(), true);
+                $repositories = array_merge($repositories, $repositories_api);
+
+                $page++;
+            } while (count($repositories_api) === $per_page);
 
             return response()->json([
                 'success' => true,
-                'data' => $repositories_api,
+                'data' => $repositories,
             ], 200);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get group repositories error');
+            Log::error($th->getMessage() . ' get group repositories error');
 
             return response()->json([
                 'success' => false,
