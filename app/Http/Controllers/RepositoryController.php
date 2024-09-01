@@ -38,7 +38,7 @@ class RepositoryController extends Controller
                 $query->withTrashed();
             })
             ->orderBy('last_commit_at', 'desc')
-            ->paginate(10);
+            ->paginate(30);
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryResource::collection($repositories),
