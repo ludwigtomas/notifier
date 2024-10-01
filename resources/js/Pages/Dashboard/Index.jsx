@@ -23,7 +23,7 @@ import {
     TelescopeIcon,
 } from "@/Components/Ecosystem/Icons";
 
-export default function Dashboard({ auth, notifications, models, filters }) {
+export default function Dashboard({ auth, notifications, models, filters, environment }) {
     const [selectedModel, setSelectedModel] = useState(filters.model || []);
 
     const handleModel = (model) => {
@@ -164,6 +164,12 @@ export default function Dashboard({ auth, notifications, models, filters }) {
                                         Telescope je nástroj pro debugování
                                         aplikace.
                                     </p>
+
+                                    { environment == 'prod' && (
+                                        <p className="mt-2 text-red-500">
+                                            Only for development environment. { environment }
+                                        </p>
+                                    )}
                                 </figcaption>
 
                                 <a

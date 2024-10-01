@@ -37,6 +37,7 @@ class DashboardController extends Controller
             'notifications' => NotificationResource::collection($notifications),
             'models' => ModelHelper::getModels(),
             'filters' => $request->only('model'),
+            'environment' => app()->environment(),
         ]);
     }
 }

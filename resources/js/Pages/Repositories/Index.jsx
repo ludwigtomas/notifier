@@ -1,57 +1,21 @@
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
-    CheckIcon,
-    XMarkIcon,
-    LinkIcon,
-    BackspaceIcon,
-    CommandLineIcon,
-    ArrowPathIcon,
     RocketLaunchIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import Modal from "@/Components/Modal";
-import DangerButton from "@/Components/DangerButton";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
-import SecondaryButton from "@/Components/SecondaryButton";
 import ResetFilters from "@/Components/ResetFilters";
 import Pagination from "@/Components/Pagination";
 import debounce from "lodash/debounce";
 import { useState } from "react";
 import Dropdown from "@/Components/Dropdown";
+import RepositoriesTable from "@/Pages/Repositories/Partials/RepositoriesTable";
 
 export default function Index({ auth, repositories, filters }) {
-    const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
-    const [selectedRepository, setSelectedRepository] = useState(null);
     const [search, setSearch] = useState(filters.search || "");
     const [trashed, setTrashed] = useState(filters.trashed || false);
-
-    // catch repository into variable
-    const toggleModal = (repository) => {
-        setSelectedRepository(repository);
-
-        setToggleDeleteModal(true);
-    };
-
-    const closeModal = () => {
-        setToggleDeleteModal(false);
-    };
-
-    const deleteRepository = () => {
-        let url = route("repositories.destroy", selectedRepository.repository_id);
-
-        router.delete(url, {
-            preserveScroll: true,
-            preserveState: true,
-            onSuccess: () => {
-                setToggleDeleteModal(false);
-            },
-        });
-    };
 
     const debouncedSearch = debounce((value) => {
         setSearch(value);
@@ -135,66 +99,50 @@ export default function Index({ auth, repositories, filters }) {
                                         value="Smazané"
                                     />
 
-                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
-                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
-                                        <h3 className="text-gray-300">
-                                            Vybrané modely
-                                        </h3>
+                                    <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                        <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
+                                            <h3 className="text-gray-300">
+                                                Vybrané modely
+                                            </h3>
 
-                                        <div className="text-white font-bold">
-                                            {trashed}
+                                            <div className="text-white font-bold">
+                                                {trashed}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
-                                        <div className="z-40 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
-                                            <div className="grid grid-cols-1 gap-4">
-                                                <button
-                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'with' ? 'bg-zinc-800' : '')}
-                                                    onClick={(e) =>handleSetTrashed('with')}
-                                                >
-                                                    <span className="text-zinc-200">
-                                                        Společně s mazanými
-                                                    </span>
-                                                </button>
+                                        <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
+                                            <div className="z-40 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                                <div className="grid grid-cols-1 gap-4">
+                                                    <button
+                                                        className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'with' ? 'bg-zinc-800' : '')}
+                                                        onClick={(e) =>handleSetTrashed('with')}
+                                                    >
+                                                        <span className="text-zinc-200">
+                                                            Společně s mazanými
+                                                        </span>
+                                                    </button>
 
-                                                <button
-                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'only' ? 'bg-zinc-800' : '')}
-                                                    onClick={(e) =>handleSetTrashed('only')}
-                                                >
-                                                    <span className="text-zinc-200">
-                                                        Pouze smazané
-                                                    </span>
-                                                </button>
+                                                    <button
+                                                        className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'only' ? 'bg-zinc-800' : '')}
+                                                        onClick={(e) =>handleSetTrashed('only')}
+                                                    >
+                                                        <span className="text-zinc-200">
+                                                            Pouze smazané
+                                                        </span>
+                                                    </button>
 
-                                                <button
-                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'without' ? 'bg-zinc-800' : '')}
-                                                    onClick={(e) =>handleSetTrashed('without')}
-                                                >
-                                                    <span className="text-zinc-200">
-                                                        Pouze aktivní
-                                                    </span>
-                                                </button>
+                                                    <button
+                                                        className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'without' ? 'bg-zinc-800' : '')}
+                                                        onClick={(e) =>handleSetTrashed('without')}
+                                                    >
+                                                        <span className="text-zinc-200">
+                                                            Pouze aktivní
+                                                        </span>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-{/*
-                                    <button
-                                        id="trashed"
-                                        name="trashed"
-                                        className="w-full bg-zinc-700 py-2 border-2 border-zinc-600 text-zinc-200 rounded-md shadow-sm"
-                                        onClick={(e) => handleSetTrashed(!trashed)}
-                                    >
-                                        <span className="text-xs text-zinc-400">
-                                            aktuálně: &nbsp;
-                                        </span>
-                                        <span className="text-zinc-200">
-                                            {trashed ? "Smazané" : "Aktivní"}
-                                        </span>
-                                    </button>
- */}
                                 </div>
                             </div>
                         </section>
@@ -225,7 +173,7 @@ export default function Index({ auth, repositories, filters }) {
                         <main className="mt-2">
                             {repositories && repositories.data.length > 0 ? (
                                 <>
-                                    <section className="card">
+                                    {/* <section className="card">
                                         <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
                                             <thead className="bg-zinc-800 text-nowrap">
                                                 <tr>
@@ -407,9 +355,7 @@ export default function Index({ auth, repositories, filters }) {
                                                                         {repository.repository_url ? (
                                                                             <a
                                                                                 className="group bg-green-950 p-2 rounded-xl"
-                                                                                href={
-                                                                                    repository.repository_url
-                                                                                }
+                                                                                href={ repository.repository_url }
                                                                                 target="_blank"
                                                                                 rel="noreferrer noopener"
                                                                             >
@@ -444,12 +390,7 @@ export default function Index({ auth, repositories, filters }) {
                                                                         <div
                                                                             className={
                                                                                 "p-2 rounded-xl " +
-                                                                                (repository
-                                                                                    .relationships
-                                                                                    ?.hosting_repository
-                                                                                    ?.hosting_id
-                                                                                    ? "bg-green-950"
-                                                                                    : "bg-red-950")
+                                                                                (repository.relationships?.hosting_repository?.hosting_id ? "bg-green-950" : "bg-red-950")
                                                                             }
                                                                         >
                                                                             {repository
@@ -575,7 +516,11 @@ export default function Index({ auth, repositories, filters }) {
                                                 )}
                                             </tbody>
                                         </table>
-                                    </section>
+                                    </section> */}
+
+                                    <RepositoriesTable
+                                        repositories={repositories}
+                                    />
 
                                     <div className="mt-5">
                                         <Pagination links={repositories.meta} />
@@ -649,60 +594,6 @@ export default function Index({ auth, repositories, filters }) {
                 </div>
             </div>
 
-            <Modal
-                maxWidth="md"
-                show={toggleDeleteModal}
-                onClose={closeModal}
-                className="p-10"
-            >
-                {selectedRepository && (
-                    <div className="p-4 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-medium text-gray-200 text-center">
-                            {selectedRepository.name}
-                        </h2>
-
-                        <p className="mt-1 text-sm text-gray-400 text-center">
-                            Chystáš se smazat repozitář společně se všemi
-                            databázemi a klienty. Tato akce je nevratná.
-                        </p>
-
-                        <div className="flex justify-center space-x-4">
-                            {selectedRepository.deleted_at ? (
-                                <div>
-                                    <Link
-                                        onClick={closeModal}
-                                        as="button"
-                                        method="DELETE"
-                                        href={route(
-                                            "repositories.force-delete",
-                                            selectedRepository.repository_id
-                                        )}
-                                        className="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                    >
-                                        <TrashIcon className="size-6 mr-2" />
-                                        Smazat trvale
-                                    </Link>
-                                </div>
-                            ) : (
-                                <div>
-                                    <DangerButton
-                                        type="submit"
-                                        onClick={deleteRepository}
-                                    >
-                                        <TrashIcon className="size-6 mr-2" />
-
-                                        {selectedRepository.name}
-                                    </DangerButton>
-                                </div>
-                            )}
-
-                            <SecondaryButton onClick={closeModal}>
-                                Zavřít
-                            </SecondaryButton>
-                        </div>
-                    </div>
-                )}
-            </Modal>
         </AdminLayout>
     );
 }

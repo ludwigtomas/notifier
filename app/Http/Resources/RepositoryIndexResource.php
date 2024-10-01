@@ -25,6 +25,7 @@ class RepositoryIndexResource extends JsonResource
             'repository_url' => $this->repository_url,
 
             'last_commit_at_human' => $this->last_commit_at ? Carbon::parse($this->last_commit_at)->diffForHumans() : null,
+            'deleted_at' => $this->deleted_at,
 
             'relationships' => [
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),
@@ -33,10 +34,6 @@ class RepositoryIndexResource extends JsonResource
                 'database_backups_count' => $this->database_backups_count ?? 0,
 
                 'hosting_repository' => $this->whenLoaded('hosting_repository'),
-                'hosting_repository_count' => $this->hosting_repository_count ?? 0,
-
-                'notifications' => NotificationResource::collection($this->whenLoaded('notifications')),
-                'notifications_count' => $this->notifications_count ?? 0,
             ],
         ];
     }

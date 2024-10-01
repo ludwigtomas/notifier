@@ -49,13 +49,11 @@ class RepositoryResource extends JsonResource
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'clients_count' => $this->clients_count ?? 0,
 
-                'database_backups' => RepositoryDatabaseResource::collection($this->whenLoaded('database_backups')),
                 'database_backups_count' => $this->database_backups_count ?? 0,
 
                 'hosting' => new HostingResource($this->whenLoaded('hosting')),
 
                 'hosting_repository' => $this->whenLoaded('hosting_repository'),
-                'hosting_repository_count' => $this->hosting_repository_count ?? 0,
 
                 'notifications' => NotificationResource::collection($this->whenLoaded('notifications')),
                 'notifications_count' => $this->notifications_count ?? 0,
