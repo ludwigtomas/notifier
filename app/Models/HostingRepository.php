@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Enums\HostingRepository\HostingRepositoryEnum;
+use App\Enums\HostingRepository\HostingRepositoryPasswordTypeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class HostingRepository extends Model
@@ -28,7 +28,7 @@ class HostingRepository extends Model
     ];
 
     protected $casts = [
-        'password_type' => HostingRepositoryEnum::class,
+        'password_type' => HostingRepositoryPasswordTypeEnum::class,
     ];
 
     /*

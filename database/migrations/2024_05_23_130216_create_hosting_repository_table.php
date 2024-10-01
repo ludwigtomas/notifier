@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\HostingRepository\HostingRepositoryPasswordTypeEnum;
 use App\Models\Hosting;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->integer('ip_port')->nullable();
             $table->string('login_user')->nullable();
             $table->string('login_password')->nullable();
-            $table->integer('password_type')->nullable();
+            $table->string('password_type')->default(HostingRepositoryPasswordTypeEnum::PASSWORD_TEXT);
         });
     }
 
