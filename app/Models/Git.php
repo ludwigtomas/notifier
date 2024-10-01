@@ -27,9 +27,16 @@ class Git extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function gitGroups(): HasMany
+    public function gitGroupsParent(): HasMany
     {
-        return $this->hasMany(GitGroup::class, 'git_id', 'id');
+        return $this->hasMany(GitGroup::class, 'git_id', 'id')
+            ->whereNull('parent_id');
+    }
+
+    public function gitGroupsChildren(): HasMany
+    {
+        return $this->hasMany(GitGroup::class, 'git_id', 'id')
+            ->whereNotNull('parent_id');
     }
 
     public function repositories(): HasManyThrough

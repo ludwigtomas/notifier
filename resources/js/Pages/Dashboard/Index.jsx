@@ -29,41 +29,25 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
     const handleModel = (model) => {
         if (model === "clear_all") {
             setSelectedModel([]);
-
-            router.get(
-                route(
-                    "dashboard.index",
-                    {},
-                    {
-                        preserveScroll: true,
-                        preserveState: true,
-                    }
-                )
-            );
-        } else {
-            if (selectedModel.includes(model)) {
-                setSelectedModel(
-                    selectedModel.filter((item) => item !== model)
-                );
-            } else {
-                setSelectedModel([...selectedModel, model]);
-            }
-
-            router.get(
-                route(
-                    "dashboard.index",
-                    {
-                        model: selectedModel.includes(model)
-                            ? selectedModel.filter((item) => item !== model)
-                            : [...selectedModel, model],
-                    },
-                    {
-                        preserveScroll: true,
-                        preserveState: true,
-                    }
-                )
-            );
+            router.get(route("dashboard.index"), {}, {
+                preserveScroll: true,
+                preserveState: true,
+            });
+            return;
         }
+
+        const updatedModel = selectedModel.includes(model)
+            ? selectedModel.filter((item) => item !== model)
+            : [...selectedModel, model];
+
+        setSelectedModel(updatedModel);
+
+        router.get(route("dashboard.index"), {
+            model: updatedModel,
+        }, {
+            preserveScroll: true,
+            preserveState: true,
+        });
     };
 
     return (
@@ -218,11 +202,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                                         </div>
                                                     ) : (
                                                         <div
-                                                            onClick={() =>
-                                                                handleModel(
-                                                                    "clear_all"
-                                                                )
-                                                            }
+                                                            onClick={() =>handleModel("clear_all")}
                                                             className="col-span-3 bg-red-500 rounded-lg p-4 border-2 border-red-600 cursor-pointer"
                                                         >
                                                             <div className="text-center text-white">
@@ -238,10 +218,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                                             return (
                                                                 <div
                                                                     key={index}
-                                                                    onClick={() =>
-                                                                        handleModel(
-                                                                            model
-                                                                        )
+                                                                    onClick={() =>handleModel(model)
                                                                     }
                                                                     className={
                                                                         "text-xs text-gray-200 flex flex-col items-center justify-center rounded-lg p-4 border-2 cursor-pointer bg-zinc-700 " +
@@ -391,10 +368,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                                         RepositoryDatabase: (
                                                             <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />
                                                         ),
-                                                    }[
-                                                        notification
-                                                            .notifiable_type_formatted
-                                                    ] || <div>No Icon</div>}
+                                                    }[notification.notifiable_type_formatted] || <div>No Icon</div>}
                                                 </td>
 
                                                 <td className="px-4 py-4 ">

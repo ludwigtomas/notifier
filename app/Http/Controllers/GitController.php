@@ -16,7 +16,7 @@ class GitController extends Controller
     public function index(): Response
     {
         $gits = Git::query()
-            ->withCount(['gitGroups', 'repositories'])
+            ->withCount(['gitGroupsParent', 'repositories'])
             ->get();
 
         return inertia('Gits/Index', [
@@ -39,7 +39,7 @@ class GitController extends Controller
 
     public function edit(Git $git): Response
     {
-        $git->load('gitGroups', 'repositories');
+        $git->load('gitGroupsParent', 'gitGroupsChildren', 'repositories');
 
         return inertia('Gits/Edit', [
             'git' => new GitResource($git),

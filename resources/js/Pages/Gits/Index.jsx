@@ -3,8 +3,6 @@ import { Head, Link } from "@inertiajs/react";
 import { ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 import {
     EditButton,
-    ShowButton,
-    DeleteButton,
 } from "@/Components/Buttons/ActionButtons";
 
 export default function Index({ auth, gits }) {
@@ -139,19 +137,13 @@ export default function Index({ auth, gits }) {
 
                                             <td className="px-4 py-4">
                                                 <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
-                                                    {
-                                                        git.relationships
-                                                            .git_groups_count
-                                                    }
+                                                    { git.relationships.git_groups_parent_count}
                                                 </div>
                                             </td>
 
                                             <td className="px-4 py-4">
                                                 <div className="bg-stone-800 group-hover:bg-stone-700 text-center py-1 px-2 text-gray-200 rounded-lg ">
-                                                    {
-                                                        git.relationships
-                                                            .repositories_count
-                                                    }
+                                                    { git.relationships.repositories_count }
                                                 </div>
                                             </td>
 

@@ -80,14 +80,14 @@ export default function Edit({ auth, git, repositories }) {
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
                         <UpdateGitGroups
-                            git_groups={git.relationships.git_groups}
+                            git_groups={git.relationships.git_groups_parent}
                             repositories={repositories}
                         />
                     </div>
 
                     <div className="p-8 bg-zinc-900 sm:rounded-3xl border-4 border-zinc-900">
                         <AttachGitGroups
-                            git_groups={git.relationships.git_groups}
+                            git_groups={git.relationships.git_groups_parent}
                         />
                     </div>
                 </div>
