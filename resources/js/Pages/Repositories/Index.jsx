@@ -42,10 +42,7 @@ export default function Index({ auth, repositories, filters }) {
     };
 
     const deleteRepository = () => {
-        let url = route(
-            "repositories.destroy",
-            selectedRepository.repository_id
-        );
+        let url = route("repositories.destroy", selectedRepository.repository_id);
 
         router.delete(url, {
             preserveScroll: true,
@@ -58,28 +55,18 @@ export default function Index({ auth, repositories, filters }) {
 
     const debouncedSearch = debounce((value) => {
         setSearch(value);
-
-        router.get(
-            route("repositories.index"),
-            {
-                search: value,
-                trashed: trashed,
-            },
-            {
-                preserveScroll: true,
-                preserveState: true,
-            }
-        );
+        fetchRepositories(value, trashed);
     }, 500);
 
     const handleSetTrashed = (value) => {
         setTrashed(value);
+        fetchRepositories(search, value);
+    };
 
-        router.get(
-            route("repositories.index"),
-            {
-                search: search,
-                trashed: value,
+    const fetchRepositories = (searchValue, trashedValue) => {
+        router.get(route("repositories.index"), {
+                search: searchValue,
+                trashed: trashedValue,
             },
             {
                 preserveScroll: true,
@@ -87,6 +74,7 @@ export default function Index({ auth, repositories, filters }) {
             }
         );
     };
+
 
     return (
         <AdminLayout
@@ -147,13 +135,57 @@ export default function Index({ auth, repositories, filters }) {
                                         value="Smazané"
                                     />
 
+                                <div className="relative group w-full bg-zinc-700 py-2 border-2 border-zinc-600 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm">
+                                    <div className="flex items-center justify-center space-x-4 bg-zinc-700 rounded-xl">
+                                        <h3 className="text-gray-300">
+                                            Vybrané modely
+                                        </h3>
+
+                                        <div className="text-white font-bold">
+                                            {trashed}
+                                        </div>
+                                    </div>
+
+                                    <div className="hidden group-hover:block absolute right-0 top-full pt-4 ">
+                                        <div className="z-40 overflow-y-auto overflow-x-hidden p-2 w-[30rem] border border-neutral-600 bg-neutral-800 rounded-xl">
+                                            <div className="grid grid-cols-1 gap-4">
+                                                <button
+                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'with' ? 'bg-zinc-800' : '')}
+                                                    onClick={(e) =>handleSetTrashed('with')}
+                                                >
+                                                    <span className="text-zinc-200">
+                                                        Společně s mazanými
+                                                    </span>
+                                                </button>
+
+                                                <button
+                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'only' ? 'bg-zinc-800' : '')}
+                                                    onClick={(e) =>handleSetTrashed('only')}
+                                                >
+                                                    <span className="text-zinc-200">
+                                                        Pouze smazané
+                                                    </span>
+                                                </button>
+
+                                                <button
+                                                    className={"w-full bg-zinc-700 py-2 border-2 border-zinc-600 hover:bg-zinc-800 text-zinc-200 rounded-md shadow-sm " + (trashed === 'without' ? 'bg-zinc-800' : '')}
+                                                    onClick={(e) =>handleSetTrashed('without')}
+                                                >
+                                                    <span className="text-zinc-200">
+                                                        Pouze aktivní
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+{/*
                                     <button
                                         id="trashed"
                                         name="trashed"
                                         className="w-full bg-zinc-700 py-2 border-2 border-zinc-600 text-zinc-200 rounded-md shadow-sm"
-                                        onClick={(e) =>
-                                            handleSetTrashed(!trashed)
-                                        }
+                                        onClick={(e) => handleSetTrashed(!trashed)}
                                     >
                                         <span className="text-xs text-zinc-400">
                                             aktuálně: &nbsp;
@@ -162,6 +194,7 @@ export default function Index({ auth, repositories, filters }) {
                                             {trashed ? "Smazané" : "Aktivní"}
                                         </span>
                                     </button>
+ */}
                                 </div>
                             </div>
                         </section>
@@ -339,38 +372,19 @@ export default function Index({ auth, repositories, filters }) {
                                                                             .clients_count >
                                                                         0 ? (
                                                                             <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                                                {repository.relationships.clients
-                                                                                    .slice(
-                                                                                        0,
-                                                                                        2
-                                                                                    )
-                                                                                    .map(
-                                                                                        (
-                                                                                            client
-                                                                                        ) => (
-                                                                                            <p
-                                                                                                key={
-                                                                                                    client.id
-                                                                                                }
-                                                                                                className="text-xs text-zinc-400 pr-2"
-                                                                                            >
-                                                                                                {
-                                                                                                    client.name
-                                                                                                }
-                                                                                            </p>
-                                                                                        )
-                                                                                    )}
+                                                                                {repository.relationships.clients.slice(0, 2).map((client) => (
+                                                                                    <p
+                                                                                        key={client.id}
+                                                                                        className="text-xs text-zinc-400 pr-2"
+                                                                                    >
+                                                                                        { client.name }
+                                                                                    </p>
+                                                                                ))}
 
-                                                                                {repository
-                                                                                    .relationships
-                                                                                    .clients_count >
-                                                                                    2 && (
+                                                                                {repository.relationships.clients_count > 2 && (
                                                                                     <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
                                                                                         +{" "}
-                                                                                        {repository
-                                                                                            .relationships
-                                                                                            .clients_count -
-                                                                                            2}
+                                                                                        {repository.relationships.clients_count - 2}
                                                                                     </span>
                                                                                 )}
                                                                             </div>
@@ -384,11 +398,7 @@ export default function Index({ auth, repositories, filters }) {
 
                                                                 <td className="px-4 py-4 text-center ">
                                                                     <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                                        {
-                                                                            repository
-                                                                                .relationships
-                                                                                .database_backups_count
-                                                                        }
+                                                                        { repository.relationships.database_backups_count }
                                                                     </span>
                                                                 </td>
 

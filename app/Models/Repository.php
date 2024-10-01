@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -99,4 +100,38 @@ class Repository extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            return $query->whereAny([
+                'repository_id',
+                'name',
+                'slug',
+            ], 'like', '%' . $search . '%');
+        }
+
+        return $query;
+    }
+
+    public function scopeTrashed($query, $trashed)
+    {
+        // TODO:
+        // onlyTrashed()
+        // withTrashed()
+
+        if ($trashed === 'with') {
+            return $query->withTrashed();
+        }
+
+        if ($trashed === 'only') {
+            return $query->onlyTrashed();
+        }
+
+        if ($trashed === 'without') {
+            return $query->withoutTrashed();
+        }
+
+        return $query;
+    }
 }

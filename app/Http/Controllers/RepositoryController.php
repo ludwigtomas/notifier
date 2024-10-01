@@ -19,29 +19,23 @@ use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\DatabaseBackupResource;
+use App\Http\Resources\RepositoryIndexResource;
 
 class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with('clients', 'hosting_repository')
-            ->withCount('clients', 'database_backups')
-            ->when($request->search, function ($query, $search) {
-                $query->whereAny([
-                    'repository_id',
-                    'name',
-                    'slug',
-                ], 'like', '%' . $search . '%');
-            })
-            ->when($request->trashed == 'true', function ($query, $trashed) {
-                $query->withTrashed();
-            })
+            ->with(['clients', 'hosting_repository'])
+            ->withCount(['clients', 'database_backups'])
+            ->search($request->search)
+            ->trashed($request->trashed)
             ->orderBy('last_commit_at', 'desc')
-            ->paginate(30);
+            ->paginate(20)
+            ->withQueryString();
 
         return inertia('Repositories/Index', [
-            'repositories' => RepositoryResource::collection($repositories),
+            'repositories' => RepositoryIndexResource::collection($repositories),
             'filters' => $request->only('search', 'trashed'),
         ]);
     }
