@@ -66,13 +66,13 @@ class Repository extends Model
             ->withPivot('client_email');
     }
 
-    public function database_backups(): HasMany
+    public function databaseBackups(): HasMany
     {
         return $this->hasMany(RepositoryDatabase::class, 'repository_id', 'repository_id')
             ->orderBy('created_at', 'desc');
     }
 
-    public function hosting_repository(): HasOne
+    public function hostingRepository(): HasOne
     {
         return $this->hasOne(HostingRepository::class, 'repository_id', 'repository_id');
     }

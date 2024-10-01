@@ -26,8 +26,8 @@ class RepositoryController extends Controller
     public function index(Request $request): Response
     {
         $repositories = Repository::query()
-            ->with(['clients', 'hosting_repository'])
-            ->withCount(['clients', 'database_backups'])
+            ->with(['clients', 'hostingRepository'])
+            ->withCount(['clients', 'databaseBackups'])
             ->search($request->search)
             ->trashed($request->trashed)
             ->orderBy('last_commit_at', 'desc')
@@ -42,12 +42,12 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository): Response
     {
-        $repository->loadCount('clients', 'database_backups')
-            ->load('hosting', 'hosting_repository', 'notifications');
+        $repository->loadCount('clients', 'databaseBackups')
+            ->load('hosting', 'hostingRepository', 'notifications');
 
         $clients = $repository->clients()->paginate(10);
 
-        $database_backups = $repository->database_backups()->paginate(20);
+        $database_backups = $repository->databaseBackups()->paginate(20);
 
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
@@ -63,7 +63,7 @@ class RepositoryController extends Controller
             ->get();
 
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository->load('clients', 'hosting_repository', 'hosting')),
+            'repository' => new RepositoryResource($repository->load('clients', 'hostingRepository', 'hosting')),
             'hostings' => HostingResource::collection(Hosting::all()),
             'clients' => ClientResource::collection($clients),
         ]);

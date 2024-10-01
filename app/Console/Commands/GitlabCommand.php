@@ -19,7 +19,7 @@ class GitlabCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sync repositories from Gitlab';
 
     /**
      * Execute the console command.

@@ -33,7 +33,7 @@ class RepositoryIndexResource extends JsonResource
 
                 'database_backups_count' => $this->database_backups_count ?? 0,
 
-                'hosting_repository' => $this->whenLoaded('hosting_repository'),
+                'hosting_repository' => $this->whenLoaded('hostingRepository'),
             ],
         ];
     }

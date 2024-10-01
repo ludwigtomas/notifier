@@ -139,12 +139,12 @@ class GitlabService
 
     public static function getRepositoriesLastCommit(): void
     {
-        // $repositories = Repository::all();
+        $repositories = Repository::all();
 
-        // foreach ($repositories as $repository) {
-        //     self::getRepositorylastCommit($repository);
-        //     self::getRepositoryAvatar($repository);
-        // }
+        foreach ($repositories as $repository) {
+            self::getRepositorylastCommit($repository);
+            self::getRepositoryAvatar($repository);
+        }
     }
 
     public static function getRepositoryAvatar(Repository $repository, $repository_api = null, $gitlab = null)
