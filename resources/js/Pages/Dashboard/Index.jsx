@@ -165,7 +165,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                         aplikace.
                                     </p>
 
-                                    { environment == 'prod' && (
+                                    { environment == 'production' && (
                                         <p className="mt-2 text-red-500">
                                             Only for development environment. { environment }
                                         </p>
