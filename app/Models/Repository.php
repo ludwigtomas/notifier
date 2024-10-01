@@ -101,7 +101,7 @@ class Repository extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function scopeSearch($query, $search)
+    public function scopeSearch($query, $search): mixed
     {
         if ($search) {
             return $query->whereAny([
@@ -114,24 +114,13 @@ class Repository extends Model
         return $query;
     }
 
-    public function scopeTrashed($query, $trashed)
+    public function scopeTrashed($query, $trashed): mixed
     {
-        // TODO:
-        // onlyTrashed()
-        // withTrashed()
-
-        if ($trashed === 'with') {
-            return $query->withTrashed();
-        }
-
-        if ($trashed === 'only') {
-            return $query->onlyTrashed();
-        }
-
-        if ($trashed === 'without') {
-            return $query->withoutTrashed();
-        }
-
-        return $query;
+        return match ($trashed) {
+            'with' => $query->withTrashed(),
+            'only' => $query->onlyTrashed(),
+            'without' => $query->withoutTrashed(),
+            default => $query,
+        };
     }
 }
