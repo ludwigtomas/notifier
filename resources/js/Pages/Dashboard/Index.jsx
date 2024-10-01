@@ -151,7 +151,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
 
                                     { environment == 'production' && (
                                         <p className="mt-2 text-red-500">
-                                            Only for development environment. { environment }
+                                            Only for development purposes.
                                         </p>
                                     )}
                                 </figcaption>
