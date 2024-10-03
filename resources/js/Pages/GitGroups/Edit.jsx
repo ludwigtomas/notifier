@@ -1,24 +1,19 @@
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link } from "@inertiajs/react";
 import {
-    FireIcon,
-    ArrowRightCircleIcon,
     ChevronRightIcon,
     LinkIcon,
     PencilSquareIcon,
     ArrowPathIcon,
     EyeIcon,
 } from "@heroicons/react/24/outline";
-import UpdateGitGroups from "@/Pages/Gits/Partials/UpdateGitGroups";
-import AttachGitGroups from "@/Pages/Gits/Partials/AttachGitGroups";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "@/Components/Modal";
 import { router } from "@inertiajs/react";
 
 export default function ({ auth, git_group }) {
     const [isLoading, setIsLoading] = useState(false);
-    const [toggleRepositoriesModal, setToggleRepositoriesModal] =
-        useState(false);
+    const [toggleRepositoriesModal, setToggleRepositoriesModal] = useState(false);
     const [toggleSubgroupsModal, setToggleSubgroupsModal] = useState(false);
     const [repositories, setRepositories] = useState([]);
     const [subgroups, setSubgroups] = useState([]);
@@ -65,29 +60,27 @@ export default function ({ auth, git_group }) {
         let url = route("repositories.store");
 
         router.post(url, {
-                group_id: git_group.group_id,
-                repository_id: repository_id,
-            }, {
-                preserveScroll: true,
+            group_id: git_group.group_id,
+            repository_id: repository_id,
+        }, {
+            preserveScroll: true,
 
-                onError: () => {
-                    alert("Error");
-                },
-            }
-        );
+            onError: () => {
+                alert("Error");
+            },
+        });
     };
 
     const storeSubgroup = (group) => {
         let url = route("git-groups.store");
 
         router.post(url, { group }, {
-                preserveScroll: true,
+            preserveScroll: true,
 
-                onError: () => {
-                    alert("Error");
-                },
-            }
-        );
+            onError: () => {
+                alert("Error");
+            },
+        });
     };
 
     return (
