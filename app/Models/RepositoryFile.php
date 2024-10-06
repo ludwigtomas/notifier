@@ -24,4 +24,6 @@ class RepositoryFile extends Model
     public $casts = [
         'file_type' => RepositoryFileTypeEnum::class,
     ];
+
+    
 }

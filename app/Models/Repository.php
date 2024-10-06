@@ -55,7 +55,7 @@ class Repository extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function git_group(): BelongsTo
+    public function gitGroup(): BelongsTo
     {
         return $this->belongsTo(GitGroup::class, 'group_id', 'group_id');
     }

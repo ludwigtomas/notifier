@@ -80,7 +80,6 @@ class GitGroup extends Model
     | SCOPE
     |--------------------------------------------------------------------------
     */
-
     public function scopeParentGroups($query, ?string $search = null)
     {
         return $query->whereNull('parent_id')

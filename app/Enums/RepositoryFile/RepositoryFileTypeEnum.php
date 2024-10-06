@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Enums;
+namespace App\Enums\RepositoryFile;
 
-class RepositoryFileTypeEnum
+enum RepositoryFileTypeEnum: string
 {
-    const DATABASE = 'database';
-    const ZIP = 'zip';
+    case DATABASE = 'database';
+    case ZIP = 'zip';
 }
