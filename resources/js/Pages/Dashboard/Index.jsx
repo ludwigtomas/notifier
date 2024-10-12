@@ -423,25 +423,19 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
 
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium">
-                                                        {
-                                                            notification.notifiable_id
-                                                        }
+                                                        { notification.notifiable_id }
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium">
-                                                        {
-                                                            notification.created_at_formatted
-                                                        }
+                                                        { notification.created_at_formatted }
                                                     </span>
                                                 </td>
 
                                                 <td className="px-4 py-4 ">
                                                     <span className="text-sm font-medium">
-                                                        {
-                                                            notification.type_formatted
-                                                        }
+                                                        { notification.type_formatted }
                                                     </span>
                                                 </td>
 
@@ -463,10 +457,14 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                                 <td className="px-4 py-4">
                                                     <div className="flex justify-center space-x-2">
                                                         <Link
-                                                            href={route(
-                                                                "notifications.show",
-                                                                notification.id
-                                                            )}
+                                                            href={route("notifications.show", notification.id )}
+                                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                        >
+                                                            <EyeIcon className="size-6 text-sky-500" />
+                                                        </Link>
+
+                                                        <Link
+                                                            href={route("notifications.show", notification.id)}
                                                             className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
                                                         >
                                                             <PencilSquareIcon className="size-6 text-green-500" />
@@ -475,20 +473,15 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                                         <Link
                                                             as="button"
                                                             method="PATCH"
-                                                            href={route(
-                                                                "notifications.mark-as-read",
-                                                                notification.id
-                                                            )}
+                                                            href={route("notifications.mark-as-read", notification.id)}
                                                             className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-yellow-500 faster-animation"
                                                             preserveScroll
                                                         >
-                                                            <BookmarkIcon
-                                                                className={
-                                                                    "size-6 " +
-                                                                    (notification.read_at
-                                                                        ? "text-yellow-500 fill-yellow-500"
-                                                                        : "text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500")
-                                                                }
+                                                            <BookmarkIcon className={"size-6 " + (
+                                                                notification.read_at
+                                                                    ? "text-yellow-500 fill-yellow-500"
+                                                                    : "text-yellow-500 group-hover:text-yellow-500 group-hover:fill-yellow-500"
+                                                                )}
                                                             />
                                                         </Link>
                                                     </div>

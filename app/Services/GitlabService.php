@@ -135,7 +135,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositoriesLastCommit(): void
+    public static function syncRepositoriesWithGitlab(): void
     {
         $repositories = Repository::all();
 

@@ -82,7 +82,7 @@ export default function Index({ auth, repositories, filters }) {
                                     <TextInput
                                         label="Hledat"
                                         name="search"
-                                        placeholder="Hledat hlavní skupinu..."
+                                        placeholder="Hledat repozitář..."
                                         type="text"
                                         className="w-full !border-zinc-600 "
                                         onChange={(e) =>
@@ -207,32 +207,16 @@ export default function Index({ auth, repositories, filters }) {
                             </h3>
 
                             <Link
-                                // href={route("repositories.sync")}
-                                preserveScroll
-                                className="flex items-center justify-center py-2 pl-1 text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                            >
-                                <code className="p-1 w-full">
-                                    ❌ Repositories - update last commit
-                                </code>
-                            </Link>
-
-                            <Link
-                                // href={route("repositories.sync")}
-                                preserveScroll
-                                className="flex items-center justify-center py-2 pl-1 text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                            >
-                                <code className="p-1 w-full">
-                                    ❌ Repositories - update avatar
-                                </code>
-                            </Link>
-
-                            <Link
                                 href={route("repositories.sync")}
                                 preserveScroll
                                 className="flex items-center justify-center py-2 pl-1 text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                             >
                                 <code className="p-1 w-full">
-                                    Repositories - sync everything
+                                    Repositories - sync everything <br />
+
+                                    <span className="text-zinc-500 text-xs">
+                                        (img, last commit)
+                                    </span>
                                 </code>
                             </Link>
                         </Dropdown.Content>

@@ -214,12 +214,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                                     -p
                                                 </span>{" "}
                                                 <span className="text-purple-400">
-                                                    {
-                                                        repository
-                                                            .relationships
-                                                            .hosting_repository
-                                                            ?.ip_port
-                                                    }
+                                                    { repository.relationships.hosting_repository?.ip_port }
                                                 </span>
                                             </span>
                                         )}

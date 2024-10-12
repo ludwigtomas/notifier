@@ -19,7 +19,7 @@ class RepositoriesJob implements ShouldQueue
 
     public function handle(): void
     {
-        GitlabService::getRepositoriesLastCommit();
+        GitlabService::syncRepositoriesWithGitlab();
     }
 
     public function tags(): array
