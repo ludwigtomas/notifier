@@ -21,19 +21,6 @@ class GitController extends Controller
 
         return inertia('Gits/Index', [
             'gits' => GitResource::collection($gits),
-            'repositories' => RepositoryResource::collection(Repository::all()),
-        ]);
-    }
-
-    public function create(): Response
-    {
-        return inertia('Gits/Create');
-    }
-
-    public function show(Git $git): Response
-    {
-        return inertia('Gits/Show', [
-            'git' => new GitResource($git),
         ]);
     }
 

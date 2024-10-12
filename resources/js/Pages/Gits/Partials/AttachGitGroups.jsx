@@ -3,12 +3,9 @@ import React, { useState, useEffect } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import {
-    BackButton,
     EditButton,
-    ShowButton,
 } from '@/Components/Buttons/ActionButtons';
-import PrimaryButton from "@/Components/PrimaryButton";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 
 export default function ({ git_groups, className = "" }) {
@@ -86,9 +83,44 @@ export default function ({ git_groups, className = "" }) {
                 <div className="max-w-[100rem] mx-auto">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="divide-y divide-zinc-800 ">
+                            
+                            <div className="p-4 text-center text-zinc-400">
+                                <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                                    <div class="animate-pulse flex space-x-4">
+                                        <div class="rounded-full bg-slate-700 h-10 w-10"></div>
+                                        <div class="flex-1 space-y-6 py-1">
+                                            <div class="h-2 bg-slate-700 rounded"></div>
+                                            <div class="space-y-3">
+                                                <div class="grid grid-cols-3 gap-4">
+                                                    <div class="h-2 bg-slate-700 rounded col-span-2"></div>
+                                                    <div class="h-2 bg-slate-700 rounded col-span-1"></div>
+                                                </div>
+
+                                                <div class="h-2 bg-slate-700 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             { isLoading ? (
                                 <div className="p-4 text-center text-zinc-400">
-                                    Loading...
+                                    <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                                        <div class="animate-pulse flex space-x-4">
+                                            <div class="rounded-full bg-slate-700 h-10 w-10"></div>
+                                            <div class="flex-1 space-y-6 py-1">
+                                                <div class="h-2 bg-slate-700 rounded"></div>
+                                                <div class="space-y-3">
+                                                    <div class="grid grid-cols-3 gap-4">
+                                                        <div class="h-2 bg-slate-700 rounded col-span-2"></div>
+                                                        <div class="h-2 bg-slate-700 rounded col-span-1"></div>
+                                                    </div>
+
+                                                    <div class="h-2 bg-slate-700 rounded"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             ) : gitGroups && gitGroups.data ? (
                                 <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
@@ -175,7 +207,6 @@ export default function ({ git_groups, className = "" }) {
 
                                                                 <EditButton href={route("git-groups.edit", group.id)} />
                                                             </>
-
                                                         ) : (
                                                             <button
                                                                 className="px-4 py-2 rounded-md bg-green-500 text-zinc-100 hover:bg-green-600"
@@ -184,8 +215,6 @@ export default function ({ git_groups, className = "" }) {
                                                                 Attach
                                                             </button>
                                                         )}
-
-
                                                     </div>
                                                 </td>
                                             </tr>
