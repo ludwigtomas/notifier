@@ -11,11 +11,13 @@ import {
     RocketLaunchIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import { Head, Link, router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useState } from "react";
+import Pagination from "@/Components/Pagination";
+import { isImages } from '@/Utils/IsImage';
 
 export default function RepositoryClientsTable({ repositories }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -158,22 +160,17 @@ export default function RepositoryClientsTable({ repositories }) {
                                             <img
                                                 src={
                                                     repository.avatar
-                                                        ? "/storage/avatars/" +
-                                                            repository.avatar
-                                                        : "https://ui-avatars.com/api/?name=" +
-                                                            repository.name +
-                                                            "&background=0D8ABC&color=fff"
+                                                        ? "/storage/avatars/" + repository.avatar
+                                                        : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"
                                                 }
-                                                alt="test"
+                                                alt={repository.name}
                                                 className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
                                             />
                                         </td>
 
                                         <td className="px-4 py-4 ">
                                             <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                {
-                                                    repository.name
-                                                }
+                                                { repository.name }
                                             </span>
                                         </td>
 
@@ -355,6 +352,10 @@ export default function RepositoryClientsTable({ repositories }) {
                         )}
                     </tbody>
                 </table>
+
+                <div className="mt-5">
+                    <Pagination links={repositories.meta} />
+                </div>
             </section>
 
             <Modal
