@@ -22,7 +22,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'users', [
+            $response = $client->get('users', [
                 'query' => [
                     'username' => $gitlab->username,
                 ],

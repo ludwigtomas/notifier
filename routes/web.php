@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Git;
+use App\Services\GitlabService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
 use Illuminate\Support\Facades\Storage;
@@ -145,6 +147,10 @@ if (app()->isLocal()) {
             echo $file;
         }, 'databases_1719494018.zip');
     })->name('test');
+
+    route::Get('/testingos', function(){
+        GitlabService::getUserID(Git::first());
+    });
 
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
     route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');

@@ -176,18 +176,13 @@ export default function RepositoryClientsTable({ repositories }) {
 
                                         <td className="px-4 py-4 ">
                                             <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                {
-                                                    repository.slug
-                                                }
+                                                { repository.slug }
                                             </span>
                                         </td>
 
                                         <td className="px-4 py-4 ">
                                             <div className="flex items-center gap-x-2 text-nowrap ">
-                                                {repository
-                                                    .relationships
-                                                    .clients_count >
-                                                0 ? (
+                                                {repository.relationships.clients_count > 0 ? (
                                                     <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                         {repository.relationships.clients.slice(0, 2).map((client) => (
                                                             <p
