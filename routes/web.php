@@ -45,6 +45,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::post('/', [GitController::class, 'store'])->name('store');
         route::put('/{git}', [GitController::class, 'update'])->name('update');
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+        route::get('/{git:slug}/sync', [GitController::class, 'sync'])->name('sync');
     });
 
     // 🔺 GIT GROUPS
