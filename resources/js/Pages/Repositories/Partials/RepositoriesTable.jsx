@@ -95,7 +95,7 @@ export default function RepositoryClientsTable({ repositories }) {
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal"
+                                className="px-4 py-3.5 text-sm font-normal border-x border-gray-700"
                             >
                                 <div className="text-white">
                                     Nastavení
@@ -143,23 +143,18 @@ export default function RepositoryClientsTable({ repositories }) {
                             (repository) => {
                                 return (
                                     <tr
-                                        key={
-                                            repository.repository_id
-                                        }
+                                        key={repository.repository_id}
                                         className="group text-white transition-colors duration-200 hover:bg-zinc-800"
                                     >
                                         <td className="px-4 py-4 ">
                                             <span className="text-sm font-medium text-zinc-400">
-                                                {
-                                                    repository.repository_id
-                                                }
+                                                {repository.repository_id}
                                             </span>
                                         </td>
 
                                         <td className="px-4 py-2 w-20">
                                             <img
-                                                src={
-                                                    repository.avatar
+                                                src={ repository.avatar
                                                         ? "/storage/avatars/" + repository.avatar
                                                         : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"
                                                 }
@@ -214,7 +209,7 @@ export default function RepositoryClientsTable({ repositories }) {
                                             </span>
                                         </td>
 
-                                        <td className="grid grid-cols-4 py-3.5">
+                                        <td className="grid grid-cols-4 py-3.5 border-x border-gray-800 group-hover:border-gray-700">
                                             <div className="flex items-center justify-center">
                                                 {repository.repository_url ? (
                                                     <a

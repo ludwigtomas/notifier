@@ -13,13 +13,13 @@ export default function Pagination({ links }) {
             <div className="card">
                 <div className="text-center">
                     <span className="text-sm text-gray-400">
-                        Showing
+                        Zobrazeno
                         <span className="font-medium"> {links.from} </span>
-                        to
+                        až
                         <span className="font-medium"> {links.to} </span>
-                        of
+                        z
                         <span className="font-medium"> {links.total} </span>
-                        results
+                        výsledků
                     </span>
                 </div>
 
@@ -29,8 +29,13 @@ export default function Pagination({ links }) {
                             key={key}
                             className={getClassName(link.active)}
                             href={link.url}
-                            preserveScroll
-                            dangerouslySetInnerHTML={{ __html: link.label === 'pagination.next' ? 'Next' : link.label === 'pagination.previous' ? 'Previous' : link.label}}
+                            dangerouslySetInnerHTML={{ __html:
+                                link.label === 'pagination.next'
+                                    ? 'Další'
+                                    : link.label === 'pagination.previous'
+                                        ? 'Předchozí'
+                                        : link.label
+                            }}
                         />
                     ))}
                 </div>

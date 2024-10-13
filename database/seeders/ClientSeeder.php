@@ -20,9 +20,15 @@ class ClientSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ], [
-                'name' => 'Tomáš Ludwig',
-                'email' => 'info@ludwigtomas.cz',
-                'phone' => '+420 730 681 670',
+                'name' => 'Alena Zlamalová',
+                'email' => 'alenazlamalova@seznam.cz',
+                'phone' => '+420 775 719 479',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'name' => 'Milada Soldánová',
+                'email' => 'info@dopravnihriste.eu',
+                'phone' => '+420 776 219 191',
                 'created_at' => now(),
                 'updated_at' => now(),
             ], [
@@ -39,7 +45,7 @@ class ClientSeeder extends Seeder
                 'updated_at' => now(),
             ], [
                 'name' => 'Miroslav Kočí',
-                'email' => 'w',
+                'email' => 'koci@softici.cz',
                 'phone' => '+420 775 968 901',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -56,14 +62,8 @@ class ClientSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ], [
-                'name' => 'RahomaDigital',
+                'name' => 'Rahoma Digital',
                 'email' => 'info@rahomadigital.cz',
-                'phone' => '+420 607 247 034',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ], [
-                'name' => 'Mayhem',
-                'email' => 'tkasparek01@gmail.com',
                 'phone' => '+420 607 247 034',
                 'created_at' => now(),
                 'updated_at' => now(),
