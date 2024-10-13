@@ -96,6 +96,11 @@ class Repository extends Model
         );
     }
 
+    public function repositorySettings(): HasMany
+    {
+        return $this->hasMany(RepositorySetting::class, 'repository_id', 'repository_id');
+    }
+
     public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable')
@@ -104,10 +109,9 @@ class Repository extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | FUNCTIONS
+    | SCOPES
     |--------------------------------------------------------------------------
     */
-
     public function scopeSearch($query, $search): mixed
     {
         if ($search) {
@@ -130,4 +134,10 @@ class Repository extends Model
             default => $query,
         };
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
 }

@@ -10,6 +10,7 @@ import {
     ArrowPathIcon,
     RocketLaunchIcon,
     ChevronRightIcon,
+    Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 import { Link, router } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
@@ -95,7 +96,7 @@ export default function RepositoryClientsTable({ repositories }) {
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal border-x border-gray-700"
+                                className="px-4 py-3.5 text-sm font-normal border-x border-zinc-700"
                             >
                                 <div className="text-white">
                                     Nastavení
@@ -209,7 +210,7 @@ export default function RepositoryClientsTable({ repositories }) {
                                             </span>
                                         </td>
 
-                                        <td className="grid grid-cols-4 py-3.5 border-x border-gray-800 group-hover:border-gray-700">
+                                        <td className="grid grid-cols-4 -mr-[1px] py-3.5 border-x border-zinc-800 group-hover:border-zinc-700">
                                             <div className="flex items-center justify-center">
                                                 {repository.repository_url ? (
                                                     <a
@@ -218,11 +219,11 @@ export default function RepositoryClientsTable({ repositories }) {
                                                         target="_blank"
                                                         rel="noreferrer noopener"
                                                     >
-                                                        <LinkIcon className="text-green-500 w-6 h-6" />
+                                                        <LinkIcon className="text-green-500 size-6" />
                                                     </a>
                                                 ) : (
                                                     <div className="bg-red-950 p-2 rounded-xl">
-                                                        <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                        <XMarkIcon className="text-red-500 size-6" />
                                                     </div>
                                                 )}
                                             </div>
@@ -234,11 +235,11 @@ export default function RepositoryClientsTable({ repositories }) {
                                                         href={ repository.website_url }
                                                         target="_blank"
                                                     >
-                                                        <LinkIcon className="text-green-500 w-6 h-6" />
+                                                        <LinkIcon className="text-green-500 size-6" />
                                                     </a>
                                                 ) : (
                                                     <div className="bg-red-950 p-2 rounded-xl">
-                                                        <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                        <XMarkIcon className="text-red-500 size-6" />
                                                     </div>
                                                 )}
                                             </div>
@@ -251,9 +252,9 @@ export default function RepositoryClientsTable({ repositories }) {
                                                     }
                                                 >
                                                     {repository.relationships?.hosting_repository?.hosting_id >= 1 ? (
-                                                        <CheckIcon className="w-6 h-6 text-green-500" />
+                                                        <CheckIcon className="size-6 text-green-500" />
                                                     ) : (
-                                                        <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                        <XMarkIcon className="text-red-500 size-6" />
                                                     )}
                                                 </div>
                                             </div>
@@ -267,9 +268,9 @@ export default function RepositoryClientsTable({ repositories }) {
                                                     }
                                                 >
                                                     {repository.analytics_property_id ? (
-                                                        <CheckIcon className="w-6 h-6 text-green-500" />
+                                                        <CheckIcon className="size-6 text-green-500" />
                                                     ) : (
-                                                        <XMarkIcon className="text-red-500 w-6 h-6" />
+                                                        <XMarkIcon className="text-red-500 size-6" />
                                                     )}
                                                 </div>
                                             </div>
@@ -312,6 +313,13 @@ export default function RepositoryClientsTable({ repositories }) {
                                                     </>
                                                 ) : (
                                                     <>
+                                                        <Link
+                                                            href={route("repository-settings.edit", repository.repository_id)}
+                                                            className="group/custom bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-pink-500 faster-animation"
+                                                        >
+                                                            <Cog8ToothIcon className="size-6 text-pink-500 group-hover/custom:animate-spin" />
+                                                        </Link>
+
                                                         <Link
                                                             href={route("repositories.edit", repository.repository_id)}
                                                             className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"

@@ -17,6 +17,7 @@ use App\Http\Controllers\GoogleAnalyticsController;
 use App\Http\Controllers\ClientRepositoryController;
 use App\Http\Controllers\HostingRepositoryController;
 use App\Http\Controllers\RepositoryDatabaseController;
+use App\Http\Controllers\RepositorySettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,16 @@ route::middleware('auth:sanctum')->group(function () {
         route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
         route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
     });
+
+    // 🔺 REPOSITORY SETTINGS
+    route::group(['prefix' => '/repository/{repository}/repository-settings', 'as' => 'repository-settings.'], function () {
+        route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
+        route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
+
+        route::get('/edit', [RepositorySettingController::class, 'edit'])->name('edit');
+        route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
+    });
+
 
     // 🔺 DATABASES
     route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {

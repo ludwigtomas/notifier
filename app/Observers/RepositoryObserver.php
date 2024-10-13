@@ -13,6 +13,7 @@ class RepositoryObserver
     public function creating(Repository $repository): void
     {
         $repository->database_verification_code = Str::uuid();
+        $repository->slug = Str::slug($repository->name);
     }
 
     public function created(Repository $repository): void
@@ -20,6 +21,11 @@ class RepositoryObserver
         Cache::forget('repositories_count');
 
         $repository->notify(new RepositoryNotification('created'));
+    }
+
+    public function updating(Repository $repository): void
+    {
+        $repository->slug = Str::slug($repository->name);
     }
 
     public function updated(Repository $repository): void

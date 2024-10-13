@@ -2,26 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
+use App\Enums\RepositorySetting\RepositorySettingValueEnum;
+use App\Models\Repository;
+use App\Models\RepositorySetting;
 use App\Http\Requests\StoreRepositorySettingRequest;
 use App\Http\Requests\UpdateRepositorySettingRequest;
-use App\Models\RepositorySetting;
 
 class RepositorySettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function create(Repository $repository)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return inertia('RepositorySettings/Create', [
+            'repository' => $repository,
+            'option_keys' => RepositorySettingKeyEnum::cases(),
+            'option_values' => RepositorySettingValueEnum::cases(),
+        ]);
     }
 
     /**
@@ -45,7 +41,8 @@ class RepositorySettingController extends Controller
      */
     public function edit(RepositorySetting $repositorySetting)
     {
-        //
+        return inertia('Repositories/Edit', [
+        ]);
     }
 
     /**

@@ -53,42 +53,10 @@ export default function Edit({ auth, repository, hostings, clients }) {
                         <ChevronRightIcon className="size-5" />
                     </span>
 
-                    <div className="relative group">
-                        <Link
-                            className="font-semibold text-lg leading-tight text-sky-500"
-                            href={route("repositories.edit", repository.repository_id)}
-                        >
-                            Edit
-                        </Link>
 
-                        <div className="absolute invisible group-hover:visible flex flex-col left-0 top-full pt-6 z-30">
-                            <div className="bg-zinc-900 border-2 border-zinc-700 rounded-xl p-2 grid gap-y-2 shadow-xl shadow-black">
-                                <Link
-                                    className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-sky-500"
-                                    href={route("repositories.show", repository.repository_id)}
-                                >
-                                    <span className="text-gray-200">
-                                        Zobrazit
-                                    </span>
-
-                                    <EyeIcon className="size-6 text-sky-500" />
-                                </Link>
-
-                                {repository.relationships.hosting_repository && repository.relationships.hosting_repository.id && (
-                                    <Link
-                                        className="flex items-center justify-center space-x-4 bg-zinc-800 px-4 py-2 rounded-md border border-transparent hover:border-orange-500"
-                                        href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
-                                    >
-                                        <span className="text-gray-200">
-                                            Hosting
-                                        </span>
-
-                                        <CommandLineIcon className="size-6 text-orange-500" />
-                                    </Link>
-                                )}
-                            </div>
-                        </div>
-                    </div>
+                    <span>
+                        <ChevronRightIcon className="size-5" />
+                    </span>
                 </header>
             }
         >
@@ -99,28 +67,6 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     <UpdateRepositoryInformationForm
                         repository={repository}
                     />
-                </div>
-
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
-                    <header>
-                        <h2 className="text-lg font-medium text-gray-100">
-                            Repository settings
-                        </h2>
-
-                        <p className="mt-1 text-sm text-gray-400">
-                            Manage repository settings
-                        </p>
-
-                        <p className="mt-1 text-sm text-gray-400">
-                            <Link
-                                href={route("repository-settings.create", repository.repository_id)}
-                                className="text-sky-500"
-                            >
-                                Create
-                            </Link>
-                        </p>
-                    </header>
-
                 </div>
 
                 <div className="p-10 bg-zinc-900 sm:rounded-xl">
@@ -139,7 +85,9 @@ export default function Edit({ auth, repository, hostings, clients }) {
                 <div className="p-10 bg-zinc-900 sm:rounded-xl grid grid-cols-2 place-items-center gap-20">
                     {repository.relationships.hosting_repository ? (
                         <UpdateRepositoryHostingForm
-                            hosting_repository={repository.relationships.hosting_repository}
+                            hosting_repository={
+                                repository.relationships.hosting_repository
+                            }
                             hosting={repository.relationships.hosting}
                             hostings={hostings}
                             className="w-full"
@@ -147,7 +95,9 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     ) : (
                         <CreateRepositoryHostingForm
                             repository_id={repository.repository_id}
-                            hosting_repository={repository.relationships.hosting_repository}
+                            hosting_repository={
+                                repository.relationships.hosting_repository
+                            }
                             hostings={hostings}
                             className="w-full"
                         />
@@ -176,9 +126,9 @@ export default function Edit({ auth, repository, hostings, clients }) {
                             </div>
 
                             <div className="p-4 flex space-x-2">
-                                <div className="rounded-full size-3 bg-red-500"></div>
-                                <div className="rounded-full size-3 bg-yellow-500"></div>
-                                <div className="rounded-full size-3 bg-green-500"></div>
+                                <div className="rounded-full w-3 h-3 bg-red-500"></div>
+                                <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
+                                <div className="rounded-full w-3 h-3 bg-green-500"></div>
                             </div>
                         </div>
 
@@ -193,15 +143,25 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                             ssh
                                         </span>{" "}
                                         <span className="text-purple-400">
-                                            { repository.relationships.hosting_repository?.login_user}
+                                            {
+                                                repository.relationships
+                                                    .hosting_repository
+                                                    ?.login_user
+                                            }
                                         </span>
                                         <span className="text-green-300">
                                             @
                                         </span>
                                         <span className="text-purple-400">
-                                            {repository.relationships.hosting_repository?.ip_address}
+                                            {
+                                                repository.relationships
+                                                    .hosting_repository
+                                                    ?.ip_address
+                                            }
                                         </span>{" "}
-                                        {repository.relationships.hosting_repository?.ip_port && (
+                                        {repository.relationships
+                                            .hosting_repository
+                                            ?.ip_port && (
                                             <span>
                                                 <span className="text-green-300">
                                                     -p
@@ -241,9 +201,33 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                 Odeslání emailu
                             </h3>
 
+                            <Link
+                                href={route(
+                                    "repositories.last-commit",
+                                    repository.repository_id
+                                )}
+                                preserveScroll
+                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            >
+                                VPS
+                            </Link>
 
                             <Link
-                                href={route("repositories.last-commit", repository.repository_id)}
+                                href={route(
+                                    "repositories.last-commit",
+                                    repository.repository_id
+                                )}
+                                preserveScroll
+                                className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            >
+                                Delete
+                            </Link>
+
+                            <Link
+                                href={route(
+                                    "repositories.last-commit",
+                                    repository.repository_id
+                                )}
                                 preserveScroll
                                 className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                             >
@@ -251,9 +235,13 @@ export default function Edit({ auth, repository, hostings, clients }) {
                             </Link>
 
                             <Link
-                                href={repository.analytics_property_id
-                                    ? route("repositories.google-analytics", repository.repository_id)
-                                    : null
+                                href={
+                                    repository.analytics_property_id
+                                        ? route(
+                                                "repositories.google-analytics",
+                                                repository.repository_id
+                                            )
+                                        : null
                                 }
                                 preserveScroll
                                 disabled={!repository.analytics_property_id}

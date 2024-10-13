@@ -39,7 +39,7 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                     Detach repositories
                 </h2>
 
-                <p className="maxmt-1 text-sm text-gray-400">
+                <p className="mt-1 text-sm text-gray-400">
                     Defaultně se využije <code>client.email</code>, případně lze
                     zadat custom pro každého klienta.
                 </p>

@@ -62,8 +62,15 @@ class RepositoryController extends Controller
             ->whereNotIn('id', $repository->clients->pluck('id'))
             ->get();
 
+        $repository->load(
+            'clients',
+            'hostingRepository',
+            'hosting',
+            'repositorySettings'
+        );
+
         return inertia('Repositories/Edit', [
-            'repository' => new RepositoryResource($repository->load('clients', 'hostingRepository', 'hosting')),
+            'repository' => new RepositoryResource($repository),
             'hostings' => HostingResource::collection(Hosting::all()),
             'clients' => ClientResource::collection($clients),
         ]);
