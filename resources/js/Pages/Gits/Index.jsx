@@ -4,6 +4,7 @@ import { ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 import {
     EditButton,
 } from "@/Components/Buttons/ActionButtons";
+import Dropdown from "@/Components/Dropdown";
 
 export default function Index({ auth, gits }) {
     return (
@@ -165,6 +166,42 @@ export default function Index({ auth, gits }) {
                             </tbody>
                         </table>
                     </section>
+                </div>
+
+                {/* Another options */}
+                <div className="fixed right-10 bottom-10">
+                    <Dropdown maxWidth="md">
+                        <Dropdown.Trigger>
+                            <div className="flex items-center space-x-2">
+                                <div className="group inline-flex rounded-xl bg-sky-500 ">
+                                    <button
+                                        type="button"
+                                        className="px-6 py-3 rounded-md focus:outline-none"
+                                    >
+                                        <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                            Další možnosti
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </Dropdown.Trigger>
+
+                        <Dropdown.Content direction="up" width="72">
+                            <h3 className="text-center text-white font-bold uppercase py-2 mb-2 border-b border-zinc-800">
+                                Settings
+                            </h3>
+
+                            <Link
+                                href={route("gits.sync", "gitlab")}
+                                preserveScroll
+                                className="flex items-center justify-center py-2 pl-1 text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
+                            >
+                                <code className="p-1 w-full">
+                                    Sync Gitlab
+                                </code>
+                            </Link>
+                        </Dropdown.Content>
+                    </Dropdown>
                 </div>
             </div>
         </AdminLayout>

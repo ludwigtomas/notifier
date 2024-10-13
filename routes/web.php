@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Git;
+use App\Services\GitlabService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GitController;
 use Illuminate\Support\Facades\Storage;
@@ -43,6 +45,7 @@ route::middleware('auth:sanctum')->group(function () {
         route::post('/', [GitController::class, 'store'])->name('store');
         route::put('/{git}', [GitController::class, 'update'])->name('update');
         route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+        route::get('/{git:slug}/sync', [GitController::class, 'sync'])->name('sync');
     });
 
     // 🔺 GIT GROUPS
@@ -145,6 +148,10 @@ if (app()->isLocal()) {
             echo $file;
         }, 'databases_1719494018.zip');
     })->name('test');
+
+    route::Get('/testingos', function(){
+        GitlabService::getUserID(Git::first());
+    });
 
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
     route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');

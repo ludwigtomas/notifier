@@ -49,6 +49,13 @@ class Repository extends Model
         'subscription_to',             //! manually added
     ];
 
+    protected $casts = [
+        'last_commit_at' => 'datetime',
+        'repository_created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'created_at' => 'datetime',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONSHIPS

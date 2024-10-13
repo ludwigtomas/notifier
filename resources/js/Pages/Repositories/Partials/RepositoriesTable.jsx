@@ -11,11 +11,13 @@ import {
     RocketLaunchIcon,
     ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import { Head, Link, router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useState } from "react";
+import Pagination from "@/Components/Pagination";
+import { isImages } from '@/Utils/IsImage';
 
 export default function RepositoryClientsTable({ repositories }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -158,39 +160,29 @@ export default function RepositoryClientsTable({ repositories }) {
                                             <img
                                                 src={
                                                     repository.avatar
-                                                        ? "/storage/avatars/" +
-                                                            repository.avatar
-                                                        : "https://ui-avatars.com/api/?name=" +
-                                                            repository.name +
-                                                            "&background=0D8ABC&color=fff"
+                                                        ? "/storage/avatars/" + repository.avatar
+                                                        : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"
                                                 }
-                                                alt="test"
+                                                alt={repository.name}
                                                 className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
                                             />
                                         </td>
 
                                         <td className="px-4 py-4 ">
                                             <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                {
-                                                    repository.name
-                                                }
+                                                { repository.name }
                                             </span>
                                         </td>
 
                                         <td className="px-4 py-4 ">
                                             <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                {
-                                                    repository.slug
-                                                }
+                                                { repository.slug }
                                             </span>
                                         </td>
 
                                         <td className="px-4 py-4 ">
                                             <div className="flex items-center gap-x-2 text-nowrap ">
-                                                {repository
-                                                    .relationships
-                                                    .clients_count >
-                                                0 ? (
+                                                {repository.relationships.clients_count > 0 ? (
                                                     <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                         {repository.relationships.clients.slice(0, 2).map((client) => (
                                                             <p
@@ -355,6 +347,10 @@ export default function RepositoryClientsTable({ repositories }) {
                         )}
                     </tbody>
                 </table>
+
+                <div className="mt-5">
+                    <Pagination links={repositories.meta} />
+                </div>
             </section>
 
             <Modal

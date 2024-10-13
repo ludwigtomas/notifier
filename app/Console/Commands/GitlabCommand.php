@@ -26,6 +26,6 @@ class GitlabCommand extends Command
      */
     public function handle()
     {
-        GitlabService::getRepositoriesLastCommit();
+        GitlabService::syncRepositoriesWithGitlab();
     }
 }

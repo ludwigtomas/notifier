@@ -141,7 +141,7 @@ class RepositoryController extends Controller
         GoogleAnalyticsJob::dispatch($repository);
     }
 
-    public function syncWithGit()
+    public function syncWithGit(): void
     {
         RepositoriesJob::dispatch();
     }

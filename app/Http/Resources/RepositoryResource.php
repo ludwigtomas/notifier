@@ -27,8 +27,10 @@ class RepositoryResource extends JsonResource
             'description' => $this->description,
 
             'database_verification_code' => $this->database_verification_code,
-            'last_commit_at' => $this->last_commit_at,
+
+            'last_commit_at' => Carbon::parse($this->last_commit_at)->format('Y-m-d H:i:s'),
             'last_commit_at_human' => $this->last_commit_at ? Carbon::parse($this->last_commit_at)->diffForHumans() : null,
+
             'repository_created_at' => $this->repository_created_at,
             'repository_created_at_human' => Carbon::parse($this->repository_created_at)->diffForHumans(),
 

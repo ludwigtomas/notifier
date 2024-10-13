@@ -10,6 +10,7 @@ use App\Http\Resources\GitResource;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\RepositoryResource;
 use App\Http\Requests\Gits\UpdateGitRequest;
+use App\Services\GitlabService;
 
 class GitController extends Controller
 {
@@ -49,8 +50,13 @@ class GitController extends Controller
 
     public function destroy(Git $git): RedirectResponse
     {
-        $git->delete();
+        // $git->delete();
 
         return to_route('gits.index');
+    }
+
+    public function sync(Git $git): void
+    {
+        GitlabService::updateUser($git);
     }
 }

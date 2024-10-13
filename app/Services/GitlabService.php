@@ -15,25 +15,25 @@ use GuzzleHttp\Exception\ClientException;
 
 class GitlabService
 {
-    public static function getUserID(Git $gitlab): void
+    public static function updateUser(Git $gitlab): void
     {
         $client = new GuzzleClient([
             'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
         try {
-            $response = $client->request('GET', 'users', [
+            $response = $client->get('users', [
                 'query' => [
                     'username' => $gitlab->username,
                 ],
             ]);
 
-            $body = json_decode($response->getBody()->getContents())[0];
+            $gitlab_information = json_decode($response->getBody()->getContents())[0];
 
             $gitlab->update([
-                'user_id' => $body->id,
-                'username' => $body->username,
-                'user_avatar_url' => $body->avatar_url,
+                'user_id' => $gitlab_information->id,
+                'username' => $gitlab_information->username,
+                'user_avatar_url' => $gitlab_information->avatar_url,
             ]);
 
             self::downloadAvatar($gitlab);
@@ -49,7 +49,7 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', $gitlab->user_avatar_url);
+            $response = $client->get($gitlab->user_avatar_url);
 
             $body = $response->getBody();
 
@@ -82,11 +82,9 @@ class GitlabService
 
             foreach ($repositories_api as $repository_api) {
 
-                $repository = Repository::updateOrCreate(
-                    [
+                $repository = Repository::updateOrCreate([
                         'repository_id' => $repository_api->id
-                    ],
-                    [
+                    ],[
                         'name' => $repository_api->name,
                         'slug' => Str::slug($repository_api->name),
                         'repository_url' => $repository_api->web_url,
@@ -137,7 +135,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositoriesLastCommit(): void
+    public static function syncRepositoriesWithGitlab(): void
     {
         $repositories = Repository::all();
 
