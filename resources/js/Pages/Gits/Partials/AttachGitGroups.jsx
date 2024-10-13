@@ -83,9 +83,9 @@ export default function ({ git_groups, className = "" }) {
                 <div className="max-w-[100rem] mx-auto">
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="divide-y divide-zinc-800 ">
-                            
+
                             <div className="p-4 text-center text-zinc-400">
-                                <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                                <div class="border border-sky-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
                                     <div class="animate-pulse flex space-x-4">
                                         <div class="rounded-full bg-slate-700 h-10 w-10"></div>
                                         <div class="flex-1 space-y-6 py-1">
