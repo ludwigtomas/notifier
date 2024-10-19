@@ -8,6 +8,7 @@ use App\Models\Repository;
 use App\Models\RepositorySetting;
 use App\Http\Requests\StoreRepositorySettingRequest;
 use App\Http\Requests\UpdateRepositorySettingRequest;
+use Illuminate\Http\Request;
 
 class RepositorySettingController extends Controller
 {
@@ -23,9 +24,9 @@ class RepositorySettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRepositorySettingRequest $request)
+    public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

@@ -16,8 +16,9 @@ export default function Edit({
     option_values
 }) {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
-        key: "",
-        value: "",
+        key: option_keys[0],
+        value: option_values[0],
+        is_active: true,
     });
 
     const submit = (e) => {
@@ -94,67 +95,97 @@ export default function Edit({
         >
             <Head title={repository.name + " - Edit"} />
 
-            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div className="max-w-[50rem] mx-auto sm:px-6 lg:px-8 space-y-6">
                 <form
                     className="col-span-6 space-y-6"
                     onSubmit={submit}
                 >
-                    <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                        <div className="grid grid-cols-2 gap-5">
-                            <div>
-                                <InputLabel
-                                    htmlFor="key"
-                                    value="klíč"
-                                />
+                    <div className="grid grid-cols-1 place-items-start space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                        <div className="w-full">
+                            <InputLabel
+                                htmlFor="key"
+                                value="klíč"
+                            />
 
-                                <select
-                                    name="key"
-                                    value={data.key}
-                                    onChange={(e) => setData("key", e.target.value)}
-                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
-                                >
-                                    {option_keys.map((key) => (
-                                        <option
-                                            key={key}
-                                            value={key}
-                                        >
-                                            {key}
-                                        </option>
-                                    ))}
-                                </select>
+                            <select
+                                name="key"
+                                value={data.key}
+                                onChange={(e) => setData("key", e.target.value)}
+                                className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                            >
+                                {option_keys.map((key) => (
+                                    <option
+                                        key={key}
+                                        value={key}
+                                    >
+                                        {key}
+                                    </option>
+                                ))}
+                            </select>
 
-                                <InputError
-                                    message={errors.key}
-                                    className="mt-2"
-                                />
-                            </div>
+                            <InputError
+                                message={errors.key}
+                                className="mt-2"
+                            />
+                        </div>
 
-                            <div>
-                                <InputLabel
-                                    htmlFor="value"
-                                    value="hodnota"
-                                />
+                        <div className="w-full">
+                            <InputLabel
+                                htmlFor="value"
+                                value="hodnota"
+                            />
 
-                                <select
-                                    name="value"
-                                    value={data.value}
-                                    onChange={(e) => setData("value", e.target.value)}
-                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
-                                >
-                                    {option_values.map((value) => (
-                                        <option
-                                            key={value}
-                                            value={value}
-                                        >
-                                            {value}
-                                        </option>
-                                    ))}
-                                </select>
+                            <select
+                                name="value"
+                                value={data.value}
+                                onChange={(e) => setData("value", e.target.value)}
+                                className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                            >
+                                {option_values.map((value) => (
+                                    <option
+                                        key={value}
+                                        value={value}
+                                    >
+                                        {value}
+                                    </option>
+                                ))}
+                            </select>
 
-                            </div>
+                            <InputError
+                                message={errors.value}
+                                className="mt-2"
+                            />
+                        </div>
+
+                        <div>
+                            <InputLabel
+                                htmlFor="is_active"
+                                value="aktivní"
+                            />
+
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                checked={data.is_active}
+                                onChange={(e) => setData("is_active", e.target.checked)}
+                                className="rounded-md bg-zinc-900 text-sky-500"
+                            />
+
+                            <InputError
+                                message={errors.is_active}
+                                className="mt-2"
+                            />
+                        </div>
+
+                        <div className="flex justify-end space-x-4">
+                            <PrimaryButton
+                                type="submit"
+                                processing={processing}
+                            >
+                                Save
+                            </PrimaryButton>
                         </div>
                     </div>
-
                 </form>
             </div>
         </AdminLayout>
