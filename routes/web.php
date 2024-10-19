@@ -75,7 +75,7 @@ route::middleware('auth:sanctum')->group(function () {
     });
 
     // 🔺 REPOSITORY SETTINGS
-    route::group(['prefix' => '/repository/{repository}/repository-settings', 'as' => 'repository-settings.'], function () {
+    route::group(['prefix' => '/dashboard/repositories/{repository}/repository-settings', 'as' => 'repository-settings.'], function () {
         route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
         route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
 

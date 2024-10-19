@@ -8,8 +8,8 @@ import {
 } from '@/Components/Buttons/ActionButtons';
 import {
     PencilSquareIcon,
-    TrashIcon,
     EyeIcon,
+    TrashIcon,
 } from "@heroicons/react/24/outline";
 
 export default function ({ className = "", git_groups, repositories }) {
@@ -185,6 +185,12 @@ export default function ({ className = "", git_groups, repositories }) {
                                                         </button>
 
                                                         <EditButton href={route("git-groups.edit", group.group_id)} />
+
+                                                        <button
+                                                            className="inline-flex items-center p-1.5 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest transition ease-in-out duration-150 bg-red-100 hover:bg-red-200 cursor-not-allowed"
+                                                        >
+                                                            <TrashIcon className="size-6 text-red-500" />
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

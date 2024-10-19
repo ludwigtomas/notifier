@@ -100,20 +100,58 @@ export default function Edit({
                     onSubmit={submit}
                 >
                     <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                        <div>
-                            <InputLabel
-                                htmlFor="key"
-                                value="klíč"
-                            />
+                        <div className="grid grid-cols-2 gap-5">
+                            <div>
+                                <InputLabel
+                                    htmlFor="key"
+                                    value="klíč"
+                                />
 
-                            <select>
-                                {option_keys.map((key) => (
-                                    <option key={key} value={key}>
-                                        {key}
-                                    </option>
-                                ))}
-                            </select>
+                                <select
+                                    name="key"
+                                    value={data.key}
+                                    onChange={(e) => setData("key", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                >
+                                    {option_keys.map((key) => (
+                                        <option
+                                            key={key}
+                                            value={key}
+                                        >
+                                            {key}
+                                        </option>
+                                    ))}
+                                </select>
 
+                                <InputError
+                                    message={errors.key}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div>
+                                <InputLabel
+                                    htmlFor="value"
+                                    value="hodnota"
+                                />
+
+                                <select
+                                    name="value"
+                                    value={data.value}
+                                    onChange={(e) => setData("value", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                >
+                                    {option_values.map((value) => (
+                                        <option
+                                            key={value}
+                                            value={value}
+                                        >
+                                            {value}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </div>
                         </div>
                     </div>
 

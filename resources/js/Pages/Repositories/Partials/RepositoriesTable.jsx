@@ -147,7 +147,7 @@ export default function RepositoryClientsTable({ repositories }) {
                                         key={repository.repository_id}
                                         className="group text-white transition-colors duration-200 hover:bg-zinc-800"
                                     >
-                                        <td className="px-4 py-4 ">
+                                        <td className="px-4 py-4">
                                             <span className="text-sm font-medium text-zinc-400">
                                                 {repository.repository_id}
                                             </span>
