@@ -81,7 +81,6 @@ class GitlabService
             $repositories_api = json_decode($response->getBody()->getContents());
 
             foreach ($repositories_api as $repository_api) {
-
                 $repository = Repository::updateOrCreate([
                         'repository_id' => $repository_api->id
                     ],[

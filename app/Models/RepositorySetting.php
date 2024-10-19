@@ -16,15 +16,14 @@ class RepositorySetting extends Model
         'repository_id',
         'key',
         'value',
+        'date',
         'is_active',
-        'date'
     ];
 
     public $casts = [
         'key' => RepositorySettingKeyEnum::class,
         'value' => RepositorySettingValueEnum::class,
         'is_active' => 'boolean',
-        
     ];
 
     /*
