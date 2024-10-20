@@ -12,6 +12,14 @@ class RepositorySetting extends Model
 {
     use HasFactory;
 
+    public $casts = [
+        'key' => RepositorySettingKeyEnum::class,
+        'value' => RepositorySettingValueEnum::class,
+        'is_active' => 'boolean',
+        'last_attempt_at' => 'datetime',
+        'is_successful' => 'boolean',
+    ];
+
     protected $fillable = [
         'repository_id',
         'key',
@@ -19,14 +27,6 @@ class RepositorySetting extends Model
         'is_active',
         'last_attempt_at',
         'is_successful',
-    ];
-
-    public $casts = [
-        'key' => RepositorySettingKeyEnum::class,
-        'value' => RepositorySettingValueEnum::class,
-        'is_active' => 'boolean',
-        'last_attempt_at' => 'datetime',
-        'is_successful' => 'boolean',
     ];
 
     /*

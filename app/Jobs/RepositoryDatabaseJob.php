@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Mail;
 
 class RepositoryDatabaseJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     // public $queue = 'database';
 
@@ -45,7 +48,7 @@ class RepositoryDatabaseJob implements ShouldQueue
     {
         return [
             'database',
-            'repository:'.$this->repository->repository_id,
+            'repository:' . $this->repository->repository_id,
         ];
     }
 }

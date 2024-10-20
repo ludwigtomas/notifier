@@ -39,10 +39,7 @@ class RepositorySettingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RepositorySetting $repositorySetting)
-    {
-        //
-    }
+    public function show(RepositorySetting $repositorySetting): void {}
 
     /**
      * Show the form for editing the specified resource.
@@ -56,16 +53,10 @@ class RepositorySettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepositorySettingRequest $request, RepositorySetting $repositorySetting)
-    {
-        //
-    }
+    public function update(UpdateRepositorySettingRequest $request, RepositorySetting $repositorySetting): void {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RepositorySetting $repositorySetting)
-    {
-        //
-    }
+    public function destroy(RepositorySetting $repositorySetting): void {}
 }

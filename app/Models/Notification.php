@@ -45,7 +45,7 @@ class Notification extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function markAsRead()
+    public function markAsRead(): void
     {
         $this->read_at = now();
         $this->save();

@@ -12,7 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 class RepositoryNotifierMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -30,7 +31,7 @@ class RepositoryNotifierMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Notifier - proběhla aktualizace ('.$this->repository->name.')',
+            subject: 'Notifier - proběhla aktualizace (' . $this->repository->name . ')',
         );
     }
 

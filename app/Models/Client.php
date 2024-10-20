@@ -12,7 +12,8 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy(ClientObserver::class)]
 class Client extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'name',
@@ -33,7 +34,7 @@ class Client extends Model
             Repository::class,
             'client_repository',
             'client_id',
-            'repository_id'
+            'repository_id',
         )->withPivot('client_email');
     }
 }

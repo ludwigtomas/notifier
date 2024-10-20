@@ -14,7 +14,9 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy(RepositoryDatabaseObserver::class)]
 class RepositoryDatabase extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     protected $fillable = [
         'repository_id',
@@ -35,7 +37,7 @@ class RepositoryDatabase extends Model
         return $this->belongsTo(
             Repository::class,
             'repository_id',
-            'repository_id'
+            'repository_id',
         );
     }
 

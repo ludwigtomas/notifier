@@ -10,6 +10,10 @@ class RepositoryFile extends Model
 {
     use HasFactory;
 
+    public $casts = [
+        'file_type' => RepositoryFileTypeEnum::class,
+    ];
+
     protected $fillable = [
         'repository_id',
 
@@ -19,9 +23,5 @@ class RepositoryFile extends Model
         'path',
         'created_at',
         'updated_at',
-    ];
-
-    public $casts = [
-        'file_type' => RepositoryFileTypeEnum::class,
     ];
 }

@@ -10,56 +10,35 @@ class RepositoryFilePolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
-    {
-        //
-    }
+    public function viewAny(User $user): bool {}
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, RepositoryFile $repositoryFile): bool
-    {
-        //
-    }
+    public function view(User $user, RepositoryFile $repositoryFile): bool {}
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
-    {
-        //
-    }
+    public function create(User $user): bool {}
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, RepositoryFile $repositoryFile): bool
-    {
-        //
-    }
+    public function update(User $user, RepositoryFile $repositoryFile): bool {}
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, RepositoryFile $repositoryFile): bool
-    {
-        //
-    }
+    public function delete(User $user, RepositoryFile $repositoryFile): bool {}
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, RepositoryFile $repositoryFile): bool
-    {
-        //
-    }
+    public function restore(User $user, RepositoryFile $repositoryFile): bool {}
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, RepositoryFile $repositoryFile): bool
-    {
-        //
-    }
+    public function forceDelete(User $user, RepositoryFile $repositoryFile): bool {}
 }

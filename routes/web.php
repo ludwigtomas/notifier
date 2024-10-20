@@ -30,119 +30,117 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-route::get('/', function () {
-    return to_route('login');
-});
+Route::get('/', fn() => to_route('login'));
 
-route::middleware('auth:sanctum')->group(function () {
-    route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-        route::get('/', [DashboardController::class, 'index'])->name('index');
+Route::middleware('auth:sanctum')->group(function (): void {
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (): void {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
     });
 
     // 🔺 GITS
-    route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function () {
-        route::get('/', [GitController::class, 'index'])->name('index');
-        route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
-        route::post('/', [GitController::class, 'store'])->name('store');
-        route::put('/{git}', [GitController::class, 'update'])->name('update');
-        route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
-        route::get('/{git:slug}/sync', [GitController::class, 'sync'])->name('sync');
+    Route::group(['prefix' => '/dashboard/gits', 'as' => 'gits.'], function (): void {
+        Route::get('/', [GitController::class, 'index'])->name('index');
+        Route::get('/{git}/edit', [GitController::class, 'edit'])->name('edit');
+        Route::post('/', [GitController::class, 'store'])->name('store');
+        Route::put('/{git}', [GitController::class, 'update'])->name('update');
+        Route::delete('/{git}', [GitController::class, 'destroy'])->name('destroy');
+        Route::get('/{git:slug}/sync', [GitController::class, 'sync'])->name('sync');
     });
 
     // 🔺 GIT GROUPS
-    route::group(['prefix' => '/dashboard/git-groups', 'as' => 'git-groups.'], function () {
-        route::get('/', [GitGroupController::class, 'index'])->name('index');
-        route::post('/attach', [GitGroupController::class, 'attach'])->name('attach');
-        route::get('/{git_group}/edit', [GitGroupController::class, 'edit'])->name('edit');
-        route::put('/{git_group}', [GitGroupController::class, 'update'])->name('update');
-        route::post('/', [GitGroupController::class, 'store'])->name('store');
+    Route::group(['prefix' => '/dashboard/git-groups', 'as' => 'git-groups.'], function (): void {
+        Route::get('/', [GitGroupController::class, 'index'])->name('index');
+        Route::post('/attach', [GitGroupController::class, 'attach'])->name('attach');
+        Route::get('/{git_group}/edit', [GitGroupController::class, 'edit'])->name('edit');
+        Route::put('/{git_group}', [GitGroupController::class, 'update'])->name('update');
+        Route::post('/', [GitGroupController::class, 'store'])->name('store');
     });
 
     // 🔺 REPOSITORIES
-    route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function () {
-        route::get('/', [RepositoryController::class, 'index'])->name('index');
-        route::post('/', [RepositoryController::class, 'store'])->name('store');
-        route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
-        route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
-        route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
-        route::delete('/{repository}/delete', [RepositoryController::class, 'destroy'])->name('destroy');
-        route::patch('/{repository}/restore', [RepositoryController::class, 'restore'])->name('restore');
-        route::delete('/{repository}/force-delete', [RepositoryController::class, 'forceDelete'])->name('force-delete');
+    Route::group(['prefix' => '/dashboard/repositories', 'as' => 'repositories.'], function (): void {
+        Route::get('/', [RepositoryController::class, 'index'])->name('index');
+        Route::post('/', [RepositoryController::class, 'store'])->name('store');
+        Route::get('/{repository}', [RepositoryController::class, 'show'])->name('show');
+        Route::get('/{repository}/edit', [RepositoryController::class, 'edit'])->name('edit');
+        Route::put('/{repository}', [RepositoryController::class, 'update'])->name('update');
+        Route::delete('/{repository}/delete', [RepositoryController::class, 'destroy'])->name('destroy');
+        Route::patch('/{repository}/restore', [RepositoryController::class, 'restore'])->name('restore');
+        Route::delete('/{repository}/force-delete', [RepositoryController::class, 'forceDelete'])->name('force-delete');
 
-        route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
-        route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
-        route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
+        Route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
+        Route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
+        Route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
     });
 
     // 🔺 REPOSITORY SETTINGS
-    route::group(['prefix' => '/dashboard/repositories/{repository}/repository-settings', 'as' => 'repository-settings.'], function () {
-        route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
-        route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
+    Route::group(['prefix' => '/dashboard/repositories/{repository}/repository-settings', 'as' => 'repository-settings.'], function (): void {
+        Route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
+        Route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
 
-        route::get('/edit', [RepositorySettingController::class, 'edit'])->name('edit');
-        route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
+        Route::get('/edit', [RepositorySettingController::class, 'edit'])->name('edit');
+        Route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
     });
 
     // 🔺 DATABASES
-    route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
-        route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
-        route::delete('/test/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
+    Route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function (): void {
+        Route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+        Route::delete('/test/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
 
-        route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
+        Route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
         //* STORE ---> api.php
     });
 
     // 🔺 CLIENTS
-    route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function () {
-        route::get('/', [ClientController::class, 'index'])->name('index');
-        route::get('/create', [ClientController::class, 'create'])->name('create');
-        route::post('/', [ClientController::class, 'store'])->name('store');
-        route::get('/{client}', [ClientController::class, 'show'])->name('show');
-        route::get('/{client:id}/edit', [ClientController::class, 'edit'])->name('edit');
-        route::put('/{client}', [ClientController::class, 'update'])->name('update');
-        route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
+    Route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function (): void {
+        Route::get('/', [ClientController::class, 'index'])->name('index');
+        Route::get('/create', [ClientController::class, 'create'])->name('create');
+        Route::post('/', [ClientController::class, 'store'])->name('store');
+        Route::get('/{client}', [ClientController::class, 'show'])->name('show');
+        Route::get('/{client:id}/edit', [ClientController::class, 'edit'])->name('edit');
+        Route::put('/{client}', [ClientController::class, 'update'])->name('update');
+        Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
     });
 
     // 🔺 CLIENT REPOSITORY
-    route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client-repository.'], function () {
-        route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
-        route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
-        route::patch('update', [ClientRepositoryController::class, 'update'])->name('update');
+    Route::group(['prefix' => '/client/{client}/repository/{repository}', 'as' => 'client-repository.'], function (): void {
+        Route::delete('detach', [ClientRepositoryController::class, 'detach'])->name('detach');
+        Route::post('attach', [ClientRepositoryController::class, 'attach'])->name('attach');
+        Route::patch('update', [ClientRepositoryController::class, 'update'])->name('update');
     });
 
     // 🔺 HOSTINGS REPOSITORY
-    route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function () {
-        route::post('/hosting/{hosting}/repository/{repository}/attach', [HostingRepositoryController::class, 'attach'])->name('attach');
-        route::delete('/hosting/{hosting}/repository/{repository}/detach', [HostingRepositoryController::class, 'detach'])->name('detach');
+    Route::group(['prefix' => '/dashboard/hosting-repository', 'as' => 'hosting-repository.'], function (): void {
+        Route::post('/hosting/{hosting}/repository/{repository}/attach', [HostingRepositoryController::class, 'attach'])->name('attach');
+        Route::delete('/hosting/{hosting}/repository/{repository}/detach', [HostingRepositoryController::class, 'detach'])->name('detach');
 
-        route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
-        route::put('/{hosting_repository}/update', [HostingRepositoryController::class, 'update'])->name('update');
-        route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
-        route::get('/{hosting_repository}/vps-connect', [HostingRepositoryController::class, 'vpsConnect'])->name('vps-connect');
+        Route::post('/', [HostingRepositoryController::class, 'store'])->name('store');
+        Route::put('/{hosting_repository}/update', [HostingRepositoryController::class, 'update'])->name('update');
+        Route::delete('/{hosting_repository}', [HostingRepositoryController::class, 'destroy'])->name('destroy');
+        Route::get('/{hosting_repository}/vps-connect', [HostingRepositoryController::class, 'vpsConnect'])->name('vps-connect');
     });
 
     // 🔺 HOSTINGS
-    route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function () {
-        route::get('/', [HostingController::class, 'index'])->name('index');
-        route::get('/create', [HostingController::class, 'create'])->name('create');
-        route::post('/', [HostingController::class, 'store'])->name('store');
-        route::get('/{hosting}/edit', [HostingController::class, 'edit'])->name('edit');
-        route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
-        route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
+    Route::group(['prefix' => '/dashboard/hostings', 'as' => 'hostings.'], function (): void {
+        Route::get('/', [HostingController::class, 'index'])->name('index');
+        Route::get('/create', [HostingController::class, 'create'])->name('create');
+        Route::post('/', [HostingController::class, 'store'])->name('store');
+        Route::get('/{hosting}/edit', [HostingController::class, 'edit'])->name('edit');
+        Route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
+        Route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
     });
 
     // 🔺 NOTIFICATIONS
-    route::group(['prefix' => '/dashboard/notifications', 'as' => 'notifications.'], function () {
-        route::get('/', [NotificationController::class, 'index'])->name('index');
-        route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
-        route::get('/{notification}/edit', [NotificationController::class, 'edit'])->name('edit');
-        route::put('/{notification}', [NotificationController::class, 'update'])->name('update');
-        route::patch('/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
-        route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
+    Route::group(['prefix' => '/dashboard/notifications', 'as' => 'notifications.'], function (): void {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/{notification}', [NotificationController::class, 'show'])->name('show');
+        Route::get('/{notification}/edit', [NotificationController::class, 'edit'])->name('edit');
+        Route::put('/{notification}', [NotificationController::class, 'update'])->name('update');
+        Route::patch('/{notification}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('mark-as-read');
+        Route::delete('/{notification}', [NotificationController::class, 'destroy'])->name('destroy');
     });
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function (): void {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -151,10 +149,10 @@ Route::middleware('auth')->group(function () {
 // DELETE IN PRODUCTION
 if (app()->isLocal()) {
 
-    route::get('/test', function () {
+    Route::get('/test', function () {
         $file = Storage::get('databases_1719494018.zip');
 
-        return response()->streamDownload(function () use ($file) {
+        return response()->streamDownload(function () use ($file): void {
             echo $file;
         }, 'databases_1719494018.zip');
     })->name('test');
@@ -164,5 +162,5 @@ if (app()->isLocal()) {
     // });
 
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
-    route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
+    Route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
 }

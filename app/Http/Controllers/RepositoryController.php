@@ -66,7 +66,7 @@ class RepositoryController extends Controller
             'clients',
             'hostingRepository',
             'hosting',
-            'repositorySettings'
+            'repositorySettings',
         );
 
         return inertia('Repositories/Edit', [
@@ -143,7 +143,7 @@ class RepositoryController extends Controller
         return to_route('repositories.edit', $repository);
     }
 
-    public function googleAnalytics(Repository $repository)
+    public function googleAnalytics(Repository $repository): void
     {
         GoogleAnalyticsJob::dispatch($repository);
     }

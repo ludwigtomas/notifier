@@ -16,19 +16,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:sanctum')->get('/user', fn(Request $request) => $request->user());
 
-route::group(['prefix' => 'v1'], function () {
-    route::group(['prefix' => 'repositories'], function () {
-        route::post('/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
+Route::group(['prefix' => 'v1'], function (): void {
+    Route::group(['prefix' => 'repositories'], function (): void {
+        Route::post('/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
     });
 
-    route::group(['prefix' => 'gitlab', 'as' => 'gitlab.'], function () {
-        route::get('/groups', [GitlabController::class, 'groups'])->name('groups');
-        route::get('/groups/{group}/subgroups', [GitlabController::class, 'subgroups'])->name('subgroups');
-        route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
-        route::get('/groups/{group_id}/repositories', [GitlabController::class, 'groupRepositories'])->name('group.repositories');
+    Route::group(['prefix' => 'gitlab', 'as' => 'gitlab.'], function (): void {
+        Route::get('/groups', [GitlabController::class, 'groups'])->name('groups');
+        Route::get('/groups/{group}/subgroups', [GitlabController::class, 'subgroups'])->name('subgroups');
+        Route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
+        Route::get('/groups/{group_id}/repositories', [GitlabController::class, 'groupRepositories'])->name('group.repositories');
     });
 });

@@ -7,7 +7,7 @@ use App\Http\Resources\NotificationResource;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Inertia\Response;
- 
+
 class DashboardController extends Controller
 {
     public function index(Request $request): Response
@@ -15,14 +15,12 @@ class DashboardController extends Controller
         $requsted_models = [];
 
         if ($request->model) {
-            $requsted_models = array_map(function ($model) {
-                return 'App\\Models\\'.$model;
-            }, $request->model);
+            $requsted_models = array_map(fn($model) => 'App\\Models\\' . $model, $request->model);
         }
 
         $notifications = Notification::query()
             ->whereNull('read_at')
-            ->when($requsted_models, function ($query, $requsted_models) {
+            ->when($requsted_models, function ($query, $requsted_models): void {
                 $query->whereIn('notifiable_type', $requsted_models);
             })
             ->whereJsonContains('data->action', 'created')

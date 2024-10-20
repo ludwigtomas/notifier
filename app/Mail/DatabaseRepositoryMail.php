@@ -11,7 +11,8 @@ use Illuminate\Queue\SerializesModels;
 
 class DatabaseRepositoryMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -33,7 +34,7 @@ class DatabaseRepositoryMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Notifier - ('.$this->repository->name.') - '.strtoupper($this->status),
+            subject: 'Notifier - (' . $this->repository->name . ') - ' . mb_strtoupper($this->status),
         );
     }
 

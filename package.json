@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "npm run pint && vite",
         "build": "vite build",
-        "pint": "vendor/bin/pint ."
+        "pint": "vendor/bin/pint . --config=/var/www/html/notifier-administration/pint.json"
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",

@@ -14,7 +14,8 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy(GitGroupObserver::class)]
 class GitGroup extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $table = 'git_groups';
 
@@ -83,11 +84,11 @@ class GitGroup extends Model
     public function scopeParentGroups($query, ?string $search = null)
     {
         return $query->whereNull('parent_id')
-            ->when($search, function ($query, $search) {
+            ->when($search, function ($query, $search): void {
                 $query->whereAny([
                     'group_id',
                     'name',
-                ], 'like', '%'.$search.'%');
+                ], 'like', '%' . $search . '%');
             })
             ->whereNull('parent_id');
     }

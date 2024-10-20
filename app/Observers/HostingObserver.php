@@ -39,10 +39,7 @@ class HostingObserver
     /**
      * Handle the Hosting "restored" event.
      */
-    public function restored(Hosting $hosting): void
-    {
-        //
-    }
+    public function restored(Hosting $hosting): void {}
 
     /**
      * Handle the Hosting "force deleted" event.

@@ -19,20 +19,20 @@ class NotificationController extends Controller
         $request->model ? $requsted_models = ModelHelper::modelsPath($request->model) : null;
 
         $notifications = Notification::query()
-            ->when($request->search, function ($query, $search) {
+            ->when($request->search, function ($query, $search): void {
                 $query->whereAny([
                     'type',
                     'notifiable_type',
                     'notifiable_id',
-                ], 'like', '%'.$search.'%');
+                ], 'like', '%' . $search . '%');
             })
-            ->when($requsted_models, function ($query, $requsted_models) {
+            ->when($requsted_models, function ($query, $requsted_models): void {
                 $query->whereIn('notifiable_type', $requsted_models);
             })
-            ->when($request->read_at == 'true', function ($query) {
+            ->when('true' === $request->read_at, function ($query): void {
                 $query->whereNotNull('read_at');
             })
-            ->when($request->action && $request->action != 'everything', function ($query) use ($request) {
+            ->when($request->action && 'everything' !== $request->action, function ($query) use ($request): void {
                 $query->whereJsonContains('data->action', $request->action);
             })
             ->orderBy('created_at', 'desc')

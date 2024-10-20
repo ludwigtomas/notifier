@@ -11,56 +11,35 @@ class RepositoryFileController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+    public function index(): void {}
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create(): void {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRepositoryFileRequest $request)
-    {
-        //
-    }
+    public function store(StoreRepositoryFileRequest $request): void {}
 
     /**
      * Display the specified resource.
      */
-    public function show(RepositoryFile $repositoryFile)
-    {
-        //
-    }
+    public function show(RepositoryFile $repositoryFile): void {}
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RepositoryFile $repositoryFile)
-    {
-        //
-    }
+    public function edit(RepositoryFile $repositoryFile): void {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepositoryFileRequest $request, RepositoryFile $repositoryFile)
-    {
-        //
-    }
+    public function update(UpdateRepositoryFileRequest $request, RepositoryFile $repositoryFile): void {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RepositoryFile $repositoryFile)
-    {
-        //
-    }
+    public function destroy(RepositoryFile $repositoryFile): void {}
 }

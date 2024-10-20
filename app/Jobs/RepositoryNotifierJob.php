@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Mail;
 
 class RepositoryNotifierJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new job instance.
@@ -46,7 +49,7 @@ class RepositoryNotifierJob implements ShouldQueue
     {
         return [
             'notifier',
-            'repository:'.$this->repository->repository_id,
+            'repository:' . $this->repository->repository_id,
         ];
     }
 }

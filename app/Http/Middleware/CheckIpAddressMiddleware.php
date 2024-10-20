@@ -11,7 +11,7 @@ class CheckIpAddressMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -23,7 +23,7 @@ class CheckIpAddressMiddleware
             '192.168.50.210',
         ];
 
-        if (! in_array($request->ip(), $allowed_ips)) {
+        if ( ! in_array($request->ip(), $allowed_ips)) {
             return response()->json([
                 'message' => 'Unauthorized',
                 'ip_address' => $request->ip(),

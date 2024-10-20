@@ -15,13 +15,25 @@ use Illuminate\Support\Facades\DB;
 #[ObservedBy(HostingObserver::class)]
 class Hosting extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'id',
         'name',
         'hosting_url',
     ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    public static function countDB(): int
+    {
+        return Cache::remember('hostings_count', 60, fn() => DB::table('hostings')->count());
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -53,21 +65,8 @@ class Hosting extends Model
             Repository::class,
             'hosting_repository',
             'hosting_id',
-            'repository_id'
+            'repository_id',
         )->withPivot('ip_address', 'ip_port', 'login_user', 'login_password', 'password_type');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public static function countDB(): int
-    {
-        return Cache::remember('hostings_count', 60, function () {
-            return DB::table('hostings')->count();
-        });
     }
 
     /*

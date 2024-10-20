@@ -18,10 +18,7 @@ class ClientObserver
     /**
      * Handle the Client "updated" event.
      */
-    public function updated(Client $client): void
-    {
-        //
-    }
+    public function updated(Client $client): void {}
 
     /**
      * Handle the Client "deleted" event.

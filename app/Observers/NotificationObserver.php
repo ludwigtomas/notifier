@@ -34,16 +34,10 @@ class NotificationObserver
     /**
      * Handle the Notification "restored" event.
      */
-    public function restored(Notification $notification): void
-    {
-        //
-    }
+    public function restored(Notification $notification): void {}
 
     /**
      * Handle the Notification "force deleted" event.
      */
-    public function forceDeleted(Notification $notification): void
-    {
-        //
-    }
+    public function forceDeleted(Notification $notification): void {}
 }

@@ -10,7 +10,7 @@ class ModelHelper extends Helper
         $path = app_path('Models');
         $files = scandir($path);
         foreach ($files as $file) {
-            if (is_file($path.'/'.$file)) {
+            if (is_file($path . '/' . $file)) {
                 $models[] = str_replace('.php', '', $file);
             }
         }
@@ -20,8 +20,6 @@ class ModelHelper extends Helper
 
     public static function modelsPath(array $models)
     {
-        return array_map(function ($model) {
-            return 'App\\Models\\'.$model;
-        }, $models);
+        return array_map(fn($model) => 'App\\Models\\' . $model, $models);
     }
 }

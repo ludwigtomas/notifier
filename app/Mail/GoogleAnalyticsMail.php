@@ -12,7 +12,8 @@ use Illuminate\Queue\SerializesModels;
 
 class GoogleAnalyticsMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * Create a new message instance.
@@ -30,7 +31,7 @@ class GoogleAnalyticsMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Měsíční report - Google Analytics ('.$this->repository->name.')',
+            subject: 'Měsíční report - Google Analytics (' . $this->repository->name . ')',
         );
     }
 

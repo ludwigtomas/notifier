@@ -17,7 +17,7 @@ class GitGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+
         ];
     }
 }

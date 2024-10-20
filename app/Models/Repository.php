@@ -18,7 +18,9 @@ use Illuminate\Notifications\Notifiable;
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     protected $table = 'repositories';
 
@@ -90,7 +92,7 @@ class Repository extends Model
             'repository_id',
             'id',
             'repository_id',
-            'hosting_id'
+            'hosting_id',
         );
     }
 
@@ -117,7 +119,7 @@ class Repository extends Model
                 'repository_id',
                 'name',
                 'slug',
-            ], 'like', '%'.$search.'%');
+            ], 'like', '%' . $search . '%');
         }
 
         return $query;

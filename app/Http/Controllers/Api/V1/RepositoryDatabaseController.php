@@ -32,9 +32,9 @@ class RepositoryDatabaseController extends Controller
 
             $this->checkPassword($password, $repository);
 
-            $path = $repository->slug.'/databases/'.now()->format('Y').'/'.now()->format('m');
+            $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
 
-            $backup_name = now()->format('d').'-'.uniqid().'.sql';
+            $backup_name = now()->format('d') . '-' . uniqid() . '.sql';
 
             // $this->checkIfBackupExists($path, $backup_name, $repository);
 
@@ -66,7 +66,7 @@ class RepositoryDatabaseController extends Controller
         }
     }
 
-    private function checkPassword(string $password, Repository $repository)
+    private function checkPassword(string $password, Repository $repository): void
     {
         if ($password !== $repository->database_verification_code) {
             $this->sendMail($repository, 'failed', 'Database backup -- PASSWORD -- is incorrect');

@@ -17,12 +17,12 @@ class ClientController extends Controller
     public function index(Request $request): Response
     {
         $clients = Client::query()
-            ->when($request->search, function ($query, $search) {
+            ->when($request->search, function ($query, $search): void {
                 $query->whereAny([
                     'name',
                     'email',
                     'phone',
-                ], 'like', '%'.$search.'%');
+                ], 'like', '%' . $search . '%');
             })
             ->with('repositories')
             ->orderBy('name')
