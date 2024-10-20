@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ModelHelper;
 use App\Http\Resources\NotificationResource;
-use App\Models\Notification;
 use Illuminate\Http\Request;
+use App\Helpers\ModelHelper;
 use Inertia\Response;
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request): Response
-    {
+    public function index(Request $request): Response {
         $requsted_models = [];
 
         if ($request->model) {
