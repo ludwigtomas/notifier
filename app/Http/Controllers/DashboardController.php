@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\NotificationResource;
 use Inertia\Response;
-use App\Models\Notification;
 use App\Helpers\ModelHelper;
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
