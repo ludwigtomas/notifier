@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ModelHelper;
-
-use Illuminate\Http\Request;
 use App\Http\Resources\NotificationResource;
-use Inertia\Response;
-
-
 use App\Models\Notification;
-
+use Illuminate\Http\Request;
+use Inertia\Response;
+ 
 class DashboardController extends Controller
 {
     public function index(Request $request): Response

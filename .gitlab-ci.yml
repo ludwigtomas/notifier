@@ -1,3 +1,40 @@
+stages:
+  # - lint
+  - deploy
+
+# pint:
+#   image: php:8.3
+#   stage: lint
+#   variables:
+#     GIT_STRATEGY: clone
+#   before_script:
+#     # Install system dependencies
+#     - apt-get update && apt-get install -y git unzip
+
+#     # Set Git user information
+#     - git config --global user.name "$GITLAB_USER_NAME"
+#     - git config --global user.email "$GITLAB_USER_EMAIL"
+
+#     # Install Composer
+#     - curl -sS https://getcomposer.org/installer | php
+#     - mv composer.phar /usr/local/bin/composer
+
+#     # Install project dependencies
+#     - composer install --no-interaction --prefer-dist --optimize-autoloader
+
+#     # Install Laravel Pint globally
+#     - composer global require laravel/pint
+
+#     # Add Composer global bin to PATH
+#     - export PATH="$PATH:/root/.composer/vendor/bin"
+
+#   script:
+#     # Run Pint to check code style
+#     - pint --test
+
+#   # Fail the job if Pint finds issues
+#   allow_failure: false
+
 deploy:
   stage: deploy
   script:
