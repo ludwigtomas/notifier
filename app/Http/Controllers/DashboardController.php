@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\NotificationResource;
 use Illuminate\Http\Request;
-use App\Helpers\ModelHelper;
+use App\Http\Resources\NotificationResource;
 use Inertia\Response;
+use App\Helpers\ModelHelper;
 use App\Models\Notification;
 
 class DashboardController extends Controller
