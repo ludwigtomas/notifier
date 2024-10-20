@@ -17,6 +17,7 @@ class RepositorySetting extends Model
         'value' => RepositorySettingValueEnum::class,
         'is_active' => 'boolean',
         'last_attempt_at' => 'datetime',
+        'attempts' => 'integer',
         'is_successful' => 'boolean',
     ];
 
@@ -26,6 +27,7 @@ class RepositorySetting extends Model
         'value',
         'is_active',
         'last_attempt_at',
+        'attempts',
         'is_successful',
     ];
 

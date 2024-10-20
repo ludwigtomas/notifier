@@ -80,19 +80,36 @@ export default function RepositoryClientsTable({ repositories }) {
                                 Slug
                             </th>
 
-                            <th
+                            {/* <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
                             >
                                 Počet klientů
-                            </th>
+                            </th> */}
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-sm font-normal border-x border-zinc-700"
                             >
-                                Počet databází
+                                <div className="text-white">
+                                    Nastavení
+                                </div>
+
+                                <ul className="grid grid-cols-3 mt-2 w-full">
+                                    <li className="text-sm font-normal text-center text-zinc-400">
+                                        Klienti
+                                    </li>
+
+                                    <li className="text-sm font-normal text-center text-zinc-400">
+                                        Databáze
+                                    </li>
+
+                                    <li className="text-sm font-normal text-center text-zinc-400">
+                                        Settings
+                                    </li>
+                                </ul>
                             </th>
+
 
                             <th
                                 scope="col"
@@ -140,77 +157,92 @@ export default function RepositoryClientsTable({ repositories }) {
                     </thead>
 
                     <tbody className="divide-y divide-zinc-800 bg-zinc-700">
-                        {repositories.data.map(
-                            (repository) => {
-                                return (
-                                    <tr
-                                        key={repository.repository_id}
-                                        className="group text-white transition-colors duration-200 hover:bg-zinc-800"
-                                    >
-                                        <td className="px-4 py-4">
-                                            <span className="text-sm font-medium text-zinc-400">
-                                                {repository.repository_id}
-                                            </span>
-                                        </td>
+                        {repositories.data.map((repository) => {
+                            return (
+                                <tr
+                                    key={repository.repository_id}
+                                    className="group text-white transition-colors duration-200 hover:bg-zinc-800"
+                                >
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">
+                                            {repository.repository_id}
+                                        </span>
+                                    </td>
 
-                                        <td className="px-4 py-2 w-20">
-                                            <img
-                                                src={ repository.avatar
-                                                        ? "/storage/avatars/" + repository.avatar
-                                                        : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"
-                                                }
-                                                alt={repository.name}
-                                                className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
-                                            />
-                                        </td>
+                                    <td className="px-4 py-2 w-20">
+                                        <img
+                                            src={ repository.avatar
+                                                    ? "/storage/avatars/" + repository.avatar
+                                                    : "https://ui-avatars.com/api/?name=" + repository.name + "&background=0D8ABC&color=fff"
+                                            }
+                                            alt={repository.name}
+                                            className="size-12 object-contain p-1 bg-zinc-800 rounded-xl"
+                                        />
+                                    </td>
 
-                                        <td className="px-4 py-4 ">
-                                            <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                { repository.name }
-                                            </span>
-                                        </td>
+                                    <td className="px-4 py-4 ">
+                                        <span className="text-sm font-medium text-zinc-400 text-nowrap">
+                                            { repository.name }
+                                        </span>
+                                    </td>
 
-                                        <td className="px-4 py-4 ">
-                                            <span className="text-sm font-medium text-zinc-400 text-nowrap">
-                                                { repository.slug }
-                                            </span>
-                                        </td>
+                                    <td className="px-4 py-4 ">
+                                        <span className="text-sm font-medium text-zinc-400 text-nowrap">
+                                            { repository.slug }
+                                        </span>
+                                    </td>
 
-                                        <td className="px-4 py-4 ">
-                                            <div className="flex items-center gap-x-2 text-nowrap ">
-                                                {repository.relationships.clients_count > 0 ? (
-                                                    <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                        {repository.relationships.clients.slice(0, 2).map((client) => (
-                                                            <p
-                                                                key={client.id}
-                                                                className="text-xs text-zinc-400 pr-2"
-                                                            >
-                                                                { client.name }
-                                                            </p>
-                                                        ))}
+                                    {/* <td className="px-4 py-4 ">
+                                        <div className="flex items-center gap-x-2 text-nowrap ">
+                                            {repository.relationships.clients.length > 0 ? (
+                                                <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    {repository.relationships.clients.slice(0, 2).map((client) => (
+                                                        <p
+                                                            key={client.id}
+                                                            className="text-xs text-zinc-400 pr-2"
+                                                        >
+                                                            { client.name }
+                                                        </p>
+                                                    ))}
 
-                                                        {repository.relationships.clients_count > 2 && (
-                                                            <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
-                                                                +{" "}
-                                                                {repository.relationships.clients_count - 2}
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                ) : (
-                                                    <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                        0
-                                                    </span>
-                                                )}
+                                                    {repository.relationships.clients.length > 2 && (
+                                                        <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
+                                                            +{" "}
+                                                            {repository.relationships.clients.length - 2}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    0
+                                                </span>
+                                            )}
+                                        </div>
+                                    </td> */}
+
+                                    <td className="-mr-[1px] py-3.5 border-x border-zinc-800 group-hover:border-zinc-700">
+                                        <div className="grid grid-cols-3 place-items-center">
+                                            <div>
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    { repository.relationships.clients_count }
+                                                </span>
                                             </div>
-                                        </td>
 
-                                        <td className="px-4 py-4 text-center ">
-                                            <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                { repository.relationships.database_backups_count }
-                                            </span>
-                                        </td>
+                                            <div>
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    { repository.relationships.database_backups_count }
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    { repository.relationships.repository_settings_count }
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                                        <td className="grid grid-cols-4 -mr-[1px] py-3.5 border-x border-zinc-800 group-hover:border-zinc-700">
+                                    <td className="-mr-[1px] py-3.5 border-x border-zinc-800 group-hover:border-zinc-700">
+                                        <div className="grid grid-cols-4 ">
                                             <div className="flex items-center justify-center">
                                                 {repository.repository_url ? (
                                                     <a
@@ -274,80 +306,80 @@ export default function RepositoryClientsTable({ repositories }) {
                                                     )}
                                                 </div>
                                             </div>
-                                        </td>
+                                        </div>
+                                    </td>
 
-                                        <td className="px-4 py-4">
-                                            <span className="text-sm font-medium text-zinc-400">
-                                                {repository.last_commit_at_human ?? "-"}
-                                            </span>
-                                        </td>
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">
+                                            {repository.last_commit_at_human ?? "-"}
+                                        </span>
+                                    </td>
 
-                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                            <div className="flex items-center justify-end space-x-2">
-                                                {repository.relationships.hosting_repository && !repository.deleted_at && (
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                        <div className="flex items-center justify-end space-x-2">
+                                            {repository.relationships.hosting_repository && !repository.deleted_at && (
+                                                <Link
+                                                    href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
+                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                >
+                                                    <CommandLineIcon className="size-6 text-orange-400" />
+                                                </Link>
+                                            )}
+
+                                            {repository.deleted_at ? (
+                                                <>
                                                     <Link
-                                                        href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
-                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                        method="PATCH"
+                                                        as="button"
+                                                        href={route("repositories.restore", repository.repository_id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
                                                     >
-                                                        <CommandLineIcon className="size-6 text-orange-400" />
+                                                        <ArrowPathIcon className="size-6 text-sky-500" />
                                                     </Link>
-                                                )}
 
-                                                {repository.deleted_at ? (
-                                                    <>
-                                                        <Link
-                                                            method="PATCH"
-                                                            as="button"
-                                                            href={route("repositories.restore", repository.repository_id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                        >
-                                                            <ArrowPathIcon className="size-6 text-sky-500" />
-                                                        </Link>
+                                                    <button
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        onClick={() => toggleModal(repository)}
+                                                    >
+                                                        <BackspaceIcon className="size-6 text-red-500" />
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {/* <Link
+                                                        href={route("repository-settings.edit", repository: repository.repository_id)}
+                                                        className="group/custom bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-pink-500 faster-animation"
+                                                    >
+                                                        <Cog8ToothIcon className="size-6 text-pink-500 group-hover/custom:animate-spin" />
+                                                    </Link> */}
 
-                                                        <button
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                            onClick={() => toggleModal(repository)}
-                                                        >
-                                                            <BackspaceIcon className="size-6 text-red-500" />
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Link
-                                                            href={route("repository-settings.edit", repository.repository_id)}
-                                                            className="group/custom bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-pink-500 faster-animation"
-                                                        >
-                                                            <Cog8ToothIcon className="size-6 text-pink-500 group-hover/custom:animate-spin" />
-                                                        </Link>
+                                                    <Link
+                                                        href={route("repositories.edit", repository.repository_id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                                    >
+                                                        <PencilSquareIcon className="size-6 text-green-500" />
+                                                    </Link>
 
-                                                        <Link
-                                                            href={route("repositories.edit", repository.repository_id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                        >
-                                                            <PencilSquareIcon className="size-6 text-green-500" />
-                                                        </Link>
+                                                    <Link
+                                                        href={route("repositories.show", repository.repository_id)}
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
+                                                    >
+                                                        <EyeIcon className="size-6 text-sky-500" />
+                                                    </Link>
 
-                                                        <Link
-                                                            href={route("repositories.show", repository.repository_id)}
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-sky-500 faster-animation"
-                                                        >
-                                                            <EyeIcon className="size-6 text-sky-500" />
-                                                        </Link>
-
-                                                        <button
-                                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                            onClick={() =>toggleModal(repository)}
-                                                        >
-                                                            <TrashIcon className="size-6 text-red-500" />
-                                                        </button>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                );
-                            }
-                        )}
+                                                    <button
+                                                        className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                                        onClick={() =>toggleModal(repository)}
+                                                    >
+                                                        <TrashIcon className="size-6 text-red-500" />
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
 

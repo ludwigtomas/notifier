@@ -125,7 +125,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                         <thead className="border-b border-white/10 text-sm leading-6 text-white">
                             <tr>
                                 <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
-                                    Name
+                                    Key
                                 </th>
 
                                 <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
@@ -133,11 +133,23 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                 </th>
 
                                 <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
-                                    Status
+                                    Last attempt at
                                 </th>
 
                                 <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
-                                    Test
+                                    Attempts
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    is successful
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    is active
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    actions
                                 </th>
                             </tr>
                         </thead>
@@ -157,6 +169,18 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                     </td>
 
                                     <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.last_attempt_at ?? "N/A"}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.attempts ?? "N/A"}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.is_successful ? "Yes" : "No"}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
                                         {setting.is_active ? (
                                             <span className="text-green-500">
                                                 Active
@@ -169,7 +193,17 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                     </td>
 
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                        { setting.last_successful_attempt_at }
+                                        <div className="flex items-center space-x-2">
+                                            <Link
+                                                className="text-white bg-green-500 px-4 py-1 rounded-md"
+                                                href={route("repository-settings.edit", {
+                                                    repository: repository.repository_id,
+                                                    repository_setting: setting.id,
+                                                })}
+                                            >
+                                                Edit
+                                            </Link>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -195,7 +229,6 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     {repository.relationships.hosting_repository ? (
                         <UpdateRepositoryHostingForm
                             hosting_repository={repository.relationships.hosting_repository}
-                            hosting={repository.relationships.hosting}
                             hostings={hostings}
                             className="w-full"
                         />

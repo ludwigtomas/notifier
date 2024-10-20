@@ -6,6 +6,7 @@ use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
 use App\Enums\RepositorySetting\RepositorySettingValueEnum;
 use App\Http\Requests\StoreRepositorySettingRequest;
 use App\Http\Requests\UpdateRepositorySettingRequest;
+use App\Http\Resources\RepositoryResource;
 use App\Models\Repository;
 use App\Models\RepositorySetting;
 
@@ -44,9 +45,11 @@ class RepositorySettingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RepositorySetting $repositorySetting)
+    public function edit(Repository $repository, RepositorySetting $repository_setting)
     {
-        return inertia('Repositories/Edit', [
+        return inertia('RepositorySettings/Edit', [
+            'repository' => new RepositoryResource($repository->load('hostingRepository')),
+            'repository_setting' => $repository_setting,
         ]);
     }
 

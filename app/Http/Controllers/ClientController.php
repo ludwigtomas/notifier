@@ -24,6 +24,7 @@ class ClientController extends Controller
                     'phone',
                 ], 'like', '%' . $search . '%');
             })
+            ->orderBy('id', 'desc')
             ->with('repositories')
             ->orderBy('name')
             ->paginate(10);

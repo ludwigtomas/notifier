@@ -23,6 +23,7 @@ return new class () extends Migration {
             $table->string('value');
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_attempt_at')->nullable();
+            $table->integer('attempts')->default(0);
             $table->boolean('is_successful')->default(false);
 
             $table->timestamps();

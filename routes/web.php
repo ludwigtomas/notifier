@@ -77,7 +77,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
         Route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
 
-        Route::get('/edit', [RepositorySettingController::class, 'edit'])->name('edit');
+        Route::get('/{repository_setting}/edit', [RepositorySettingController::class, 'edit'])->name('edit');
         Route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
     });
 

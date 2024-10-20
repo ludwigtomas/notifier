@@ -20,6 +20,7 @@ class RepositoryIndexResource extends JsonResource
             'analytics_property_id' => $this->analytics_property_id ?? null,
 
             'name' => $this->name,
+            'slug' => $this->slug,
             'avatar' => $this->avatar,
             'website_url' => $this->website_url,
             'repository_url' => $this->repository_url,
@@ -28,11 +29,11 @@ class RepositoryIndexResource extends JsonResource
             'deleted_at' => $this->deleted_at,
 
             'relationships' => [
-                'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'clients_count' => $this->clients_count ?? 0,
-
                 'database_backups_count' => $this->database_backups_count ?? 0,
+                'repository_settings_count' => $this->repository_settings_count ?? 0,
 
+                'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'hosting_repository' => $this->whenLoaded('hostingRepository'),
             ],
         ];

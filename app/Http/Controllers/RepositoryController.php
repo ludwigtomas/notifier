@@ -18,6 +18,7 @@ use App\Services\GitlabService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
@@ -25,14 +26,16 @@ class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        $repositories = Repository::query()
-            ->with(['clients', 'hostingRepository'])
-            ->withCount(['clients', 'databaseBackups'])
-            ->search($request->search)
-            ->trashed($request->trashed)
-            ->orderBy('last_commit_at', 'desc')
-            ->paginate(20)
-            ->withQueryString();
+        $repositories = Cache::remember('repositories', 60, function () use ($request) {
+            return Repository::query()
+                ->with('hostingRepository')
+                ->withCount('clients', 'repositorySettings', 'databaseBackups')
+                ->search($request->search)
+                ->trashed($request->trashed)
+                ->orderBy('last_commit_at', 'desc')
+                ->paginate(20)
+                ->withQueryString();
+        });
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryIndexResource::collection($repositories),

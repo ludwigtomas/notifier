@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Git;
 use App\Models\Repository;
 use App\Services\GitlabService;
-use Spatie\Analytics\Facades\Analytics;
-use Spatie\Analytics\Period;
 
 class TestController extends Controller
 {

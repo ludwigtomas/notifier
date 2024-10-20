@@ -19,7 +19,6 @@ class RepositorySettingFactory extends Factory
      */
     public function definition(): array
     {
-
         $keys = RepositorySettingKeyEnum::cases();
         $values = RepositorySettingValueEnum::cases();
 
@@ -27,8 +26,10 @@ class RepositorySettingFactory extends Factory
             'repository_id' => Repository::all()->random()->id,
             'key' => $keys[array_rand($keys)],
             'value' => $values[array_rand($values)],
-            'date' => fake()->date(),
-            'is_active' => fake()->boolean(),
+            'is_active' => fake()->boolean,
+            'last_attempt_at' => fake()->dateTime,
+            'attempts' => fake()->numberBetween(0, 10),
+            'is_successful' => fake()->boolean,
         ];
     }
 }
