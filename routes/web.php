@@ -159,9 +159,9 @@ if (app()->isLocal()) {
         }, 'databases_1719494018.zip');
     })->name('test');
 
-    route::Get('/testingos', function(){
-        GitlabService::getUserID(Git::first());
-    });
+    // route::Get('/testingos', function(){
+    //     GitlabService::getUserID(Git::first());
+    // });
 
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
     route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');

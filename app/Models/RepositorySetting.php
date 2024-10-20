@@ -17,14 +17,16 @@ class RepositorySetting extends Model
         'key',
         'value',
         'is_active',
-        'last_successful_attempt_at',
+        'last_attempt_at',
+        'is_successful',
     ];
 
     public $casts = [
         'key' => RepositorySettingKeyEnum::class,
         'value' => RepositorySettingValueEnum::class,
         'is_active' => 'boolean',
-        'last_successful_attempt_at' => 'datetime',
+        'last_attempt_at' => 'datetime',
+        'is_successful' => 'boolean',
     ];
 
     /*
