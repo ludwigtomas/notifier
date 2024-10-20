@@ -180,7 +180,6 @@ export default function Edit({
                         <div className="flex justify-end space-x-4">
                             <PrimaryButton
                                 type="submit"
-                                processing={processing}
                             >
                                 Save
                             </PrimaryButton>

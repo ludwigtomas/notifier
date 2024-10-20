@@ -101,7 +101,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     />
                 </div>
 
-                <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                <div className="p-10 bg-zinc-900 sm:rounded-xl grid">
                     <header>
                         <h2 className="text-lg font-medium text-gray-100">
                             Repository settings
@@ -120,6 +120,61 @@ export default function Edit({ auth, repository, hostings, clients }) {
                             </Link>
                         </p>
                     </header>
+
+                    <table className="mt-6 w-full whitespace-nowrap text-left p-3">
+                        <thead className="border-b border-white/10 text-sm leading-6 text-white">
+                            <tr>
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    Name
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    Value
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    Status
+                                </th>
+
+                                <th scope="col" className="py-3.5 text-left px-4 text-sm font-semibold text-gray-200">
+                                    Test
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody className="divide-y divide-gray-900">
+                            { repository.relationships.repository_settings.map((setting) => (
+                                <tr
+                                    className="bg-zinc-800 hover:bg-zinc-700 transition duration-150 ease-in-out"
+                                    key={setting.id}
+                                >
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.key}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.value}
+                                    </td>
+
+                                    <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
+                                        {setting.is_active ? (
+                                            <span className="text-green-500">
+                                                Active
+                                            </span>
+                                        ) : (
+                                            <span className="text-red-500">
+                                                Inactive
+                                            </span>
+                                        )}
+                                    </td>
+
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                        { setting.last_successful_attempt_at }
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
 
                 </div>
 

@@ -83,7 +83,6 @@ route::middleware('auth:sanctum')->group(function () {
         route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
     });
 
-
     // 🔺 DATABASES
     route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function () {
         route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');

@@ -24,9 +24,17 @@ class RepositorySettingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Repository $repository, StoreRepositorySettingRequest $request)
     {
-        dd($request->all());
+        // Check if the repository already has a setting with the same key
+        if ($repository->repositorySettings()->where('key', $request->key)->exists()) {
+            return back()->withErrors(['key' => 'Klíč již existuje']);
+        }
+
+        $repository->repositorySettings()->create($request->validated());
+
+        return to_route('repositories.edit', $repository);
+
     }
 
     /**

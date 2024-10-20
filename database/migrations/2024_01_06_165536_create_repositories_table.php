@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('repositories', function (Blueprint $table) {
             $table->unsignedBigInteger('repository_id')
-                ->unique()
                 ->primary();
 
             $table->foreignId('group_id')

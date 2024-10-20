@@ -81,29 +81,22 @@ class GitlabService
             $repositories_api = json_decode($response->getBody()->getContents());
 
             foreach ($repositories_api as $repository_api) {
+                $repository = Repository::updateOrCreate([
+                        'repository_id' => $repository_api->id,
+                        'group_id' => $repository_api->namespace->id,
+                    ],[
+                        'name' => $repository_api->name,
+                        'slug' => Str::slug($repository_api->name),
+                        'repository_url' => $repository_api->web_url,
 
-                $repository= Repository::create([
-                    'repository_id' => $repository_api->id,
-                    'name' => $repository_api->name,
-                    'slug' => Str::slug($repository_api->name),
-                    'repository_url' => $repository_api->web_url,
-                    'repository_created_at' => Carbon::parse($repository_api->created_at),
-                ]);
+                        'repository_created_at' => Carbon::parse($repository_api->created_at),
+                    ]
+                );
 
-                dd($repository);
-                // $repository = Repository::updateOrCreate([
-                //         'repository_id' => $repository_api->id
-                //     ],[
-                //         'name' => $repository_api->name,
-                //         'slug' => Str::slug($repository_api->name),
-                //         'repository_url' => $repository_api->web_url,
+                $repository = Repository::find($repository_api->id);
 
-                //         'repository_created_at' => Carbon::parse($repository_api->created_at),
-                //     ]
-                // );
-
-                // self::getRepositorylastCommit($repository);
-                // self::getRepositoryAvatar($repository, $repository_api, $gitlab);
+                self::getRepositorylastCommit($repository);
+                self::getRepositoryAvatar($repository, $repository_api, $gitlab);
             }
         } catch (Throwable $th) {
             Log::error($th->getMessage() . 'get repositories error', ['gitlab' => $gitlab]);

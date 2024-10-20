@@ -23,13 +23,15 @@ class StoreRepositorySettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        $keys = implode(',', array_keys(RepositorySettingKeyEnum::cases()));
-        $values = implode(',', array_keys(RepositorySettingValueEnum::cases()));
+        $keys = RepositorySettingKeyEnum::cases();
+        $values = RepositorySettingValueEnum::cases();
+
+        $keys = array_map(fn($key) => $key->value, $keys);
+        $values = array_map(fn($value) => $value->value, $values);
 
         return [
-            'repository_id' => ['required', 'exists:repositories,id'],
-            'key' => ['required', 'string', 'in:' . $keys],
-            'value' => ['required', 'string', 'in:' . $values],
+            'key' => ['required', 'string', 'in:' . implode(',', $keys)],
+            'value' => ['required', 'string', 'in:' . implode(',', $values)],
             'is_active' => ['required', 'boolean'],
         ];
     }
