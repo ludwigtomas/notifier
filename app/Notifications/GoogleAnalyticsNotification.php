@@ -12,7 +12,7 @@ class GoogleAnalyticsNotification extends Notification
     public function __construct(
         public string $action,
     ) {}
-    
+
     public function via(): array
     {
         return ['database'];

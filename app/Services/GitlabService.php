@@ -2,16 +2,16 @@
 
 namespace App\Services;
 
-use Throwable;
-use Carbon\Carbon;
+use App\Jobs\RepositoryNotifierJob;
 use App\Models\Git;
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use App\Jobs\RepositoryNotifierJob;
-use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 use GuzzleHttp\Client as GuzzleClient;
-use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Throwable;
 
 class GitlabService
 {
@@ -53,11 +53,11 @@ class GitlabService
 
             $body = $response->getBody();
 
-            $path = 'avatars/' . $gitlab->username . '.png';
+            $path = 'avatars/'.$gitlab->username.'.png';
 
             Storage::disk('public')->put($path, $body);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'download avatar error');
+            Log::error($th->getMessage().'download avatar error');
         }
     }
 
@@ -70,7 +70,7 @@ class GitlabService
         try {
             $response = $client->get('groups/64297613/projects', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $gitlab->api_token,
+                    'Authorization' => 'Bearer '.$gitlab->api_token,
                 ],
                 'query' => [
                     'order_by' => 'updated_at',
@@ -82,15 +82,15 @@ class GitlabService
 
             foreach ($repositories_api as $repository_api) {
                 $repository = Repository::updateOrCreate([
-                        'repository_id' => $repository_api->id,
-                        'group_id' => $repository_api->namespace->id,
-                    ],[
-                        'name' => $repository_api->name,
-                        'slug' => Str::slug($repository_api->name),
-                        'repository_url' => $repository_api->web_url,
+                    'repository_id' => $repository_api->id,
+                    'group_id' => $repository_api->namespace->id,
+                ], [
+                    'name' => $repository_api->name,
+                    'slug' => Str::slug($repository_api->name),
+                    'repository_url' => $repository_api->web_url,
 
-                        'repository_created_at' => Carbon::parse($repository_api->created_at),
-                    ]
+                    'repository_created_at' => Carbon::parse($repository_api->created_at),
+                ]
                 );
 
                 $repository = Repository::find($repository_api->id);
@@ -99,7 +99,7 @@ class GitlabService
                 self::getRepositoryAvatar($repository, $repository_api, $gitlab);
             }
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get repositories error', ['gitlab' => $gitlab]);
+            Log::error($th->getMessage().'get repositories error', ['gitlab' => $gitlab]);
         }
     }
 
@@ -110,9 +110,9 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->get('projects/' . $repository->repository_id . '/repository/commits', [
+            $response = $client->get('projects/'.$repository->repository_id.'/repository/commits', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
                 'query' => [
                     'per_page' => 1,
@@ -133,7 +133,7 @@ class GitlabService
                 'last_commit_at' => $create_date,
             ]);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get repository last commit error', ['repository' => $repository]);
+            Log::error($th->getMessage().'get repository last commit error', ['repository' => $repository]);
         }
     }
 
@@ -154,21 +154,21 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->get('projects/' . $repository->repository_id . '/avatar', [
+            $response = $client->get('projects/'.$repository->repository_id.'/avatar', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
             ]);
 
             if ($response->getStatusCode() === 200) {
                 $body = $response->getBody();
 
-                $path = 'avatars/' . $repository->slug . '.png';
+                $path = 'avatars/'.$repository->slug.'.png';
 
                 Storage::disk('public')->put($path, $body);
 
                 $repository->update([
-                    'avatar' => $repository->slug . '.png',
+                    'avatar' => $repository->slug.'.png',
                 ]);
             }
         } catch (ClientException $e) {
@@ -185,7 +185,7 @@ class GitlabService
         try {
             $response = $client->request('GET', 'groups', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
             ]);
 
@@ -202,7 +202,7 @@ class GitlabService
                 'data' => $groups,
             ], 200);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get groups error');
+            Log::error($th->getMessage().'get groups error');
 
             return response()->json([
                 'success' => false,
@@ -218,9 +218,9 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'groups/' . $group_id, [
+            $response = $client->request('GET', 'groups/'.$group_id, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
             ]);
 
@@ -231,7 +231,7 @@ class GitlabService
                 'data' => $group_api,
             ], 200);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get group detail error');
+            Log::error($th->getMessage().'get group detail error');
 
             return response()->json([
                 'success' => false,
@@ -247,9 +247,9 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'projects/' . $repository_id, [
+            $response = $client->request('GET', 'projects/'.$repository_id, [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
             ]);
 
@@ -257,7 +257,7 @@ class GitlabService
 
             return $repository_api;
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get repository error');
+            Log::error($th->getMessage().'get repository error');
 
             return response()->json([
                 'success' => false,
@@ -274,9 +274,9 @@ class GitlabService
         ]);
 
         try {
-            $response = $client->request('GET', 'groups/' . $group_id . '/subgroups', [
+            $response = $client->request('GET', 'groups/'.$group_id.'/subgroups', [
                 'headers' => [
-                    'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                    'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                 ],
             ]);
 
@@ -287,7 +287,7 @@ class GitlabService
                 'data' => $subgroups_api,
             ], 200);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . 'get subgroups error');
+            Log::error($th->getMessage().'get subgroups error');
 
             return response()->json([
                 'success' => false,
@@ -308,9 +308,9 @@ class GitlabService
 
         try {
             do {
-                $response = $client->request('GET', 'groups/' . $group_id . '/projects', [
+                $response = $client->request('GET', 'groups/'.$group_id.'/projects', [
                     'headers' => [
-                        'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                        'Authorization' => 'Bearer '.self::getGitlab()->api_token,
                     ],
                     'query' => [
                         'order_by' => 'updated_at',
@@ -331,7 +331,7 @@ class GitlabService
                 'data' => $repositories,
             ], 200);
         } catch (Throwable $th) {
-            Log::error($th->getMessage() . ' get group repositories error');
+            Log::error($th->getMessage().' get group repositories error');
 
             return response()->json([
                 'success' => false,

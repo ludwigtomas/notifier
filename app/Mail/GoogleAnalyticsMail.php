@@ -21,8 +21,7 @@ class GoogleAnalyticsMail extends Mailable
         protected Repository $repository,
         protected array $compare,
         protected Client $client,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.

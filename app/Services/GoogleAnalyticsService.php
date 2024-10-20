@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
-use App\Models\Repository;
 use App\Mail\GoogleAnalyticsMail;
-use Illuminate\Support\Facades\Mail;
-use Google\Analytics\Data\V1beta\Metric;
+use App\Models\Repository;
+use App\Notifications\GoogleAnalyticsNotification;
+use Carbon\Carbon;
+use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
-use App\Notifications\GoogleAnalyticsNotification;
-use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
+use Google\Analytics\Data\V1beta\Metric;
+use Illuminate\Support\Facades\Mail;
 
 class GoogleAnalyticsService
 {
@@ -58,7 +58,7 @@ class GoogleAnalyticsService
 
     private static function currentMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->startOfMonth()->toDateString(),
@@ -107,7 +107,7 @@ class GoogleAnalyticsService
 
     private static function previousMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->subMonthNoOverflow()->startOfMonth()->toDateString(),

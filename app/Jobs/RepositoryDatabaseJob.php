@@ -2,14 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Mail\DatabaseRepositoryMail;
 use App\Models\Repository;
 use Illuminate\Bus\Queueable;
-use App\Mail\DatabaseRepositoryMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class RepositoryDatabaseJob implements ShouldQueue
 {
@@ -45,7 +45,7 @@ class RepositoryDatabaseJob implements ShouldQueue
     {
         return [
             'database',
-            'repository:' . $this->repository->repository_id,
+            'repository:'.$this->repository->repository_id,
         ];
     }
 }

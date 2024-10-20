@@ -38,7 +38,7 @@ class GoogleAnalyticsController extends Controller
 
     private function currentMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->startOfMonth()->toDateString(),
@@ -88,7 +88,7 @@ class GoogleAnalyticsController extends Controller
 
     private function previousMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->subMonthNoOverflow()->startOfMonth()->toDateString(),

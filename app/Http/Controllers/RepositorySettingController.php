@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
 use App\Enums\RepositorySetting\RepositorySettingValueEnum;
-use App\Models\Repository;
-use App\Models\RepositorySetting;
 use App\Http\Requests\StoreRepositorySettingRequest;
 use App\Http\Requests\UpdateRepositorySettingRequest;
-use Illuminate\Http\Request;
+use App\Models\Repository;
+use App\Models\RepositorySetting;
 
 class RepositorySettingController extends Controller
 {

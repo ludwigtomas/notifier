@@ -2,14 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Mail\RepositoryNotifierMail;
 use App\Models\Repository;
 use Illuminate\Bus\Queueable;
-use App\Mail\RepositoryNotifierMail;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class RepositoryNotifierJob implements ShouldQueue
 {
@@ -46,7 +46,7 @@ class RepositoryNotifierJob implements ShouldQueue
     {
         return [
             'notifier',
-            'repository:' . $this->repository->repository_id,
+            'repository:'.$this->repository->repository_id,
         ];
     }
 }

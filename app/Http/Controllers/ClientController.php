@@ -22,7 +22,7 @@ class ClientController extends Controller
                     'name',
                     'email',
                     'phone',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->with('repositories')
             ->orderBy('name')

@@ -21,8 +21,7 @@ class RepositoryNotifierMail extends Mailable
         protected Repository $repository,
         protected $commit_message,
         protected Client $client,
-    ) {
-    }
+    ) {}
 
     /**
      * Get the message envelope.

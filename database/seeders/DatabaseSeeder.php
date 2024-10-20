@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
         ]);
 
-        if (app()->isLocal()) {;
+        if (app()->isLocal()) {
             $this->call([
                 GitGroupSeeder::class,
                 RepositorySeeder::class,

@@ -22,11 +22,7 @@ class RepositoryDatabaseObserver
         $repository_database->notify(new RepositoryDatabaseNotification('deleted'));
     }
 
-    public function restored(RepositoryDatabase $repository_database): void
-    {
-    }
+    public function restored(RepositoryDatabase $repository_database): void {}
 
-    public function forceDeleted(RepositoryDatabase $repository_database): void
-    {
-    }
+    public function forceDeleted(RepositoryDatabase $repository_database): void {}
 }

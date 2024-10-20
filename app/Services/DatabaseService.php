@@ -4,8 +4,8 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DatabaseService
@@ -41,7 +41,7 @@ class DatabaseService
         Log::channel('backup')->info('➡️ preparing file for sending');
 
         try {
-            $client = new Client();
+            $client = new Client;
 
             $response = $client->request('POST', env('BACKUP_URL'), [
                 'multipart' => [

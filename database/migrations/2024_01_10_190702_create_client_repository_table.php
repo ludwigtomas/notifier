@@ -28,7 +28,6 @@ return new class extends Migration
             $table->primary(['client_id', 'repository_id']);
             $table->unique(['client_id', 'repository_id']);
 
-            
         });
     }
 

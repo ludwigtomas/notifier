@@ -25,7 +25,7 @@ class ClientSeeder extends Seeder
                 'phone' => '+420 775 719 479',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],[
+            ], [
                 'name' => 'Milada Soldánová',
                 'email' => 'info@dopravnihriste.eu',
                 'phone' => '+420 776 219 191',

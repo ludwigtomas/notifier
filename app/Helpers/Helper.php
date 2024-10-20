@@ -2,6 +2,4 @@
 
 namespace App\Helpers;
 
-class Helper
-{
-}
+class Helper {}

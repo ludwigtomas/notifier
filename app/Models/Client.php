@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Observers\ClientObserver;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy(ClientObserver::class)]
 class Client extends Model

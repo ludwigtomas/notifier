@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Repository;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
 use App\Enums\RepositorySetting\RepositorySettingValueEnum;
+use App\Models\Repository;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RepositorySetting>

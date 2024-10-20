@@ -2,20 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Notification;
 use App\Observers\RepositoryObserver;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Attributes\ScopedBy;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 #[ObservedBy(RepositoryObserver::class)]
 class Repository extends Model
@@ -104,7 +102,7 @@ class Repository extends Model
     public function notifications(): MorphMany
     {
         return $this->morphMany(Notification::class, 'notifiable')
-            ->orderBy('created_at', 'desc');;
+            ->orderBy('created_at', 'desc');
     }
 
     /*
@@ -119,7 +117,7 @@ class Repository extends Model
                 'repository_id',
                 'name',
                 'slug',
-            ], 'like', '%' . $search . '%');
+            ], 'like', '%'.$search.'%');
         }
 
         return $query;

@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
+use App\Enums\RepositorySetting\RepositorySettingValueEnum;
 use App\Models\Git;
 use App\Models\Repository;
 use App\Services\GitlabService;
 use Illuminate\Database\Seeder;
-use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
-use App\Enums\RepositorySetting\RepositorySettingValueEnum;
 
 class RepositorySeeder extends Seeder
 {

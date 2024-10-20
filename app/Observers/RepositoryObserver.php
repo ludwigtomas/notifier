@@ -2,11 +2,10 @@
 
 namespace App\Observers;
 
-use Carbon\Carbon;
 use App\Models\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
 use App\Notifications\RepositoryNotification;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class RepositoryObserver
 {

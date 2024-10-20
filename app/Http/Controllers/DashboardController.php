@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
 use App\Helpers\ModelHelper;
+use App\Http\Resources\NotificationResource;
 use App\Models\Notification;
 use Illuminate\Http\Request;
-use App\Http\Resources\NotificationResource;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
         if ($request->model) {
             $requsted_models = array_map(function ($model) {
-                return 'App\\Models\\' . $model;
+                return 'App\\Models\\'.$model;
             }, $request->model);
         }
 
@@ -31,7 +31,7 @@ class DashboardController extends Controller
             ->limit(10)
             ->get();
 
-            // dd($notifications[0]['notifiable']->getTableName());
+        // dd($notifications[0]['notifiable']->getTableName());
 
         return inertia('Dashboard/Index', [
             'notifications' => NotificationResource::collection($notifications),

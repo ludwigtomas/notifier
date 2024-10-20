@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Helpers\ModelHelper;
-use App\Models\Notification;
-use Illuminate\Http\Request;
 use App\Helpers\ActionTypeHelper;
-use Illuminate\Http\RedirectResponse;
+use App\Helpers\ModelHelper;
 use App\Http\Resources\NotificationResource;
+use App\Models\Notification;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class NotificationController extends Controller
 {
@@ -24,7 +24,7 @@ class NotificationController extends Controller
                     'type',
                     'notifiable_type',
                     'notifiable_id',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->when($requsted_models, function ($query, $requsted_models) {
                 $query->whereIn('notifiable_type', $requsted_models);

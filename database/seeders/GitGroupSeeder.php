@@ -4,16 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\Git;
 use App\Models\GitGroup;
-use App\Services\GitlabService;
-use Illuminate\Database\Seeder;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Database\Seeder;
 
 class GitGroupSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-
     public function run(): void
     {
         $gitlab = Git::whereSlug('gitlab')->first();
@@ -54,7 +52,7 @@ class GitGroupSeeder extends Seeder
 
         $response = $client->get('groups', [
             'headers' => [
-                'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                'Authorization' => 'Bearer '.self::getGitlab()->api_token,
             ],
         ]);
 
@@ -75,9 +73,9 @@ class GitGroupSeeder extends Seeder
             'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
-        $response = $client->request('GET', 'groups/' . $group_id . '/subgroups', [
+        $response = $client->request('GET', 'groups/'.$group_id.'/subgroups', [
             'headers' => [
-                'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
+                'Authorization' => 'Bearer '.self::getGitlab()->api_token,
             ],
         ]);
 

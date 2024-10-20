@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
 use App\Enums\RepositorySetting\RepositorySettingValueEnum;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRepositorySettingRequest extends FormRequest
 {
@@ -26,12 +26,12 @@ class StoreRepositorySettingRequest extends FormRequest
         $keys = RepositorySettingKeyEnum::cases();
         $values = RepositorySettingValueEnum::cases();
 
-        $keys = array_map(fn($key) => $key->value, $keys);
-        $values = array_map(fn($value) => $value->value, $values);
+        $keys = array_map(fn ($key) => $key->value, $keys);
+        $values = array_map(fn ($value) => $value->value, $values);
 
         return [
-            'key' => ['required', 'string', 'in:' . implode(',', $keys)],
-            'value' => ['required', 'string', 'in:' . implode(',', $values)],
+            'key' => ['required', 'string', 'in:'.implode(',', $keys)],
+            'value' => ['required', 'string', 'in:'.implode(',', $values)],
             'is_active' => ['required', 'boolean'],
         ];
     }

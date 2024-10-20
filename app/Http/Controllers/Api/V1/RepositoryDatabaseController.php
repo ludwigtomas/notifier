@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Throwable;
-use App\Models\Repository;
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use App\Models\RepositoryDatabase;
-use App\Jobs\RepositoryDatabaseJob;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\ApiDatabaseRequest;
+use App\Jobs\RepositoryDatabaseJob;
+use App\Models\Repository;
+use App\Models\RepositoryDatabase;
 use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RepositoryDatabaseController extends Controller
 {
@@ -34,9 +32,9 @@ class RepositoryDatabaseController extends Controller
 
             $this->checkPassword($password, $repository);
 
-            $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
+            $path = $repository->slug.'/databases/'.now()->format('Y').'/'.now()->format('m');
 
-            $backup_name = now()->format('d') . '-' . uniqid() . '.sql';
+            $backup_name = now()->format('d').'-'.uniqid().'.sql';
 
             // $this->checkIfBackupExists($path, $backup_name, $repository);
 
