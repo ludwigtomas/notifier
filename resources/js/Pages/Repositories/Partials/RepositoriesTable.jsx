@@ -235,7 +235,7 @@ export default function RepositoryClientsTable({ repositories }) {
                                             </div>
                                             <div>
                                                 <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                    { repository.relationships.repository_settings_count }
+                                                    { repository.relationships.repository_settings_count || 0 }
                                                 </span>
                                             </div>
                                         </div>
