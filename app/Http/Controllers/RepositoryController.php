@@ -164,7 +164,7 @@ class RepositoryController extends Controller
 
     public function deploy(Repository $repository)
     {
-        if (! $repository->hosting?->worker) {
+        if ( ! $repository->hosting?->worker) {
             return response()->json(['error' => 'No worker assigned to this repository'], 400);
         }
         $service = new WorkerService($repository->hosting->worker);

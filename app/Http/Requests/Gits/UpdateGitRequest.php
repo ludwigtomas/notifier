@@ -22,7 +22,7 @@ class UpdateGitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:gits,name,'.$this->git->id],
+            'name' => ['required', 'string', 'max:255', 'unique:gits,name,' . $this->git->id],
             'api_token' => ['nullable', 'string', 'max:255'],
 
             'username' => ['nullable', 'string', 'max:255'],

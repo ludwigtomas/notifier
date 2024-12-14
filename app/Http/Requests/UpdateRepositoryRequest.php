@@ -22,7 +22,7 @@ class UpdateRepositoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'analytics_property_id' => ['nullable', 'max:9', 'unique:repositories,analytics_property_id,'.$this->repository->repository_id.',repository_id'],
+            'analytics_property_id' => ['nullable', 'max:9', 'unique:repositories,analytics_property_id,' . $this->repository->repository_id . ',repository_id'],
             'website_url' => ['nullable', 'url'],
             'repository_url' => ['nullable', 'url'],
             'last_commit_at' => ['nullable', 'date'],

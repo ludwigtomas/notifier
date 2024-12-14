@@ -18,7 +18,7 @@ class HostingController extends Controller
     {
         $hostings = Hosting::query()
             ->when($request->search, function ($query, $search): void {
-                $query->where('name', 'like', '%'.$search.'%');
+                $query->where('name', 'like', '%' . $search . '%');
             })
             ->withCount('repositories')
             ->orderBy('id', 'desc')

@@ -12,10 +12,7 @@ class WorkerObserver
         Cache::forget('workers_count');
     }
 
-    public function updated(Worker $worker): void
-    {
-        //
-    }
+    public function updated(Worker $worker): void {}
 
     public function deleted(Worker $worker): void
     {

@@ -23,7 +23,7 @@ class RepositoryFileNotification extends Notification
         $old_data = null;
         $new_data = null;
 
-        if ($this->action === 'updated') {
+        if ('updated' === $this->action) {
             $old_data = $notifiable->getOriginal();
             $new_data = $notifiable->getAttributes();
         }

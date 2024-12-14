@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', fn () => to_route('login'));
+Route::get('/', fn() => to_route('login'));
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (): void {
