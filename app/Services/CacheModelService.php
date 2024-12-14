@@ -49,8 +49,9 @@ class CacheModelService
 
     public static function workerCount(): int
     {
-        return Cache::remember('workers_count', 60, fn() => DB::table('workers')->count());
+        return Cache::remember('workers_count', 60, fn () => DB::table('workers')->count());
     }
+
     public static function hostingCount(): int
     {
         return Cache::remember('hostings_count', 60, fn () => DB::table('hostings')->count());

@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Models\Worker;
+use App\Http\Requests\StoreWorkerRequest;
+use App\Http\Requests\UpdateWorkerRequest;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\WorkerResource;
 use App\Models\Hosting;
-use Illuminate\Http\Request;
+use App\Models\Worker;
 use App\Services\WorkerService;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\WorkerResource;
-use App\Http\Resources\HostingResource;
-use App\Http\Requests\StoreWorkerRequest;
-use App\Http\Requests\StoreHostingRequest;
-use App\Http\Requests\UpdateWorkerRequest;
-use App\Http\Requests\UpdateHostingRequest;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class WorkerController extends Controller
 {
@@ -21,7 +19,7 @@ class WorkerController extends Controller
     {
         $workers = Worker::query()
             ->when($request->search, function ($query, $search): void {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })
             ->get();
 

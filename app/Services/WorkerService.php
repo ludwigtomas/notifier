@@ -4,27 +4,24 @@ namespace App\Services;
 
 use App\Models\Repository;
 use App\Models\Worker;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class WorkerService
 {
-    private Worker $worker;
-
     private const PING_URI = '/api/ping';
+
     private const COMMAND_URI = '/api/command';
+
     private const STATUS_URI = '/api/queue';
+
     private const CONTAINERS_URI = '/api/containers';
 
-    public function __construct(Worker $worker)
-    {
-        $this->worker = $worker;
-    }
+    public function __construct(
+        private Worker $worker
+    ){}
 
     /**
      * Pings the worker.
-     * @return bool
      */
     public function ping(): bool
     {
@@ -39,11 +36,9 @@ class WorkerService
 
     /**
      * Executes a command on the worker.
-     * @param string $command
-     * @param array<int, string> $arguments
-     * @return bool
+     *
+     * @param  array<int, string>  $arguments
      */
-
     public function command(string $command, array $arguments = []): bool
     {
         try {
@@ -62,7 +57,6 @@ class WorkerService
 
     /**
      * Retrieves the worker status.
-     * @return array
      */
     public function status(): array
     {
@@ -79,8 +73,6 @@ class WorkerService
 
     /**
      * Deploys a repository.
-     * @param Repository $repository
-     * @return bool
      */
     public function deployRepository(Repository $repository): bool
     {
@@ -97,7 +89,6 @@ class WorkerService
 
     /**
      * Retrieves the list of containers.
-     * @return array
      */
     public function containers(): array
     {
