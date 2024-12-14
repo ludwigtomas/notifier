@@ -25,6 +25,7 @@ class HostingResource extends JsonResource
                 // 'hosting_repositories' => RepositoryResource::collection($this->whenLoaded('hosting_repositories')),
                 'hosting_repositories' => $this->whenLoaded('hosting_repositories'),
                 'hosting_repositories_count' => $this->hosting_repositories_count ?? 0,
+                'worker' => new WorkerResource($this->whenLoaded('worker')),
             ],
         ];
     }

@@ -35,6 +35,7 @@ class RepositoryIndexResource extends JsonResource
 
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'hosting_repository' => $this->whenLoaded('hostingRepository'),
+                'hosting' => new HostingResource($this->whenLoaded('hosting')),
             ],
         ];
     }

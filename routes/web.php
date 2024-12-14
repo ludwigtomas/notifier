@@ -1,21 +1,24 @@
 <?php
 
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ClientRepositoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GitController;
-use App\Http\Controllers\GitGroupController;
-use App\Http\Controllers\GoogleAnalyticsController;
-use App\Http\Controllers\HostingController;
-use App\Http\Controllers\HostingRepositoryController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\RepositoryFileController;
-use App\Http\Controllers\RepositorySettingController;
-use App\Http\Controllers\TestController;
+use App\Models\Git;
+use App\Services\GitlabService;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GitController;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\HostingController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GitGroupController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\GoogleAnalyticsController;
+use App\Http\Controllers\ClientRepositoryController;
+use App\Http\Controllers\HostingRepositoryController;
+use App\Http\Controllers\RepositorySettingController;
+use App\Http\Controllers\RepositoryDatabaseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +71,8 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/{repository}/last-commit', [RepositoryController::class, 'lastCommit'])->name('last-commit');
         Route::get('/{repository}/google-analytics', [RepositoryController::class, 'googleAnalytics'])->name('google-analytics');
         Route::get('/repositories/sync', [RepositoryController::class, 'syncWithGit'])->name('sync');
+
+        Route::post('/{repository}/deploy', [RepositoryController::class, 'deploy'])->name('deploy');
     });
 
     // 🔺 REPOSITORY SETTINGS
@@ -136,6 +141,24 @@ Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/{hosting}/edit', [HostingController::class, 'edit'])->name('edit');
         Route::put('/{hosting}', [HostingController::class, 'update'])->name('update');
         Route::delete('/{hosting}', [HostingController::class, 'destroy'])->name('destroy');
+    });
+
+    // 🔺 WORKERS
+    Route::group(['prefix' => '/dashboard/workers', 'as' => 'workers.'], function (): void {
+        Route::get('/', [WorkerController::class, 'index'])->name('index');
+        Route::get('/create', [WorkerController::class, 'create'])->name('create');
+        Route::post('/', [WorkerController::class, 'store'])->name('store');
+        Route::get('/{worker}/edit', [WorkerController::class, 'edit'])->name('edit');
+
+        // EXTERNAL FORWARDING
+        Route::get('/{worker}/ping', [WorkerController::class, 'ping'])->name('ping');
+        Route::post('/{worker}/command', [WorkerController::class, 'command'])->name('command');
+        Route::get('/{worker}/status', [WorkerController::class, 'status'])->name('status');
+        Route::get('/{worker}/containers', [WorkerController::class, 'containers'])->name('containers');
+        // END EXTERNAL FORWARDING
+
+        Route::put('/{worker}', [WorkerController::class, 'update'])->name('update');
+        Route::delete('/{worker}', [WorkerController::class, 'destroy'])->name('destroy');
     });
 
     // 🔺 NOTIFICATIONS
