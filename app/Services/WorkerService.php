@@ -18,7 +18,7 @@ class WorkerService
 
     public function __construct(
         private Worker $worker
-    ){}
+    ) {}
 
     /**
      * Pings the worker.

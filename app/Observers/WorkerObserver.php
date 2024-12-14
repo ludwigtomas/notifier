@@ -24,7 +24,6 @@ class WorkerObserver
 
     public function restored(Worker $worker): void {}
 
-
     public function forceDeleted(Worker $worker): void
     {
         Cache::forget('workers_count');
