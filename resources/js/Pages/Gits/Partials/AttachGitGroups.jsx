@@ -86,7 +86,7 @@ export default function ({ git_groups, className = "" }) {
                     <div className="bg-zinc-900 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="divide-y divide-zinc-800 ">
                             { isLoading ? (
-                                <div class="space-y-10">
+                                <div className="space-y-10">
                                     <GitPlaceholderTable/>
                                     <GitPlaceholderTable/>
                                     <GitPlaceholderTable/>
