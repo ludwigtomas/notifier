@@ -1,57 +1,24 @@
 import AdminLayout from "@/Layouts/AdminLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
-    PlusIcon,
-    CheckIcon,
-    XMarkIcon,
     ChevronRightIcon,
-    LinkIcon,
     ServerStackIcon,
-    ArchiveBoxArrowDownIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import Modal from "@/Components/Modal";
-import DangerButton from "@/Components/DangerButton";
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
-import SecondaryButton from "@/Components/SecondaryButton";
-import Pagination from "@/Components/Pagination";
 import debounce from "lodash/debounce";
 import Dropdown from "@/Components/Dropdown";
 import ResetFilters from "@/Components/ResetFilters";
+import HostingsTable from "@/Pages/Hostings/Partials/HostingsTable";
 
 export default function Index({ auth, hostings, filters }) {
-    const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
-    const [selectedClient, setSelectedClient] = useState(null);
     const [search, setSearch] = useState(filters.search ?? "");
 
-    // catch client into variable
-    const toggleModal = (client) => {
-        setSelectedClient(client);
-
-        setToggleDeleteModal(true);
-    };
-
-    const closeModal = () => {
-        setToggleDeleteModal(false);
-    };
-
-    const deleteHosting = () => {
-        let url = route("hostings.destroy", selectedClient.id);
-
-        router.delete(url, {
-            preserveScroll: true,
-            onSuccess: () => closeModal(),
-        });
-    };
-
     const debouncedSearch = debounce((value) => {
-        router.get(
-            route("hostings.index"),
-            {
+        setSearch(value);
+
+        router.get(route("hostings.index"), {
                 search: value,
             },
             {
@@ -59,7 +26,7 @@ export default function Index({ auth, hostings, filters }) {
                 preserveState: true,
             }
         );
-    }, 100);
+    }, 500);
 
     return (
         <AdminLayout
@@ -137,127 +104,8 @@ export default function Index({ auth, hostings, filters }) {
                     </section>
 
                     <main className="mt-2">
-                        {hostings && hostings.length >= 1 ? (
-                            <section className="card">
-                                <table className="min-w-full divide-y divide-zinc-700 rounded-lg overflow-hidden">
-                                    <thead className="bg-zinc-800 text-nowrap">
-                                        <tr>
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                #
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                Název
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                URL
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                Počet projektů
-                                            </th>
-
-                                            <th
-                                                scope="col"
-                                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                                            >
-                                                <span className="sr-only">
-                                                    Edit
-                                                </span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody className="divide-y divide-zinc-800 bg-zinc-700">
-                                        {hostings.map((hosting) => {
-                                            return (
-                                                <tr
-                                                    key={hosting.id}
-                                                    className="text-sm text-zinc-400 hover:bg-zinc-800 group"
-                                                >
-                                                    <td className="px-4 py-3.5">
-                                                        {hosting.id}
-                                                    </td>
-
-                                                    <td className="px-4 py-3.5">
-                                                        {hosting.name}
-                                                    </td>
-
-                                                    <td className="px-4 py-3.5">
-                                                        <div className="flex">
-                                                            {hosting.hosting_url ? (
-                                                                <a
-                                                                    className="bg-green-950 p-2 rounded-xl"
-                                                                    href={
-                                                                        hosting.hosting_url
-                                                                    }
-                                                                    target="_blank"
-                                                                >
-                                                                    <LinkIcon className="text-green-500 w-6 h-6" />
-                                                                </a>
-                                                            ) : (
-                                                                <div className="bg-red-950 p-2 rounded-xl">
-                                                                    <XMarkIcon className="text-red-500 w-6 h-6" />
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </td>
-
-                                                    <td className="px-4 py-3.5">
-                                                        <div className="flex">
-                                                            <span className="text-center p-2 size-8 rounded-xl bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                                {
-                                                                    hosting
-                                                                        .relationships
-                                                                        .repositories_count
-                                                                }
-                                                            </span>
-                                                        </div>
-                                                    </td>
-
-                                                    <td className="px-4 py-3.5">
-                                                        <div className="flex items-center space-x-2">
-                                                            <Link
-                                                                href={route(
-                                                                    "hostings.edit",
-                                                                    hosting.id
-                                                                )}
-                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                            >
-                                                                <PencilSquareIcon className="size-6 text-green-500" />
-                                                            </Link>
-
-                                                            <button
-                                                                onClick={() =>
-                                                                    toggleModal(
-                                                                        hosting
-                                                                    )
-                                                                }
-                                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                            >
-                                                                <TrashIcon className="size-6 text-red-500" />
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            </section>
+                        {hostings && hostings.data.length >= 1 ? (
+                            <HostingsTable hostings={hostings} />
                         ) : (
                             <ResetFilters href={route("hostings.index")}>
                                 Nebyly nalezeny žádné hostingy.

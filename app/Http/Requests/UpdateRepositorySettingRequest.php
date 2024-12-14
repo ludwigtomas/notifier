@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
+use App\Enums\RepositorySetting\RepositorySettingValueEnum;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRepositorySettingRequest extends FormRequest
@@ -11,7 +13,7 @@ class UpdateRepositorySettingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +23,16 @@ class UpdateRepositorySettingRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $keys = RepositorySettingKeyEnum::cases();
+        $values = RepositorySettingValueEnum::cases();
 
+        return [
+            'key' => ['required', 'string'],
+            'value' => ['required', 'string'],
+            'is_active' => ['required', 'boolean'],
+            'last_attempt_at' => ['required', 'date'],
+            'attempts' => ['required', 'integer'],
+            'was_successful' => ['required', 'boolean'],
         ];
     }
 }

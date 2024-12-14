@@ -22,11 +22,10 @@ class ClientController extends Controller
                     'name',
                     'email',
                     'phone',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
-            ->orderBy('id', 'desc')
             ->with('repositories')
-            ->orderBy('name')
+            ->latest()
             ->paginate(10);
 
         return inertia('Clients/Index', [

@@ -22,8 +22,7 @@ class ApiRepositoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => ['required', 'max:255'],
-            'backup_file' => ['required', 'file', 'mimes:sql,zip', 'max:40960'],
+            'backup_type' => ['required', 'max:255'],
         ];
     }
 
@@ -35,15 +34,7 @@ class ApiRepositoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'password.required' => 'The password field is required.',
-            'password.string' => 'The password field must be a string.',
-            'password.min' => 'The password field must be at least 8 characters.',
-            'password.max' => 'The password field must not be greater than 255 characters.',
-
-            'backup_file.required' => 'The backup file field is required.',
-            'backup_file.file' => 'The backup file field must be a file.',
-            'backup_file.mimes' => 'The backup file field must be a file of type: sql, zip.',
-            'backup_file.max' => 'The backup file field must not be greater than 40960 kilobytes.',
+            'backup_type.required' => 'The password field is required.',
         ];
     }
 }

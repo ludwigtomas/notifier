@@ -183,6 +183,12 @@ export default function Edit({
                             >
                                 Save
                             </PrimaryButton>
+
+                            {recentlySuccessful && (
+                                <span className="text-green-500">
+                                    Uloženo
+                                </span>
+                            )}
                         </div>
                     </div>
                 </form>

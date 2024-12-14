@@ -27,7 +27,7 @@
 ## :point_right: Description
 
 The main purpose of this website is:
-
+-  [Database structure](https://drawsql.app/teams/bubakvoe/diagrams/notifier)
 -   Sync repositories from Gitlab ( ✅ )
 -   connect via SSH connection to VPS (IP, Port, username, password) ( ✅)
 -   send daily notifications to the client/clients if on their website is a new commit ( ✅ )

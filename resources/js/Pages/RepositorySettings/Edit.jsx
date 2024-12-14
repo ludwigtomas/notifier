@@ -5,8 +5,12 @@ import UpdateRepositoryAttachClientsForm from "@/Pages/Repositories/Partials/Upd
 import UpdateRepositoryHostingForm from "@/Pages/Repositories/Partials/UpdateRepositoryHostingForm";
 import CreateRepositoryHostingForm from "@/Pages/Repositories/Partials/CreateRepositoryHostingForm";
 import Dropdown from "@/Components/Dropdown";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { motion } from "framer-motion";
+import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/InputLabel';
+import PrimaryButton from '@/Components/PrimaryButton';
+import TextInput from '@/Components/TextInput';
 import {
     EyeIcon,
     ChevronRightIcon,
@@ -15,7 +19,33 @@ import {
     PencilSquareIcon,
 } from "@heroicons/react/24/outline";
 
-export default function Edit({ auth, repository, repository_setting }) {
+export default function Edit({
+    auth,
+    repository,
+    repository_setting,
+    option_keys,
+    option_values,
+}) {
+    const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
+        key: repository_setting.key,
+        value: repository_setting.value,
+        is_active: repository_setting.is_active,
+        last_attempt_at: repository_setting.last_attempt_at,
+        attempts: repository_setting.attempts,
+        was_successful: repository_setting.was_successful,
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+
+        put(route('repository-settings.update', {
+            repository: repository.repository_id,
+            repository_setting: repository_setting.id,
+        }), {
+            preserveScroll: true,
+        });
+    };
+
     return (
         <AdminLayout
             user={auth.user}
@@ -124,8 +154,163 @@ export default function Edit({ auth, repository, repository_setting }) {
         >
             <Head title={repository.name + " - Edit"} />
 
-            <div className="max-w-[90rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+            <div className="max-w-[50rem] mx-auto sm:px-6 lg:px-8 space-y-6">
+                <form
+                        className="col-span-6 space-y-6"
+                        onSubmit={submit}
+                    >
+                        <div className="grid grid-cols-1 place-items-start space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="key"
+                                    value="klíč"
+                                />
 
+                                <select
+                                    name="key"
+                                    value={data.key}
+                                    onChange={(e) => setData("key", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                >
+                                    {option_keys.map((key) => (
+                                        <option
+                                            key={key}
+                                            value={key}
+                                        >
+                                            {key}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <InputError
+                                    message={errors.key}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="value"
+                                    value="hodnota"
+                                />
+
+                                <select
+                                    name="value"
+                                    value={data.value}
+                                    onChange={(e) => setData("value", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                >
+                                    {option_values.map((value) => (
+                                        <option
+                                            key={value}
+                                            value={value}
+                                        >
+                                            {value}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <InputError
+                                    message={errors.value}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="w-full text-white">
+                                <InputLabel
+                                    htmlFor="is_active"
+                                    value="aktivní"
+                                />
+
+                                <input
+                                    type="checkbox"
+                                    name="is_active"
+                                    checked={data.is_active}
+                                    onChange={(e) => setData("is_active", e.target.checked)}
+                                    className="rounded-md bg-zinc-900 text-sky-500"
+                                />
+
+                                <InputError
+                                    message={errors.is_active}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="last_attempt_at"
+                                    value="poslední pokus"
+                                />
+
+                                <TextInput
+                                    name="last_attempt_at"
+                                    type="datetime-local"
+                                    value={data.last_attempt_at}
+                                    onChange={(e) => setData("last_attempt_at", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                />
+
+                                <InputError
+                                    message={errors.last_attempt_at}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="attempts"
+                                    value="pokusy"
+                                />
+
+                                <TextInput
+                                    name="attempts"
+                                    type="number"
+                                    value={data.attempts}
+                                    onChange={(e) => setData("attempts", e.target.value)}
+                                    className="w-full !border-zinc-600 rounded-md bg-zinc-900 text-white"
+                                />
+
+                                <InputError
+                                    message={errors.attempts}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="w-full">
+                                <InputLabel
+                                    htmlFor="was_successful"
+                                    value="úspěšné"
+                                />
+
+                                <input
+                                    type="checkbox"
+                                    name="was_successful"
+                                    checked={data.was_successful}
+                                    onChange={(e) => setData("was_successful", e.target.checked)}
+                                    className="rounded-md bg-zinc-900 text-sky-500"
+                                />
+
+                                <InputError
+                                    message={errors.was_successful}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="flex justify-end space-x-4">
+                                <PrimaryButton
+                                    type="submit"
+                                >
+                                    Save
+                                </PrimaryButton>
+
+                                {recentlySuccessful && (
+                                    <span className="text-green-500">
+                                        Uloženo
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                </form>
             </div>
         </AdminLayout>
     );

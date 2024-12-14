@@ -9,9 +9,21 @@ class HostingSeeder extends Seeder
 {
     public function run(): void
     {
-        Hosting::create([
-            'name' => 'Bohemia Cloud',
-            'hosting_url' => 'https://bohemia-cloud.cz/',
-        ]);
+        $hostings = [
+            [
+                'name' => 'Bohemia Cloud',
+                'hosting_url' => 'https://bohemia-cloud.cz/',
+            ],
+            [
+                'name' => 'Hukot',
+                'hosting_url' => 'https://www.hukot.net/cs/',
+            ],
+            [
+                'name' => 'Vercel',
+                'hosting_url' => 'https://vercel.com/',
+            ],
+        ];
+
+        Hosting::insert($hostings);
     }
 }

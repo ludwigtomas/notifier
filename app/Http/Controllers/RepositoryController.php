@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
 use App\Http\Requests\StoreRepositoryRequest;
 use App\Http\Requests\UpdateRepositoryRequest;
 use App\Http\Resources\ClientResource;
-use App\Http\Resources\DatabaseBackupResource;
 use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryFileResource;
 use App\Http\Resources\RepositoryIndexResource;
 use App\Http\Resources\RepositoryResource;
 use App\Jobs\GoogleAnalyticsJob;
@@ -26,16 +27,25 @@ class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        $repositories = Cache::remember('repositories', 60, function () use ($request) {
-            return Repository::query()
-                ->with('hostingRepository')
-                ->withCount('clients', 'repositorySettings', 'databaseBackups')
-                ->search($request->search)
-                ->trashed($request->trashed)
-                ->orderBy('last_commit_at', 'desc')
-                ->paginate(20)
-                ->withQueryString();
-        });
+        // $repositories = Cache::remember('repositories', 60, function () use ($request) {
+        //     return Repository::query()
+        //         ->with('hostingRepository')
+        //         ->withCount('clients', 'repositorySettings', 'databaseBackups')
+        //         ->search($request->search)
+        //         ->trashed($request->trashed)
+        //         ->orderBy('last_commit_at', 'desc')
+        //         ->paginate(20)
+        //         ->withQueryString();
+        // });
+
+        $repositories = Repository::query()
+            ->with('hostingRepository')
+            ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
+            ->search($request->search)
+            ->trashed($request->trashed)
+            ->orderBy('last_commit_at', 'desc')
+            ->paginate(20)
+            ->withQueryString();
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryIndexResource::collection($repositories),
@@ -45,17 +55,24 @@ class RepositoryController extends Controller
 
     public function show(Repository $repository): Response
     {
-        $repository->loadCount('clients', 'databaseBackups')
-            ->load('hosting', 'hostingRepository', 'notifications');
+        $repository->loadCount('clients', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
+            ->load('hosting', 'hostingRepository', 'notifications', 'repositorySettings');
 
         $clients = $repository->clients()->paginate(10);
 
-        $database_backups = $repository->databaseBackups()->paginate(20);
+        $repository_storages = $repository
+            ->repositoryFilesFor(RepositoryFileTypeEnum::STORAGE_BACKUP)
+            ->paginate(20);
+
+        $repository_databases = $repository
+            ->repositoryFilesFor(RepositoryFileTypeEnum::DATABASE_BACKUP)
+            ->paginate(20);
 
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
             'clients' => ClientResource::collection($clients),
-            'database_backups' => DatabaseBackupResource::collection($database_backups),
+            'repository_storages' => RepositoryFileResource::collection($repository_storages),
+            'repository_databases' => RepositoryFileResource::collection($repository_databases),
         ]);
     }
 
@@ -127,9 +144,8 @@ class RepositoryController extends Controller
 
     public function forceDelete($repository): RedirectResponse
     {
-        // TODO: Before deleting database, send them my email in ZIP format
-        // TODO: Delete database backups
-        // TODO: Delete repository avatar
+        // TODO: Before deleting database, send them to my email in ZIP format
+        // TODO: Purge storage "slug" folder
 
         Repository::query()
             ->withTrashed()

@@ -20,7 +20,7 @@ export default function Authenticated({ user, header, children }) {
 
                 {/* <Breadcrumbs/> */}
 
-                <div className="max-w-[100rem] mt-28 mx-auto">
+                <div className="max-w-[100rem] mt-28 mx-auto pb-10">
                     {children}
                 </div>
             </section>

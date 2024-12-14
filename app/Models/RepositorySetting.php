@@ -18,7 +18,7 @@ class RepositorySetting extends Model
         'is_active' => 'boolean',
         'last_attempt_at' => 'datetime',
         'attempts' => 'integer',
-        'is_successful' => 'boolean',
+        'was_successful' => 'boolean',
     ];
 
     protected $fillable = [
@@ -28,7 +28,7 @@ class RepositorySetting extends Model
         'is_active',
         'last_attempt_at',
         'attempts',
-        'is_successful',
+        'was_successful',
     ];
 
     /*

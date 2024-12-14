@@ -32,7 +32,7 @@ class Hosting extends Model
 
     public static function countDB(): int
     {
-        return Cache::remember('hostings_count', 60, fn() => DB::table('hostings')->count());
+        return Cache::remember('hostings_count', 60, fn () => DB::table('hostings')->count());
     }
 
     /*

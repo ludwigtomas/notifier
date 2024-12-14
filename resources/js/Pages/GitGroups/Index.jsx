@@ -22,9 +22,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
     const [search, setSearch] = useState(filters.search || "");
 
     const debouncedSearch = debounce((value) => {
-        router.get(
-            route("git-groups.index"),
-            {
+        setSearch(value);
+
+        router.get(route("git-groups.index"),{
                 search: value,
             },
             {

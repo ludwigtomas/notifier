@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ActionTypeHelper;
 use App\Helpers\ModelHelper;
-use App\Http\Resources\NotificationResource;
+use App\Http\Resources\NotificationIndexResource;
+use App\Http\Resources\NotificationShowResource;
 use App\Models\Notification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,23 +25,24 @@ class NotificationController extends Controller
                     'type',
                     'notifiable_type',
                     'notifiable_id',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->when($requsted_models, function ($query, $requsted_models): void {
                 $query->whereIn('notifiable_type', $requsted_models);
             })
-            ->when('true' === $request->read_at, function ($query): void {
+            ->when($request->read_at === 'true', function ($query): void {
                 $query->whereNotNull('read_at');
             })
-            ->when($request->action && 'everything' !== $request->action, function ($query) use ($request): void {
+            ->when($request->action && $request->action !== 'everything', function ($query) use ($request): void {
                 $query->whereJsonContains('data->action', $request->action);
             })
             ->orderBy('created_at', 'desc')
             ->with('notifiable')
-            ->paginate(20);
+            ->paginate(20)
+            ->withQueryString();
 
         return inertia('Notifications/Index', [
-            'notifications' => NotificationResource::collection($notifications),
+            'notifications' => NotificationIndexResource::collection($notifications),
             'models' => ModelHelper::getModels(),
             'actions' => ActionTypeHelper::getActions(),
             'filters' => $request->only('search', 'read_at', 'model', 'action'),
@@ -52,7 +54,7 @@ class NotificationController extends Controller
         $notification->load('notifiable');
 
         return inertia('Notifications/Show', [
-            'notification' => new NotificationResource($notification),
+            'notification' => new NotificationShowResource($notification),
         ]);
     }
 

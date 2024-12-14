@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "npm run pint && vite",
         "build": "vite build",
-        "pint": "vendor/bin/pint . --config=/var/www/html/notifier-administration/pint.json"
+        "pint": "php vendor/bin/pint . --config=/var/www/html/notifier-administration/pint.json",
+        "analyse": "php ./vendor/bin/phpstan analyse --memory-limit=32G"
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",

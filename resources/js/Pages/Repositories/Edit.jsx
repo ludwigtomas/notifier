@@ -177,7 +177,15 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                     </td>
 
                                     <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">
-                                        {setting.is_successful ? "Yes" : "No"}
+                                        {setting.was_successful ? (
+                                            <span className="text-green-500">
+                                                Yes
+                                            </span>
+                                        ) : (
+                                            <span className="text-red-500">
+                                                No
+                                            </span>
+                                        )}
                                     </td>
 
                                     <td className="whitespace-nowrap px-4 text-sm font-medium text-gray-300 py-3">

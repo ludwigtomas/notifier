@@ -16,9 +16,14 @@ class ClientRepositoryFactory extends Factory
 
     public function definition(): array
     {
+        do {
+            $client_id = Client::all()->random()->id;
+            $repository_id = Repository::all()->random()->repository_id;
+        } while (ClientRepository::where('client_id', $client_id)->where('repository_id', $repository_id)->exists());
+
         return [
-            'client_id' => Client::all()->random()->id,
-            'repository_id' => Repository::all()->random()->id,
+            'client_id' => $client_id,
+            'repository_id' => $repository_id,
         ];
     }
 }

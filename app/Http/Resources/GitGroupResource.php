@@ -2,16 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Models\GitGroup;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin GitGroup
+ */
 class GitGroupResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [

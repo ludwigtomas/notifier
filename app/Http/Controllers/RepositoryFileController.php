@@ -2,44 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DownloadRepositoryFileRequest;
 use App\Http\Requests\StoreRepositoryFileRequest;
 use App\Http\Requests\UpdateRepositoryFileRequest;
 use App\Models\RepositoryFile;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class RepositoryFileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function download(DownloadRepositoryFileRequest $request)
+    {
+        $databases = RepositoryFile::query()
+            ->whereIn('id', $request->repository_file)
+            ->with('repository')
+            ->get();
+
+        $repository_slug = $databases[0]->repository->slug;
+
+        $zip = new ZipArchive;
+
+        $zip_file_name = $repository_slug.'.zip';
+
+        $zip_path = storage_path('app/public/'.$zip_file_name);
+
+        if ($zip->open($zip_path, ZipArchive::CREATE) === true) {
+
+            foreach ($databases as $database) {
+                // get the file from local storage
+
+                $file_path = Storage::disk('local')->path($database->path.'/'.$database->name);
+
+                if (file_exists($file_path)) {
+                    $zip->addFile($file_path, basename($file_path));
+                } else {
+                    return back();
+                }
+            }
+            $zip->close();
+        } else {
+            return response()->json(['error' => 'Cannot create zip file'], 500);
+        }
+
+        return response()->download($zip_path)->deleteFileAfterSend(true);
+    }
+
     public function index(): void {}
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): void {}
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRepositoryFileRequest $request): void {}
 
-    /**
-     * Display the specified resource.
-     */
     public function show(RepositoryFile $repositoryFile): void {}
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(RepositoryFile $repositoryFile): void {}
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRepositoryFileRequest $request, RepositoryFile $repositoryFile): void {}
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(RepositoryFile $repositoryFile): void {}
+    public function destroy(Request $request): void
+    {
+        $repository_files = RepositoryFile::query()
+            ->whereIn('id', $request->repository_files)
+            ->get();
+
+        foreach ($repository_files as $file) {
+            Storage::disk('local')->delete($file->path.'/'.$file->name);
+
+            $file->delete();
+        }
+    }
 }
