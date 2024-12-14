@@ -38,7 +38,7 @@ class NotificationController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->with('notifiable')
-            ->paginate(20)
+            ->paginate(20)  
             ->withQueryString();
 
         return inertia('Notifications/Index', [

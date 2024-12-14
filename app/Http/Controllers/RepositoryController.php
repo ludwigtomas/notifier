@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreRepositoryRequest;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\RepositoryIndexResource;
-use App\Http\Resources\RepositoryResource;
-use App\Jobs\GoogleAnalyticsJob;
-use App\Jobs\RepositoriesJob;
+use Carbon\Carbon;
+use Inertia\Response;
 use App\Models\Client;
 use App\Models\Hosting;
 use App\Models\Repository;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
 use App\Services\WorkerService;
-use Carbon\Carbon;
+use App\Jobs\GoogleAnalyticsJob;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
-use Inertia\Response;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\RepositoryFileResource;
+use App\Http\Resources\RepositoryIndexResource;
+use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
 
 class RepositoryController extends Controller
 {
@@ -29,7 +31,7 @@ class RepositoryController extends Controller
         $repositories = Cache::remember('repositories', 60, function () use ($request) {
             return Repository::query()
                 ->with(['hostingRepository', 'hosting', 'hosting.worker'])
-                ->withCount('clients', 'repositorySettings', 'databaseBackups')
+                ->withCount('clients', 'repositorySettings')
                 ->search($request->search)
                 ->trashed($request->trashed)
                 ->orderBy('last_commit_at', 'desc')
