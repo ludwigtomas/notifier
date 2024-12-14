@@ -11,11 +11,9 @@ use App\Http\Controllers\HostingRepositoryController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\RepositoryDatabaseController;
+use App\Http\Controllers\RepositoryFileController;
 use App\Http\Controllers\RepositorySettingController;
 use App\Http\Controllers\TestController;
-use App\Models\Git;
-use App\Services\GitlabService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +28,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', fn() => to_route('login'));
+Route::get('/', fn () => to_route('login'));
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (): void {
@@ -73,22 +71,33 @@ Route::middleware('auth:sanctum')->group(function (): void {
     });
 
     // 🔺 REPOSITORY SETTINGS
-    Route::group(['prefix' => '/dashboard/repositories/{repository}/repository-settings', 'as' => 'repository-settings.'], function (): void {
-        Route::get('/create', [RepositorySettingController::class, 'create'])->name('create');
-        Route::post('/store', [RepositorySettingController::class, 'store'])->name('store');
+    Route::group(['prefix' => '/dashboard/repositories/', 'as' => 'repository-settings.'], function (): void {
+        Route::get('/{repository}/repository-settings/create', [RepositorySettingController::class, 'create'])->name('create');
+        Route::post('/{repository}/repository-settings/store', [RepositorySettingController::class, 'store'])->name('store');
 
-        Route::get('/{repository_setting}/edit', [RepositorySettingController::class, 'edit'])->name('edit');
-        Route::put('/update', [RepositorySettingController::class, 'update'])->name('update');
+        Route::get('/{repository}/repository-settings/{repository_setting}/edit', [RepositorySettingController::class, 'edit'])->name('edit');
+        Route::put('/{repository_setting}/update', [RepositorySettingController::class, 'update'])->name('update');
+    });
+
+    // 🔺 REPOSITORY FILE
+    Route::group(['prefix' => '/dashboard/repository-files', 'as' => 'repository-files.'], function (): void {
+        Route::get('/download', [RepositoryFileController::class, 'download'])->name('download');
+        Route::delete('/delete', [RepositoryFileController::class, 'destroy'])->name('destroy');
+        // Route::get('/create', [RepositoryFileController::class, 'create'])->name('create');
+        // Route::post('/store', [RepositoryFileController::class, 'store'])->name('store');
+
+        // Route::get('/{repository_file}/edit', [RepositoryFileController::class, 'edit'])->name('edit');
+        // Route::put('/update', [RepositoryFileController::class, 'update'])->name('update');
     });
 
     // 🔺 DATABASES
-    Route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function (): void {
-        Route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
-        Route::delete('/test/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
+    // Route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function (): void {
+    //     Route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
+    //     Route::delete('/test/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
 
-        Route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
-        //* STORE ---> api.php
-    });
+    //     Route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
+    //     //* STORE ---> api.php
+    // });
 
     // 🔺 CLIENTS
     Route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function (): void {
@@ -157,10 +166,23 @@ if (app()->isLocal()) {
         }, 'databases_1719494018.zip');
     })->name('test');
 
-    // route::Get('/testingos', function(){
-    //     GitlabService::getUserID(Git::first());
-    // });
-
     Route::get('/test/{repository}', [TestController::class, 'index'])->name('test.index');
     Route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
+
+    Route::get('/testingos', [TestController::class, 'test'])->name('testingos');
+    // Route::Get('/testingos', function (): void {
+    //     $repositories = Repository::query()
+    //         ->with('repositorySettings')
+    //         ->get();
+
+    //     foreach ($repositories as $repository) {
+    //         foreach ($repository->repositorySettings as $setting) {
+    //             match ($setting->value->value) {
+    //                 'daily' => dd('daily'),
+    //                 'weekly' => dd('weekly'),
+    //                 'monthly' => dd('monthly'),
+    //             };
+    //         }
+    //     }
+
 }

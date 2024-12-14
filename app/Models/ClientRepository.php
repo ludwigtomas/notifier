@@ -17,11 +17,13 @@ class ClientRepository extends Model
     protected $fillable = [
         'client_id',
         'repository_id',
-        'client_email',
+        'client_email_secondary',
+        'client_email_tertiary',
 
-        'is_update_interested',           // automatically - depends on commit to Git
-        'is_monthly_overview_interested', // automatically - monthly overview
-        'is_database_backup_interested',  // automatically - database backup (daily)
+        // 'is_repository_update_interested',
+        // 'is_storage_backup_interested',
+        // 'is_database_backup_interested',
+        // 'is_analytics_interested'
     ];
 
     /*
@@ -42,13 +44,13 @@ class ClientRepository extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | SCOPE
+    | FUNCTIONS
     |--------------------------------------------------------------------------
     */
 
     /*
     |--------------------------------------------------------------------------
-    | FUNCTIONS
+    | SCOPE
     |--------------------------------------------------------------------------
     */
 }

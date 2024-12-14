@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@inertiajs/react";
 import {
-    EyeIcon,
+    PencilSquareIcon
 } from "@heroicons/react/24/outline";
 export default function RepositoryClientsTable({ clients }) {
     return (
@@ -102,7 +102,7 @@ export default function RepositoryClientsTable({ clients }) {
                                         href={route("clients.show", client.id)}
                                         className="text-sky-500 hover:text-sky-600"
                                     >
-                                        <EyeIcon className="size-5" />
+                                        <PencilSquareIcon className="size-5" />
                                     </Link>
                                 </td>
                             </tr>

@@ -17,38 +17,40 @@ const RepositorySettingForApi = ({repository}) => {
         setShowCode(!showCode);
     }
 
-
     const handleSelectTab = (file) => {
         return () => {
             setSelectFile(file);
         };
     }
-        // Function to copy the code to clipboard
-        const copyEnvToClipboard = () => {
-            let backup_code = repository.database_verification_code;
 
-            let backup_url = import.meta.env.VITE_APP_URL + "/api/v1/repositories/" + repository.slug;
-            let env_code = "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url;
+    // Function to copy the code to clipboard
+    const copyEnvToClipboard = () => {
 
-            navigator.clipboard.writeText(env_code);
-        };
+        let backup_code = '"' + repository.database_verification_code + '"';
+        let backup_url = '"'+ import.meta.env.VITE_APP_URL + "/api/v1/repositories/" + repository.slug + '"';
+        let BACKUP_ZIP_PASSWORD = '"'+ repository.slug.slice(0, 1) + '_secret123' + '"';
 
-        const copySSHToClipboard = () => {
-            if (!repository.relationships.hosting_repository) {
-                return;
-            }
+        let env_code = "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url + "\n" + "BACKUP_ZIP_PASSWORD=" + BACKUP_ZIP_PASSWORD;
 
-            let port = repository.relationships.hosting_repository.ip_port ? repository.relationships.hosting_repository.ip_port : 22;
+        navigator.clipboard.writeText(env_code);
+    };
 
-            let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + port;
-
-            console.log(ssh_code);
-
-            navigator.clipboard.writeText(ssh_code);
+    const copySSHToClipboard = () => {
+        if (!repository.relationships.hosting_repository) {
+            return;
         }
 
+        let port = repository.relationships.hosting_repository.ip_port ? repository.relationships.hosting_repository.ip_port : 22;
+
+        let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + port;
+
+        console.log(ssh_code);
+
+        navigator.clipboard.writeText(ssh_code);
+    }
+
     return (
-        <div className="col-span-12 h-56">
+        <div className="col-span-12 h-56 mb-10">
             <div className="flex justify-center items-center">
                 <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
                     <div className="flex justify-between items-center relative">
@@ -231,6 +233,28 @@ const RepositorySettingForApi = ({repository}) => {
                                                         : import.meta.env
                                                               .VITE_APP_URL +
                                                           "/api/v1/repositories/xxxxx-xxxxx"}
+                                                </span>
+
+                                                <span className="text-blue-400">
+                                                    "
+                                                </span>
+                                            </div>
+
+                                            <div className="text-base">
+                                                <span className="text-yellow-300">
+                                                    BACKUP_ZIP_PASSWORD
+                                                </span>
+                                                <span className="text-green-400">
+                                                    =
+                                                </span>
+                                                <span className="text-blue-400">
+                                                    "
+                                                </span>
+
+                                                <span className="text-purple-400">
+                                                    {showCode
+                                                        ? repository.slug.slice(0, 1) + '_secret123'
+                                                        : "x_xxxxxxxxx"}
                                                 </span>
 
                                                 <span className="text-blue-400">

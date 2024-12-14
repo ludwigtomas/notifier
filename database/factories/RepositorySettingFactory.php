@@ -29,7 +29,7 @@ class RepositorySettingFactory extends Factory
             'is_active' => fake()->boolean,
             'last_attempt_at' => fake()->dateTime,
             'attempts' => fake()->numberBetween(0, 10),
-            'is_successful' => fake()->boolean,
+            'was_successful' => fake()->boolean,
         ];
     }
 }

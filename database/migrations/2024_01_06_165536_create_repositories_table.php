@@ -1,10 +1,12 @@
 <?php
 
+use App\Models\GitGroup;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -14,10 +16,10 @@ return new class () extends Migration {
             $table->unsignedBigInteger('repository_id')
                 ->primary();
 
-            $table->foreignId('group_id')
+            $table->foreignIdFor(GitGroup::class, 'group_id')
                 ->constrained('git_groups', 'group_id')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
 
             $table->integer('analytics_property_id')->nullable();
 

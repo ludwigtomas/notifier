@@ -11,7 +11,10 @@ import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
 import { useState } from "react";
 
-export default function RepositoryDatabaseTable({ repository, database_backups }) {
+export default function RepositoryDatabaseTable({
+    repository,
+    backups
+}) {
     const [selectedDatabases, setSelectedDatabases] = useState([]);
     const [selectedDatabase, setSelectedDatabase] = useState(null);
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
@@ -30,7 +33,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
     };
 
     const deleteDatabase = () => {
-        let url = route("databases.destroy", {
+        let url = route("repository-files.destroy", {
             databases: [selectedDatabase.id],
         });
 
@@ -41,7 +44,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
     };
 
     const bulkDeleteRepositories = () => {
-        let url = route("databases.destroy", {
+        let url = route("repository-files.destroy", {
             databases: selectedDatabases,
         });
 
@@ -92,7 +95,7 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                                 <a
                                     className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
                                     href={route("databases.download", {
-                                        databases: selectedDatabases,
+                                        databases: selectedDatabases
                                     })}
                                 >
                                     <span className="mr-2 ">
@@ -160,86 +163,80 @@ export default function RepositoryDatabaseTable({ repository, database_backups }
                         </tr>
                     </thead>
 
+
                     <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                        {database_backups &&
-                            database_backups.data.map((database) => (
-                                <tr
-                                    key={database.id}
-                                    className="group hover:bg-zinc-800"
-                                >
-                                    <td className="px-4 py-4">
-                                        <input
-                                            type="checkbox"
-                                            className="rounded-md p-3"
-                                            onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setSelectedDatabases([
-                                                        ...selectedDatabases,
-                                                        database.id,
-                                                    ]);
-                                                } else {
-                                                    setSelectedDatabases(
-                                                        selectedDatabases.filter(
-                                                            (id) =>
-                                                                id !==
-                                                                database.id
-                                                        )
-                                                    );
-                                                }
-                                            }}
-                                        />
-                                    </td>
+                        {backups && backups.data.map((database) => (
+                            <tr
+                                key={database.id}
+                                className="group hover:bg-zinc-800"
+                            >
+                                <td className="px-4 py-4">
+                                    <input
+                                        type="checkbox"
+                                        className="rounded-md p-3"
+                                        onChange={(e) => {
+                                            if (e.target.checked) {
+                                                setSelectedDatabases([
+                                                    ...selectedDatabases,
+                                                    database.id,
+                                                ]);
+                                            } else {
+                                                setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id));
+                                            }
+                                        }}
+                                    />
+                                </td>
 
-                                    <td className="px-4 py-4 ">
-                                        <span className="text-sm font-medium text-zinc-400">
-                                            {database.name}
-                                        </span>
-                                    </td>
+                                <td className="px-4 py-4 ">
+                                    <span className="text-sm font-medium text-zinc-400">
+                                        {database.name}
+                                    </span>
+                                </td>
 
-                                    <td className="px-4 py-4 ">
-                                        <span className="text-sm font-medium text-zinc-400">
-                                            {database.size} KB
-                                        </span>
-                                    </td>
+                                <td className="px-4 py-4 ">
+                                    <span className="text-sm font-medium text-zinc-400">
+                                        {database.size} KB
+                                    </span>
+                                </td>
 
-                                    <td className="px-4 py-4 ">
-                                        <span className="text-sm font-medium text-zinc-400">
-                                            {database.path}
-                                        </span>
-                                    </td>
+                                <td className="px-4 py-4 ">
+                                    <span className="text-sm font-medium text-zinc-400">
+                                        {database.path}
+                                    </span>
+                                </td>
 
-                                    <td className="px-4 py-4 ">
-                                        <span className="text-sm font-medium text-zinc-400">
-                                            {database.created_at_human}
-                                        </span>
-                                    </td>
+                                <td className="px-4 py-4 ">
+                                    <span className="text-sm font-medium text-zinc-400">
+                                        {database.created_at_human}
+                                    </span>
+                                </td>
 
-                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div className="flex items-center space-x-2">
-                                            <a
-                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                                href={route("databases.download", {
-                                                        databases: [database.id],
-                                                })}
-                                            >
-                                                <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />
-                                            </a>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                    <div className="flex items-center space-x-2">
+                                        <a
+                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
+                                            href={route("repository-files.download", {
+                                                repository_file: [database.id],
+                                            })}
+                                        >
+                                            <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />
+                                        </a>
 
-                                            <button
-                                                className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                                onClick={() => toggleModal(database)}
-                                            >
-                                                <TrashIcon className="w-6 h-6 text-red-500" />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
+                                        <button
+                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                            onClick={() => toggleModal(database)}
+                                        >
+                                            <TrashIcon className="w-6 h-6 text-red-500" />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
 
-            <Pagination links={database_backups.meta} />
+            {/* <Pagination links={backups.meta} /> */}
 
             {/* toggleDeleteModal */}
             <Modal

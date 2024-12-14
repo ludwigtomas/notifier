@@ -2,17 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Repository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Repository
+ */
 class RepositoryIndexResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -30,8 +29,9 @@ class RepositoryIndexResource extends JsonResource
 
             'relationships' => [
                 'clients_count' => $this->clients_count ?? 0,
-                'database_backups_count' => $this->database_backups_count ?? 0,
                 'repository_settings_count' => $this->repository_settings_count ?? 0,
+                'repository_database_backups_count' => $this->repository_database_backups_count ?? 0,
+                'repository_storage_backups_count' => $this->repository_storage_backups_count ?? 0,
 
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'hosting_repository' => $this->whenLoaded('hostingRepository'),

@@ -184,13 +184,13 @@ const Navbar = ({ user }) => {
                                 Pulse
                             </a>
 
-                            <a
+                            {/* <a
                                 className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
                                 href={route("telescope")}
                                 target="_blank"
                             >
                                 Telescope
-                            </a>
+                            </a> */}
 
                             <a
                                 className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"

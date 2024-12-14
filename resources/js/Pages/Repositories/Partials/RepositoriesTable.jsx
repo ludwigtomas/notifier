@@ -20,7 +20,7 @@ import { useState } from "react";
 import Pagination from "@/Components/Pagination";
 import { isImages } from '@/Utils/IsImage';
 
-export default function RepositoryClientsTable({ repositories }) {
+export default function RepositoriesTable({ repositories }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
     const [selectedRepository, setSelectedRepository] = useState(null);
 
@@ -80,13 +80,6 @@ export default function RepositoryClientsTable({ repositories }) {
                                 Slug
                             </th>
 
-                            {/* <th
-                                scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
-                            >
-                                Počet klientů
-                            </th> */}
-
                             <th
                                 scope="col"
                                 className="px-4 py-3.5 text-sm font-normal border-x border-zinc-700"
@@ -95,13 +88,17 @@ export default function RepositoryClientsTable({ repositories }) {
                                     Nastavení
                                 </div>
 
-                                <ul className="grid grid-cols-3 mt-2 w-full">
+                                <ul className="grid grid-cols-4 mt-2 w-full">
                                     <li className="text-sm font-normal text-center text-zinc-400">
                                         Klienti
                                     </li>
 
                                     <li className="text-sm font-normal text-center text-zinc-400">
                                         Databáze
+                                    </li>
+
+                                    <li className="text-sm font-normal text-center text-zinc-400">
+                                        Storage
                                     </li>
 
                                     <li className="text-sm font-normal text-center text-zinc-400">
@@ -192,36 +189,8 @@ export default function RepositoryClientsTable({ repositories }) {
                                         </span>
                                     </td>
 
-                                    {/* <td className="px-4 py-4 ">
-                                        <div className="flex items-center gap-x-2 text-nowrap ">
-                                            {repository.relationships.clients.length > 0 ? (
-                                                <div className="pl-3 py-1 pr-1 flex items-center justify-between space-x-2 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                    {repository.relationships.clients.slice(0, 2).map((client) => (
-                                                        <p
-                                                            key={client.id}
-                                                            className="text-xs text-zinc-400 pr-2"
-                                                        >
-                                                            { client.name }
-                                                        </p>
-                                                    ))}
-
-                                                    {repository.relationships.clients.length > 2 && (
-                                                        <span className="p-1.5 text-xs text-zinc-400 rounded-full bg-zinc-900 group-hover:bg-zinc-700 faster-animation">
-                                                            +{" "}
-                                                            {repository.relationships.clients.length - 2}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            ) : (
-                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                    0
-                                                </span>
-                                            )}
-                                        </div>
-                                    </td> */}
-
                                     <td className="-mr-[1px] py-3.5 border-x border-zinc-800 group-hover:border-zinc-700">
-                                        <div className="grid grid-cols-3 place-items-center">
+                                        <div className="grid grid-cols-4 place-items-center">
                                             <div>
                                                 <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                     { repository.relationships.clients_count }
@@ -230,12 +199,19 @@ export default function RepositoryClientsTable({ repositories }) {
 
                                             <div>
                                                 <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                    { repository.relationships.database_backups_count }
+                                                    { repository.relationships.repository_database_backups_count }
                                                 </span>
                                             </div>
+
                                             <div>
                                                 <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
-                                                    { repository.relationships.repository_settings_count || 0 }
+                                                    { repository.relationships.repository_storage_backups_count }
+                                                </span>
+                                            </div>
+
+                                            <div>
+                                                <span className="px-3 py-1 text-xs text-zinc-400 rounded-full bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                                    { repository.relationships.repository_settings_count }
                                                 </span>
                                             </div>
                                         </div>

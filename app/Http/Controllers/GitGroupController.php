@@ -23,11 +23,11 @@ class GitGroupController extends Controller
 
             $relationship = $request->relationship;
 
-            if ('childrens' === $relationship) {
+            if ($relationship === 'childrens') {
                 $group_details = $group_details->childrens()->get();
             }
 
-            if ('repositories' === $relationship) {
+            if ($relationship === 'repositories') {
                 $group_details = $group_details->repositories->merge($group_details->allRepositories);
             }
         }
@@ -45,7 +45,7 @@ class GitGroupController extends Controller
             ->whereSlug('gitlab')
             ->first();
 
-        if ('parent' === $request->type) {
+        if ($request->type === 'parent') {
             $git_group = GitGroup::query()
                 ->where('group_id', $request->data['id'])
                 ->first();
@@ -63,7 +63,7 @@ class GitGroupController extends Controller
             ]);
         }
 
-        if ('child' === $request->type) {
+        if ($request->type === 'child') {
             $git_group = GitGroup::query()
                 ->where('group_id', $request->subgroup['id'])
                 ->first();

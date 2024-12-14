@@ -2,17 +2,16 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Repository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Repository
+ */
 class RepositoryResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -46,22 +45,18 @@ class RepositoryResource extends JsonResource
             'client_email' => $this->pivot->client_email ?? null,
 
             'relationships' => [
-                'git' => new GitResource($this->whenLoaded('git')),
-
-                'clients' => ClientResource::collection($this->whenLoaded('clients')),
                 'clients_count' => $this->clients_count ?? 0,
-
-                'database_backups_count' => $this->database_backups_count ?? 0,
-
-                'hosting' => new HostingResource($this->whenLoaded('hosting')),
-
-                'hosting_repository' => $this->whenLoaded('hostingRepository'),
-
-                'notifications' => NotificationResource::collection($this->whenLoaded('notifications')),
+                'repository_settings_count' => $this->repository_settings_count ?? 0,
+                'repository_database_backups_count' => $this->repository_database_backups_count ?? 0,
+                'repository_storage_backups_count' => $this->repository_storage_backups_count ?? 0,
                 'notifications_count' => $this->notifications_count ?? 0,
 
-                'repository_settings' => $this->whenLoaded('repositorySettings'),
-                'repository_settings_count' => $this->repositorySettings_count ?? 0,
+                'git' => new GitResource($this->whenLoaded('git')),
+                'clients' => ClientResource::collection($this->whenLoaded('clients')),
+                'hosting' => new HostingResource($this->whenLoaded('hosting')),
+                'hosting_repository' => $this->whenLoaded('hostingRepository'),
+                'notifications' => NotificationIndexResource::collection($this->whenLoaded('notifications')),
+                'repository_settings' => RepositorySettingIndexResource::collection($this->whenLoaded('repositorySettings')),
             ],
         ];
     }

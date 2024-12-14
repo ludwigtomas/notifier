@@ -38,7 +38,9 @@ class GoogleAnalyticsController extends Controller
 
     private function currentMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient([
+            'credentials' => json_decode(file_get_contents(storage_path('credentials.json')), true),
+        ]);
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->startOfMonth()->toDateString(),
@@ -54,7 +56,7 @@ class GoogleAnalyticsController extends Controller
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],
@@ -70,13 +72,13 @@ class GoogleAnalyticsController extends Controller
         ];
 
         foreach ($response as $key => $value) {
-            $array_key = '(not set)' !== $value->getDimensionValues()[0]->getValue() ? $value->getDimensionValues()[0]->getValue() : '---';
+            $array_key = $value->getDimensionValues()[0]->getValue() !== '(not set)' ? $value->getDimensionValues()[0]->getValue() : '---';
 
             $data['metric'][$array_key] = $value->getMetricValues()[0]->getValue();
 
             // get five the most visited cities
             if ($key < 4) {
-                $data['most_visited_cities'][] = '(not set)' !== $value->getDimensionValues()[0]->getValue() ? $value->getDimensionValues()[0]->getValue() : '---';
+                $data['most_visited_cities'][] = $value->getDimensionValues()[0]->getValue() !== '(not set)' ? $value->getDimensionValues()[0]->getValue() : '---';
             }
 
             $data['visitors'] += $value->getMetricValues()[0]->getValue();
@@ -88,7 +90,9 @@ class GoogleAnalyticsController extends Controller
 
     private function previousMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient([
+            'credentials' => json_decode(file_get_contents(storage_path('credentials.json')), true),
+        ]);
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->subMonthNoOverflow()->startOfMonth()->toDateString(),
@@ -104,7 +108,7 @@ class GoogleAnalyticsController extends Controller
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],
@@ -120,13 +124,13 @@ class GoogleAnalyticsController extends Controller
         ];
 
         foreach ($response as $key => $value) {
-            $array_key = '(not set)' !== $value->getDimensionValues()[0]->getValue() ? $value->getDimensionValues()[0]->getValue() : '---';
+            $array_key = $value->getDimensionValues()[0]->getValue() !== '(not set)' ? $value->getDimensionValues()[0]->getValue() : '---';
 
             $data['metric'][$array_key] = $value->getMetricValues()[0]->getValue();
 
             // get five the most visited cities
             if ($key < 4) {
-                $data['most_visited_cities'][] = '(not set)' !== $value->getDimensionValues()[0]->getValue() ? $value->getDimensionValues()[0]->getValue() : '---';
+                $data['most_visited_cities'][] = $value->getDimensionValues()[0]->getValue() !== '(not set)' ? $value->getDimensionValues()[0]->getValue() : '---';
             }
 
             $data['visitors'] += $value->getMetricValues()[0]->getValue();

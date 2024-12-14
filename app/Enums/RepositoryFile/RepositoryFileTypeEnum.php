@@ -4,6 +4,6 @@ namespace App\Enums\RepositoryFile;
 
 enum RepositoryFileTypeEnum: string
 {
-    case DATABASE = 'database';
-    case ZIP = 'zip';
+    case DATABASE_BACKUP = 'database_backup';
+    case STORAGE_BACKUP = 'storage_backup';
 }

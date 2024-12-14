@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DownloadDatabaseRequest extends FormRequest
+class DownloadRepositoryFileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class DownloadDatabaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'databases' => ['required', 'array'],
-            'databases.*' => ['required', 'integer', 'exists:repository_databases,id'],
+            'repository_file' => ['required', 'array'],
+            'repository_file.*' => ['required', 'integer', 'exists:repository_files,id'],
         ];
     }
 }

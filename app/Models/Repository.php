@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
+use App\Enums\RepositorySetting\RepositorySettingKeyEnum;
 use App\Observers\RepositoryObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,12 +72,23 @@ class Repository extends Model
     public function clients(): BelongsToMany
     {
         return $this->belongsToMany(Client::class, 'client_repository', 'repository_id', 'client_id')
-            ->withPivot('client_email');
+            ->withPivot('client_email_secondary');
     }
 
-    public function databaseBackups(): HasMany
+    public function repositorySettings(): HasMany
     {
-        return $this->hasMany(RepositoryDatabase::class, 'repository_id', 'repository_id')
+        return $this->hasMany(RepositorySetting::class, 'repository_id', 'repository_id');
+    }
+
+    public function notifications(): MorphMany
+    {
+        return $this->morphMany(Notification::class, 'notifiable')
+            ->orderBy('created_at', 'desc');
+    }
+
+    public function repositoryFiles(): HasMany
+    {
+        return $this->hasMany(RepositoryFile::class, 'repository_id', 'repository_id')
             ->orderBy('created_at', 'desc');
     }
 
@@ -96,17 +109,6 @@ class Repository extends Model
         );
     }
 
-    public function repositorySettings(): HasMany
-    {
-        return $this->hasMany(RepositorySetting::class, 'repository_id', 'repository_id');
-    }
-
-    public function notifications(): MorphMany
-    {
-        return $this->morphMany(Notification::class, 'notifiable')
-            ->orderBy('created_at', 'desc');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -119,7 +121,7 @@ class Repository extends Model
                 'repository_id',
                 'name',
                 'slug',
-            ], 'like', '%' . $search . '%');
+            ], 'like', '%'.$search.'%');
         }
 
         return $query;
@@ -140,4 +142,24 @@ class Repository extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public function repositoryDatabaseBackups(): HasMany
+    {
+        return $this->repositoryFilesFor(RepositoryFileTypeEnum::DATABASE_BACKUP);
+    }
+
+    public function repositoryStorageBackups(): HasMany
+    {
+        return $this->repositoryFilesFor(RepositoryFileTypeEnum::STORAGE_BACKUP);
+    }
+
+    public function repositoryFilesFor(RepositoryFileTypeEnum $file_type): HasMany
+    {
+        return $this->repositoryFiles()->where('file_type', $file_type);
+    }
+
+    public function repositorySettingsFor(RepositorySettingKeyEnum $key): HasMany
+    {
+        return $this->repositorySettings()->where('key', $key);
+    }
 }

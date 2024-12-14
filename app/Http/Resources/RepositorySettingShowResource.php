@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DatabaseBackupResource extends JsonResource
+class RepositorySettingShowResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,15 +17,14 @@ class DatabaseBackupResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'size' => $this->size,
-            'path' => $this->path,
-
+            'key' => $this->key,
+            'value' => $this->value,
+            'is_active' => $this->is_active ? true : false,
+            'last_attempt_at' => Carbon::parse($this->last_attempt_at)->format('Y-m-d H:i:s'),
+            'was_successful' => $this->was_successful,
+            'attempts' => $this->attempts,
             'created_at' => $this->created_at,
-            'created_at_human' => $this->created_at->diffForHumans(),
-
             'updated_at' => $this->updated_at,
-            'updated_at_human' => $this->updated_at->diffForHumans(),
         ];
     }
 }

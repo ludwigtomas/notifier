@@ -7,8 +7,10 @@ use App\Enums\RepositorySetting\RepositorySettingValueEnum;
 use App\Http\Requests\StoreRepositorySettingRequest;
 use App\Http\Requests\UpdateRepositorySettingRequest;
 use App\Http\Resources\RepositoryResource;
+use App\Http\Resources\RepositorySettingShowResource;
 use App\Models\Repository;
 use App\Models\RepositorySetting;
+use Carbon\Carbon;
 
 class RepositorySettingController extends Controller
 {
@@ -49,14 +51,26 @@ class RepositorySettingController extends Controller
     {
         return inertia('RepositorySettings/Edit', [
             'repository' => new RepositoryResource($repository->load('hostingRepository')),
-            'repository_setting' => $repository_setting,
+            'repository_setting' => new RepositorySettingShowResource($repository_setting),
+            'option_keys' => RepositorySettingKeyEnum::cases(),
+            'option_values' => RepositorySettingValueEnum::cases(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRepositorySettingRequest $request, RepositorySetting $repositorySetting): void {}
+    public function update(UpdateRepositorySettingRequest $request, RepositorySetting $repository_setting): void
+    {
+        $repository_setting->update([
+            'key' => $request->key,
+            'value' => $request->value,
+            'is_active' => $request->is_active,
+            'last_attempt_at' => Carbon::parse($request->last_attempt_at)->format('Y-m-d H:i:s'),
+            'attempts' => $request->attempts,
+            'was_successful' => $request->was_successful,
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.

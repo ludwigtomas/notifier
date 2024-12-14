@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreHostingRequest;
 use App\Http\Requests\UpdateHostingRequest;
+use App\Http\Resources\HostingIndexResource;
 use App\Http\Resources\HostingResource;
 use App\Models\Hosting;
 use App\Models\Repository;
@@ -17,13 +18,15 @@ class HostingController extends Controller
     {
         $hostings = Hosting::query()
             ->when($request->search, function ($query, $search): void {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })
             ->withCount('repositories')
-            ->get();
+            ->orderBy('id', 'desc')
+            ->paginate(20)
+            ->withQueryString();
 
         return inertia('Hostings/Index', [
-            'hostings' => HostingResource::collection($hostings),
+            'hostings' => HostingIndexResource::collection($hostings),
             'filters' => $request->only('search'),
         ]);
     }

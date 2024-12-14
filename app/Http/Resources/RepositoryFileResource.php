@@ -2,20 +2,22 @@
 
 namespace App\Http\Resources;
 
+use App\Models\RepositoryFile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class RepositoryDatabaseResource extends JsonResource
+/**
+ * @mixin RepositoryFile
+ */
+class RepositoryFileResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
+            'repository_id' => $this->repository_id,
+
+            'file_type' => $this->file_type,
             'name' => $this->name,
             'size' => $this->size,
             'path' => $this->path,
@@ -29,7 +31,6 @@ class RepositoryDatabaseResource extends JsonResource
             'relationships' => [
                 'repository' => new RepositoryResource($this->whenLoaded('repository')),
             ],
-
         ];
     }
 }

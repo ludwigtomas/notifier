@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
-use App\Models\Hosting;
-use App\Models\Repository;
-use Illuminate\Http\Request;
-use App\Models\HostingRepository;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\HostingRepositoryResource;
 use App\Http\Requests\HostingRepository\StoreHostingRepositoryRequest;
 use App\Http\Requests\HostingRepository\UpdateHostingRepositoryRequest;
+use App\Http\Resources\HostingRepositoryResource;
+use App\Models\Hosting;
+use App\Models\HostingRepository;
+use App\Models\Repository;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
 
 class HostingRepositoryController extends Controller
 {
