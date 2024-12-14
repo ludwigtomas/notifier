@@ -45,7 +45,7 @@ class HostingController extends Controller
 
     public function edit(Hosting $hosting): Response
     {
-        $hosting->load('repositories');
+        $hosting->load('repositories', 'worker');
 
         $repositories = Repository::query()
             ->whereNotIn('repository_id', $hosting->repositories->pluck('repository_id'))

@@ -2,50 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
-use App\Http\Requests\StoreRepositoryRequest;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\RepositoryFileResource;
-use App\Http\Resources\RepositoryIndexResource;
-use App\Http\Resources\RepositoryResource;
-use App\Jobs\GoogleAnalyticsJob;
-use App\Jobs\RepositoriesJob;
+use Carbon\Carbon;
+use Inertia\Response;
 use App\Models\Client;
 use App\Models\Hosting;
 use App\Models\Repository;
-use App\Services\GitlabService;
-use Carbon\Carbon;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
-use Inertia\Response;
+use Illuminate\Http\Request;
+use App\Jobs\RepositoriesJob;
+use App\Services\GitlabService;
+use App\Services\WorkerService;
+use App\Jobs\GoogleAnalyticsJob;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\DatabaseBackupResource;
+use App\Http\Resources\RepositoryIndexResource;
 
 class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        // $repositories = Cache::remember('repositories', 60, function () use ($request) {
-        //     return Repository::query()
-        //         ->with('hostingRepository')
-        //         ->withCount('clients', 'repositorySettings', 'databaseBackups')
-        //         ->search($request->search)
-        //         ->trashed($request->trashed)
-        //         ->orderBy('last_commit_at', 'desc')
-        //         ->paginate(20)
-        //         ->withQueryString();
-        // });
-
-        $repositories = Repository::query()
-            ->with('hostingRepository')
-            ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
-            ->search($request->search)
-            ->trashed($request->trashed)
-            ->orderBy('last_commit_at', 'desc')
-            ->paginate(20)
-            ->withQueryString();
+        $repositories = Cache::remember('repositories', 60, function () use ($request) {
+            return Repository::query()
+                ->with(['hostingRepository', 'hosting', 'hosting.worker'])
+                ->withCount('clients', 'repositorySettings', 'databaseBackups')
+                ->search($request->search)
+                ->trashed($request->trashed)
+                ->orderBy('last_commit_at', 'desc')
+                ->paginate(20)
+                ->withQueryString();
+        });
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryIndexResource::collection($repositories),
@@ -170,5 +161,19 @@ class RepositoryController extends Controller
     public function syncWithGit(): void
     {
         RepositoriesJob::dispatch();
+    }
+
+    public function deploy(Repository $repository)
+    {
+        if (!$repository->hosting?->worker) {
+            return response()->json(['error' => 'No worker assigned to this repository'], 400);
+        }
+        $service = new WorkerService($repository->hosting->worker);
+        $result = $service->deployRepository($repository);
+
+        if ($result) {
+            return response()->json(['message' => 'Repository deployed successfully'], 200);
+        }
+        return response()->json(['error' => 'Failed to deploy repository'], 400);
     }
 }

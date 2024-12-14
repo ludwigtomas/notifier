@@ -18,6 +18,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import AttachHostingRepositoriesForm from "@/Pages/Hostings/Partials/AttachHostingRepositoriesForm";
 import UpdateHostingAttachedRepositoriesForm from "@/Pages/Hostings/Partials/UpdateHostingAttachedRepositoriesForm";
 import UpdateHostingInformationForm from "@/Pages/Hostings/Partials/UpdateHostingInformationForm";
+import WorkerStatus from "./Partials/WorkerStatus";
 
 export default function Index({ auth, hosting, repositories }) {
     const { data, setData, put, processing, errors, recentlySuccessful } =
@@ -99,6 +100,13 @@ export default function Index({ auth, hosting, repositories }) {
                         repositories={repositories}
                     />
                 </div>
+                { hosting.relationships.worker?.id && (
+                    <div className="p-10 bg-zinc-900 sm:rounded-xl">
+                    <WorkerStatus
+                        worker={hosting.relationships.worker}
+                    />
+                </div>
+                )}
             </div>
         </AdminLayout>
     );

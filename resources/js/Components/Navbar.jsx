@@ -150,6 +150,20 @@ const Navbar = ({ user }) => {
                         </NavLink>
 
                         <NavLink
+                            href={route("workers.index")}
+                            active={route().current("workers.*")}
+                            className="gap-4 w-full"
+                        >
+                            <ServerStackIcon className="size-10" />
+
+                            <span className="w-full hidden xl:block">
+                                Workers
+                            </span>
+
+                            <span>{usePage().props.global.workers_count}</span>
+                        </NavLink>
+
+                        <NavLink
                             href={route("notifications.index")}
                             active={route().current("notifications.*")}
                             className="gap-4 w-full"

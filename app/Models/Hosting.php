@@ -2,15 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Worker;
 use App\Observers\HostingObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(HostingObserver::class)]
 class Hosting extends Model
@@ -67,6 +69,11 @@ class Hosting extends Model
             'hosting_id',
             'repository_id',
         )->withPivot('ip_address', 'ip_port', 'login_user', 'login_password', 'password_type');
+    }
+
+    public function worker(): HasOne
+    {
+        return $this->hasOne(Worker::class);
     }
 
     /*

@@ -3,7 +3,9 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ActionButton } from "@/Components/Buttons/ActionButtons";
+import { useCallback } from "react";
 
 export default function Show({ hostings, hosting, hosting_repository, className = "" }) {
     const { data, setData, put, errors, processing, recentlySuccessful } =
@@ -24,6 +26,7 @@ export default function Show({ hostings, hosting, hosting_repository, className 
 
         });
     };
+
 
     return (
         <section className={className}>
@@ -72,6 +75,8 @@ export default function Show({ hostings, hosting, hosting_repository, className 
                             className="mt-2"
                             message={errors.hosting_id}
                         />
+
+
                     </div>
 
                     <div className="pt-10">

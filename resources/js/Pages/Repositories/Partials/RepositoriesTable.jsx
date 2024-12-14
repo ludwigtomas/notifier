@@ -16,7 +16,7 @@ import { Link, router } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Pagination from "@/Components/Pagination";
 import { isImages } from '@/Utils/IsImage';
 
@@ -46,6 +46,22 @@ export default function RepositoriesTable({ repositories }) {
         });
     };
 
+    
+
+    
+    const deployToHosting = useCallback((repository) => {
+        
+        console.log("Deploying to hosting...", repository);
+        axios.post(route("repositories.deploy", repository.repository_id))
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+
+    console.log(repositories);
     return (
         <>
             <section className="card">
@@ -293,6 +309,14 @@ export default function RepositoriesTable({ repositories }) {
 
                                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         <div className="flex items-center justify-end space-x-2">
+                                            {repository.relationships.hosting?.relationships.worker && (
+                                                <button
+                                                    className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-orange-500 faster-animation"
+                                                    onClick={() => deployToHosting(repository)}
+                                                >
+                                                    <RocketLaunchIcon className="size-6 text-orange-400" />
+                                                </button>
+                                            )}
                                             {repository.relationships.hosting_repository && !repository.deleted_at && (
                                                 <Link
                                                     href={route("hosting-repository.vps-connect", repository.relationships.hosting_repository.id)}
