@@ -46,11 +46,11 @@ export default function RepositoriesTable({ repositories }) {
         });
     };
 
-    
 
-    
+
+
     const deployToHosting = useCallback((repository) => {
-        
+
         console.log("Deploying to hosting...", repository);
         axios.post(route("repositories.deploy", repository.repository_id))
             .then((response) => {
@@ -101,7 +101,7 @@ export default function RepositoriesTable({ repositories }) {
                                 className="px-4 py-3.5 text-sm font-normal border-x border-zinc-700"
                             >
                                 <div className="text-white">
-                                    Nastavení
+                                    Počty
                                 </div>
 
                                 <ul className="grid grid-cols-4 mt-2 w-full">

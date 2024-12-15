@@ -210,12 +210,25 @@ export default function NotificationsTable({notifications}) {
                                                 )}
                                             />
                                         </Link>
+
+                                        <Link
+                                            as="button"
+                                            method="DELETE"
+                                            href={route("notifications.destroy", notification.id)}
+                                            className="group bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
+                                            preserveScroll
+                                        >
+                                            <TrashIcon className={"size-6 text-red-500 group-hover:text-red-600"}/>
+                                        </Link>
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-5">
+                    <Pagination links={notifications.meta} />
+                </div>
             </section>
         </>
     )

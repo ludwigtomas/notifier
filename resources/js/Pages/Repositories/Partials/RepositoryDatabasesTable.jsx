@@ -34,7 +34,7 @@ export default function RepositoryDatabaseTable({
 
     const deleteDatabase = () => {
         let url = route("repository-files.destroy", {
-            databases: [selectedDatabase.id],
+            repository_files: [selectedDatabase.id],
         });
 
         router.delete(url, {
@@ -45,7 +45,7 @@ export default function RepositoryDatabaseTable({
 
     const bulkDeleteRepositories = () => {
         let url = route("repository-files.destroy", {
-            databases: selectedDatabases,
+            repository_files: selectedDatabases,
         });
 
         router.delete(url, {
@@ -68,7 +68,13 @@ export default function RepositoryDatabaseTable({
         axios
             .get(url + "?param=backup_database")
             .then((response) => {
-                console.log(response);
+                if(response.status === 200) {
+                    router.visit(route('repositories.show', repository.repository_id), {
+                        only: ['repository_databases'],
+                        preserveScroll: true,
+                        preserveState: true
+                    })
+                }
             })
             .catch((error) => {
                 alert(error)
@@ -95,12 +101,12 @@ export default function RepositoryDatabaseTable({
                         className="p-2 text-center w-full space-x-2 text-white font-bold text-2xl"
                         onClick={() => getNewBackup()}
                     >
-                        Get new storage backup
+                        Get new <u>Database</u> backup
                     </button>
                 </div>
             </div>
 
-            <div className="mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
+            <div className="mt-10 mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
                 {selectedDatabases.length > 0 && (
                     <div className="fixed right-10 bottom-10">
                         <Dropdown>
@@ -135,8 +141,8 @@ export default function RepositoryDatabaseTable({
 
                                 <a
                                     className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                                    href={route("databases.download", {
-                                        databases: selectedDatabases
+                                    href={route("repository-files.download", {
+                                        repository_file: selectedDatabases
                                     })}
                                 >
                                     <span className="mr-2 ">
@@ -147,7 +153,6 @@ export default function RepositoryDatabaseTable({
 
                                 <button
                                     className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                                    href={route("profile.edit")}
                                     onClick={() => setSelectedDatabases([])}
                                 >
                                     <span className="mr-2">

@@ -143,6 +143,11 @@ class Repository extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function repositoryFilesFor(RepositoryFileTypeEnum $file_type): HasMany
+    {
+        return $this->repositoryFiles()->where('file_type', $file_type);
+    }
+
     public function repositoryDatabaseBackups(): HasMany
     {
         return $this->repositoryFilesFor(RepositoryFileTypeEnum::DATABASE_BACKUP);
@@ -151,11 +156,6 @@ class Repository extends Model
     public function repositoryStorageBackups(): HasMany
     {
         return $this->repositoryFilesFor(RepositoryFileTypeEnum::STORAGE_BACKUP);
-    }
-
-    public function repositoryFilesFor(RepositoryFileTypeEnum $file_type): HasMany
-    {
-        return $this->repositoryFiles()->where('file_type', $file_type);
     }
 
     public function repositorySettingsFor(RepositorySettingKeyEnum $key): HasMany

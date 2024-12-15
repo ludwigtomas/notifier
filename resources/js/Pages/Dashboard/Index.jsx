@@ -16,7 +16,6 @@ import {
     Horizonicon,
     TelescopeIcon,
 } from "@/Components/Ecosystem/Icons";
-// import NotificationTable from "@/Pages/Notifications/Partials/NotificationsTable";
 import NotificationTable from "@/Components/Tables/NotificationTable";
 
 

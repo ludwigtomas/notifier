@@ -69,6 +69,13 @@ export default function RepositoryStoragesTable({
             .get(url + "?param=backup_storage")
             .then((response) => {
                 console.log(response);
+                if(response.status === 200) {
+                    router.visit(route('repositories.show', repository.repository_id), {
+                        only: ['repository_storages'],
+                        preserveScroll: true,
+                        preserveState: true
+                    });
+                }
             })
             .catch((error) => {
                 alert(error)
@@ -95,7 +102,7 @@ export default function RepositoryStoragesTable({
                         className="p-2 text-center w-full space-x-2 text-white font-bold text-2xl"
                         onClick={() => getNewStorage()}
                     >
-                        Get new storage backup
+                        Get new <u>Storage</u> backup
                     </button>
                 </div>
             </div>
@@ -147,7 +154,6 @@ export default function RepositoryStoragesTable({
 
                                 <button
                                     className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
-                                    href={route("profile.edit")}
                                     onClick={() => setSelectedDatabases([])}
                                 >
                                     <span className="mr-2">
@@ -304,6 +310,7 @@ export default function RepositoryStoragesTable({
                             <DangerButton
                                 type="submit"
                                 onClick={deleteStorage}
+                                zIndex={999}
                             >
                                 <TrashIcon className="w-6 h-6 mr-2" />
 
@@ -314,7 +321,6 @@ export default function RepositoryStoragesTable({
                 )}
             </Modal>
 
-            {/* toggleBulkDeleteModal */}
             <Modal
                 maxWidth="md"
                 show={toggleBulkDeleteModal}

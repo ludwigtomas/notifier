@@ -31,7 +31,7 @@ class RepositoryController extends Controller
         $repositories = Cache::remember('repositories', 60, function () use ($request) {
             return Repository::query()
                 ->with(['hostingRepository', 'hosting', 'hosting.worker'])
-                ->withCount('clients', 'repositorySettings')
+                ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
                 ->search($request->search)
                 ->trashed($request->trashed)
                 ->orderBy('last_commit_at', 'desc')
