@@ -25,6 +25,7 @@ class StoreWorkerRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'url' => ['required', 'string', 'max:255'],
             'token' => ['required', 'string', 'max:255'],
+            'hosting_id' => ['required', 'exists:hostings,id'],
         ];
     }
 
@@ -45,6 +46,8 @@ class StoreWorkerRequest extends FormRequest
             'token.required' => 'The token field is required.',
             'token.string' => 'The token field must be a string.',
             'token.max' => 'The token field must not exceed 255 characters.',
+            'hosting_id.required' => 'The hosting field is required.',
+            'hosting_id.exists' => 'The selected hosting is invalid.',
         ];
     }
 }

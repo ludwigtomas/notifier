@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\Api\V1\GitlabController;
 use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,5 @@ Route::group(['prefix' => 'gitlab', 'as' => 'gitlab.'], function (): void {
     Route::get('/groups/{group_id}/detail', [GitlabController::class, 'groupDetail'])->name('groups.detail');
     Route::get('/groups/{group_id}/repositories', [GitlabController::class, 'groupRepositories'])->name('group.repositories');
 });
+
+Route::post('/workers/{worker}/notify', [WorkerController::class, 'notify'])->name('workers.notify');

@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreWorkerRequest;
-use App\Http\Requests\UpdateWorkerRequest;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\WorkerResource;
-use App\Models\Hosting;
+use App\Enums\HostingRepository\HostingRepositoryPasswordTypeEnum;
+use Inertia\Response;
 use App\Models\Worker;
+use App\Models\Hosting;
+use App\Models\Repository;
+use Illuminate\Http\Request;
 use App\Services\WorkerService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Inertia\Response;
+use App\Http\Resources\WorkerResource;
+use App\Http\Resources\HostingResource;
+use App\Http\Requests\StoreWorkerRequest;
+use App\Http\Requests\UpdateWorkerRequest;
+use App\Models\HostingRepository;
 
 class WorkerController extends Controller
 {
@@ -31,7 +34,9 @@ class WorkerController extends Controller
 
     public function create(): Response
     {
-        return inertia('Workers/Create');
+        return inertia('Workers/Create', [
+            'hostings' => HostingResource::collection(Hosting::all()),
+        ]);
     }
 
     public function store(StoreWorkerRequest $request): RedirectResponse
@@ -103,5 +108,44 @@ class WorkerController extends Controller
         ];
 
         return response()->json($result);
+    }
+
+    public function notify(Request $request, Worker $worker)
+    {
+        logger('Worker notify', $request->all());
+        if ($request->headers->get('Authorization') !== $worker->token) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'id' => 'required|integer|exists:repositories,repository_id',
+            'password' => 'required|string',
+            'port' => 'required|integer',
+        ]);
+
+        $hostingRepository = HostingRepository::query()
+            ->where('hosting_id', $worker->hosting_id)
+            ->where('repository_id', $request->id)
+            ->first();
+
+        if (! $hostingRepository) {
+            return response()->json(['error' => 'Repository not found'], 404);
+        }
+
+        $result = $hostingRepository->update([
+            'ip_address' => $worker->url,
+            'ip_port' => $request->port,
+            'login_password' => $request->password,
+            'login_user' => 'root',
+            'password_type' => HostingRepositoryPasswordTypeEnum::PASSWORD_TEXT,
+        ]);
+
+        if (! $result) {
+            return response()->json(['error' => 'Failed to update repository'], 500);
+        }
+
+        
+
+        return response()->json(['success' => true]);
     }
 }

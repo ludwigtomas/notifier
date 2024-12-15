@@ -38,9 +38,12 @@ class WorkerService
     /**
      * Executes a command on the worker.
      *
+     * @param  string  $command
      * @param  array<int, string>  $arguments
+     * @param  array<string, mixed>  $otherParams
+     * @return bool
      */
-    public function command(string $command, array $arguments = []): bool
+    public function command(string $command, array $arguments = [], array $otherParams = []): bool
     {
         try {
             $response = Http::withHeaders([
@@ -48,6 +51,7 @@ class WorkerService
             ])->post($this->worker->url . self::COMMAND_URI, [
                 'command' => $command,
                 'args' => $arguments,
+                ...$otherParams,
             ]);
 
             return $response->ok();
@@ -82,7 +86,11 @@ class WorkerService
             $arg1 = explode('devuni2/', $repository->repository_url)[1];
             $arg2 = $repository->name;
 
-            return $this->command('deploy', [$arg1, $arg2]);
+            return $this->command(
+                'deploy',
+                [$arg1, $arg2],
+                [ 'id' => $repository->repository_id ]
+            );
         } catch (Exception $e) {
             return false;
         }
@@ -98,7 +106,7 @@ class WorkerService
                 'Authorization' => $this->worker->token,
             ])->get($this->worker->url . self::CONTAINERS_URI);
 
-            return $response->json();
+            return $response->ok() ? $response->json() : [];
         } catch (Exception $e) {
             return [];
         }
