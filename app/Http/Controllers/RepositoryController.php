@@ -63,8 +63,8 @@ class RepositoryController extends Controller
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
             'clients' => ClientResource::collection($clients),
-            'repository_storages' => RepositoryFileResource::collection($repository_storages),
-            'repository_databases' => RepositoryFileResource::collection($repository_databases),
+            'repository_storages' => fn() => RepositoryFileResource::collection($repository_storages),
+            'repository_databases' => fn() => RepositoryFileResource::collection($repository_databases),
         ]);
     }
 

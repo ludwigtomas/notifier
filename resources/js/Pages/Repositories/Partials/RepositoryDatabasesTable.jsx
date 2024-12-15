@@ -2,8 +2,9 @@ import {
     TrashIcon,
     ArrowDownTrayIcon,
     BackspaceIcon,
+    ArrowPathIcon,
 } from "@heroicons/react/24/outline";
-import { router } from "@inertiajs/react";
+import { router, Link } from "@inertiajs/react";
 import Dropdown from "@/Components/Dropdown";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
@@ -76,13 +77,27 @@ export default function RepositoryDatabaseTable({
 
     return (
         <>
-            <div className="grid mt-10 mb-5 bg-sky-500 rounded-xl">
-                <button
-                    className="p-2 flex items-center justify-center space-x-2 text-white font-bold text-2xl"
-                    onClick={() => getNewBackup()}
-                >
-                    Get new database backup
-                </button>
+            <div className="grid grid-cols-12 gap-2 mt-10 mb-5">
+                <div className="col-span-1 flex items-center justify-center text-center bg-sky-500 rounded-xl">
+                    <Link
+                        className="p-2 h-full w-full flex justify-center items-center"
+                        href={route("repositories.show", repository.repository_id)}
+                        only={['repository_databases']}
+                        preserveScroll
+                        preserveState
+                    >
+                        <ArrowPathIcon className="size-6 text-white" />
+                    </Link>
+                </div>
+
+                <div className="col-span-11 bg-sky-500 rounded-xl">
+                    <button
+                        className="p-2 text-center w-full space-x-2 text-white font-bold text-2xl"
+                        onClick={() => getNewBackup()}
+                    >
+                        Get new storage backup
+                    </button>
+                </div>
             </div>
 
             <div className="mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
