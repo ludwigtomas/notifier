@@ -7,7 +7,6 @@ import {
 import TextInput from "@/Components/TextInput";
 import InputLabel from "@/Components/InputLabel";
 import ResetFilters from "@/Components/ResetFilters";
-import Pagination from "@/Components/Pagination";
 import debounce from "lodash/debounce";
 import { useState } from "react";
 import Dropdown from "@/Components/Dropdown";

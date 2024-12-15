@@ -62,7 +62,7 @@ export default function RepositoryDatabaseTable({
             return;
         }
 
-        let url = repository.website_url + "/api/backup";
+        let url = repository.website_url + "api/backup";
 
         // send axios get with params
         axios
