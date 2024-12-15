@@ -8,7 +8,7 @@
         "php": "^8.3",
         "google/analytics-data": "^0.9.5",
         "guzzlehttp/guzzle": "^7.9",
-        "inertiajs/inertia-laravel": "2.x-dev",
+        "inertiajs/inertia-laravel": "^2.0",
         "laravel/breeze": "^2.0",
         "laravel/framework": "v11.33.2",
         "laravel/horizon": "v5.29.1",

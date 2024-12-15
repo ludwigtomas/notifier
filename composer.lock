@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19697e92f61467a847e9d2d3c817f6b1",
+    "content-hash": "19a6474e07acfa7ad79206c57b8b3709",
     "packages": [
         {
             "name": "brick/math",
@@ -1579,7 +1579,7 @@
         },
         {
             "name": "inertiajs/inertia-laravel",
-            "version": "2.x-dev",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/inertiajs/inertia-laravel.git",
@@ -1607,7 +1607,6 @@
             "suggest": {
                 "ext-pcntl": "Recommended when running the Inertia SSR server via the `inertia:start-ssr` artisan command."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -10672,14 +10671,12 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "inertiajs/inertia-laravel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
