@@ -57,8 +57,35 @@ export default function RepositoryStoragesTable({
         });
     };
 
+    const getNewStorage = () => {
+        if (!repository.website_url) {
+            return;
+        }
+
+        let url = repository.website_url + "/api/backup";
+
+        // send axios get with params
+        axios
+            .get(url + "?param=backup_storage")
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                alert(error)
+            });
+    };
+
     return (
         <>
+            <div className="grid mt-10 mb-5 bg-sky-500 rounded-xl">
+                <button
+                    className="p-2 flex items-center justify-center space-x-2 text-white font-bold text-2xl"
+                    onClick={() => getNewStorage()}
+                >
+                    Get new storage backup
+                </button>
+            </div>
+
             <div className="mt-10 mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
                 {selectedDatabases.length > 0 && (
                     <div className="fixed right-10 bottom-10">
