@@ -16,11 +16,12 @@ import {
 } from "@heroicons/react/24/outline";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Index({ auth }) {
+export default function Index({ auth, hostings }) {
     const { data, setData, post, processing, errors } = useForm({
         name: "",
         url: "",
         token: "",
+        hosting_id: "",
     });
 
     const submit = (e) => {
@@ -156,6 +157,37 @@ export default function Index({ auth }) {
                                 <InputError
                                     message={errors.token}
                                     htmlFor="token"
+                                />
+                            </div>
+                            <div>
+                                <InputLabel
+                                    htmlFor="hosting_id"
+                                    value="Hosting"
+                                />
+
+                                <select
+                                    id="hosting_id"
+                                    name="hosting_id"
+                                    value={data.hosting_id}
+                                    onChange={(e) =>
+                                        setData(
+                                            "hosting_id",
+                                            e.target.value
+                                        )
+                                    }
+                                    className="mt-1 block w-full bg-zinc-700 text-gray-200 rounded-lg"
+                                >
+                                    <option value="" disabled>Vyberte hosting</option>
+                                    {hostings && hostings.map((hosting) => (
+                                        <option key={hosting.id} value={hosting.id}>
+                                            {hosting.name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <InputError
+                                    message={errors.hosting_id}
+                                    htmlFor="hosting_id"
                                 />
                             </div>
                         </div>

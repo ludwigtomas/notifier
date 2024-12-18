@@ -31,7 +31,9 @@ class WorkerController extends Controller
 
     public function create(): Response
     {
-        return inertia('Workers/Create');
+        return inertia('Workers/Create', [
+            'hostings' => HostingResource::collection(Hosting::all()),
+        ]);
     }
 
     public function store(StoreWorkerRequest $request): RedirectResponse
