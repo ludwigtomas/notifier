@@ -22,12 +22,12 @@ class Handler extends ExceptionHandler
     {
         $response = parent::render($request, $e);
 
-        if ( ! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
+        if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 404, 403])) {
             return inertia('Error', ['status' => $response->getStatusCode()])
                 ->toResponse($request)
                 ->setStatusCode($response->getStatusCode());
         }
-        if (419 === $response->getStatusCode()) {
+        if ($response->getStatusCode() === 419) {
             return back()->with([
                 'message' => 'The page expired, please try again.',
             ]);

@@ -15,15 +15,15 @@ class DatabaseService
     {
         Log::channel('backup')->info('⚙️ STARTING NEW BACKUP ⚙️');
 
-        $filename = 'backup-' . Carbon::now()->format('Y-m-d') . '.sql';
+        $filename = 'backup-'.Carbon::now()->format('Y-m-d').'.sql';
 
         Storage::disk('local')->makeDirectory('backups');
 
-        $path = storage_path('app/backups/' . $filename);
+        $path = storage_path('app/backups/'.$filename);
 
         Log::channel('backup')->info('➡️ creating backup file');
 
-        $command = 'mysqldump --no-tablespaces --user=' . env('DB_USERNAME') . ' --password=' . env('DB_PASSWORD') . ' --host=' . env('DB_HOST') . ' ' . env('DB_DATABASE') . ' > ' . $path;
+        $command = 'mysqldump --no-tablespaces --user='.env('DB_USERNAME').' --password='.env('DB_PASSWORD').' --host='.env('DB_HOST').' '.env('DB_DATABASE').' > '.$path;
 
         exec($command);
 
@@ -42,7 +42,7 @@ class DatabaseService
         Log::channel('backup')->info('➡️ preparing file for sending');
 
         try {
-            $client = new Client();
+            $client = new Client;
 
             $response = $client->request('POST', env('BACKUP_URL'), [
                 'multipart' => [
@@ -58,7 +58,7 @@ class DatabaseService
                 ],
             ]);
 
-            if (200 === $response->getStatusCode() || 201 === $response->getStatusCode()) {
+            if ($response->getStatusCode() === 200 || $response->getStatusCode() === 201) {
                 Log::channel('backup')->info('➡️ file was sent');
 
                 File::delete($path);

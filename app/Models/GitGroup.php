@@ -88,7 +88,7 @@ class GitGroup extends Model
                 $query->whereAny([
                     'group_id',
                     'name',
-                ], 'like', '%' . $search . '%');
+                ], 'like', '%'.$search.'%');
             })
             ->whereNull('parent_id');
     }

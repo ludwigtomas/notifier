@@ -121,7 +121,7 @@ class Repository extends Model
                 'repository_id',
                 'name',
                 'slug',
-            ], 'like', '%' . $search . '%');
+            ], 'like', '%'.$search.'%');
         }
 
         return $query;

@@ -29,7 +29,7 @@ class WorkerService
         try {
             return Http::withHeaders([
                 'Authorization' => $this->worker->token,
-            ])->get($this->worker->url . self::PING_URI)->ok();
+            ])->get($this->worker->url.self::PING_URI)->ok();
         } catch (Exception $e) {
             return false;
         }
@@ -45,7 +45,7 @@ class WorkerService
         try {
             $response = Http::withHeaders([
                 'Authorization' => $this->worker->token,
-            ])->post($this->worker->url . self::COMMAND_URI, [
+            ])->post($this->worker->url.self::COMMAND_URI, [
                 'command' => $command,
                 'args' => $arguments,
             ]);
@@ -64,7 +64,7 @@ class WorkerService
         try {
             $response = Http::withHeaders([
                 'Authorization' => $this->worker->token,
-            ])->get($this->worker->url . self::STATUS_URI);
+            ])->get($this->worker->url.self::STATUS_URI);
 
             return $response->json();
         } catch (Exception $e) {
@@ -96,7 +96,7 @@ class WorkerService
         try {
             $response = Http::withHeaders([
                 'Authorization' => $this->worker->token,
-            ])->get($this->worker->url . self::CONTAINERS_URI);
+            ])->get($this->worker->url.self::CONTAINERS_URI);
 
             return $response->json();
         } catch (Exception $e) {

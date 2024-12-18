@@ -19,7 +19,7 @@ class WorkerController extends Controller
     {
         $workers = Worker::query()
             ->when($request->search, function ($query, $search): void {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })
             ->get();
 

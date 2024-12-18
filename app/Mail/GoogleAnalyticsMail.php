@@ -31,7 +31,7 @@ class GoogleAnalyticsMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Měsíční report - Google Analytics (' . $this->repository->name . ')',
+            subject: 'Měsíční report - Google Analytics ('.$this->repository->name.')',
         );
     }
 

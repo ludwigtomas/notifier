@@ -25,13 +25,13 @@ class ClientRepositoryController extends Controller
 
     public function update(Client $client, Repository $repository, UpdateClientRepositoryRequest $request): RedirectResponse
     {
-        if ('repository_client' === $request->relationship) {
+        if ($request->relationship === 'repository_client') {
             $repository->clients()->updateExistingPivot($client, [
                 'client_email' => $request->client_email,
             ]);
         }
 
-        if ('client_repository' === $request->relationship) {
+        if ($request->relationship === 'client_repository') {
             $client->repositories()->updateExistingPivot($repository, [
                 'client_email' => $request->client_email,
             ]);

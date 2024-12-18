@@ -32,7 +32,7 @@ class Worker extends Model
     */
     public static function countDB(): int
     {
-        return Cache::remember('workers_count', 60, fn() => DB::table('workers')->count());
+        return Cache::remember('workers_count', 60, fn () => DB::table('workers')->count());
     }
 
     public function setTokenAttribute($value): void
