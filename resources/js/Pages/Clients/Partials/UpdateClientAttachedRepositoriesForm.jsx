@@ -27,7 +27,7 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedRepository(null);
-                setData("client_email", "");
+                setData("client_email_secondary", "");
             },
         });
     }
@@ -73,12 +73,12 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                                         {selectedRepository == repository.repository_id ? (
                                             <>
                                                 <TextInput
-                                                    id="client_email"
+                                                    id="client_email_secondary"
                                                     type="email"
                                                     className="mt-1 block w-full"
                                                     placeholder="info@ludwigtomas.cz"
                                                     value={data.client_email}
-                                                    onChange={(e) => setData("client_email", e.target.value)}
+                                                    onChange={(e) => setData("client_email_secondary", e.target.value)}
                                                     isFocused
                                                     required
                                                 />
@@ -121,7 +121,7 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                                                     type="button"
                                                     onClick={() => {
                                                         setSelectedRepository(repository.repository_id);
-                                                        setData("client_email", repository.client_email ?? "");
+                                                        setData("client_email_secondary", repository.client_email ?? "");
                                                     }}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
                                                 >
