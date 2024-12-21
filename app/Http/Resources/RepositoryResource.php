@@ -42,7 +42,7 @@ class RepositoryResource extends JsonResource
             'deleted_at' => $this->deleted_at,
             'deleted_at_human' => $this->deleted_at ? Carbon::parse($this->deleted_at)->diffForHumans() : null,
 
-            'client_email' => $this->pivot->client_email ?? null,
+            'client_email_secondary' => $this->pivot->client_email_secondary ?? null,
 
             'relationships' => [
                 'clients_count' => $this->clients_count ?? 0,
