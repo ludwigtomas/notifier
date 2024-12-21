@@ -132,7 +132,7 @@ export default function RepositoriesTable({ repositories }) {
                                     Nastavení
                                 </div>
 
-                                <ul className="grid grid-cols-4 mt-2 w-full">
+                                <ul className="grid grid-cols-4 mt-2">
                                     <li className="text-sm font-normal text-center text-zinc-400">
                                         Gitlab
                                     </li>
@@ -153,7 +153,7 @@ export default function RepositoriesTable({ repositories }) {
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400 border-r border-zinc-700"
                             >
                                 Nejnovější commit
                             </th>
@@ -301,7 +301,7 @@ export default function RepositoriesTable({ repositories }) {
                                         </div>
                                     </td>
 
-                                    <td className="px-4 py-4">
+                                    <td className="px-4 py-4 border-r border-zinc-800 text-center group-hover:border-zinc-700">
                                         <span className="text-sm font-medium text-zinc-400">
                                             {repository.last_commit_at_human ?? "-"}
                                         </span>

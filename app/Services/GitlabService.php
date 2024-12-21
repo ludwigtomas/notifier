@@ -347,7 +347,7 @@ class GitlabService
         return Git::whereSlug('gitlab')->first();
     }
 
-    private static function sendNotificationToClient(Repository $repository, $commit_message = null): void
+    private static function sendNotificationToClient(Repository $repository, string $commit_message): void
     {
         RepositoryNotifierJob::dispatch($repository, $commit_message);
     }

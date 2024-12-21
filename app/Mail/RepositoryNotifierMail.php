@@ -20,7 +20,7 @@ class RepositoryNotifierMail extends Mailable
      */
     public function __construct(
         protected Repository $repository,
-        protected $commit_message,
+        protected string $commit_message,
         protected Client $client,
     ) {}
 
@@ -30,7 +30,7 @@ class RepositoryNotifierMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: env('MAIL_FROM_ADDRESS'),
+            from: config('mail.from.address'),
             subject: 'Notifier - proběhla aktualizace (' . $this->repository->name . ')',
         );
     }

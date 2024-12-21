@@ -14,7 +14,7 @@ import {
     BellIcon,
 } from "@heroicons/react/24/outline";
 
-const Navbar = ({ user }) => {
+const Sidebar = ({ user }) => {
     return (
         <aside className="min-h-screen relative grid w-[4rem] lg:w-[14rem]">
             <nav className="bg-zinc-900 border-r border-neutral-700 fixed w-[4rem] lg:w-[14rem] h-full left-0 top-0 py-20 ">
@@ -238,4 +238,4 @@ const Navbar = ({ user }) => {
     )
 };
 
-export default Navbar;
+export default Sidebar;

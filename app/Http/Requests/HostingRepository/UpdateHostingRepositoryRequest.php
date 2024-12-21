@@ -24,8 +24,8 @@ class UpdateHostingRepositoryRequest extends FormRequest
         return [
             'hosting_id' => ['required', 'exists:hostings,id'],
 
-            'ip_address' => ['nullable', 'max:255'],
-            'ip_port' => ['nullable', 'max:255'],
+            'ip_address' => ['nullable', 'string', 'max:255'],
+            'ip_port' => ['nullable', 'numeric'],
             'login_user' => ['nullable', 'max:255'],
             'login_password' => ['nullable', 'max:255'],
             'password_type' => ['nullable'],
@@ -49,7 +49,7 @@ class UpdateHostingRepositoryRequest extends FormRequest
             'ip_address.string' => 'The ip address must be a string.',
             'ip_address.max' => 'The ip address may not be greater than 255 characters.',
 
-            'ip_port.string' => 'The ip port must be a string.',
+            'ip_port.numeric' => 'The ip port must be a number.',
             'ip_port.max' => 'The ip port may not be greater than 255 characters.',
 
             'login_user.string' => 'The login user must be a string.',

@@ -68,7 +68,7 @@ export default function NotificationsTable({notifications}) {
                                 Model ID
                             </th>
 
-                            <th className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400">
+                            <th className="px-4 py-3.5 text-sm font-normal text-center text-zinc-400">
                                 Vytvořeno dne
                             </th>
 

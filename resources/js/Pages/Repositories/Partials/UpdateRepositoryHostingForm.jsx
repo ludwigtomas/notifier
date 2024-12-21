@@ -75,8 +75,6 @@ export default function Show({ hostings, hosting, hosting_repository, className 
                             className="mt-2"
                             message={errors.hosting_id}
                         />
-
-
                     </div>
 
                     <div className="pt-10">

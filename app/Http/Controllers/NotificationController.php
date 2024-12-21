@@ -15,9 +15,9 @@ class NotificationController extends Controller
 {
     public function index(Request $request): Response
     {
-        $requsted_models = [];
-
-        $request->model ? $requsted_models = ModelHelper::modelsPath($request->model) : null;
+        $request->model
+            ? $requsted_models = ModelHelper::modelsPath($request->model)
+            : $requsted_models = [];
 
         $notifications = Notification::query()
             ->when($request->search, function ($query, $search): void {
@@ -51,18 +51,14 @@ class NotificationController extends Controller
 
     public function show(Notification $notification): Response
     {
-        $notification->load('notifiable');
-
         return inertia('Notifications/Show', [
-            'notification' => new NotificationShowResource($notification),
+            'notification' => new NotificationShowResource($notification->load('notifiable')),
         ]);
     }
 
-    public function markAsRead(Notification $notification): RedirectResponse
+    public function markAsRead(Notification $notification): void
     {
-        $notification->markAsRead();
-
-        return redirect()->back();
+        $notification->toggleReadAt();
     }
 
     public function destroy(Notification $notification): RedirectResponse

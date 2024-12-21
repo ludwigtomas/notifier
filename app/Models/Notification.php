@@ -45,9 +45,9 @@ class Notification extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function markAsRead(): void
+    public function toggleReadAt(): void
     {
-        $this->read_at = now();
+        $this->read_at = $this->read_at ? null : now();
         $this->save();
     }
 

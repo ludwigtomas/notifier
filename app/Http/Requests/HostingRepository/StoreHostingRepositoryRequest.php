@@ -26,7 +26,7 @@ class StoreHostingRepositoryRequest extends FormRequest
             'repository_id' => ['required', 'exists:repositories,repository_id'],
 
             'ip_address' => ['nullable', 'string', 'max:255'],
-            'ip_port' => ['nullable', 'string', 'max:255'],
+            'ip_port' => ['nullable', 'numeric',],
             'login_user' => ['nullable', 'string', 'max:255'],
             'login_password' => ['nullable', 'string', 'max:255'],
             'password_type' => ['nullable', 'integer'],
@@ -50,8 +50,7 @@ class StoreHostingRepositoryRequest extends FormRequest
             'ip_address.string' => 'The ip address must be a string.',
             'ip_address.max' => 'The ip address may not be greater than 255 characters.',
 
-            'ip_port.string' => 'The ip port must be a string.',
-            'ip_port.max' => 'The ip port may not be greater than 255 characters.',
+            'ip_port.numeric' => 'The ip port must be a number.',
 
             'login_user.string' => 'The login user must be a string.',
             'login_user.max' => 'The login user may not be greater than 255 characters.',

@@ -118,8 +118,8 @@ export default function HostingsTable({ hostings }) {
                                     </td>
 
                                     <td className="px-4 py-3.5">
-                                        <div className="flex">
-                                            <span className="text-center p-2 size-8 rounded-xl bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
+                                        <div className="flex items-center">
+                                            <span className="flex items-center justify-center p-2 size-8 rounded-xl bg-zinc-800 group-hover:bg-zinc-900 faster-animation">
                                                 {hosting.relationships.repositories_count}
                                             </span>
                                         </div>

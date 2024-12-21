@@ -2,7 +2,6 @@
 {{-- Header --}}
 <x-slot:header>
 <x-mail::header url="https://ludwigtomas.cz/">
-{{ config('app.name') }}
 </x-mail::header>
 </x-slot:header>
 

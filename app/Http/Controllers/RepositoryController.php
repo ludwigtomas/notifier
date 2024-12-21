@@ -28,11 +28,9 @@ class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        if ($request->search || $request->trashed) {
-            Cache::forget('repositories');
-        }
+        $md5 = md5($request->fullUrl());
 
-        $repositories = Cache::remember('repositories', 60, function () use ($request) {
+        $repositories = Cache::remember('repositories' . $md5, 60, function () use ($request) {
             return Repository::query()
                 ->with(['hostingRepository', 'hosting', 'hosting.worker'])
                 ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')

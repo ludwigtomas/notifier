@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Telescope\Telescope;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,12 +19,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Telescope::night();
+
         Model::shouldBeStrict( ! app()->isProduction());
 
         JsonResource::withoutWrapping();
 
-        if (app()->isProduction()) {
-            $this->app['request']->server->set('HTTPS', true);
-        }
+        app()->isProduction()
+            ? $this->app['request']->server->set('HTTPS', true)
+            : null;
     }
 }

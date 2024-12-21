@@ -39,9 +39,10 @@ class AuthServiceProvider extends ServiceProvider
                 'david@devuni.cz',
             ]));
 
-            // Gate::define('viewTelescope', fn(User $user) => in_array($user->email, [
-            //     'info@ludwigtomas.cz',
-            // ]));
+            Gate::define('viewTelescope', fn(User $user) => in_array($user->email, [
+                'info@ludwigtomas.cz',
+                'david@devuni.cz',
+            ]));
         }
     }
 }
