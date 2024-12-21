@@ -18,16 +18,16 @@ class RepositoryDatabaseController extends Controller
     {
         $backup_types = RepositorySettingKeyEnum::cases();
 
-        $backup_types = array_map(fn ($type) => $type->value, $backup_types);
+        $backup_types = array_map(fn($type) => $type->value, $backup_types);
 
         $validated = $request->validate([
-            'backup_type' => ['required', 'string', 'in:'.implode(',', $backup_types)],
+            'backup_type' => ['required', 'string', 'in:' . implode(',', $backup_types)],
             'password' => ['required', 'string'],
             'backup_file' => ['required', 'file'],
         ], [
             'backup_type.required' => 'Backup type is required',
             'backup_type.string' => 'Backup type must be a string',
-            'backup_type.in' => 'Backup type must be one of the following: '.implode(', ', $backup_types),
+            'backup_type.in' => 'Backup type must be one of the following: ' . implode(', ', $backup_types),
 
             'password.required' => 'Password is required',
             'password.string' => 'Password must be a string',
@@ -50,18 +50,18 @@ class RepositoryDatabaseController extends Controller
                 ),
             };
 
-            $this->sendMail($repository, 'success', 'Backup uploaded successfully'.' - '.$validated['backup_type']);
+            $this->sendMail($repository, 'success', 'Backup uploaded successfully' . ' - ' . $validated['backup_type']);
 
             return response()->json([
                 'type' => 'success',
-                'message' => 'Backup uploaded successfully'.' - '.$validated['backup_type'],
+                'message' => 'Backup uploaded successfully' . ' - ' . $validated['backup_type'],
             ], 201);
         } catch (Exception $e) {
             // $this->sendMail($repository, 'failed', 'Backup failed to upload' . ' - ' . $validated['backup_type']);
 
             return response()->json([
                 'type' => 'error',
-                'message' => 'Backup failed to upload'.' - '.$validated['backup_type'],
+                'message' => 'Backup failed to upload' . ' - ' . $validated['backup_type'],
                 'error' => $e->getMessage(),
             ], 500);
         }
@@ -74,12 +74,12 @@ class RepositoryDatabaseController extends Controller
         /*
          * ludwig-tomas/storage/2021/09
          */
-        $path = $repository->slug.'/storages/'.now()->format('Y').'/'.now()->format('m');
+        $path = $repository->slug . '/storages/' . now()->format('Y') . '/' . now()->format('m');
 
         /*
          * 15-614f1b7b7b7b7.zip
          */
-        $backup_name = now()->format('d').'-'.uniqid().'.'.$file->getClientOriginalExtension();
+        $backup_name = now()->format('d') . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
 
         $test = RepositoryFile::create([
             'repository_id' => $repository->repository_id,
@@ -101,12 +101,12 @@ class RepositoryDatabaseController extends Controller
         /*
          * ludwig-tomas/database/2021/09
          */
-        $path = $repository->slug.'/databases/'.now()->format('Y').'/'.now()->format('m');
+        $path = $repository->slug . '/databases/' . now()->format('Y') . '/' . now()->format('m');
 
         /*
          * 15-614f1b7b7b7b7.sql
          */
-        $backup_name = now()->format('d').'-'.uniqid().'.'.$file->getClientOriginalExtension();
+        $backup_name = now()->format('d') . '-' . uniqid() . '.' . $file->getClientOriginalExtension();
 
         RepositoryFile::create([
             'repository_id' => $repository->repository_id,

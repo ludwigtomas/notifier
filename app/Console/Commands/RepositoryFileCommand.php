@@ -77,9 +77,9 @@ class RepositoryFileCommand extends Command
         RepositorySetting $setting,
     ): void {
         try {
-            $client = new Client;
+            $client = new Client();
 
-            $url = $repository->website_url.'api/backup';
+            $url = $repository->website_url . 'api/backup';
 
             $param_type = match ($setting->key) {
                 RepositorySettingKeyEnum::BACKUP_DATABASE => RepositorySettingKeyEnum::BACKUP_DATABASE->value,
@@ -95,9 +95,9 @@ class RepositoryFileCommand extends Command
 
             $data = $response->getBody()->getContents();
 
-            Log::info("POST request to {$repository->website_url} was successful. Response: ".$response->getBody());
+            Log::info("POST request to {$repository->website_url} was successful. Response: " . $response->getBody());
         } catch (Exception $e) {
-            Log::error("POST request to {$repository->website_url} failed. Error: ".$e->getMessage());
+            Log::error("POST request to {$repository->website_url} failed. Error: " . $e->getMessage());
         }
     }
 }

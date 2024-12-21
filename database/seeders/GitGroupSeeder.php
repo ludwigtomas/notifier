@@ -52,7 +52,7 @@ class GitGroupSeeder extends Seeder
 
         $response = $client->get('groups', [
             'headers' => [
-                'Authorization' => 'Bearer '.self::getGitlab()->api_token,
+                'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
             ],
         ]);
 
@@ -73,9 +73,9 @@ class GitGroupSeeder extends Seeder
             'base_uri' => 'https://gitlab.com/api/v4/',
         ]);
 
-        $response = $client->request('GET', 'groups/'.$group_id.'/subgroups', [
+        $response = $client->request('GET', 'groups/' . $group_id . '/subgroups', [
             'headers' => [
-                'Authorization' => 'Bearer '.self::getGitlab()->api_token,
+                'Authorization' => 'Bearer ' . self::getGitlab()->api_token,
             ],
         ]);
 

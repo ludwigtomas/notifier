@@ -31,7 +31,7 @@ class RepositoryNotifierMail extends Mailable
     {
         return new Envelope(
             from: env('MAIL_FROM_ADDRESS'),
-            subject: 'Notifier - proběhla aktualizace ('.$this->repository->name.')',
+            subject: 'Notifier - proběhla aktualizace (' . $this->repository->name . ')',
         );
     }
 

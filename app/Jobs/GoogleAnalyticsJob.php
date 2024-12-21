@@ -39,7 +39,7 @@ class GoogleAnalyticsJob implements ShouldQueue
     {
         return [
             'google_analytics',
-            'repository:'.$this->repository->repository_id,
+            'repository:' . $this->repository->repository_id,
         ];
     }
 }

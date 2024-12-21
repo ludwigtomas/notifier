@@ -28,12 +28,12 @@ class ValidBackupFile implements ValidationRule
         // Debug statements
         Log::info("Validating backup file: {$attribute}, Type: {$this->backup_type}, Extension: {$extension}");
 
-        if ($this->backup_type === RepositorySettingKeyEnum::BACKUP_DATABASE->value && $extension !== 'sql') {
+        if ($this->backup_type === RepositorySettingKeyEnum::BACKUP_DATABASE->value && 'sql' !== $extension) {
             Log::info('Validation failed: Expected .sql file for database backups.');
             $fail('The backup file must be a .sql file for database backups.');
         }
 
-        if ($this->backup_type === RepositorySettingKeyEnum::BACKUP_STORAGE->value && $extension !== 'zip') {
+        if ($this->backup_type === RepositorySettingKeyEnum::BACKUP_STORAGE->value && 'zip' !== $extension) {
             Log::info('Validation failed: Expected .zip file for storage backups.');
             $fail('The backup file must be a .zip file for storage backups.');
         }

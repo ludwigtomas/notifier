@@ -49,7 +49,7 @@ class RepositoryNotifierJob implements ShouldQueue
     {
         return [
             'notifier',
-            'repository:'.$this->repository->repository_id,
+            'repository:' . $this->repository->repository_id,
         ];
     }
 }

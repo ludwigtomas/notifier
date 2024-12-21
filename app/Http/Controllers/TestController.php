@@ -39,11 +39,11 @@ class TestController extends Controller
 
     private static function daily(Repository $repository, RepositorySetting $setting): void
     {
-        if (! $setting->is_active) {
+        if ( ! $setting->is_active) {
             return;
         }
 
-        if (! $setting->was_successful) {
+        if ( ! $setting->was_successful) {
             return;
         }
 
@@ -56,11 +56,11 @@ class TestController extends Controller
 
     private static function weekly(Repository $repository, RepositorySetting $setting): void
     {
-        if (! $setting->is_active) {
+        if ( ! $setting->is_active) {
             return;
         }
 
-        if (! $setting->was_successful) {
+        if ( ! $setting->was_successful) {
             return;
         }
 
@@ -73,11 +73,11 @@ class TestController extends Controller
 
     private static function monthly(Repository $repository, RepositorySetting $setting): void
     {
-        if (! $setting->is_active) {
+        if ( ! $setting->is_active) {
             return;
         }
 
-        if (! $setting->was_successful) {
+        if ( ! $setting->was_successful) {
             return;
         }
 
