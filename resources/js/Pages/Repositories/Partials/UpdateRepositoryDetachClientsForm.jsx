@@ -14,7 +14,7 @@ export default function Show({ repository, className = "" }) {
     const [selectedClient, setSelectedClient] = useState(null);
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        client_email: "",
+        client_email_secondary: "",
         relationship: "repository_client",
     });
 
@@ -31,7 +31,7 @@ export default function Show({ repository, className = "" }) {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedClient(null);
-                setData("client_email", "");
+                setData("client_email_secondary", "");
             },
         });
     }
@@ -52,7 +52,7 @@ export default function Show({ repository, className = "" }) {
                 {repository.relationships.clients.map((client) => {
                     return (
                         <div
-                            className="col-span-12 sm:col-span-6 lg:col-span-4"
+                            className="col-span-12 sm:col-span-6"
                             key={client.id}
                         >
                             <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-2">
@@ -73,28 +73,34 @@ export default function Show({ repository, className = "" }) {
                                             {client.email ?? "N/A"}
                                         </p>
 
+
+                                        <p className="mt-1 text-sm text-gray-400">
+                                            {client.client_email_secondary ?? "N/A"}
+                                        </p>
+
+
                                         {selectedClient === client.id ? (
                                             <>
                                                 <TextInput
-                                                    id="client_email"
+                                                    id="client_email_secondary"
                                                     className="mt-1 block w-full"
                                                     placeholder="info@ludwigtomas.cz"
-                                                    value={data.client_email}
-                                                    onChange={(e) => setData("client_email", e.target.value)}
+                                                    value={data.client_email_secondary}
+                                                    onChange={(e) => setData("client_email_secondary", e.target.value)}
                                                     isFocused
                                                 />
 
                                                 <InputError
                                                     className="mt-2"
-                                                    message={errors.client_email}
+                                                    message={errors.client_email_secondary}
                                                 />
                                             </>
                                         ) : (
                                             <TextInput
-                                                id="client_email"
+                                                id="client_email_secondary"
                                                 className="mt-1 block w-full"
                                                 placeholder="---"
-                                                defaultValue={client.client_email}
+                                                defaultValue={client.client_email_secondary}
                                                 disabled
                                             />
                                         )}
@@ -139,7 +145,7 @@ export default function Show({ repository, className = "" }) {
                                                     type="button"
                                                     onClick={() => {
                                                         setSelectedClient(client.id);
-                                                        setData("client_email", client.client_email ?? "");
+                                                        setData("client_email_secondary", client.client_email_secondary ?? "");
                                                     }}
                                                     className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
                                                 >

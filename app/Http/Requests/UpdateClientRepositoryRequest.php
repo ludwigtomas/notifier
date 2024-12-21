@@ -23,7 +23,7 @@ class UpdateClientRepositoryRequest extends FormRequest
     {
         return [
             'relationship' => ['required', 'string', 'in:repository_client,client_repository'],
-            'client_email' => ['nullable', 'email'],
+            'client_email_secondary' => ['nullable', 'email:rfc,dns'],
         ];
     }
 
@@ -39,7 +39,7 @@ class UpdateClientRepositoryRequest extends FormRequest
             'relationship.string' => 'The relationship field must be a string.',
             'relationship.in' => 'The selected relationship is invalid.',
 
-            'client_email.email' => 'The client email must be a valid email address.',
+            'client_email_secondary.email' => 'The client email must be a valid email address.',
         ];
     }
 }

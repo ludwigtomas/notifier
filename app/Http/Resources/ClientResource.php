@@ -26,7 +26,7 @@ class ClientResource extends JsonResource
             'updated_at' => $this->updated_at,
             'updated_at_human' => $this->updated_at->diffForHumans(),
 
-            'client_email' => $this->pivot->client_email ?? null,
+            'client_email_secondary' => $this->pivot->client_email_secondary ?? null,
 
             'relationships' => [
                 'repositories' => RepositoryResource::collection($this->whenLoaded('repositories')),
