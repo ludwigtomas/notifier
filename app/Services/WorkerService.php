@@ -82,7 +82,7 @@ class WorkerService
             $arg1 = explode('gitlab.com/', $repository->repository_url)[1];
             $arg2 = $repository->name;
 
-            return $this->command('deploy', [$arg1, $arg2]);
+            return $this->command('deploy', [$arg1, $arg2, $repository->repository_id]);
         } catch (Exception $e) {
             return false;
         }
