@@ -14,7 +14,7 @@ import { useCallback, useState, useEffect } from "react";
 import PrettyJson from "@/Components/PrettyJson";
 
 export default function WorkerStatus({ worker, className = "" }) {
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [statusInterval, setStatusInterval] = useState(null);
     const [containers, setContainers] = useState([]);
@@ -33,6 +33,7 @@ export default function WorkerStatus({ worker, className = "" }) {
         axios
             .get(route("workers.status", worker.id))
             .then((response) => {
+                console.log(response.data);
                 setStatus(response.data.status || []);
                 setIsLoading(false);
             })
@@ -62,6 +63,7 @@ export default function WorkerStatus({ worker, className = "" }) {
         fetchWorkerContainers();
         const interval = setInterval(() => {
             fetchWorkerStatus();
+            fetchWorkerContainers();
         }, 5000);
 
         setStatusInterval(interval);
@@ -99,6 +101,30 @@ export default function WorkerStatus({ worker, className = "" }) {
                                 Idle
                             </span>
                         )}
+                        <table className="w-full mt-2">
+                            <thead>
+                                <tr>
+                                    <th className="text-left">ID</th>
+                                    <th className="text-left">Status</th>
+                                    <th className="text-left">Script</th>
+                                    <th className="text-left">Args</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {status && status.length > 0 ? status.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.id}</td>
+                                        <td>{item.state}</td>
+                                        <td>{JSON.stringify(item.data.script)}</td>
+                                        <td>{JSON.stringify(item.data.args)}</td>
+                                    </tr>
+                                )) : (
+                                    <tr>
+                                        <td colSpan="4">No status available</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
