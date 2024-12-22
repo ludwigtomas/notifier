@@ -79,7 +79,7 @@ class WorkerService
     {
         try {
             // Slug is not correct here, so have to explode the string
-            $arg1 = explode('devuni2/', $repository->repository_url)[1];
+            $arg1 = explode('gitlab.com/', $repository->repository_url)[1];
             $arg2 = $repository->name;
 
             return $this->command('deploy', [$arg1, $arg2]);
