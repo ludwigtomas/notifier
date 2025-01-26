@@ -282,7 +282,7 @@ export default function ({ auth, git_group }) {
                                                                 target="_blank"
                                                                 className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
                                                             >
-                                                                <LinkIcon className="w-4 h-4" />
+                                                                <LinkIcon className="w-4 h-4 mr-2" />
 
                                                                 { group.web_url }
                                                             </a>

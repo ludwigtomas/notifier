@@ -92,7 +92,15 @@ class RepositoryController extends Controller
 
     public function update(UpdateRepositoryRequest $request, Repository $repository): RedirectResponse
     {
-        $repository->update($request->validated());
+        $repository->update([
+            'analytics_property_id' => $request->analytics_property_id,
+            'website_url' => $request->website_url,
+            'repository_url' => $request->repository_url,
+            'last_commit_at' => $request->last_commit_at,
+
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
 
         return to_route('repositories.edit', $repository);
     }

@@ -13,6 +13,8 @@ export default function UpdateRepositoryInformationForm({repository, className =
         website_url: repository.website_url ?? '',
         repository_url: repository.repository_url ?? '',
         last_commit_at: repository.last_commit_at ?? '',
+        name: repository.name ?? '',
+        description: repository.description ?? '',
     });
 
     const submit = (e) => {
@@ -41,9 +43,9 @@ export default function UpdateRepositoryInformationForm({repository, className =
             </header>
 
             {/* FORM */}
-            <div className="mt-6 grid grid-cols-12 gap-5 items-start">
+            <div className="mt-6 grid gap-6 items-start">
 
-                <div className="col-span-12 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                <div className="border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
                     <div className="grid grid-cols-4 divide-x divide-zinc-600">
                         <div className="flex flex-col items-center justify-center space-y-2">
                             <div>
@@ -120,7 +122,7 @@ export default function UpdateRepositoryInformationForm({repository, className =
                 </div>
 
                 <form
-                    className="col-span-6 space-y-6"
+                    className="grid grid-cols-2 gap-6"
                     onSubmit={submit}
                 >
                     <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
@@ -181,10 +183,10 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                     <LinkIcon className="w-6 h-6 text-zinc-400"/>
                                 </a>
 
-                                <input
+                                <TextInput
                                     type="text"
                                     placeholder="ludwigtomas.cz"
-                                    className="block w-full rounded-l-none placeholder-zinc-400/70 px-3 py-2 bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                                    className="block w-full rounded-l-none"
                                     value={data.repository_url}
                                     onChange={(e) => setData('repository_url', e.target.value)}
                                 />
@@ -215,98 +217,114 @@ export default function UpdateRepositoryInformationForm({repository, className =
                                 message={errors.last_commit_at}
                             />
                         </div>
-                    </div>
-
-                    <div className="mt-6 col-span-12 flex items-center space-x-4">
 
                         <div>
-                            <PrimaryButton
-                                typeOfButton="submit"
-                                className="w-full"
-                                disabled={processing}
-                            >
-                                Update
-                            </PrimaryButton>
+                            <InputLabel
+                                disabled
+                                htmlFor="name"
+                                value="Název"
+                            />
+
+                            <TextInput
+                                id="name"
+                                className="mt-1 block w-full"
+                                placeholder="Ludwig Tomas"
+                                value={data.name}
+                                onChange={(e) => setData('name', e.target.value)}
+                            />
                         </div>
 
                         <div>
-                            <GoBackLink
-                                href={route('repositories.index')}
-                            >
-                                Zpátky
-                            </GoBackLink>
+                            <InputLabel
+                                htmlFor="slug"
+                                value="slug"
+                            />
+
+                            <TextInput
+                                id="slug"
+                                placeholder="ludwig-tomas"
+                                className="mt-1 block w-full cursor-not-allowed bg-zinc-500/10 border-zinc-600"
+                                disabled
+                                defaultValue={repository.slug}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                        <div>
+                            <InputLabel
+                                htmlFor="id"
+                                value="ID repozitáře"
+                            />
+
+                            <TextInput
+                                id="id"
+                                className="mt-1 block w-full cursor-not-allowed bg-zinc-500/10 border-zinc-600"
+                                disabled
+                                placeholder="52740614"
+                                defaultValue={repository.repository_id}
+                            />
                         </div>
 
-                        {recentlySuccessful && (
-                            <p className="text-green-500">
-                                Repository information has been updated!
-                            </p>
-                        )}
+                        <div>
+                            <InputLabel
+                                htmlFor="database_verification_code"
+                                value="Ověřovací kód"
+                            />
+
+                            <TextInput
+                                id="database_verification_code"
+                                className="mt-1 block w-full cursor-not-allowed bg-zinc-500/10 border-zinc-600"
+                                disabled
+                                placeholder="ac8185c8-01cb-4e30-9639-870000000000"
+                                defaultValue={repository.database_verification_code}
+                            />
+                        </div>
+
+                        <div>
+                            <InputLabel
+                                htmlFor="description"
+                                value="Text"
+                            />
+
+                            <textarea
+                                id="description"
+                                className='mt-1 w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm'
+                                cols={30}
+                                rows={13}
+                                placeholder="Popis"
+                                value={data.description}
+                                onChange={(e) => setData('description', e.target.value)}
+                            />
+                        </div>
                     </div>
+
+                    <div>
+                        <PrimaryButton
+                            typeOfButton="submit"
+                            className="w-full flex justify-center"
+                            disabled={processing}
+                        >
+                            Update
+                        </PrimaryButton>
+                    </div>
+
+                    <div>
+                        <GoBackLink
+                            className="w-full flex justify-center"
+                            href={route('repositories.index')}
+                        >
+                            Zpátky
+                        </GoBackLink>
+                    </div>
+
+                    {recentlySuccessful && (
+                        <p className="text-green-500">
+                            Repository information has been updated!
+                        </p>
+                    )}
                 </form>
 
-                <div className="col-span-6 space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
-                    <div>
-                        <InputLabel
-                            htmlFor="id"
-                            value="ID repozitáře"
-                        />
-
-                        <TextInput
-                            id="id"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
-                            disabled
-                            placeholder="52740614"
-                            defaultValue={repository.repository_id}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            disabled
-                            htmlFor="name"
-                            value="Název"
-                        />
-
-                        <TextInput
-                            id="name"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
-                            disabled
-                            placeholder="Ludwig Tomas"
-                            defaultValue={repository.name}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            htmlFor="slug"
-                            value="slug"
-                        />
-
-                        <TextInput
-                            id="slug"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
-                            disabled
-                            placeholder="ludwig-tomas"
-                            defaultValue={repository.slug}
-                        />
-                    </div>
-
-                    <div>
-                        <InputLabel
-                            htmlFor="database_verification_code"
-                            value="database_verification_code"
-                        />
-
-                        <TextInput
-                            id="database_verification_code"
-                            className="mt-1 block w-full cursor-not-allowed bg-zinc-500/20"
-                            disabled
-                            placeholder="ac8185c8-01cb-4e30-9639-870000000000"
-                            defaultValue={repository.database_verification_code}
-                        />
-                    </div>
-                </div>
             </div>
         </section>
     );

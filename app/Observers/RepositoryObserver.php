@@ -12,7 +12,7 @@ class RepositoryObserver
     public function creating(Repository $repository): void
     {
         $repository->database_verification_code = Str::uuid();
-        $repository->slug = Str::slug($repository->name);
+        $repository->slug = Str::slug(str_replace('.', '-', $repository->name));
     }
 
     public function created(Repository $repository): void
@@ -24,7 +24,7 @@ class RepositoryObserver
 
     public function updating(Repository $repository): void
     {
-        $repository->slug = Str::slug($repository->name);
+        $repository->slug = Str::slug(str_replace('.', '-', $repository->name));
     }
 
     public function updated(Repository $repository): void

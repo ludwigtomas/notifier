@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "npm run pint && vite",
+        "dev": "vite",
         "build": "vite build",
         "pint": "php vendor/bin/pint . --config=/var/www/html/notifier-administration/pint.json",
         "analyse": "php ./vendor/bin/phpstan analyse --memory-limit=32G"

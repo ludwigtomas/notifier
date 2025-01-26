@@ -26,6 +26,8 @@ class UpdateRepositoryRequest extends FormRequest
             'website_url' => ['nullable', 'url'],
             'repository_url' => ['nullable', 'url'],
             'last_commit_at' => ['nullable', 'date'],
+
+            'name' => ['nullable', 'string', 'sometimes', 'unique:repositories,name,' . $this->repository->repository_id . ',repository_id'],
             'description' => ['nullable', 'string'],
         ];
     }
