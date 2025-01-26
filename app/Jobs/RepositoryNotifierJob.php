@@ -52,6 +52,7 @@ class RepositoryNotifierJob implements ShouldQueue
     {
         return [
             'notifier',
+            'mrdka',
             'repository:' . $this->repository->repository_id,
         ];
     }
