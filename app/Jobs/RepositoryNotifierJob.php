@@ -37,7 +37,7 @@ class RepositoryNotifierJob implements ShouldQueue
 
             $client_email = $client->pivot->client_email ?? $client->email;
 
-            Mail::to($client_email)->send(new RepositoryNotifierMail(
+            Mail::to('ludwig@devuni.cz')->send(new RepositoryNotifierMail(
                 $this->repository,
                 $this->commit_message,
                 $client,
