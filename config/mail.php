@@ -110,7 +110,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'info@devuni.cz'),
+        'address' => env('MAIL_FROM_ADDRESS', 'testovaci@devuni.cz'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
