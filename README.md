@@ -340,6 +340,13 @@ supervisorctl start notifier:*
 
 -   in progress ...
 
+
+## :point_right: Repositories setup for Notifier
+```sh
+sudo chown -R www-data:www-data /var/www/html/storage
+sudo chmod -R 775 /var/www/html/storage
+```
+
 <br>
 <br>
 <br>

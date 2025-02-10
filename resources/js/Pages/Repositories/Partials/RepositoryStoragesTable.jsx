@@ -69,7 +69,7 @@ export default function RepositoryStoragesTable({
             .get(url + "?param=backup_storage")
             .then((response) => {
                 console.log(response);
-                if(response.status === 200) {
+                if (response.status === 200) {
                     router.visit(route('repositories.show', repository.repository_id), {
                         only: ['repository_storages'],
                         preserveScroll: true,
@@ -79,6 +79,9 @@ export default function RepositoryStoragesTable({
             })
             .catch((error) => {
                 alert(error)
+            })
+            .finally(() => {
+                console.log("finally");
             });
     };
 
