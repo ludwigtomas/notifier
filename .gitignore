@@ -16,6 +16,7 @@ auth.json
 
 privatekey.txt
 
+db_data
 npm-debug.log
 yarn-error.log
 /.fleet
