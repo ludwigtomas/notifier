@@ -23,16 +23,16 @@ class GoogleAnalyticsNotification extends Notification
         $old_data = null;
         $new_data = null;
 
-        if ('updated' === $this->action) {
+        if ($this->action === 'updated') {
             $old_data = $notifiable->getOriginal();
             $new_data = $notifiable->getAttributes();
         }
 
-        if ('deleted' === $this->action || 'forceDeleted' === $this->action) {
+        if ($this->action === 'deleted' || $this->action === 'forceDeleted') {
             $old_data = $notifiable->getAttributes();
         }
 
-        if ('restored' === $this->action || 'created' === $this->action) {
+        if ($this->action === 'restored' || $this->action === 'created') {
             $new_data = $notifiable->getAttributes();
         }
 

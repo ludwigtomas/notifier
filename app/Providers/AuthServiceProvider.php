@@ -24,22 +24,22 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if (app()->isProduction()) {
-            Gate::define('viewPulse', fn(User $user) => in_array($user->email, [
+            Gate::define('viewPulse', fn (User $user) => in_array($user->email, [
                 'info@ludwigtomas.cz',
                 'david@devuni.cz',
             ]));
 
-            Gate::define('viewLogViewer', fn(User $user) => in_array($user->email, [
+            Gate::define('viewLogViewer', fn (User $user) => in_array($user->email, [
                 'info@ludwigtomas.cz',
                 'david@devuni.cz',
             ]));
 
-            Gate::define('viewHorizon', fn(User $user) => in_array($user->email, [
+            Gate::define('viewHorizon', fn (User $user) => in_array($user->email, [
                 'info@ludwigtomas.cz',
                 'david@devuni.cz',
             ]));
 
-            Gate::define('viewTelescope', fn(User $user) => in_array($user->email, [
+            Gate::define('viewTelescope', fn (User $user) => in_array($user->email, [
                 'info@ludwigtomas.cz',
                 'david@devuni.cz',
             ]));

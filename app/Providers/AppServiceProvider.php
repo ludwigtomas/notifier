@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\Telescope;
 
@@ -21,10 +23,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Telescope::night();
 
-        Model::shouldBeStrict( ! app()->isProduction());
+        Model::shouldBeStrict(! app()->isProduction());
 
         JsonResource::withoutWrapping();
-        
+
         Vite::prefetch(concurrency: 3);
 
         if (app()->isProduction()) {

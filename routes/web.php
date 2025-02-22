@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('/', fn() => to_route('login'));
+Route::get('/', fn () => to_route('login'));
 
 Route::middleware('auth:sanctum')->group(function (): void {
     Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function (): void {
@@ -214,9 +214,9 @@ if (app()->isLocal()) {
 
     Route::get('/testingos', [TestController::class, 'test'])->name('testingos');
 
-
     Route::get('/email-test', function () {
-        Mail::to(config('mail.from.address'))->send(new TestMail());
+        Mail::to(config('mail.from.address'))->send(new TestMail);
+
         return 'Test email sent!';
     });
 

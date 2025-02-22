@@ -30,7 +30,7 @@ class RepositoryController extends Controller
     {
         $md5 = md5($request->fullUrl());
 
-        $repositories = Cache::remember('repositories' . $md5, 60, fn() => Repository::query()
+        $repositories = Cache::remember('repositories'.$md5, 60, fn () => Repository::query()
             ->with(['hostingRepository', 'hosting', 'hosting.worker'])
             ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
             ->search($request->search)
@@ -63,8 +63,8 @@ class RepositoryController extends Controller
         return inertia('Repositories/Show', [
             'repository' => new RepositoryResource($repository),
             'clients' => ClientResource::collection($clients),
-            'repository_storages' => fn() => RepositoryFileResource::collection($repository_storages),
-            'repository_databases' => fn() => RepositoryFileResource::collection($repository_databases),
+            'repository_storages' => fn () => RepositoryFileResource::collection($repository_storages),
+            'repository_databases' => fn () => RepositoryFileResource::collection($repository_databases),
         ]);
     }
 
@@ -174,7 +174,7 @@ class RepositoryController extends Controller
 
     public function deploy(Repository $repository)
     {
-        if ( ! $repository->hosting?->worker) {
+        if (! $repository->hosting?->worker) {
             return response()->json(['error' => 'No worker assigned to this repository'], 400);
         }
         $service = new WorkerService($repository->hosting->worker);

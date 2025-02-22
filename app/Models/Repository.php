@@ -32,14 +32,14 @@ class Repository extends Model
         'repository_id',               // automatically
 
         'group_id',                    // automatically - relationship
-        'analytics_property_id',       //! manually added
+        'analytics_property_id',       // ! manually added
 
         'name',                        // automatically - api
         'slug',                        // automatically - generated
         'avatar',                      // automatically - api
-        'website_url',                 //! manually added
+        'website_url',                 // ! manually added
         'repository_url',              // automatically - api
-        'description',                 //! manually added
+        'description',                 // ! manually added
 
         'database_verification_code',  // automatically - Observer
         'last_commit_at',              // automatically - api
@@ -48,7 +48,7 @@ class Repository extends Model
         'updated_at',                  // automatically - api
         'created_at',                  // automatically - api
 
-        'subscription_to',             //! manually added
+        'subscription_to',             // ! manually added
     ];
 
     protected $casts = [
@@ -121,7 +121,7 @@ class Repository extends Model
                 'repository_id',
                 'name',
                 'slug',
-            ], 'like', '%' . $search . '%');
+            ], 'like', '%'.$search.'%');
         }
 
         return $query;

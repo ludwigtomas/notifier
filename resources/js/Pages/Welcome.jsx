@@ -1,30 +1,30 @@
-import { Link, Head } from "@inertiajs/react";
+import { Link, Head } from '@inertiajs/react'
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-                <div className="sm:fixed sm:top-0 sm:right-0 p-6 text-end">
+            <div className="bg-dots-darker dark:bg-dots-lighter relative min-h-screen bg-gray-100 bg-center selection:bg-red-500 selection:text-white sm:flex sm:items-center sm:justify-center dark:bg-gray-900">
+                <div className="p-6 text-end sm:fixed sm:right-0 sm:top-0">
                     {auth.user ? (
                         <Link
-                            href={route("dashboard.index")}
-                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                            href={route('dashboard.index')}
+                            className="font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500 dark:text-gray-400 dark:hover:text-white"
                         >
                             Dashboard
                         </Link>
                     ) : (
                         <>
                             <Link
-                                href={route("login")}
-                                className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                href={route('login')}
+                                className="font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500 dark:text-gray-400 dark:hover:text-white"
                             >
                                 Log in
                             </Link>
 
                             <Link
-                                href={route("register")}
-                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                href={route('register')}
+                                className="ms-4 font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500 dark:text-gray-400 dark:hover:text-white"
                             >
                                 Register
                             </Link>
@@ -32,7 +32,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     )}
                 </div>
 
-                <div className="max-w-7xl mx-auto p-6 lg:p-8">
+                <div className="mx-auto max-w-7xl p-6 lg:p-8">
                     <div className="flex justify-center">
                         <svg
                             viewBox="0 0 62 65"
@@ -48,20 +48,20 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                     </div>
 
                     <div className="mt-16">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
                             {auth.user ? (
                                 <Link
-                                    href={route("dashboard.index")}
-                                    className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                                    href={route('dashboard.index')}
+                                    className="duration-250 flex scale-100 rounded-lg bg-white from-gray-700/50 via-transparent p-6 shadow-2xl shadow-gray-500/20 transition-all focus:outline focus:outline-2 focus:outline-red-500 motion-safe:hover:scale-[1.01] dark:bg-gray-800/50 dark:bg-gradient-to-bl dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/5"
                                 >
                                     <div>
-                                        <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50 dark:bg-red-800/20">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 strokeWidth="1.5"
-                                                className="w-7 h-7 stroke-red-500"
+                                                className="h-7 w-7 stroke-red-500"
                                             >
                                                 <path
                                                     strokeLinecap="round"
@@ -71,14 +71,10 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             </svg>
                                         </div>
 
-                                        <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                            Dashboard
-                                        </h2>
+                                        <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Dashboard</h2>
 
-                                        <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                            Dashboard Dashboard Dashboard
-                                            Dashboard Dashboard Dashboard
-                                            Dashboard Dashboard Dashboard
+                                        <p className="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+                                            Dashboard Dashboard Dashboard Dashboard Dashboard Dashboard Dashboard Dashboard Dashboard
                                             Dashboard Dashboard Dashboard
                                         </p>
                                     </div>
@@ -88,7 +84,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         strokeWidth="1.5"
-                                        className="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
+                                        className="mx-6 h-6 w-6 shrink-0 self-center stroke-red-500"
                                     >
                                         <path
                                             strokeLinecap="round"
@@ -100,16 +96,16 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             ) : (
                                 <Link
                                     href={route('login')}
-                                    className="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500"
+                                    className="duration-250 flex scale-100 rounded-lg bg-white from-gray-700/50 via-transparent p-6 shadow-2xl shadow-gray-500/20 transition-all focus:outline focus:outline-2 focus:outline-red-500 motion-safe:hover:scale-[1.01] dark:bg-gray-800/50 dark:bg-gradient-to-bl dark:shadow-none dark:ring-1 dark:ring-inset dark:ring-white/5"
                                 >
                                     <div>
-                                        <div className="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-50 dark:bg-red-800/20">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 strokeWidth="1.5"
-                                                className="w-7 h-7 stroke-red-500"
+                                                className="h-7 w-7 stroke-red-500"
                                             >
                                                 <path
                                                     strokeLinecap="round"
@@ -119,18 +115,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                             </svg>
                                         </div>
 
-                                        <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">
-                                            Login
-                                        </h2>
+                                        <h2 className="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Login</h2>
 
-                                        <p className="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                            Laravel has wonderful documentation
-                                            covering every aspect of the
-                                            framework. Whether you are a
-                                            newcomer or have prior experience
-                                            with Laravel, we recommend reading
-                                            our documentation from beginning to
-                                            end.
+                                        <p className="mt-4 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+                                            Laravel has wonderful documentation covering every aspect of the framework. Whether you are a
+                                            newcomer or have prior experience with Laravel, we recommend reading our documentation from
+                                            beginning to end.
                                         </p>
                                     </div>
 
@@ -139,7 +129,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         strokeWidth="1.5"
-                                        className="self-center shrink-0 stroke-red-500 w-6 h-6 mx-6"
+                                        className="mx-6 h-6 w-6 shrink-0 self-center stroke-red-500"
                                     >
                                         <path
                                             strokeLinecap="round"
@@ -165,5 +155,5 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                 }
             `}</style>
         </>
-    );
+    )
 }

@@ -21,7 +21,7 @@ class WorkerController extends Controller
     {
         $workers = Worker::query()
             ->when($request->search, function ($query, $search): void {
-                $query->where('name', 'like', '%' . $search . '%');
+                $query->where('name', 'like', '%'.$search.'%');
             })
             ->get();
 
@@ -127,7 +127,7 @@ class WorkerController extends Controller
             ->where('repository_id', $request->id)
             ->first();
 
-        if ( ! $hostingRepository) {
+        if (! $hostingRepository) {
             return response()->json(['error' => 'Repository not found'], 404);
         }
 
@@ -139,11 +139,9 @@ class WorkerController extends Controller
             'password_type' => HostingRepositoryPasswordTypeEnum::PASSWORD_TEXT,
         ]);
 
-        if ( ! $result) {
+        if (! $result) {
             return response()->json(['error' => 'Failed to update repository'], 500);
         }
-
-
 
         return response()->json(['success' => true]);
     }

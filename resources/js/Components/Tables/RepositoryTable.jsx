@@ -1,7 +1,3 @@
-export default function Index({
-}) {
-
-    <>
-        test
-    </>
+export default function Index({}) {
+    ;<>test</>
 }

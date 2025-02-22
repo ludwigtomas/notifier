@@ -1,93 +1,85 @@
-import {
-    TrashIcon,
-    ArrowDownTrayIcon,
-    BackspaceIcon,
-    ArrowPathIcon,
-} from "@heroicons/react/24/outline";
-import { router, Link } from "@inertiajs/react";
-import Dropdown from "@/Components/Dropdown";
-import Modal from "@/Components/Modal";
-import DangerButton from "@/Components/DangerButton";
-import SecondaryButton from "@/Components/SecondaryButton";
-import { useState } from "react";
+import { TrashIcon, ArrowDownTrayIcon, BackspaceIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { router, Link } from '@inertiajs/react'
+import Dropdown from '@/Components/Dropdown'
+import Modal from '@/Components/Modal'
+import DangerButton from '@/Components/DangerButton'
+import SecondaryButton from '@/Components/SecondaryButton'
+import { useState } from 'react'
 
-export default function RepositoryDatabaseTable({
-    repository,
-    backups
-}) {
-    const [selectedDatabases, setSelectedDatabases] = useState([]);
-    const [selectedDatabase, setSelectedDatabase] = useState(null);
-    const [toggleDeleteModal, setToggleDeleteModal] = useState(false);
-    const [toggleBulkDeleteModal, setToggleBulkDeleteModal] = useState(false);
+export default function RepositoryDatabaseTable({ repository, backups }) {
+    const [selectedDatabases, setSelectedDatabases] = useState([])
+    const [selectedDatabase, setSelectedDatabase] = useState(null)
+    const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
+    const [toggleBulkDeleteModal, setToggleBulkDeleteModal] = useState(false)
 
     const toggleModal = (database) => {
-        setSelectedDatabase(database);
+        setSelectedDatabase(database)
 
-        setToggleDeleteModal(true);
-    };
+        setToggleDeleteModal(true)
+    }
 
     const closeModal = () => {
-        setToggleDeleteModal(false);
-        setToggleBulkDeleteModal(false);
-        setSelectedDatabase(null);
-    };
+        setToggleDeleteModal(false)
+        setToggleBulkDeleteModal(false)
+        setSelectedDatabase(null)
+    }
 
     const deleteDatabase = () => {
-        let url = route("repository-files.destroy", {
+        let url = route('repository-files.destroy', {
             repository_files: [selectedDatabase.id],
-        });
+        })
 
         router.delete(url, {
             preserveScroll: true,
             onSuccess: () => closeModal(),
-        });
-    };
+        })
+    }
 
     const bulkDeleteRepositories = () => {
-        let url = route("repository-files.destroy", {
+        let url = route('repository-files.destroy', {
             repository_files: selectedDatabases,
-        });
+        })
 
         router.delete(url, {
             preserveScroll: true,
             onSuccess: () => {
-                closeModal();
-                setSelectedDatabases([]);
+                closeModal()
+                setSelectedDatabases([])
             },
-        });
-    };
+        })
+    }
 
     const getNewBackup = () => {
         if (!repository.website_url) {
-            return;
+            return
         }
 
-        let url = repository.website_url + "api/backup";
+        let url = repository.website_url + 'api/backup'
 
         // send axios get with params
         axios
-            .get(url + "?param=backup_database")
+            .get(url + '?param=backup_database')
             .then((response) => {
-                if(response.status === 200) {
+                if (response.status === 200) {
                     router.visit(route('repositories.show', repository.repository_id), {
                         only: ['repository_databases'],
                         preserveScroll: true,
-                        preserveState: true
+                        preserveState: true,
                     })
                 }
             })
             .catch((error) => {
                 alert(error)
-            });
+            })
     }
 
     return (
         <>
-            <div className="grid grid-cols-12 gap-2 mt-10 mb-5">
-                <div className="col-span-1 flex items-center justify-center text-center bg-sky-500 rounded-xl">
+            <div className="mb-5 mt-10 grid grid-cols-12 gap-2">
+                <div className="col-span-1 flex items-center justify-center rounded-xl bg-sky-500 text-center">
                     <Link
-                        className="p-2 h-full w-full flex justify-center items-center"
-                        href={route("repositories.show", repository.repository_id)}
+                        className="flex h-full w-full items-center justify-center p-2"
+                        href={route('repositories.show', repository.repository_id)}
                         only={['repository_databases']}
                         preserveScroll
                         preserveState
@@ -96,9 +88,9 @@ export default function RepositoryDatabaseTable({
                     </Link>
                 </div>
 
-                <div className="col-span-11 bg-sky-500 rounded-xl">
+                <div className="col-span-11 rounded-xl bg-sky-500">
                     <button
-                        className="p-2 text-center w-full space-x-2 text-white font-bold text-2xl"
+                        className="w-full space-x-2 p-2 text-center text-2xl font-bold text-white"
                         onClick={() => getNewBackup()}
                     >
                         Get new <u>Database</u> backup
@@ -106,21 +98,19 @@ export default function RepositoryDatabaseTable({
                 </div>
             </div>
 
-            <div className="mt-10 mb-5 border-4 border-zinc-900 divide-y rounded-lg divide-zinc-800 ">
+            <div className="mb-5 mt-10 divide-y divide-zinc-800 rounded-lg border-4 border-zinc-900">
                 {selectedDatabases.length > 0 && (
-                    <div className="fixed right-10 bottom-10">
+                    <div className="fixed bottom-10 right-10">
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <div className="flex items-center space-x-2">
-                                    <div className="py-3 px-5 rounded-xl bg-zinc-900 text-white">
-                                        {selectedDatabases.length}
-                                    </div>
-                                    <div className="group inline-flex rounded-xl bg-sky-500 ">
+                                    <div className="rounded-xl bg-zinc-900 px-5 py-3 text-white">{selectedDatabases.length}</div>
+                                    <div className="group inline-flex rounded-xl bg-sky-500">
                                         <button
                                             type="button"
-                                            className="px-6 py-3 rounded-md focus:outline-none"
+                                            className="rounded-md px-6 py-3 focus:outline-none"
                                         >
-                                            <span className="leading-4 font-medium text-white text-lg group-hover:text-sky-100 transition ease-in-out duration-150">
+                                            <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                                 Vybráno
                                             </span>
                                         </button>
@@ -130,33 +120,33 @@ export default function RepositoryDatabaseTable({
 
                             <Dropdown.Content direction="up">
                                 <button
-                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-red-500 hover:text-red-500"
+                                    className="flex w-full items-center border-l-4 border-transparent px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out hover:border-red-500 hover:bg-zinc-800 hover:text-red-500 focus:bg-gray-100 focus:outline-none"
                                     onClick={() => setToggleBulkDeleteModal(true)}
                                 >
                                     <span className="mr-2">
-                                        <TrashIcon className="w-6 h-6" />
+                                        <TrashIcon className="h-6 w-6" />
                                     </span>
                                     Smazat
                                 </button>
 
                                 <a
-                                    className="flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-400 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out hover:bg-zinc-800 border-l-4 border-transparent hover:border-green-500 hover:text-green-500"
-                                    href={route("repository-files.download", {
-                                        repository_file: selectedDatabases
+                                    className="flex w-full items-center border-l-4 border-transparent px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out hover:border-green-500 hover:bg-zinc-800 hover:text-green-500 focus:bg-gray-100 focus:outline-none"
+                                    href={route('repository-files.download', {
+                                        repository_file: selectedDatabases,
                                     })}
                                 >
-                                    <span className="mr-2 ">
-                                        <ArrowDownTrayIcon className="w-6 h-6" />
+                                    <span className="mr-2">
+                                        <ArrowDownTrayIcon className="h-6 w-6" />
                                     </span>
                                     Stáhnout
                                 </a>
 
                                 <button
-                                    className="border-l-4 border-transparent hover:border-blue-500 hover:text-blue-500 flex items-center w-full px-4 py-2 text-start text-sm leading-5 text-zinc-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+                                    className="flex w-full items-center border-l-4 border-transparent px-4 py-2 text-start text-sm leading-5 text-zinc-500 transition duration-150 ease-in-out hover:border-blue-500 hover:text-blue-500 focus:bg-gray-100 focus:outline-none"
                                     onClick={() => setSelectedDatabases([])}
                                 >
                                     <span className="mr-2">
-                                        <BackspaceIcon className="w-6 h-6" />
+                                        <BackspaceIcon className="h-6 w-6" />
                                     </span>
                                     Odznačit vše
                                 </button>
@@ -165,119 +155,111 @@ export default function RepositoryDatabaseTable({
                     </div>
                 )}
 
-                <table className="min-w-full divide-y divide-zinc-700 rounded-md overflow-hidden">
+                <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
                     <thead className="bg-zinc-950">
                         <tr>
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400"
                             >
                                 Bulk actions
                             </th>
 
                             <th
                                 scope="col"
-                                className="px-12 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-12 py-3.5 text-left text-sm font-normal text-zinc-400"
                             >
                                 Název
                             </th>
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400"
                             >
                                 Velikost
                             </th>
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400"
                             >
                                 Cesta
                             </th>
 
                             <th
                                 scope="col"
-                                className="px-4 py-3.5 text-sm font-normal text-left text-zinc-400"
+                                className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400"
                             >
                                 Vytvořeno
                             </th>
 
-                            <th scope="col" className="relative py-3.5 px-4">
+                            <th
+                                scope="col"
+                                className="relative px-4 py-3.5"
+                            >
                                 <span className="sr-only">Edit</span>
                             </th>
                         </tr>
                     </thead>
 
-
                     <tbody className="divide-y divide-zinc-700 bg-zinc-900">
-                        {backups && backups.data.map((database) => (
-                            <tr
-                                key={database.id}
-                                className="group hover:bg-zinc-800"
-                            >
-                                <td className="px-4 py-4">
-                                    <input
-                                        type="checkbox"
-                                        className="rounded-md p-3"
-                                        onChange={(e) => {
-                                            if (e.target.checked) {
-                                                setSelectedDatabases([
-                                                    ...selectedDatabases,
-                                                    database.id,
-                                                ]);
-                                            } else {
-                                                setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id));
-                                            }
-                                        }}
-                                    />
-                                </td>
+                        {backups &&
+                            backups.data.map((database) => (
+                                <tr
+                                    key={database.id}
+                                    className="group hover:bg-zinc-800"
+                                >
+                                    <td className="px-4 py-4">
+                                        <input
+                                            type="checkbox"
+                                            className="rounded-md p-3"
+                                            onChange={(e) => {
+                                                if (e.target.checked) {
+                                                    setSelectedDatabases([...selectedDatabases, database.id])
+                                                } else {
+                                                    setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id))
+                                                }
+                                            }}
+                                        />
+                                    </td>
 
-                                <td className="px-4 py-4 ">
-                                    <span className="text-sm font-medium text-zinc-400">
-                                        {database.name}
-                                    </span>
-                                </td>
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">{database.name}</span>
+                                    </td>
 
-                                <td className="px-4 py-4 ">
-                                    <span className="text-sm font-medium text-zinc-400">
-                                        {database.size} KB
-                                    </span>
-                                </td>
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">{database.size} KB</span>
+                                    </td>
 
-                                <td className="px-4 py-4 ">
-                                    <span className="text-sm font-medium text-zinc-400">
-                                        {database.path}
-                                    </span>
-                                </td>
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">{database.path}</span>
+                                    </td>
 
-                                <td className="px-4 py-4 ">
-                                    <span className="text-sm font-medium text-zinc-400">
-                                        {database.created_at_human}
-                                    </span>
-                                </td>
+                                    <td className="px-4 py-4">
+                                        <span className="text-sm font-medium text-zinc-400">{database.created_at_human}</span>
+                                    </td>
 
-                                <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                    <div className="flex items-center space-x-2">
-                                        <a
-                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-green-500 faster-animation"
-                                            href={route("repository-files.download", {
-                                                repository_file: [database.id],
-                                            })}
-                                        >
-                                            <ArrowDownTrayIcon className="w-6 h-6 text-green-500" />
-                                        </a>
+                                    <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                        <div className="flex items-center space-x-2">
+                                            <a
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                href={route('repository-files.download', {
+                                                    repository_file: [database.id],
+                                                })}
+                                            >
+                                                <ArrowDownTrayIcon className="h-6 w-6 text-green-500" />
+                                            </a>
 
-                                        <button
-                                            className="bg-zinc-800 group-hover:bg-zinc-900 p-1 rounded-lg border border-transparent hover:border-red-500 faster-animation"
-                                            onClick={() => toggleModal(database)}
-                                        >
-                                            <TrashIcon className="w-6 h-6 text-red-500" />
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
+                                            <button
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                onClick={() => toggleModal(database)}
+                                            >
+                                                <TrashIcon className="h-6 w-6 text-red-500" />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
@@ -292,25 +274,19 @@ export default function RepositoryDatabaseTable({
                 className="p-10"
             >
                 {selectedDatabase && (
-                    <div className="p-4 flex flex-col space-y-4">
-                        <h2 className="text-2xl font-medium text-gray-200 text-center">
-                            Smazat databázi
-                        </h2>
+                    <div className="flex flex-col space-y-4 p-4">
+                        <h2 className="text-center text-2xl font-medium text-gray-200">Smazat databázi</h2>
 
-                        <p className="mt-1 text-sm text-gray-400 text-center">
-                            Chystáš se smazat databázi. Tato akce je nevratná.
-                        </p>
+                        <p className="mt-1 text-center text-sm text-gray-400">Chystáš se smazat databázi. Tato akce je nevratná.</p>
 
                         <div className="flex justify-center space-x-4">
-                            <SecondaryButton onClick={closeModal}>
-                                Zavřít
-                            </SecondaryButton>
+                            <SecondaryButton onClick={closeModal}>Zavřít</SecondaryButton>
 
                             <DangerButton
                                 type="submit"
                                 onClick={deleteDatabase}
                             >
-                                <TrashIcon className="w-6 h-6 mr-2" />
+                                <TrashIcon className="mr-2 h-6 w-6" />
 
                                 {selectedDatabase.name}
                             </DangerButton>
@@ -326,41 +302,30 @@ export default function RepositoryDatabaseTable({
                 onClose={closeModal}
                 className="p-10"
             >
-                <div className="p-4 flex flex-col space-y-4">
-                    <h2 className="text-2xl font-medium text-gray-200 text-center">
-                        Smazat vybrané databáze
-                    </h2>
+                <div className="flex flex-col space-y-4 p-4">
+                    <h2 className="text-center text-2xl font-medium text-gray-200">Smazat vybrané databáze</h2>
 
                     <div className="my-4 space-y-0.5 text-center">
-                        <p className="text-sm text-gray-400">
-                            Chystáš se smazat vybrané databáze. Tato akce je
-                            nevratná.
-                        </p>
+                        <p className="text-sm text-gray-400">Chystáš se smazat vybrané databáze. Tato akce je nevratná.</p>
 
                         <p className="text-sm text-gray-400">
-                            Celkem se smaže{" "}
-                            <span className="font-bold text-lg mx-1">
-                                {selectedDatabases.length}
-                            </span>{" "}
-                            databází.
+                            Celkem se smaže <span className="mx-1 text-lg font-bold">{selectedDatabases.length}</span> databází.
                         </p>
                     </div>
 
                     <div className="flex justify-center space-x-4">
-                        <SecondaryButton onClick={closeModal}>
-                            Zavřít
-                        </SecondaryButton>
+                        <SecondaryButton onClick={closeModal}>Zavřít</SecondaryButton>
 
                         <DangerButton
                             type="submit"
                             onClick={bulkDeleteRepositories}
                         >
-                            <TrashIcon className="w-6 h-6 mr-2" />
+                            <TrashIcon className="mr-2 h-6 w-6" />
                             Smazat
                         </DangerButton>
                     </div>
                 </div>
             </Modal>
         </>
-    );
+    )
 }

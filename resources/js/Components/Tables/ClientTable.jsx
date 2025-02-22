@@ -1,9 +1,3 @@
-export default function Index({
-}) {
-
-    return (
-        <div>
-            test
-        </div>
-    )
+export default function Index({}) {
+    return <div>test</div>
 }

@@ -21,18 +21,18 @@ class RepositoryFileController extends Controller
 
         $repository_slug = $databases[0]->repository->slug;
 
-        $zip = new ZipArchive();
+        $zip = new ZipArchive;
 
-        $zip_file_name = $repository_slug . '.zip';
+        $zip_file_name = $repository_slug.'.zip';
 
-        $zip_path = storage_path('app/public/' . $zip_file_name);
+        $zip_path = storage_path('app/public/'.$zip_file_name);
 
-        if (true === $zip->open($zip_path, ZipArchive::CREATE)) {
+        if ($zip->open($zip_path, ZipArchive::CREATE) === true) {
 
             foreach ($databases as $database) {
                 // get the file from local storage
 
-                $file_path = Storage::disk('local')->path($database->path . '/' . $database->name);
+                $file_path = Storage::disk('local')->path($database->path.'/'.$database->name);
 
                 if (file_exists($file_path)) {
                     $zip->addFile($file_path, basename($file_path));
@@ -67,7 +67,7 @@ class RepositoryFileController extends Controller
             ->get();
 
         foreach ($repository_files as $file) {
-            Storage::disk('local')->delete($file->path . '/' . $file->name);
+            Storage::disk('local')->delete($file->path.'/'.$file->name);
 
             $file->delete();
         }

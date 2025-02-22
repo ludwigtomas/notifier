@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function index(Request $request): Response
     {
         $request->model
-            ? $requsted_models = array_map(fn($model) => 'App\\Models\\' . $model, $request->model)
+            ? $requsted_models = array_map(fn ($model) => 'App\\Models\\'.$model, $request->model)
             : $requsted_models = [];
 
         $notifications = Notification::query()

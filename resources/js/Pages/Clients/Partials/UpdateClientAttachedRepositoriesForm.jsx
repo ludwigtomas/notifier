@@ -1,47 +1,36 @@
-import { Link, useForm } from "@inertiajs/react";
-import InputError from '@/Components/InputError';
-import TextInput from '@/Components/TextInput';
-import {
-    UserIcon,
-    TrashIcon,
-    CheckIcon,
-    PencilSquareIcon,
-    XMarkIcon,
-    ArchiveBoxIcon,
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { Link, useForm } from '@inertiajs/react'
+import InputError from '@/Components/InputError'
+import TextInput from '@/Components/TextInput'
+import { UserIcon, TrashIcon, CheckIcon, PencilSquareIcon, XMarkIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
 
 export default function UpdateClientAttachedRepositoriesForm({ client, className }) {
-
     const [selectedRepository, setSelectedRepository] = useState(null)
 
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-        client_email: "",
-        relationship: "client_repository",
-    });
+        client_email: '',
+        relationship: 'client_repository',
+    })
 
     const updateSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         patch(route('client-repository.update', [client.id, selectedRepository]), {
             preserveScroll: true,
             onSuccess: () => {
-                setSelectedRepository(null);
-                setData("client_email_secondary", "");
+                setSelectedRepository(null)
+                setData('client_email_secondary', '')
             },
-        });
+        })
     }
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-100">
-                    Detach repositories
-                </h2>
+                <h2 className="text-lg font-medium text-gray-100">Detach repositories</h2>
 
                 <p className="mt-1 text-sm text-gray-400">
-                    Defaultně se využije <code>client.email</code>, případně lze
-                    zadat custom pro každého klienta.
+                    Defaultně se využije <code>client.email</code>, případně lze zadat custom pro každého klienta.
                 </p>
             </header>
 
@@ -52,23 +41,21 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                             className="col-span-12 sm:col-span-6 lg:col-span-4"
                             key={repository.repository_id}
                         >
-                            <div className="flex items-center justify-between bg-zinc-800 rounded-lg p-4">
+                            <div className="flex items-center justify-between rounded-lg bg-zinc-800 p-4">
                                 <div className="flex items-center space-x-4">
-                                    <div className="flex items-center justify-center w-12 h-12 bg-zinc-700 rounded-lg">
-                                        <ArchiveBoxIcon className="w-6 h-6 text-sky-500" />
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-700">
+                                        <ArchiveBoxIcon className="h-6 w-6 text-sky-500" />
                                     </div>
 
                                     <div>
                                         <Link
-                                            href={route("repositories.show", repository.repository_id)}
+                                            href={route('repositories.show', repository.repository_id)}
                                             className="text-lg font-semibold text-gray-100"
                                         >
                                             {repository.name}
                                         </Link>
 
-                                        <p className="mt-1 text-sm text-gray-400">
-                                            {client.email ?? "N/A"}
-                                        </p>
+                                        <p className="mt-1 text-sm text-gray-400">{client.email ?? 'N/A'}</p>
 
                                         {selectedRepository == repository.repository_id ? (
                                             <>
@@ -78,7 +65,7 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                                                     className="mt-1 block w-full"
                                                     placeholder="info@ludwigtomas.cz"
                                                     value={data.client_email}
-                                                    onChange={(e) => setData("client_email_secondary", e.target.value)}
+                                                    onChange={(e) => setData('client_email_secondary', e.target.value)}
                                                     isFocused
                                                     required
                                                 />
@@ -88,10 +75,8 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                                                     message={errors.client_email}
                                                 />
                                             </>
-                                        ): (
-                                            <p className="mt-1 text-sm text-gray-400">
-                                                {repository.client_email ?? "N/A"}
-                                            </p>
+                                        ) : (
+                                            <p className="mt-1 text-sm text-gray-400">{repository.client_email ?? 'N/A'}</p>
                                         )}
                                     </div>
                                 </div>
@@ -102,51 +87,52 @@ export default function UpdateClientAttachedRepositoriesForm({ client, className
                                             <button
                                                 type="button"
                                                 onClick={() => setSelectedRepository(null)}
-                                                className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
+                                                className="faster-animation group inline-flex items-center rounded-md bg-zinc-900 px-3 py-2 text-sm hover:bg-red-500"
                                             >
-                                                <XMarkIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
+                                                <XMarkIcon className="h-6 w-6 text-red-500 group-hover:text-red-100" />
                                             </button>
 
                                             <button
                                                 type="submit"
                                                 onClick={updateSubmit}
-                                                className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
+                                                className="faster-animation group inline-flex items-center rounded-md bg-zinc-900 px-3 py-2 text-sm hover:bg-green-500"
                                             >
-                                                <CheckIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
+                                                <CheckIcon className="h-6 w-6 text-green-500 group-hover:text-green-100" />
                                             </button>
                                         </>
-                                        ) : (
-                                            <>
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        setSelectedRepository(repository.repository_id);
-                                                        setData("client_email_secondary", repository.client_email ?? "");
-                                                    }}
-                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-green-500 faster-animation"
-                                                >
-                                                    <PencilSquareIcon className="w-6 h-6 text-green-500 group-hover:text-green-100"/>
-                                                </button>
+                                    ) : (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setSelectedRepository(repository.repository_id)
+                                                    setData('client_email_secondary', repository.client_email ?? '')
+                                                }}
+                                                className="faster-animation group inline-flex items-center rounded-md bg-zinc-900 px-3 py-2 text-sm hover:bg-green-500"
+                                            >
+                                                <PencilSquareIcon className="h-6 w-6 text-green-500 group-hover:text-green-100" />
+                                            </button>
 
-                                                <Link
-                                                    as="button"
-                                                    method="DELETE"
-                                                    preserveScroll
-                                                    className="group inline-flex items-center text-sm bg-zinc-900 px-3 py-2 rounded-md hover:bg-red-500 faster-animation"
-                                                    href={route('client-repository.detach', {client: client.id, repository: repository.repository_id})}
-                                                >
-                                                    <TrashIcon className="w-6 h-6 text-red-500 group-hover:text-red-100"/>
-                                                </Link>
-                                            </>
-                                        )
-                                    }
+                                            <Link
+                                                as="button"
+                                                method="DELETE"
+                                                preserveScroll
+                                                className="faster-animation group inline-flex items-center rounded-md bg-zinc-900 px-3 py-2 text-sm hover:bg-red-500"
+                                                href={route('client-repository.detach', {
+                                                    client: client.id,
+                                                    repository: repository.repository_id,
+                                                })}
+                                            >
+                                                <TrashIcon className="h-6 w-6 text-red-500 group-hover:text-red-100" />
+                                            </Link>
+                                        </>
+                                    )}
                                 </div>
                             </div>
-
                         </div>
-                    );
+                    )
                 })}
             </div>
         </section>
-    );
+    )
 }

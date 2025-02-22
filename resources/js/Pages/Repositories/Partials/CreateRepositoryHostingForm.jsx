@@ -1,14 +1,13 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { ClockIcon } from "@heroicons/react/24/outline";
-import Dropdown from "@/Components/Dropdown";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { Link, useForm, usePage } from '@inertiajs/react'
+import InputError from '@/Components/InputError'
+import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
+import TextInput from '@/Components/TextInput'
+import { ClockIcon } from '@heroicons/react/24/outline'
+import Dropdown from '@/Components/Dropdown'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
-export default function CreateRepositoryHostingForm({ repository_id, hosting_repository, hostings, className = "" }) {
-
+export default function CreateRepositoryHostingForm({ repository_id, hosting_repository, hostings, className = '' }) {
     const { data, setData, post, errors, processing } = useForm({
         repository_id: repository_id,
         hosting_id: '',
@@ -17,33 +16,29 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
         ip_port: '',
         login_user: '',
         login_password: '',
-    });
+    })
 
     const submit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         post(route('hosting-repository.store'), {
             preserveScroll: true,
-        });
-    };
+        })
+    }
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-100">
-                    Create Repository Hosting
-                </h2>
+                <h2 className="text-lg font-medium text-gray-100">Create Repository Hosting</h2>
 
-                <p className="mt-1 text-sm text-gray-400">
-                    Create hosting information for this repository.
-                </p>
+                <p className="mt-1 text-sm text-gray-400">Create hosting information for this repository.</p>
             </header>
 
             <form
                 onSubmit={submit}
                 className="mt-6"
             >
-                <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                <div className="space-y-6 rounded-lg border-2 border-zinc-700 bg-zinc-800 p-5">
                     {/* <div>
                         <InputLabel
                             htmlFor="name"
@@ -71,14 +66,14 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
                         />
 
                         <select
-                            className="mt-1 block w-full bg-zinc-700 border-2 border-zinc-500 focus:border-sky-500 focus:ring-sky-500 text-zinc-200 rounded-md shadow-sm"
+                            className="mt-1 block w-full rounded-md border-2 border-zinc-500 bg-zinc-700 text-zinc-200 shadow-sm focus:border-sky-500 focus:ring-sky-500"
                             value={data.hosting_id}
                             onChange={(e) => setData('hosting_id', e.target.value)}
                         >
                             <option
                                 disabled
                                 hidden
-                                value={""}
+                                value={''}
                             >
                                 Select hosting
                             </option>
@@ -184,7 +179,7 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
                     </div>
                 </div>
 
-                <div className="mt-6 col-span-12 flex items-center space-x-4">
+                <div className="col-span-12 mt-6 flex items-center space-x-4">
                     <div>
                         <PrimaryButton
                             typeOfButton="submit"
@@ -197,5 +192,5 @@ export default function CreateRepositoryHostingForm({ repository_id, hosting_rep
                 </div>
             </form>
         </section>
-    );
+    )
 }

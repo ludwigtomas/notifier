@@ -1,4 +1,4 @@
-import { Link, Head } from "@inertiajs/react"
+import { Link, Head } from '@inertiajs/react'
 
 export default function ErrorPage({ status }) {
     const title = {
@@ -16,7 +16,7 @@ export default function ErrorPage({ status }) {
     }[status]
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center">
+        <div className="flex min-h-screen flex-col items-center justify-center">
             <Head title={title} />
             <div className="text-center">
                 <h1 className="text-4xl font-bold text-white">{title}</h1>
@@ -26,7 +26,7 @@ export default function ErrorPage({ status }) {
             <div className="mt-8">
                 <Link
                     href={route('dashboard.index')}
-                    className="border h-12 flex items-center px-4 relative rounded-xl hover:bg-zinc-800 bg-zinc-700 border-white/45 before:rounded-[11px] before:absolute before:inset-0 before:border-t before:border-white/30 before:shadow before:shadow-zinc-700 text-white"
+                    className="relative flex h-12 items-center rounded-xl border border-white/45 bg-zinc-700 px-4 text-white before:absolute before:inset-0 before:rounded-[11px] before:border-t before:border-white/30 before:shadow before:shadow-zinc-700 hover:bg-zinc-800"
                 >
                     Dashboard
                 </Link>

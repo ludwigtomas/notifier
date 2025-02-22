@@ -1,7 +1,7 @@
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import { Link, usePage } from "@inertiajs/react";
+import ApplicationLogo from '@/Components/ApplicationLogo'
+import Dropdown from '@/Components/Dropdown'
+import NavLink from '@/Components/NavLink'
+import { Link, usePage } from '@inertiajs/react'
 import {
     PresentationChartBarIcon,
     UsersIcon,
@@ -12,16 +12,16 @@ import {
     GlobeAltIcon,
     RocketLaunchIcon,
     BellIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline'
 
 const Sidebar = ({ user }) => {
     return (
-        <aside className="min-h-screen relative grid w-[4rem] lg:w-[14rem]">
-            <nav className="bg-zinc-900 border-r border-neutral-700 fixed w-[4rem] lg:w-[14rem] h-full left-0 top-0 py-20 ">
-                <div className="relative flex flex-col items-center justify-between h-full">
+        <aside className="relative grid min-h-screen w-[4rem] lg:w-[14rem]">
+            <nav className="fixed left-0 top-0 h-full w-[4rem] border-r border-neutral-700 bg-zinc-900 py-20 lg:w-[14rem]">
+                <div className="relative flex h-full flex-col items-center justify-between">
                     <div className="flex flex-col items-center space-y-5">
                         <Link href={route('dashboard.index')}>
-                            <ApplicationLogo className="bg-zinc-950 size-20 p-1.5 rounded-xl" />
+                            <ApplicationLogo className="size-20 rounded-xl bg-zinc-950 p-1.5" />
                         </Link>
 
                         <div className="relative">
@@ -30,18 +30,21 @@ const Sidebar = ({ user }) => {
                                     <span className="inline-flex rounded-md">
                                         <button
                                             type="button"
-                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-none text-[20px]  hover:text-sky-500 focus:outline-none transition ease-in-out duration-150"
+                                            className="inline-flex items-center rounded-md border border-transparent bg-none px-3 py-2 text-[20px] text-sm font-medium leading-4 text-white transition duration-150 ease-in-out hover:text-sky-500 focus:outline-none"
                                         >
                                             {user.name}
 
-                                            <ChevronDownIcon className="ms-2 -me-0.5 size-4" />
+                                            <ChevronDownIcon className="-me-0.5 ms-2 size-4" />
                                         </button>
                                     </span>
                                 </Dropdown.Trigger>
 
-                                <Dropdown.Content align="center" width="40">
+                                <Dropdown.Content
+                                    align="center"
+                                    width="40"
+                                >
                                     <Dropdown.Link
-                                        href={route("profile.edit")}
+                                        href={route('profile.edit')}
                                         className="justify-center"
                                     >
                                         Profile
@@ -49,7 +52,7 @@ const Sidebar = ({ user }) => {
 
                                     <Dropdown.Link
                                         className="justify-center"
-                                        href={route("logout")}
+                                        href={route('logout')}
                                         method="post"
                                         as="button"
                                     >
@@ -62,137 +65,115 @@ const Sidebar = ({ user }) => {
 
                     <div className="space-y-2 px-4">
                         <NavLink
-                            href={route("dashboard.index")}
-                            active={route().current("dashboard.*")}
-                            className="gap-4 w-full"
+                            href={route('dashboard.index')}
+                            active={route().current('dashboard.*')}
+                            className="w-full gap-4"
                         >
                             <PresentationChartBarIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Dashboard
-                            </span>
+                            <span className="hidden w-full xl:block">Dashboard</span>
 
-                            <span>
-                                {usePage().props.global.new_notifications_count}
-                            </span>
+                            <span>{usePage().props.global.new_notifications_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("gits.index")}
-                            active={route().current("gits.*")}
-                            className="gap-4 w-full"
+                            href={route('gits.index')}
+                            active={route().current('gits.*')}
+                            className="w-full gap-4"
                         >
                             <GlobeAltIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">Git</span>
+                            <span className="hidden w-full xl:block">Git</span>
 
                             <span>{usePage().props.global.gits_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("git-groups.index")}
-                            active={route().current("git-groups.*")}
-                            className="gap-4 w-full"
+                            href={route('git-groups.index')}
+                            active={route().current('git-groups.*')}
+                            className="w-full gap-4"
                         >
                             <FolderOpenIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Git groups
-                            </span>
+                            <span className="hidden w-full xl:block">Git groups</span>
 
-                            <span>
-                                {usePage().props.global.git_group_parent_count}
-                            </span>
+                            <span>{usePage().props.global.git_group_parent_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("repositories.index")}
-                            active={route().current("repositories.*")}
-                            className="gap-4 w-full"
+                            href={route('repositories.index')}
+                            active={route().current('repositories.*')}
+                            className="w-full gap-4"
                         >
                             <RocketLaunchIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Repozitáře
-                            </span>
+                            <span className="hidden w-full xl:block">Repozitáře</span>
 
-                            <span>
-                                {usePage().props.global.repositories_count}
-                            </span>
+                            <span>{usePage().props.global.repositories_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("clients.index")}
-                            active={route().current("clients.*")}
-                            className="gap-4 w-full"
+                            href={route('clients.index')}
+                            active={route().current('clients.*')}
+                            className="w-full gap-4"
                         >
                             <UsersIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Klienti
-                            </span>
+                            <span className="hidden w-full xl:block">Klienti</span>
 
                             <span>{usePage().props.global.clients_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("hostings.index")}
-                            active={route().current("hostings.*")}
-                            className="gap-4 w-full"
+                            href={route('hostings.index')}
+                            active={route().current('hostings.*')}
+                            className="w-full gap-4"
                         >
                             <ServerStackIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Hostingy
-                            </span>
+                            <span className="hidden w-full xl:block">Hostingy</span>
 
                             <span>{usePage().props.global.hostings_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("workers.index")}
-                            active={route().current("workers.*")}
-                            className="gap-4 w-full"
+                            href={route('workers.index')}
+                            active={route().current('workers.*')}
+                            className="w-full gap-4"
                         >
                             <ServerStackIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Workers
-                            </span>
+                            <span className="hidden w-full xl:block">Workers</span>
 
                             <span>{usePage().props.global.workers_count}</span>
                         </NavLink>
 
                         <NavLink
-                            href={route("notifications.index")}
-                            active={route().current("notifications.*")}
-                            className="gap-4 w-full"
+                            href={route('notifications.index')}
+                            active={route().current('notifications.*')}
+                            className="w-full gap-4"
                         >
                             <BellIcon className="size-10" />
 
-                            <span className="w-full hidden xl:block">
-                                Notifikace
-                            </span>
+                            <span className="hidden w-full xl:block">Notifikace</span>
 
-                            <span>
-                                {usePage().props.global.notifications_count}
-                            </span>
+                            <span>{usePage().props.global.notifications_count}</span>
                         </NavLink>
                     </div>
 
-                    <div className="flex items-center flex-col">
+                    <div className="flex flex-col items-center">
                         <div className="relative grid grid-cols-1">
                             <a
-                                className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                href={route("horizon.index")}
+                                className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
+                                href={route('horizon.index')}
                                 target="_blank"
                             >
                                 Horizon
                             </a>
 
                             <a
-                                className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                href={route("pulse")}
+                                className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
+                                href={route('pulse')}
                                 target="_blank"
                             >
                                 Pulse
@@ -207,8 +188,8 @@ const Sidebar = ({ user }) => {
                             </a> */}
 
                             <a
-                                className="px-4 py-2 rounded-lg text-center text-xs leading-5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus:bg-zinc-600 transition duration-150 ease-in-out hover:bg-zinc-800"
-                                href={route("log-viewer.index")}
+                                className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
+                                href={route('log-viewer.index')}
                                 target="_blank"
                             >
                                 Log Viewer
@@ -216,18 +197,16 @@ const Sidebar = ({ user }) => {
                         </div>
                     </div>
 
-                    <div className="absolute left-1/2 -translate-x-1/2 -bottom-14">
-                        <div className="bg-zinc-700 p-2 rounded-xl relative">
-                            <div className="absolute size-5 bg-red-500 left-full bottom-full -translate-x-3 translate-y-3 rounded-full flex items-center justify-center">
-                                <span className="text-xs text-white font-bold">
-                                    {usePage().props.global.notifications_count}
-                                </span>
+                    <div className="absolute -bottom-14 left-1/2 -translate-x-1/2">
+                        <div className="relative rounded-xl bg-zinc-700 p-2">
+                            <div className="absolute bottom-full left-full flex size-5 -translate-x-3 translate-y-3 items-center justify-center rounded-full bg-red-500">
+                                <span className="text-xs font-bold text-white">{usePage().props.global.notifications_count}</span>
                             </div>
 
                             <BellAlertIcon className="size-6 text-zinc-400 hover:text-zinc-200" />
 
                             <Link
-                                href={route("notifications.index")}
+                                href={route('notifications.index')}
                                 className="absolute inset-0 z-20"
                             />
                         </div>
@@ -236,6 +215,6 @@ const Sidebar = ({ user }) => {
             </nav>
         </aside>
     )
-};
+}
 
-export default Sidebar;
+export default Sidebar

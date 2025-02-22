@@ -1,67 +1,68 @@
-import React from "react";
-import {
-    EyeIcon,
-    EyeSlashIcon,
-    ClipboardIcon,
-} from "@heroicons/react/24/outline";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import React from 'react'
+import { EyeIcon, EyeSlashIcon, ClipboardIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 
-const RepositorySettingForApi = ({repository}) => {
-
-    const [showCode, setShowCode] = useState(false);
-    const [selectFile, setSelectFile] = useState('ssh');
+const RepositorySettingForApi = ({ repository }) => {
+    const [showCode, setShowCode] = useState(false)
+    const [selectFile, setSelectFile] = useState('ssh')
 
     // Function to toggle the database_verification_code
     function toggleShowCode() {
-        setShowCode(!showCode);
+        setShowCode(!showCode)
     }
 
     const handleSelectTab = (file) => {
         return () => {
-            setSelectFile(file);
-        };
+            setSelectFile(file)
+        }
     }
 
     // Function to copy the code to clipboard
     const copyEnvToClipboard = () => {
+        let backup_code = '"' + repository.database_verification_code + '"'
+        let backup_url = '"' + import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.slug + '"'
+        let BACKUP_ZIP_PASSWORD = '"' + repository.slug.slice(0, 1) + '_secret123' + '"'
 
-        let backup_code = '"' + repository.database_verification_code + '"';
-        let backup_url = '"'+ import.meta.env.VITE_APP_URL + "/api/v1/repositories/" + repository.slug + '"';
-        let BACKUP_ZIP_PASSWORD = '"'+ repository.slug.slice(0, 1) + '_secret123' + '"';
+        let env_code =
+            'BACKUP_CODE=' + backup_code + '\n' + 'BACKUP_URL=' + backup_url + '\n' + 'BACKUP_ZIP_PASSWORD=' + BACKUP_ZIP_PASSWORD
 
-        let env_code = "BACKUP_CODE=" + backup_code + "\n" + "BACKUP_URL=" + backup_url + "\n" + "BACKUP_ZIP_PASSWORD=" + BACKUP_ZIP_PASSWORD;
-
-        navigator.clipboard.writeText(env_code);
-    };
+        navigator.clipboard.writeText(env_code)
+    }
 
     const copySSHToClipboard = () => {
         if (!repository.relationships.hosting_repository) {
-            return;
+            return
         }
 
-        let port = repository.relationships.hosting_repository.ip_port ? repository.relationships.hosting_repository.ip_port : 22;
+        let port = repository.relationships.hosting_repository.ip_port ? repository.relationships.hosting_repository.ip_port : 22
 
-        let ssh_code = "ssh " + repository.relationships.hosting_repository.login_user + "@" + repository.relationships.hosting_repository.ip_address + " -p " + port;
+        let ssh_code =
+            'ssh ' +
+            repository.relationships.hosting_repository.login_user +
+            '@' +
+            repository.relationships.hosting_repository.ip_address +
+            ' -p ' +
+            port
 
-        console.log(ssh_code);
+        console.log(ssh_code)
 
-        navigator.clipboard.writeText(ssh_code);
+        navigator.clipboard.writeText(ssh_code)
     }
 
     return (
-        <div className="col-span-12 h-56 mb-10">
-            <div className="flex justify-center items-center">
-                <div className="bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12 rounded-xl overflow-hidden">
-                    <div className="flex justify-between items-center relative">
-                        <div className="p-2 flex space-x-2">
+        <div className="col-span-12 mb-10 h-56">
+            <div className="flex items-center justify-center">
+                <div className="overflow-hidden rounded-xl bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12">
+                    <div className="relative flex items-center justify-between">
+                        <div className="flex space-x-2 p-2">
                             <div className="space-x-2">
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={handleSelectTab("ssh")}
+                                    onClick={handleSelectTab('ssh')}
                                     className={
-                                        "inline-flex bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600 + (showCode === false && 'cursor-not-allowed')"
+                                        "+ (showCode === false && 'cursor-not-allowed') inline-flex rounded-lg border border-zinc-600 bg-zinc-800 p-2 text-white"
                                     }
                                 >
                                     SSH Connection
@@ -71,10 +72,8 @@ const RepositorySettingForApi = ({repository}) => {
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={handleSelectTab("env")}
-                                    className={
-                                        "inline-flex bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
-                                    }
+                                    onClick={handleSelectTab('env')}
+                                    className={'inline-flex rounded-lg border border-zinc-600 bg-zinc-800 p-2 text-white'}
                                 >
                                     .ENV
                                     <ClipboardIcon className="ml-2 size-6" />
@@ -82,65 +81,50 @@ const RepositorySettingForApi = ({repository}) => {
                             </div>
                         </div>
 
-                        <div className="p-4 flex space-x-2">
-                            <div className="rounded-full w-3 h-3 bg-red-500"></div>
-                            <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
-                            <div className="rounded-full w-3 h-3 bg-green-500"></div>
+                        <div className="flex space-x-2 p-4">
+                            <div className="h-3 w-3 rounded-full bg-red-500"></div>
+                            <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
+                            <div className="h-3 w-3 rounded-full bg-green-500"></div>
                         </div>
                     </div>
 
-                    {selectFile === "ssh" ? (
-                        <div className="col-span-12 w-full grid p-1 relative">
-                            <div className="absolute right-2 top-1/2 -translate-y-1/2 z-50 ">
-                                <div className="p-2 flex space-x-2">
+                    {selectFile === 'ssh' ? (
+                        <div className="relative col-span-12 grid w-full p-1">
+                            <div className="absolute right-2 top-1/2 z-50 -translate-y-1/2">
+                                <div className="flex space-x-2 p-2">
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
                                         onClick={copySSHToClipboard}
-                                        className="bg-zinc-700 text-zinc-200 p-2 rounded-lg border border-zinc-400"
+                                        className="rounded-lg border border-zinc-400 bg-zinc-700 p-2 text-zinc-200"
                                     >
-                                        <ClipboardIcon className="w-6 h-6" />
+                                        <ClipboardIcon className="h-6 w-6" />
                                     </motion.button>
                                 </div>
                             </div>
 
-                            <div className="bg-stone-800 p-1 drop-shadow-2xl rounded-lg overflow-hidden flex items-center">
-                                <div className="w-full flex items-center justify-center">
-                                    <div className="bg-stone-800 rounded-lg w-full">
+                            <div className="flex items-center overflow-hidden rounded-lg bg-stone-800 p-1 drop-shadow-2xl">
+                                <div className="flex w-full items-center justify-center">
+                                    <div className="w-full rounded-lg bg-stone-800">
                                         <div
                                             id="code-area"
-                                            className="p-5 space-y-3"
+                                            className="space-y-3 p-5"
                                         >
                                             {repository.relationships.hosting_repository && (
-                                                <div className="text-base text-center">
-                                                    <span className="text-yellow-300">
-                                                        ssh
-                                                    </span>
-
-                                                    {" "}
-
+                                                <div className="text-center text-base">
+                                                    <span className="text-yellow-300">ssh</span>{' '}
                                                     <span className="text-purple-400">
-                                                        { repository.relationships.hosting_repository?.login_user}
+                                                        {repository.relationships.hosting_repository?.login_user}
                                                     </span>
-
-                                                    <span className="text-green-300">
-                                                        @
-                                                    </span>
-
+                                                    <span className="text-green-300">@</span>
                                                     <span className="text-purple-400">
-                                                        { repository.relationships.hosting_repository?.ip_address}
-                                                    </span>
-                                                    {" "}
+                                                        {repository.relationships.hosting_repository?.ip_address}
+                                                    </span>{' '}
                                                     {repository.relationships.hosting_repository?.ip_port && (
                                                         <span>
-                                                            <span className="text-green-300">
-                                                                -p
-                                                            </span>
-
-                                                            {" "}
-
+                                                            <span className="text-green-300">-p</span>{' '}
                                                             <span className="text-purple-400">
-                                                                { repository.relationships.hosting_repository.ip_port }
+                                                                {repository.relationships.hosting_repository.ip_port}
                                                             </span>
                                                         </span>
                                                     )}
@@ -152,20 +136,16 @@ const RepositorySettingForApi = ({repository}) => {
                             </div>
                         </div>
                     ) : (
-                        <div className="col-span-12 w-full grid p-1 relative">
-                            <div className="absolute right-2 top-1/2 -translate-y-1/2 z-50 ">
-                                <div className="p-2 flex space-x-2">
+                        <div className="relative col-span-12 grid w-full p-1">
+                            <div className="absolute right-2 top-1/2 z-50 -translate-y-1/2">
+                                <div className="flex space-x-2 p-2">
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
                                         whileTap={{ scale: 0.9 }}
                                         onClick={toggleShowCode}
-                                        className="bg-zinc-800 text-white p-2 rounded-lg border border-zinc-600"
+                                        className="rounded-lg border border-zinc-600 bg-zinc-800 p-2 text-white"
                                     >
-                                        {showCode ? (
-                                            <EyeIcon className="w-6 h-6" />
-                                        ) : (
-                                            <EyeSlashIcon className="w-6 h-6" />
-                                        )}
+                                        {showCode ? <EyeIcon className="h-6 w-6" /> : <EyeSlashIcon className="h-6 w-6" />}
                                     </motion.button>
 
                                     <motion.button
@@ -173,93 +153,62 @@ const RepositorySettingForApi = ({repository}) => {
                                         whileTap={{ scale: 0.9 }}
                                         onClick={copyEnvToClipboard}
                                         className={
-                                            "bg-zinc-700 text-zinc-200 p-2 rounded-lg border border-zinc-400 " +
-                                            (!showCode && "cursor-not-allowed")
+                                            'rounded-lg border border-zinc-400 bg-zinc-700 p-2 text-zinc-200 ' +
+                                            (!showCode && 'cursor-not-allowed')
                                         }
                                     >
-                                        <ClipboardIcon className="w-6 h-6" />
+                                        <ClipboardIcon className="h-6 w-6" />
                                     </motion.button>
                                 </div>
                             </div>
 
-                            <div className="bg-stone-800 p-1 drop-shadow-2xl rounded-lg overflow-hidden">
-                                <div className="w-full flex items-center justify-center">
-                                    <div className="bg-stone-800 rounded-lg w-full">
+                            <div className="overflow-hidden rounded-lg bg-stone-800 p-1 drop-shadow-2xl">
+                                <div className="flex w-full items-center justify-center">
+                                    <div className="w-full rounded-lg bg-stone-800">
                                         <div
                                             id="code-area"
-                                            className="p-5 space-y-3"
+                                            className="space-y-3 p-5"
                                         >
                                             <div className="text-base">
-                                                <span className="text-yellow-300">
-                                                    BACKUP_CODE
-                                                </span>
+                                                <span className="text-yellow-300">BACKUP_CODE</span>
 
-                                                <span className="text-green-400">
-                                                    =
-                                                </span>
+                                                <span className="text-green-400">=</span>
 
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-blue-400">"</span>
 
                                                 <span className="text-purple-400">
                                                     {showCode
                                                         ? repository.database_verification_code
-                                                        : "xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx"}
+                                                        : 'xxxxx - xxxxx - xxxxx - xxxxx - xxxxx - xxxxx'}
                                                 </span>
 
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-blue-400">"</span>
                                             </div>
 
                                             <div className="text-base">
-                                                <span className="text-yellow-300">
-                                                    BACKUP_URL
-                                                </span>
-                                                <span className="text-green-400">
-                                                    =
-                                                </span>
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-yellow-300">BACKUP_URL</span>
+                                                <span className="text-green-400">=</span>
+                                                <span className="text-blue-400">"</span>
 
                                                 <span className="text-purple-400">
                                                     {showCode
-                                                        ? import.meta.env
-                                                              .VITE_APP_URL +
-                                                          "/api/v1/repositories/" +
-                                                          repository.slug
-                                                        : import.meta.env
-                                                              .VITE_APP_URL +
-                                                          "/api/v1/repositories/xxxxx-xxxxx"}
+                                                        ? import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.slug
+                                                        : import.meta.env.VITE_APP_URL + '/api/v1/repositories/xxxxx-xxxxx'}
                                                 </span>
 
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-blue-400">"</span>
                                             </div>
 
                                             <div className="text-base">
-                                                <span className="text-yellow-300">
-                                                    BACKUP_ZIP_PASSWORD
-                                                </span>
-                                                <span className="text-green-400">
-                                                    =
-                                                </span>
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-yellow-300">BACKUP_ZIP_PASSWORD</span>
+                                                <span className="text-green-400">=</span>
+                                                <span className="text-blue-400">"</span>
 
                                                 <span className="text-purple-400">
-                                                    {showCode
-                                                        ? repository.slug.slice(0, 1) + '_secret123'
-                                                        : "x_xxxxxxxxx"}
+                                                    {showCode ? repository.slug.slice(0, 1) + '_secret123' : 'x_xxxxxxxxx'}
                                                 </span>
 
-                                                <span className="text-blue-400">
-                                                    "
-                                                </span>
+                                                <span className="text-blue-400">"</span>
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +219,7 @@ const RepositorySettingForApi = ({repository}) => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default RepositorySettingForApi;
+export default RepositorySettingForApi

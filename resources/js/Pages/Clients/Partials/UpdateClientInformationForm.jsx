@@ -1,50 +1,41 @@
-import { useForm } from "@inertiajs/react";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import GoBackLink from "@/Components/GoBackLink";
+import { useForm } from '@inertiajs/react'
+import InputError from '@/Components/InputError'
+import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
+import TextInput from '@/Components/TextInput'
+import GoBackLink from '@/Components/GoBackLink'
 
-export default function UpdateClientRepositoriesForm({
-    client,
-    className = "",
-}) {
+export default function UpdateClientRepositoriesForm({ client, className = '' }) {
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
         name: client.name ?? '',
         email: client.email ?? '',
         phone: client.phone ?? '',
         ico: client.ico ?? '',
-    });
+    })
 
     const submit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        put(route("clients.update", client.id), {
+        put(route('clients.update', client.id), {
             preserveScroll: true,
-        });
-    };
+        })
+    }
 
     return (
         <section className={className}>
             <header>
-                <h1 className="text-center text-xl font-bold text-gray-200">
-                    {client.name}
-                </h1>
+                <h1 className="text-center text-xl font-bold text-gray-200">{client.name}</h1>
 
-                <h2 className="text-lg font-medium text-gray-100">
-                    Client edit
-                </h2>
+                <h2 className="text-lg font-medium text-gray-100">Client edit</h2>
 
-                <p className="mt-1 text-sm text-gray-400">
-                    Update your client's information.
-                </p>
+                <p className="mt-1 text-sm text-gray-400">Update your client's information.</p>
             </header>
 
             <form
                 onSubmit={submit}
                 className="mt-6 w-6/12"
             >
-                <div className="space-y-6 border-2 border-zinc-700 bg-zinc-800 p-5 rounded-lg">
+                <div className="space-y-6 rounded-lg border-2 border-zinc-700 bg-zinc-800 p-5">
                     <div>
                         <InputLabel
                             isRequired
@@ -133,7 +124,7 @@ export default function UpdateClientRepositoriesForm({
                     </div>
                 </div>
 
-                <div className="mt-6 col-span-12 flex items-center space-x-4">
+                <div className="col-span-12 mt-6 flex items-center space-x-4">
                     <div>
                         <PrimaryButton
                             typeOfButton="submit"
@@ -145,21 +136,12 @@ export default function UpdateClientRepositoriesForm({
                     </div>
 
                     <div>
-                        <GoBackLink
-                            href={route('clients.index')}
-                        >
-                            Zpátky
-                        </GoBackLink>
+                        <GoBackLink href={route('clients.index')}>Zpátky</GoBackLink>
                     </div>
 
-                    {recentlySuccessful && (
-                        <p className="text-green-500">
-                            Client information has been updated!
-                        </p>
-                    )}
-
+                    {recentlySuccessful && <p className="text-green-500">Client information has been updated!</p>}
                 </div>
             </form>
         </section>
-    );
+    )
 }

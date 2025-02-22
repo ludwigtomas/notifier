@@ -1,18 +1,21 @@
-import { Link, useForm, usePage } from "@inertiajs/react";
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import { ClockIcon } from "@heroicons/react/24/outline";
-import Dropdown from "@/Components/Dropdown";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { Link, useForm, usePage } from '@inertiajs/react'
+import InputError from '@/Components/InputError'
+import InputLabel from '@/Components/InputLabel'
+import PrimaryButton from '@/Components/PrimaryButton'
+import TextInput from '@/Components/TextInput'
+import { ClockIcon } from '@heroicons/react/24/outline'
+import Dropdown from '@/Components/Dropdown'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 export default function RepositoryClientsTable({ hosting }) {
     return (
         <div className="mt-6 grid gap-5">
-            <div className="max-w-xl mx-auto w-full border-2 pace-y-6 border-zinc-700 bg-zinc-900 space-y-5 p-5 rounded-lg">
+            <div className="pace-y-6 mx-auto w-full max-w-xl space-y-5 rounded-lg border-2 border-zinc-700 bg-zinc-900 p-5">
                 <div>
-                    <InputLabel htmlFor="name" value="name" />
+                    <InputLabel
+                        htmlFor="name"
+                        value="name"
+                    />
 
                     <TextInput
                         type="text"
@@ -25,7 +28,10 @@ export default function RepositoryClientsTable({ hosting }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="hosting" value="hosting" />
+                    <InputLabel
+                        htmlFor="hosting"
+                        value="hosting"
+                    />
 
                     <TextInput
                         type="text"
@@ -38,7 +44,10 @@ export default function RepositoryClientsTable({ hosting }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="ip_address" value="ip_address" />
+                    <InputLabel
+                        htmlFor="ip_address"
+                        value="ip_address"
+                    />
 
                     <TextInput
                         type="text"
@@ -51,7 +60,10 @@ export default function RepositoryClientsTable({ hosting }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="ip_port" value="ip_port" />
+                    <InputLabel
+                        htmlFor="ip_port"
+                        value="ip_port"
+                    />
 
                     <TextInput
                         type="text"
@@ -64,7 +76,10 @@ export default function RepositoryClientsTable({ hosting }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="login_user" value="login_user" />
+                    <InputLabel
+                        htmlFor="login_user"
+                        value="login_user"
+                    />
 
                     <TextInput
                         type="text"
@@ -93,5 +108,5 @@ export default function RepositoryClientsTable({ hosting }) {
                 </div>
             </div>
         </div>
-    );
+    )
 }

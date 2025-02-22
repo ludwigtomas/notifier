@@ -26,7 +26,7 @@ class StoreHostingRepositoryRequest extends FormRequest
             'repository_id' => ['required', 'exists:repositories,repository_id'],
 
             'ip_address' => ['nullable', 'string', 'max:255'],
-            'ip_port' => ['nullable', 'numeric',],
+            'ip_port' => ['nullable', 'numeric'],
             'login_user' => ['nullable', 'string', 'max:255'],
             'login_password' => ['nullable', 'string', 'max:255'],
             'password_type' => ['nullable', 'integer'],

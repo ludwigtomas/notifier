@@ -1,6 +1,6 @@
 stages:
-  # - lint
-  - deploy
+    # - lint
+    - deploy
 
 # pint:
 #   image: php:8.3
@@ -36,30 +36,30 @@ stages:
 #   allow_failure: false
 
 deploy:
-  stage: deploy
-  script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan -p $VPS_PORT $VPS_IP >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
-    - |
-      ssh -p $VPS_PORT $VPS_USER@$VPS_IP << 'EOF'
-        cd /var/www/html
-        rm package-lock.json
-        rm composer.lock
-        git pull
-        composer i
-        npm i
-        npm run build
-        pm2 restart server
-        php artisan optimize:clear
-        php artisan optimize
-      EOF
+    stage: deploy
+    script:
+        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - ssh-keyscan -p $VPS_PORT $VPS_IP >> ~/.ssh/known_hosts
+        - chmod 644 ~/.ssh/known_hosts
+        - |
+            ssh -p $VPS_PORT $VPS_USER@$VPS_IP << 'EOF'
+              cd /var/www/html
+              rm package-lock.json
+              rm composer.lock
+              git pull
+              composer i
+              npm i
+              npm run build
+              pm2 restart server
+              php artisan optimize:clear
+              php artisan optimize
+            EOF
 
-  only:
-    - main
-  tags:
-    - vps-gitlab-runner
+    only:
+        - main
+    tags:
+        - vps-gitlab-runner

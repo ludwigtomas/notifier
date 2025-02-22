@@ -1,23 +1,18 @@
-import { Link } from "@inertiajs/react";
+import { Link } from '@inertiajs/react'
 
-export default function NavLink({
-    active = false,
-    className = "",
-    children,
-    ...props
-}) {
+export default function NavLink({ active = false, className = '', children, ...props }) {
     return (
         <Link
             {...props}
             className={
-                "border h-12 flex items-center px-4 relative rounded-xl hover:bg-zinc-800 " +
+                'relative flex h-12 items-center rounded-xl border px-4 hover:bg-zinc-800 ' +
                 (active
-                    ? "bg-zinc-700 border-white/45 before:rounded-[11px] before:absolute before:inset-0 before:border-t before:border-white/30 before:shadow before:shadow-zinc-700 text-white "
-                    : "text-gray-300 border-transparent ") +
+                    ? 'border-white/45 bg-zinc-700 text-white before:absolute before:inset-0 before:rounded-[11px] before:border-t before:border-white/30 before:shadow before:shadow-zinc-700'
+                    : 'border-transparent text-gray-300') +
                 className
             }
         >
             {children}
         </Link>
-    );
+    )
 }

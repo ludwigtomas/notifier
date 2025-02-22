@@ -1,65 +1,62 @@
-import express from "express";
-import http from "http";
-import { Server as SocketIoServer } from "socket.io";
-import { Client } from "ssh2";
-import { readFileSync } from "fs";
+import express from 'express'
+import http from 'http'
+import { Server as SocketIoServer } from 'socket.io'
+import { Client } from 'ssh2'
+import { readFileSync } from 'fs'
 
-const app = express();
-const server = http.createServer(app);
+const app = express()
+const server = http.createServer(app)
 const io = new SocketIoServer(server, {
     cors: {
-        origin: "https://notifier.smr.softici.cz/",
-        methods: ["GET", "POST"],
+        origin: 'https://notifier.smr.softici.cz/',
+        methods: ['GET', 'POST'],
     },
     allowEIO3: true,
-});
+})
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://notifier.smr.softici.cz/");
-    res.header("Access-Control-Allow-Methods", "GET, POST");
-    next();
-});
+    res.header('Access-Control-Allow-Origin', 'https://notifier.smr.softici.cz/')
+    res.header('Access-Control-Allow-Methods', 'GET, POST')
+    next()
+})
 
-io.on("connection", (socket) => {
-    const conn = new Client();
+io.on('connection', (socket) => {
+    const conn = new Client()
 
-    const { host, port, username, password } = socket.handshake.query;
+    const { host, port, username, password } = socket.handshake.query
 
-    conn.on("ready", () => {
-        socket.emit("data", "\r\n*** SSH CONNECTION ESTABLISHED ***\r\n");
+    conn.on('ready', () => {
+        socket.emit('data', '\r\n*** SSH CONNECTION ESTABLISHED ***\r\n')
         conn.shell((err, stream) => {
             if (err) {
-                socket.emit(
-                    "data",
-                    "\r\n*** SSH SHELL ERROR: " + err.message + " ***\r\n"
-                );
-                return;
+                socket.emit('data', '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n')
+                return
             }
 
-            socket.on("data", (data) => {
-                stream.write(data);
-            });
+            socket.on('data', (data) => {
+                stream.write(data)
+            })
 
             stream
-                .on("data", (data) => {
-                    socket.emit("data", data.toString("binary"));
+                .on('data', (data) => {
+                    socket.emit('data', data.toString('binary'))
                 })
-                .on("close", () => {
-                    conn.end();
-                });
-        });
+                .on('close', () => {
+                    conn.end()
+                })
+        })
     }).connect({
         host,
         port,
         username,
-        privateKey: readFileSync("privatekey.txt"),
-    });
+        privateKey: readFileSync('privatekey.txt'),
+    })
 
-    socket.on("disconnect", () => {
-        conn.end();
-    });
-});
+    socket.on('disconnect', () => {
+        conn.end()
+    })
+})
 
 server.listen(3000, () => {
-    console.log("Listening on port 3000");
-});
+    console.log('Listening on port 3000')
+})

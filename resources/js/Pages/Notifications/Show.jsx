@@ -1,6 +1,6 @@
-import React from "react";
-import AdminLayout from "@/Layouts/AdminLayout";
-import { Head, Link } from "@inertiajs/react";
+import React from 'react'
+import AdminLayout from '@/Layouts/AdminLayout'
+import { Head, Link } from '@inertiajs/react'
 import {
     ChevronRightIcon,
     GlobeAltIcon,
@@ -9,17 +9,17 @@ import {
     UsersIcon,
     ServerStackIcon,
     CircleStackIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline'
 
 export default function Edit({ auth, notification }) {
     return (
         <AdminLayout
             user={auth.user}
             header={
-                <header className="flex items-center justify-start flex-row space-x-4 text-zinc-500">
+                <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="font-semibold text-lg leading-tight hover:text-sky-500 slower-animation"
-                        href={route("dashboard.index")}
+                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        href={route('dashboard.index')}
                     >
                         Dashboard
                     </Link>
@@ -29,8 +29,8 @@ export default function Edit({ auth, notification }) {
                     </span>
 
                     <Link
-                        className="font-semibold text-lg leading-tight text-sky-500"
-                        href={route("notifications.index")}
+                        className="text-lg font-semibold leading-tight text-sky-500"
+                        href={route('notifications.index')}
                     >
                         Notifikace
                     </Link>
@@ -39,35 +39,30 @@ export default function Edit({ auth, notification }) {
         >
             <Head title="Notifikace" />
 
-            <div className="max-w-[100rem] mx-auto sm:px-6 lg:px-8">
-                <section className="mb-5 card">
-                    <h1 className="text-center text-white text-2xl font-bold tracking-wider">
-                        {notification.notifiable_type_formatted}
-                    </h1>
+            <div className="mx-auto max-w-[100rem] sm:px-6 lg:px-8">
+                <section className="card mb-5">
+                    <h1 className="text-center text-2xl font-bold tracking-wider text-white">{notification.notifiable_type_formatted}</h1>
                 </section>
 
-                <div className="mb-5 ">
+                <div className="mb-5">
                     {{
-                        Git: <GlobeAltIcon className="size-12 text-green-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        GitGroup: <FolderOpenIcon className="size-12 text-sky-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        Repository: <RocketLaunchIcon className="size-12 text-red-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        User: <UsersIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        Hosting: <ServerStackIcon className="size-12 text-purple-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                        RepositoryDatabase: <CircleStackIcon className="size-12 text-yellow-500 bg-zinc-900 p-1.5 rounded-lg" />,
-                    }[ notification.notifiable_type_formatted] || (
-                        <div>
-                            No Icon
-                        </div>
-                    )}
+                        Git: <GlobeAltIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-green-500" />,
+                        GitGroup: <FolderOpenIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-sky-500" />,
+                        Repository: <RocketLaunchIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-red-500" />,
+                        User: <UsersIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-yellow-500" />,
+                        Hosting: <ServerStackIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-purple-500" />,
+                        RepositoryDatabase: <CircleStackIcon className="size-12 rounded-lg bg-zinc-900 p-1.5 text-yellow-500" />,
+                    }[notification.notifiable_type_formatted] || <div>No Icon</div>}
 
-                    {{
-                        'created': <span className="text-green-500">Vytvoření {notification.notifiable_type_formatted}</span>,
-                        'updated': <span className="text-yellow-500">Aktualizace {notification.notifiable_type_formatted}</span>,
-                        'deleted': <span className="text-red-500">Smazání {notification.notifiable_type_formatted}</span>,
-                        'restored': <span className="text-green-500">Obnovení {notification.notifiable_type_formatted}</span>,
-                        'forceDeleted': <span className="text-red-500">Trvalé smazání {notification.notifiable_type_formatted}</span>,
-                    }[notification.data.action]}
-
+                    {
+                        {
+                            created: <span className="text-green-500">Vytvoření {notification.notifiable_type_formatted}</span>,
+                            updated: <span className="text-yellow-500">Aktualizace {notification.notifiable_type_formatted}</span>,
+                            deleted: <span className="text-red-500">Smazání {notification.notifiable_type_formatted}</span>,
+                            restored: <span className="text-green-500">Obnovení {notification.notifiable_type_formatted}</span>,
+                            forceDeleted: <span className="text-red-500">Trvalé smazání {notification.notifiable_type_formatted}</span>,
+                        }[notification.data.action]
+                    }
                 </div>
 
                 <div className="card overflow-x-auto">
@@ -78,7 +73,7 @@ export default function Edit({ auth, notification }) {
                                     <>
                                         <th
                                             scope="col"
-                                            className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                            className="px-4 py-3.5 text-left text-sm font-normal text-gray-300"
                                         >
                                             Metoda
                                         </th>
@@ -86,7 +81,7 @@ export default function Edit({ auth, notification }) {
                                         {Object.keys(notification.data.old_data).map((key) => (
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                                className="px-4 py-3.5 text-left text-sm font-normal text-gray-300"
                                                 key={key}
                                             >
                                                 {key}
@@ -100,7 +95,7 @@ export default function Edit({ auth, notification }) {
                                         {!notification.data.old_data && (
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                                className="px-4 py-3.5 text-left text-sm font-normal text-gray-300"
                                             >
                                                 Metoda
                                             </th>
@@ -109,7 +104,7 @@ export default function Edit({ auth, notification }) {
                                         {Object.keys(notification.data.new_data).map((key) => (
                                             <th
                                                 scope="col"
-                                                className="py-3.5 px-4 text-sm font-normal text-left text-gray-300"
+                                                className="px-4 py-3.5 text-left text-sm font-normal text-gray-300"
                                                 key={key}
                                             >
                                                 {key}
@@ -120,27 +115,22 @@ export default function Edit({ auth, notification }) {
                             </tr>
                         </thead>
 
-                        <tbody className="divide-y divide-zinc-700 ">
-                            <tr className="space-x-4 mx-2">
+                        <tbody className="divide-y divide-zinc-700">
+                            <tr className="mx-2 space-x-4">
                                 {notification.data && notification.data.old_data && (
                                     <>
-                                        <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
-                                            Stará data
-                                        </td>
+                                        <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400">Stará data</td>
 
                                         {Object.values(notification.data.old_data).map((value, index) => (
                                             <td
                                                 key={index}
-                                                className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
+                                                className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400"
                                             >
-                                                {notification.data.new_data && notification.data.new_data[Object.keys(notification.data.old_data)[index]] !== value ? (
-                                                    <span className="text-red-500">
-                                                        {value}
-                                                    </span>
+                                                {notification.data.new_data &&
+                                                notification.data.new_data[Object.keys(notification.data.old_data)[index]] !== value ? (
+                                                    <span className="text-red-500">{value}</span>
                                                 ) : (
-                                                    <span>
-                                                        {value ?? "-"}
-                                                    </span>
+                                                    <span>{value ?? '-'}</span>
                                                 )}
                                             </td>
                                         ))}
@@ -148,25 +138,20 @@ export default function Edit({ auth, notification }) {
                                 )}
                             </tr>
 
-                            <tr className="space-x-4 mx-2">
+                            <tr className="mx-2 space-x-4">
                                 {notification.data && notification.data.new_data && (
                                     <>
-                                        <td className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap">
-                                            Nová data
-                                        </td>
+                                        <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400">Nová data</td>
                                         {Object.values(notification.data.new_data).map((value, index) => (
                                             <td
                                                 key={index}
-                                                className="px-4 py-4 text-sm font-medium text-gray-400 whitespace-nowrap"
+                                                className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400"
                                             >
-                                                {notification.data.old_data && notification.data.old_data[Object.keys(notification.data.new_data)[index]] !== value ? (
-                                                    <span className="text-green-500">
-                                                        {value}
-                                                    </span>
+                                                {notification.data.old_data &&
+                                                notification.data.old_data[Object.keys(notification.data.new_data)[index]] !== value ? (
+                                                    <span className="text-green-500">{value}</span>
                                                 ) : (
-                                                    <span>
-                                                        {value ?? "-"}
-                                                    </span>
+                                                    <span>{value ?? '-'}</span>
                                                 )}
                                             </td>
                                         ))}
@@ -174,7 +159,6 @@ export default function Edit({ auth, notification }) {
                                 )}
                             </tr>
                         </tbody>
-
                     </table>
                 </div>
 
@@ -239,5 +223,5 @@ export default function Edit({ auth, notification }) {
                 </section> */}
             </div>
         </AdminLayout>
-    );
+    )
 }
