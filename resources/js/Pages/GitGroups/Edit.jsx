@@ -152,6 +152,7 @@ export default function ({ auth, git_group }) {
                                             className="inline-flex rounded-xl bg-stone-800 px-4 py-2 text-sm text-gray-200 hover:bg-stone-700"
                                             href={git_group.web_url}
                                             target="_blank"
+                                            rel="noreferrer"
                                         >
                                             <LinkIcon className="mr-2 size-5" />
 
@@ -178,6 +179,7 @@ export default function ({ auth, git_group }) {
                                             className="inline-flex rounded-xl bg-stone-800 px-4 py-2 text-sm text-gray-200 hover:bg-stone-700"
                                             href={git_group.web_url}
                                             target="_blank"
+                                            rel="noreferrer"
                                         >
                                             <LinkIcon className="mr-2 size-5" />
 
@@ -256,6 +258,7 @@ export default function ({ auth, git_group }) {
                                                                 href={group.web_url}
                                                                 target="_blank"
                                                                 className="inline-flex items-center space-x-2 text-gray-200 hover:text-gray-100"
+                                                                rel="noreferrer"
                                                             >
                                                                 <LinkIcon className="mr-2 h-4 w-4" />
 
@@ -370,6 +373,7 @@ export default function ({ auth, git_group }) {
                                                                     className="inline-flex rounded-xl bg-stone-800 px-4 py-2 text-sm text-gray-200 hover:bg-stone-700"
                                                                     href={repository.repository_url}
                                                                     target="_blank"
+                                                                    rel="noreferrer"
                                                                 >
                                                                     <LinkIcon className="mr-2 size-5" />
 
@@ -484,6 +488,7 @@ export default function ({ auth, git_group }) {
                                                                 className="inline-flex rounded-xl bg-stone-800 px-4 py-2 text-sm text-gray-200 hover:bg-stone-900"
                                                                 href={repository.web_url}
                                                                 target="_blank"
+                                                                rel="noreferrer"
                                                             >
                                                                 <LinkIcon className="mr-2 size-5" />
 
@@ -612,6 +617,7 @@ export default function ({ auth, git_group }) {
                                                         href={repository.web_url}
                                                         target="_blank"
                                                         className="text-sm font-medium text-zinc-200 hover:underline"
+                                                        rel="noreferrer"
                                                     >
                                                         {repository.web_url}
                                                     </a>

@@ -167,6 +167,7 @@ const Sidebar = ({ user }) => {
                                 className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
                                 href={route('horizon.index')}
                                 target="_blank"
+                                rel="noreferrer"
                             >
                                 Horizon
                             </a>
@@ -175,6 +176,7 @@ const Sidebar = ({ user }) => {
                                 className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
                                 href={route('pulse')}
                                 target="_blank"
+                                rel="noreferrer"
                             >
                                 Pulse
                             </a>
@@ -191,6 +193,7 @@ const Sidebar = ({ user }) => {
                                 className="rounded-lg px-4 py-2 text-center text-xs leading-5 text-zinc-400 transition duration-150 ease-in-out hover:bg-zinc-800 hover:text-zinc-200 focus:bg-zinc-600 focus:outline-none"
                                 href={route('log-viewer.index')}
                                 target="_blank"
+                                rel="noreferrer"
                             >
                                 Log Viewer
                             </a>

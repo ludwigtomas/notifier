@@ -64,6 +64,7 @@ const ChildrensTable = (childrens) => {
                                         href={group.web_url}
                                         target="_blank"
                                         className="text-sm font-medium text-zinc-200 hover:underline"
+                                        rel="noreferrer"
                                     >
                                         {group.web_url}
                                     </a>
@@ -158,6 +159,7 @@ const RepositoriesTable = (repositories) => {
                                         href={repository.repository_url}
                                         target="_blank"
                                         className="text-sm font-medium text-zinc-200 hover:underline"
+                                        rel="noreferrer"
                                     >
                                         {repository.repository_url}
                                     </a>

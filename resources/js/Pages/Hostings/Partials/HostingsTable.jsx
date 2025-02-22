@@ -92,6 +92,7 @@ export default function HostingsTable({ hostings }) {
                                                     className="rounded-xl bg-green-950 p-2"
                                                     href={hosting.hosting_url}
                                                     target="_blank"
+                                                    rel="noreferrer"
                                                 >
                                                     <LinkIcon className="h-6 w-6 text-green-500" />
                                                 </a>

@@ -196,6 +196,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                     className="absolute inset-0"
                                     target="_blank"
                                     href={route('horizon.index')}
+                                    rel="noreferrer"
                                 />
                             </figure>
 
@@ -212,6 +213,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                     className="absolute inset-0"
                                     target="_blank"
                                     href={route('pulse')}
+                                    rel="noreferrer"
                                 />
                             </figure>
 
@@ -226,11 +228,11 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                     {environment == 'production' && <p className="mt-2 text-red-500">Only for development purposes.</p>}
                                 </figcaption>
 
-                                <a
+                                {/* <a
                                     className="absolute inset-0"
                                     target="_blank"
                                     href={route('telescope')}
-                                />
+                                /> */}
                             </figure>
                         </section>
                     </main>

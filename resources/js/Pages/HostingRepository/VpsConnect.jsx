@@ -141,6 +141,7 @@ export default function SshClient({ auth, hosting_repository }) {
                                     href={hosting_repository.relationships.repository.website_url}
                                     target="_blank"
                                     className="absolute inset-0"
+                                    rel="noreferrer"
                                 />
                             </>
                         )}

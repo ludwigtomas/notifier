@@ -155,6 +155,7 @@ export default function UpdateRepositoryInformationForm({ repository, className 
                                     href={data.repository_url}
                                     target="_blank"
                                     className="rounded-l-lg border-2 border-r-0 border-zinc-600 bg-zinc-900 px-3 py-2 text-zinc-500"
+                                    rel="noreferrer"
                                 >
                                     <LinkIcon className="h-6 w-6 text-zinc-400" />
                                 </a>

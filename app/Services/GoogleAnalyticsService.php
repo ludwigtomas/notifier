@@ -58,7 +58,7 @@ class GoogleAnalyticsService
 
     private static function currentMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->startOfMonth()->toDateString(),
@@ -74,7 +74,7 @@ class GoogleAnalyticsService
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],
@@ -107,7 +107,7 @@ class GoogleAnalyticsService
 
     private static function previousMonthStats(?string $analytic_id = null)
     {
-        $client = new BetaAnalyticsDataClient();
+        $client = new BetaAnalyticsDataClient;
 
         $dateRange = new DateRange([
             'start_date' => Carbon::now()->subMonthNoOverflow()->startOfMonth()->toDateString(),
@@ -123,7 +123,7 @@ class GoogleAnalyticsService
         ]);
 
         $response = $client->runReport([
-            'property' => 'properties/' . $analytic_id,
+            'property' => 'properties/'.$analytic_id,
             'dateRanges' => [$dateRange],
             'dimensions' => [$dimension],
             'metrics' => [$metric],

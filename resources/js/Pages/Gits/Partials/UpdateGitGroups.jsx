@@ -153,6 +153,7 @@ export default function ({ className = '', git_groups, repositories }) {
                                                         href={group.web_url}
                                                         target="_blank"
                                                         className="text-sm font-medium text-zinc-200 hover:underline"
+                                                        rel="noreferrer"
                                                     >
                                                         {group.web_url}
                                                     </a>
@@ -236,6 +237,7 @@ export default function ({ className = '', git_groups, repositories }) {
                                                     href={gitInformations.web_url}
                                                     target="_blank"
                                                     className="hover:underline"
+                                                    rel="noreferrer"
                                                 >
                                                     {gitInformations.web_url}
                                                 </a>
@@ -323,6 +325,7 @@ export default function ({ className = '', git_groups, repositories }) {
                                                                         href={project.web_url}
                                                                         target="_blank"
                                                                         className="text-sm font-medium text-zinc-200 hover:underline"
+                                                                        rel="noreferrer"
                                                                     >
                                                                         {project.web_url}
                                                                     </a>

@@ -227,6 +227,7 @@ export default function RepositoriesTable({ repositories }) {
                                                         className="rounded-xl bg-green-950 p-2"
                                                         href={repository.website_url}
                                                         target="_blank"
+                                                        rel="noreferrer"
                                                     >
                                                         <LinkIcon className="size-6 text-green-500" />
                                                     </a>
