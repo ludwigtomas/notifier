@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Enums\HostingRepository\HostingRepositoryPasswordTypeEnum;
-use Inertia\Response;
-use App\Models\Worker;
-use App\Models\Hosting;
-use App\Models\Repository;
-use Illuminate\Http\Request;
-use App\Services\WorkerService;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\WorkerResource;
-use App\Http\Resources\HostingResource;
 use App\Http\Requests\StoreWorkerRequest;
 use App\Http\Requests\UpdateWorkerRequest;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\WorkerResource;
+use App\Models\Hosting;
 use App\Models\HostingRepository;
+use App\Models\Worker;
+use App\Services\WorkerService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Inertia\Response;
 
 class WorkerController extends Controller
 {
@@ -128,7 +127,7 @@ class WorkerController extends Controller
             ->where('repository_id', $request->id)
             ->first();
 
-        if (! $hostingRepository) {
+        if ( ! $hostingRepository) {
             return response()->json(['error' => 'Repository not found'], 404);
         }
 
@@ -140,11 +139,11 @@ class WorkerController extends Controller
             'password_type' => HostingRepositoryPasswordTypeEnum::PASSWORD_TEXT,
         ]);
 
-        if (! $result) {
+        if ( ! $result) {
             return response()->json(['error' => 'Failed to update repository'], 500);
         }
 
-        
+
 
         return response()->json(['success' => true]);
     }

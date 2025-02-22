@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\Api\V1\GitlabController;
 use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
+use App\Http\Controllers\WorkerController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

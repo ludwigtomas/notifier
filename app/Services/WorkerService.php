@@ -89,7 +89,7 @@ class WorkerService
             return $this->command(
                 'deploy',
                 [$arg1, $arg2],
-                [ 'id' => $repository->repository_id ]
+                ['id' => $repository->repository_id],
             );
         } catch (Exception $e) {
             return false;

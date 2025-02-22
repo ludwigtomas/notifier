@@ -24,9 +24,13 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict( ! app()->isProduction());
 
         JsonResource::withoutWrapping();
+        
+        Vite::prefetch(concurrency: 3);
 
-        app()->isProduction()
-            ? $this->app['request']->server->set('HTTPS', true)
-            : null;
+        if (app()->isProduction()) {
+            $this->app['request']->server->set('HTTPS', true);
+
+            DB::prohibitDestructiveCommands();
+        }
     }
 }

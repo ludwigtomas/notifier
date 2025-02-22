@@ -30,16 +30,14 @@ class RepositoryController extends Controller
     {
         $md5 = md5($request->fullUrl());
 
-        $repositories = Cache::remember('repositories' . $md5, 60, function () use ($request) {
-            return Repository::query()
-                ->with(['hostingRepository', 'hosting', 'hosting.worker'])
-                ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
-                ->search($request->search)
-                ->trashed($request->trashed)
-                ->orderBy('last_commit_at', 'desc')
-                ->paginate(20)
-                ->withQueryString();
-        });
+        $repositories = Cache::remember('repositories' . $md5, 60, fn() => Repository::query()
+            ->with(['hostingRepository', 'hosting', 'hosting.worker'])
+            ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
+            ->search($request->search)
+            ->trashed($request->trashed)
+            ->orderBy('last_commit_at', 'desc')
+            ->paginate(20)
+            ->withQueryString());
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryIndexResource::collection($repositories),
