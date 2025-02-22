@@ -1,11 +1,11 @@
-import { Link } from "@inertiajs/react"
+import { Link, Head } from "@inertiajs/react"
 
 export default function ErrorPage({ status }) {
     const title = {
-      503: '503: Service Unavailable',
-      500: '500: Server Error',
-      404: '404: Page Not Found',
-      403: '403: Forbidden',
+        503: '503: Service Unavailable',
+        500: '500: Server Error',
+        404: '404: Page Not Found',
+        403: '403: Forbidden',
     }[status]
 
     const description = {
@@ -17,7 +17,8 @@ export default function ErrorPage({ status }) {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
-            <div>
+            <Head title={title} />
+            <div className="text-center">
                 <h1 className="text-4xl font-bold text-white">{title}</h1>
                 <p className="text-gray-400">{description}</p>
             </div>
@@ -32,4 +33,4 @@ export default function ErrorPage({ status }) {
             </div>
         </div>
     )
-  }
+}
