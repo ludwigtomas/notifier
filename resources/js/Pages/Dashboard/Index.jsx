@@ -395,7 +395,7 @@ export default function Dashboard({ auth, notifications, models, filters, enviro
                                         <a
                                             className="absolute inset-0"
                                             target="_blank"
-                                            href={route('telescope')}
+                                            href={route().has('telescope') ? route('telescope') : '#'}
                                             rel="noreferrer"
                                         />
                                     )}

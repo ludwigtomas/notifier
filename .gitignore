@@ -6,6 +6,7 @@
 /storage/*.key
 /storage/credentials.json
 /vendor
+/dist
 .env
 .env.backup
 .env.production

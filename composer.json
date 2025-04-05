@@ -18,8 +18,9 @@
         "laravel/pail": "^1.2.2",
         "laravel/pulse": "^v1.4",
         "laravel/sanctum": "v4.0.8",
-        "laravel/telescope": "^5.5",
+        "laravel/telescope": "^5.7",
         "laravel/tinker": "^2.10.1",
+        "nativephp/electron": "^1.0@beta",
         "opcodesio/log-viewer": "v3.15.0",
         "predis/predis": "^2.3",
         "tightenco/ziggy": "v2.5.2"
@@ -69,6 +70,10 @@
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
+        ],
+        "native:dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -k -c \"#93c5fd,#c4b5fd\" \"php artisan native:serve --no-interaction\" \"npm run dev\" --names=app,vite"
         ]
     },
     "extra": {

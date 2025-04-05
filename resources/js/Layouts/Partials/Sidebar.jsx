@@ -166,7 +166,7 @@ const Authenticated = ({ user }) => {
                                                 </span>
                                             ) : (
                                                 <a
-                                                    href={route(navigation.href)}
+                                                    href={route().has(navigation.href) ? route(navigation.href) : '#'}
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="group flex items-center gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-zinc-200 hover:bg-zinc-800 hover:text-white"
@@ -179,7 +179,7 @@ const Authenticated = ({ user }) => {
                                             )
                                         ) : (
                                             <a
-                                                href={route(navigation.href)}
+                                                href={route().has(navigation.href) ? route(navigation.href) : '#'}
                                                 target="_blank"
                                                 rel="noreferrer"
                                                 className="group flex items-center gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-zinc-200 hover:bg-zinc-800 hover:text-white"
