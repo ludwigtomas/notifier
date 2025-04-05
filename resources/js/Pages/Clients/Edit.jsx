@@ -12,7 +12,7 @@ export default function Edit({ auth, client, repositories }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -23,7 +23,7 @@ export default function Edit({ auth, client, repositories }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('clients.index')}
                     >
                         Klienti
@@ -34,7 +34,7 @@ export default function Edit({ auth, client, repositories }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold text-sky-500"
                         href={route('clients.edit', client.id)}
                     >
                         {client.name}
@@ -45,7 +45,7 @@ export default function Edit({ auth, client, repositories }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('clients.edit', client.id)}
                     >
                         Edit

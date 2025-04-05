@@ -15,11 +15,11 @@ class GitController extends Controller
     public function index(): Response
     {
         $gits = Git::query()
-            ->withCount(['gitGroupsParent', 'repositories'])
+            ->withCount('gitGroupsParent', 'repositories')
             ->get();
 
         return inertia('Gits/Index', [
-            'gits' => GitResource::collection($gits),
+            'gits' => fn () => GitResource::collection($gits),
         ]);
     }
 

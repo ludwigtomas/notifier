@@ -13,12 +13,14 @@ import {
     ServerIcon,
 } from '@heroicons/react/24/outline'
 
-export default function NotificationTable({ data, clear_url = route('notifications.index') }) {
+export default function NotificationTable({ data, filters, clearUrl = route('notifications.index') }) {
     return (
         <>
-            {data && data.length > 0 ? (
+            {filters.length !== 0 && data.length === 0 ? (
+                <ResetFilters href={clearUrl}>Nebyly nalezeny žádné notifikace.</ResetFilters>
+            ) : data && data.length > 0 ? (
                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                    <thead className="text-nowrap bg-zinc-800">
+                    <thead className="bg-zinc-800 text-nowrap">
                         <tr>
                             <th className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400">Model</th>
                             <th className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400">Metoda</th>
@@ -124,7 +126,7 @@ export default function NotificationTable({ data, clear_url = route('notificatio
                                     <div className="flex justify-center space-x-2">
                                         <Link
                                             href={route('notifications.show', notification.id)}
-                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                         >
                                             <EyeIcon className="size-6 text-sky-500" />
                                         </Link>
@@ -133,7 +135,7 @@ export default function NotificationTable({ data, clear_url = route('notificatio
                                             as="button"
                                             method="PATCH"
                                             href={route('notifications.mark-as-read', notification.id)}
-                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-yellow-500 group-hover:bg-zinc-900"
+                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-yellow-500"
                                             preserveScroll
                                         >
                                             <BookmarkIcon
@@ -152,7 +154,23 @@ export default function NotificationTable({ data, clear_url = route('notificatio
                     </tbody>
                 </table>
             ) : (
-                <ResetFilters href={clear_url}>Nebyly nalezeny žádné notifikace.</ResetFilters>
+                <div className="relative overflow-hidden rounded-lg border-2 border-zinc-700 p-4">
+                    <div className="flex animate-pulse items-center">
+                        <div className="flex-1 space-y-6 py-1">
+                            <div className="grid grid-cols-12 gap-4">
+                                <div className="col-span-1 h-2 rounded bg-zinc-800" />
+                                <div className="col-span-4 h-2 rounded bg-zinc-800" />
+                                <div className="col-span-5 h-2 rounded bg-zinc-800" />
+                                <div className="col-span-1 h-2 rounded bg-zinc-800" />
+                                <div className="col-span-1 h-2 rounded bg-zinc-800" />
+                            </div>
+                        </div>
+
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                            <span className="rounded-full border border-zinc-800 bg-zinc-900 p-2 text-white">Žádné data</span>
+                        </div>
+                    </div>
+                </div>
             )}
         </>
     )

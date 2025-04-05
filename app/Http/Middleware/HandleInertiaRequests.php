@@ -32,22 +32,25 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth' => [
-                'user' => $request->user(),
-            ],
+
+            'auth.user' => fn () => $request->user()
+                ? $request->user()
+                : null,
 
             'global' => [
-                'gits_count' => CacheModelService::gitCount(),
-                'git_groups_count' => CacheModelService::gitGroupCount(),
-                'git_group_parent_count' => CacheModelService::gitGroupParentCount(),
-                'git_group_child_count' => CacheModelService::gitGroupChildCount(),
-                'repositories_count' => CacheModelService::repositoryCount(),
-                'clients_count' => CacheModelService::clientCount(),
-                'hostings_count' => CacheModelService::hostingCount(),
-                'workers_count' => CacheModelService::workerCount(),
-                'new_notifications_count' => CacheModelService::newNotificationCount(),
-                'notifications_count' => CacheModelService::notificationCount(),
+                'gits_count' => fn () => CacheModelService::gitCount(),
+                'git_groups_count' => fn () => CacheModelService::gitGroupCount(),
+                'git_group_parent_count' => fn () => CacheModelService::gitGroupParentCount(),
+                'git_group_child_count' => fn () => CacheModelService::gitGroupChildCount(),
+                'repositories_count' => fn () => CacheModelService::repositoryCount(),
+                'clients_count' => fn () => CacheModelService::clientCount(),
+                'hostings_count' => fn () => CacheModelService::hostingCount(),
+                'workers_count' => fn () => CacheModelService::workerCount(),
+                'new_notifications_count' => fn () => CacheModelService::newNotificationCount(),
+                'notifications_count' => fn () => CacheModelService::notificationCount(),
             ],
+
+            'environment' => app()->environment(),
         ];
     }
 }

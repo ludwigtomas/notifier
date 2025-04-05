@@ -1,12 +1,13 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link, router } from '@inertiajs/react'
-import { EyeIcon, ChevronRightIcon, BookmarkIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon, BookmarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import debounce from 'lodash/debounce'
 import InputLabel from '@/Components/InputLabel'
 import TextInput from '@/Components/TextInput'
 import ResetFilters from '@/Components/ResetFilters'
 import NotificationsTable from '@/Pages/Notifications/Partials/NotificationsTable'
+import { NotificationIcon } from '@/Components/Icons/Models'
 
 export default function Index({ auth, notifications, models, actions, filters }) {
     const [search, setSearch] = useState(filters.search || '')
@@ -106,7 +107,7 @@ export default function Index({ auth, notifications, models, actions, filters })
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -117,7 +118,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('notifications.index')}
                     >
                         Notifikace
@@ -175,7 +176,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                             <select
                                 id="action"
                                 name="action"
-                                className="w-full rounded-md border-2 border-zinc-600 bg-zinc-700 text-zinc-200 shadow-sm focus:border-sky-500 focus:ring-sky-500"
+                                className="w-full rounded-md border-2 border-zinc-600 bg-zinc-700 py-2 text-zinc-200 shadow-sm focus:border-sky-500 focus:ring-sky-500"
                                 value={selectedAction}
                                 onChange={(e) => {
                                     setSelectedAction(e.target.value)
@@ -219,8 +220,8 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     <div className="font-bold text-white">{selectedModel.length}</div>
                                 </div>
 
-                                <div className="absolute right-0 top-full hidden pt-4 group-hover:block">
-                                    <div className="z-40 h-80 w-[30rem] overflow-y-auto overflow-x-hidden rounded-xl border border-neutral-600 bg-neutral-800 p-2">
+                                <div className="absolute top-full right-0 hidden pt-4 group-hover:block">
+                                    <div className="z-40 h-80 w-[30rem] overflow-x-hidden overflow-y-auto rounded-xl border border-neutral-600 bg-neutral-800 p-2">
                                         <div className="grid grid-cols-3 gap-4">
                                             {selectedModel.length === 0 ? (
                                                 <div className="col-span-3 rounded-lg border-2 border-zinc-600 bg-zinc-700 p-4">
@@ -281,8 +282,8 @@ export default function Index({ auth, notifications, models, actions, filters })
                                     <div className="font-bold text-white">{selectedModel.length}</div>
                                 </div>
 
-                                <div className="absolute right-0 top-full hidden pt-4 group-hover:block">
-                                    <div className="z-40 h-80 w-[30rem] overflow-y-auto overflow-x-hidden rounded-xl border border-neutral-600 bg-neutral-800 p-2">
+                                <div className="absolute top-full right-0 hidden pt-4 group-hover:block">
+                                    <div className="z-40 h-80 w-[30rem] overflow-x-hidden overflow-y-auto rounded-xl border border-neutral-600 bg-neutral-800 p-2">
                                         <div className="grid grid-cols-3 gap-4">
                                             {selectedModel.length === 0 ? (
                                                 <div className="col-span-3 rounded-lg border-2 border-zinc-600 bg-zinc-700 p-4">
@@ -339,7 +340,7 @@ export default function Index({ auth, notifications, models, actions, filters })
                                 href={route('dashboard.index')}
                                 className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
                             >
-                                <EyeIcon className="size-10 text-sky-500" />
+                                <NotificationIcon className="size-10 text-sky-500" />
                             </Link>
                         </div>
 

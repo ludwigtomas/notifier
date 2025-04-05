@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link } from '@inertiajs/react'
 import { ChevronRightIcon, LinkIcon, PencilSquareIcon, ArrowPathIcon, EyeIcon } from '@heroicons/react/24/outline'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from '@/Components/Modal'
 import { router } from '@inertiajs/react'
 
@@ -13,48 +13,44 @@ export default function ({ auth, git_group }) {
     const [subgroups, setSubgroups] = useState([])
 
     const groupRepositories = () => {
-        let url = route('api.gitlab.group.repositories', git_group.group_id)
-
         setIsLoading(true)
+        setToggleRepositoriesModal(true)
 
         axios
-            .get(url)
+            .get(route('api.gitlab.group.repositories', git_group.group_id))
             .then((response) => {
-                setToggleRepositoriesModal(true)
-
                 setRepositories(response.data.data)
-
-                setIsLoading(false)
             })
             .catch((error) => {
                 alert('Error: ' + error)
+                setToggleRepositoriesModal(false)
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 
     const groupSubgroups = () => {
-        let url = route('api.gitlab.subgroups', git_group.group_id)
-
         setIsLoading(true)
+        setToggleSubgroupsModal(true)
 
         axios
-            .get(url)
+            .get(route('api.gitlab.subgroups', git_group.group_id))
             .then((response) => {
-                setToggleSubgroupsModal(true)
-
                 setSubgroups(response.data.data)
-
-                setIsLoading(false)
             })
             .catch((error) => {
                 alert('Error: ' + error)
+                setToggleSubgroupsModal(false)
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 
     const storeRepository = (repository_id) => {
-        let url = route('repositories.store')
-
         router.post(
-            url,
+            route('repositories.store'),
             {
                 group_id: git_group.group_id,
                 repository_id: repository_id,
@@ -70,10 +66,8 @@ export default function ({ auth, git_group }) {
     }
 
     const storeSubgroup = (group) => {
-        let url = route('git-groups.store')
-
         router.post(
-            url,
+            route('git-groups.store'),
             { group },
             {
                 preserveScroll: true,
@@ -87,11 +81,12 @@ export default function ({ auth, git_group }) {
 
     return (
         <AdminLayout
+            title="Dashbaord"
             user={auth.user}
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -102,7 +97,7 @@ export default function ({ auth, git_group }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('git-groups.index')}
                     >
                         Git groups
@@ -113,7 +108,7 @@ export default function ({ auth, git_group }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('git-groups.edit', git_group.group_id)}
                     >
                         {git_group.name}
@@ -121,13 +116,11 @@ export default function ({ auth, git_group }) {
                 </header>
             }
         >
-            <Head title="Dashboard" />
-
             <div className="sm:px-6 lg:px-8">
                 <div className="container mx-auto space-y-6">
                     <div
                         className={
-                            'border-y border-l-8 border-r bg-zinc-900 p-8 sm:rounded-3xl ' +
+                            'border-y border-r border-l-8 bg-zinc-900 p-8 sm:rounded-3xl ' +
                             (git_group.parent_id ? 'border-red-500' : 'border-green-500')
                         }
                     >
@@ -213,7 +206,7 @@ export default function ({ auth, git_group }) {
 
                                 <div className="rounded-xl bg-zinc-800 p-4">
                                     <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                        <thead className="text-nowrap bg-zinc-950">
+                                        <thead className="bg-zinc-950 text-nowrap">
                                             <tr>
                                                 <th
                                                     scope="col"
@@ -266,11 +259,11 @@ export default function ({ auth, git_group }) {
                                                             </a>
                                                         </td>
 
-                                                        <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div className="flex items-center space-x-2">
                                                                 <Link
                                                                     href={route('git-groups.edit', group.group_id)}
-                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                                                 >
                                                                     <PencilSquareIcon className="h-6 w-6 text-green-500" />
                                                                 </Link>
@@ -288,7 +281,7 @@ export default function ({ auth, git_group }) {
 
                     <div className="bg-zinc-900 p-4 sm:rounded-3xl">
                         <section className="grid grid-cols-12">
-                            <div className="col-span-4 my-auto">
+                            <div className="col-span-3 my-auto">
                                 <h2 className="mb-2 space-x-2 text-lg font-medium text-zinc-200">
                                     <span className="underline underline-offset-8">Repositories</span>
                                     <span>attached to</span>
@@ -302,7 +295,7 @@ export default function ({ auth, git_group }) {
                                 </div>
                             </div>
 
-                            <div className="col-span-8">
+                            <div className="col-span-9">
                                 <div className="col-span-12 mb-5">
                                     <div className="flex items-center justify-end space-x-2">
                                         <button
@@ -316,7 +309,7 @@ export default function ({ auth, git_group }) {
 
                                 <div className="rounded-xl bg-zinc-800 p-4">
                                     <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                        <thead className="text-nowrap bg-zinc-950">
+                                        <thead className="bg-zinc-950 text-nowrap">
                                             <tr>
                                                 <th
                                                     scope="col"
@@ -382,18 +375,18 @@ export default function ({ auth, git_group }) {
                                                             </div>
                                                         </td>
 
-                                                        <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                                        <td className="px-4 py-4 text-sm whitespace-nowrap">
                                                             <div className="flex items-center space-x-2">
                                                                 <Link
                                                                     href={route('repositories.edit', repository.repository_id)}
-                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                                                 >
                                                                     <PencilSquareIcon className="size-6 text-green-500" />
                                                                 </Link>
 
                                                                 <Link
                                                                     href={route('repositories.show', repository.repository_id)}
-                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                                                 >
                                                                     <EyeIcon className="size-6 text-sky-500" />
                                                                 </Link>
@@ -424,9 +417,11 @@ export default function ({ auth, git_group }) {
                             </div>
 
                             <div className="mt-5 max-h-[40rem] overflow-y-scroll">
-                                {repositories && repositories.length > 0 ? (
+                                {isLoading ? (
+                                    <>Loading</>
+                                ) : repositories && repositories.length > 0 ? (
                                     <table className="min-w-full divide-y divide-zinc-700 rounded-md">
-                                        <thead className="text-nowrap bg-stone-900/50">
+                                        <thead className="bg-stone-900/50 text-nowrap">
                                             <tr>
                                                 <th
                                                     scope="col"
@@ -556,7 +551,7 @@ export default function ({ auth, git_group }) {
 
                             {subgroups && subgroups.length > 0 ? (
                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                    <thead className="text-nowrap bg-stone-800">
+                                    <thead className="bg-stone-800 text-nowrap">
                                         <tr>
                                             <th
                                                 scope="col"

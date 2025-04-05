@@ -22,16 +22,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Telescope::night();
-
-        Model::shouldBeStrict(! app()->isProduction());
-
+        Model::shouldBeStrict();
         JsonResource::withoutWrapping();
+        Vite::usePrefetchStrategy('aggressive');
 
-        Vite::prefetch(concurrency: 3);
+        if (app()->isLocal()) {
+            Model::preventLazyLoading();
+        }
 
         if (app()->isProduction()) {
             $this->app['request']->server->set('HTTPS', true);
-
             DB::prohibitDestructiveCommands();
         }
     }

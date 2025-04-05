@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\GitlabController;
-use App\Http\Controllers\Api\V1\RepositoryDatabaseController;
-use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\Api\V1\RepositoryFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'v1'], function (): void {
-    Route::post('/repositories/{repository:slug}', [RepositoryDatabaseController::class, 'store'])->name('api.database.store');
-    Route::post('/storage/{repository:slug}', [RepositoryDatabaseController::class, 'storage'])->name('api.database.storage');
+    Route::post('/repositories/{repository:repository_id}', [RepositoryFileController::class, 'store'])->name('api.database.store');
+    Route::post('/storage/{repository:slug}', [RepositoryFileController::class, 'storage'])->name('api.database.storage');
 });
 
 Route::group(['prefix' => 'gitlab', 'as' => 'gitlab.'], function (): void {

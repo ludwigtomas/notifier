@@ -1,27 +1,24 @@
 <?php
 
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\ClientRepositoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\GitController;
-use App\Http\Controllers\GitGroupController;
-use App\Http\Controllers\GoogleAnalyticsController;
-use App\Http\Controllers\HostingController;
-use App\Http\Controllers\HostingRepositoryController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RepositoryController;
-use App\Http\Controllers\RepositoryFileController;
-use App\Http\Controllers\RepositorySettingController;
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\WorkerController;
-use App\Mail\TestMail;
-use App\Models\Git;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+use App\Http\Controllers\GitController;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\WorkerController;
+use App\Http\Controllers\HostingController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\GitGroupController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RepositoryController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RepositoryFileController;
+use App\Http\Controllers\GoogleAnalyticsController;
+use App\Http\Controllers\ClientRepositoryController;
+use App\Http\Controllers\HostingRepositoryController;
+use App\Http\Controllers\RepositorySettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,21 +88,7 @@ Route::middleware('auth:sanctum')->group(function (): void {
     Route::group(['prefix' => '/dashboard/repository-files', 'as' => 'repository-files.'], function (): void {
         Route::get('/download', [RepositoryFileController::class, 'download'])->name('download');
         Route::delete('/delete', [RepositoryFileController::class, 'destroy'])->name('destroy');
-        // Route::get('/create', [RepositoryFileController::class, 'create'])->name('create');
-        // Route::post('/store', [RepositoryFileController::class, 'store'])->name('store');
-
-        // Route::get('/{repository_file}/edit', [RepositoryFileController::class, 'edit'])->name('edit');
-        // Route::put('/update', [RepositoryFileController::class, 'update'])->name('update');
     });
-
-    // 🔺 DATABASES
-    // Route::group(['prefix' => '/dashboard/databases', 'as' => 'databases.'], function (): void {
-    //     Route::delete('/destroy', [RepositoryDatabaseController::class, 'destroy'])->name('destroy');
-    //     Route::delete('/test/bulk-destroy', [RepositoryDatabaseController::class, 'bulkDestroy'])->name('bulk.destroy');
-
-    //     Route::get('/download', [RepositoryDatabaseController::class, 'download'])->name('download');
-    //     //* STORE ---> api.php
-    // });
 
     // 🔺 CLIENTS
     Route::group(['prefix' => '/dashboard/clients', 'as' => 'clients.'], function (): void {
@@ -213,12 +196,6 @@ if (app()->isLocal()) {
     Route::get('/{repository}/google-analytics', [GoogleAnalyticsController::class, 'googleAnalytics'])->name('google-analytics');
 
     Route::get('/testingos', [TestController::class, 'test'])->name('testingos');
-
-    Route::get('/email-test', function () {
-        Mail::to(config('mail.from.address'))->send(new TestMail);
-
-        return 'Test email sent!';
-    });
 
     // Route::Get('/testingos', function (): void {
     //     $repositories = Repository::query()

@@ -38,7 +38,7 @@ export default function Index({ auth, worker, hostings }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -49,7 +49,7 @@ export default function Index({ auth, worker, hostings }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('hostings.index')}
                     >
                         Workers
@@ -60,7 +60,7 @@ export default function Index({ auth, worker, hostings }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold text-sky-500"
                         href={route('workers.create')}
                     >
                         Vytvořit

@@ -50,7 +50,7 @@ export default function NotificationsTable({ notifications }) {
         <>
             <section className="card">
                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                    <thead className="text-nowrap bg-zinc-800">
+                    <thead className="bg-zinc-800 text-nowrap">
                         <tr>
                             <th className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400">Model</th>
                             <th className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400">Metoda</th>
@@ -156,7 +156,7 @@ export default function NotificationsTable({ notifications }) {
                                     <div className="flex justify-center space-x-2">
                                         <Link
                                             href={route('notifications.show', notification.id)}
-                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                         >
                                             <EyeIcon className="size-6 text-sky-500" />
                                         </Link>
@@ -165,7 +165,7 @@ export default function NotificationsTable({ notifications }) {
                                             as="button"
                                             method="PATCH"
                                             href={route('notifications.mark-as-read', notification.id)}
-                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-yellow-500 group-hover:bg-zinc-900"
+                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-yellow-500"
                                             preserveScroll
                                         >
                                             <BookmarkIcon
@@ -182,7 +182,7 @@ export default function NotificationsTable({ notifications }) {
                                             as="button"
                                             method="DELETE"
                                             href={route('notifications.destroy', notification.id)}
-                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                            className="faster-animation group rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                             preserveScroll
                                         >
                                             <TrashIcon className={'size-6 text-red-500 group-hover:text-red-600'} />

@@ -36,7 +36,7 @@ export default function ClientsTable({ clients }) {
         <>
             <section className="card">
                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                    <thead className="text-nowrap bg-zinc-800">
+                    <thead className="bg-zinc-800 text-nowrap">
                         <tr>
                             <th
                                 scope="col"
@@ -100,11 +100,11 @@ export default function ClientsTable({ clients }) {
                                         {client.email ?? <XMarkIcon className="size-6 text-red-500" />}
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm text-zinc-300">
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap text-zinc-300">
                                         {client.phone ?? <XMarkIcon className="size-6 text-red-500" />}
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         <div className="flex items-center gap-x-2">
                                             {client.relationships.repositories.slice(0, 2).map((repository) => (
                                                 <p
@@ -127,24 +127,24 @@ export default function ClientsTable({ clients }) {
                                         </div>
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         <div className="flex items-center space-x-2">
                                             <Link
                                                 href={route('clients.show', client.id)}
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                             >
                                                 <EyeIcon className="size-6 text-sky-500" />
                                             </Link>
 
                                             <Link
                                                 href={route('clients.edit', client.id)}
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                             >
                                                 <PencilSquareIcon className="size-6 text-green-500" />
                                             </Link>
 
                                             <button
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                                 onClick={() => toggleModal(client)}
                                             >
                                                 <TrashIcon className="size-6 text-red-500" />

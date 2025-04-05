@@ -1,6 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link, router } from '@inertiajs/react'
-import { RocketLaunchIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import TextInput from '@/Components/TextInput'
 import InputLabel from '@/Components/InputLabel'
 import ResetFilters from '@/Components/ResetFilters'
@@ -8,6 +8,7 @@ import debounce from 'lodash/debounce'
 import { useState } from 'react'
 import Dropdown from '@/Components/Dropdown'
 import RepositoriesTable from '@/Pages/Repositories/Partials/RepositoriesTable'
+import { RepositoryIcon } from '@/Components/Icons/Models'
 
 export default function Index({ auth, repositories, filters }) {
     const [search, setSearch] = useState(filters.search || '')
@@ -43,7 +44,7 @@ export default function Index({ auth, repositories, filters }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -54,7 +55,7 @@ export default function Index({ auth, repositories, filters }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('repositories.index')}
                     >
                         Repozitáře
@@ -101,8 +102,8 @@ export default function Index({ auth, repositories, filters }) {
                                             <div className="font-bold text-white">{trashed}</div>
                                         </div>
 
-                                        <div className="absolute right-0 top-full hidden pt-4 group-hover:block">
-                                            <div className="z-40 w-[30rem] overflow-y-auto overflow-x-hidden rounded-xl border border-neutral-600 bg-neutral-800 p-2">
+                                        <div className="absolute top-full right-0 hidden pt-4 group-hover:block">
+                                            <div className="z-40 w-[30rem] overflow-x-hidden overflow-y-auto rounded-xl border border-neutral-600 bg-neutral-800 p-2">
                                                 <div className="grid grid-cols-1 gap-4">
                                                     <button
                                                         className={
@@ -148,7 +149,7 @@ export default function Index({ auth, repositories, filters }) {
                                         href={route('repositories.index')}
                                         className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
                                     >
-                                        <RocketLaunchIcon className="size-10 text-sky-500" />
+                                        <RepositoryIcon className="size-10 text-sky-500" />
                                     </Link>
                                 </div>
 
@@ -171,7 +172,7 @@ export default function Index({ auth, repositories, filters }) {
                 </div>
 
                 {/* Another options */}
-                <div className="fixed bottom-10 right-10">
+                <div className="fixed right-10 bottom-10">
                     <Dropdown maxWidth="md">
                         <Dropdown.Trigger>
                             <div className="flex items-center space-x-2">
@@ -180,7 +181,7 @@ export default function Index({ auth, repositories, filters }) {
                                         type="button"
                                         className="rounded-md px-6 py-3 focus:outline-none"
                                     >
-                                        <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                        <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                             Další možnosti
                                         </span>
                                     </button>
@@ -192,7 +193,7 @@ export default function Index({ auth, repositories, filters }) {
                             direction="up"
                             width="72"
                         >
-                            <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold uppercase text-white">Settings</h3>
+                            <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold text-white uppercase">Settings</h3>
 
                             <Link
                                 href={route('repositories.sync')}

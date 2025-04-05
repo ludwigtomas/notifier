@@ -502,7 +502,9 @@ var N9 = yf((B9, Ob) => {
             Object.defineProperty(
                 { __proto__: null, hasBrowserEnv: ss, hasStandardBrowserEnv: fq, hasStandardBrowserWebWorkerEnv: qq },
                 Symbol.toStringTag,
-                { value: 'Module' }
+                {
+                    value: 'Module',
+                }
             )
         ),
         A2 = { ...Wq, ...uq }

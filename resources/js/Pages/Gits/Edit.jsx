@@ -12,7 +12,7 @@ export default function Edit({ auth, git, repositories }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -23,7 +23,7 @@ export default function Edit({ auth, git, repositories }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('gits.index')}
                     >
                         Gits
@@ -34,7 +34,7 @@ export default function Edit({ auth, git, repositories }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('gits.edit', git.id)}
                     >
                         {git.name}
@@ -46,7 +46,7 @@ export default function Edit({ auth, git, repositories }) {
 
                     <div className="group relative">
                         <Link
-                            className="text-lg font-semibold leading-tight text-sky-500"
+                            className="text-lg leading-tight font-semibold text-sky-500"
                             href={route('gits.edit', git.id)}
                         >
                             Edit
@@ -57,20 +57,20 @@ export default function Edit({ auth, git, repositories }) {
         >
             <Head title={git.name + ' - Edit'} />
 
-            <div className="sm:px-6 lg:px-8">
+            <div className="">
                 <div className="container mx-auto space-y-6">
-                    <div className="border-4 border-zinc-900 bg-zinc-900 p-8 sm:rounded-3xl">
+                    <div className="card p-6">
                         <UpdateGitInformationForm git={git} />
                     </div>
 
-                    <div className="border-4 border-zinc-900 bg-zinc-900 p-8 sm:rounded-3xl">
+                    <div className="card p-6">
                         <UpdateGitGroups
                             git_groups={git.relationships.git_groups_parent}
                             repositories={repositories}
                         />
                     </div>
 
-                    <div className="border-4 border-zinc-900 bg-zinc-900 p-8 sm:rounded-3xl">
+                    <div className="card p-6">
                         <AttachGitGroups git_groups={git.relationships.git_groups_parent} />
                     </div>
                 </div>

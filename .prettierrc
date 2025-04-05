@@ -1,10 +1,10 @@
 {
+    "endOfLine": "lf",
     "singleQuote": true,
     "semi": false,
     "bracketSameLine": false,
     "printWidth": 140,
     "singleAttributePerLine": true,
-    "tailwindConfig": "./tailwind.config.js",
     "tailwindPreserveDuplicates": false,
     "trailingComma": "es5",
     "tabWidth": 4,

@@ -29,10 +29,11 @@ export default function WorkerStatus({ worker, className = '' }) {
             .then((response) => {
                 console.log(response.data)
                 setStatus(response.data.status || [])
-                setIsLoading(false)
             })
             .catch((error) => {
                 console.error(error)
+            })
+            .finally(() => {
                 setIsLoading(false)
             })
     }, [worker.id])
@@ -44,10 +45,11 @@ export default function WorkerStatus({ worker, className = '' }) {
             .then((response) => {
                 console.log(response.data)
                 setContainers(response.data.containers || [])
-                setIsLoading(false)
             })
             .catch((error) => {
                 console.error(error)
+            })
+            .finally(() => {
                 setIsLoading(false)
             })
     }, [worker.id])

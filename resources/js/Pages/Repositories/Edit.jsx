@@ -16,7 +16,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -27,7 +27,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('repositories.index')}
                     >
                         Repozitáře
@@ -38,7 +38,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('repositories.edit', repository.repository_id)}
                     >
                         {repository.name}
@@ -50,13 +50,13 @@ export default function Edit({ auth, repository, hostings, clients }) {
 
                     <div className="group relative">
                         <Link
-                            className="text-lg font-semibold leading-tight text-sky-500"
+                            className="text-lg leading-tight font-semibold text-sky-500"
                             href={route('repositories.edit', repository.repository_id)}
                         >
                             Edit
                         </Link>
 
-                        <div className="invisible absolute left-0 top-full z-30 flex flex-col pt-6 group-hover:visible">
+                        <div className="invisible absolute top-full left-0 z-30 flex flex-col pt-6 group-hover:visible">
                             <div className="grid gap-y-2 rounded-xl border-2 border-zinc-700 bg-zinc-900 p-2 shadow-xl shadow-black">
                                 <Link
                                     className="flex items-center justify-center space-x-4 rounded-md border border-transparent bg-zinc-800 px-4 py-2 hover:border-sky-500"
@@ -106,7 +106,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                         </p>
                     </header>
 
-                    <table className="mt-6 w-full whitespace-nowrap p-3 text-left">
+                    <table className="mt-6 w-full p-3 text-left whitespace-nowrap">
                         <thead className="border-b border-white/10 text-sm leading-6 text-white">
                             <tr>
                                 <th
@@ -166,19 +166,19 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                     className="bg-zinc-800 transition duration-150 ease-in-out hover:bg-zinc-700"
                                     key={setting.id}
                                 >
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">{setting.key}</td>
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">{setting.key}</td>
 
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">{setting.value}</td>
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">{setting.value}</td>
 
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">
                                         {setting.last_attempt_at ?? 'N/A'}
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">
                                         {setting.attempts ?? 'N/A'}
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">
                                         {setting.was_successful ? (
                                             <span className="text-green-500">Yes</span>
                                         ) : (
@@ -186,7 +186,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                         )}
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-300">
+                                    <td className="px-4 py-3 text-sm font-medium whitespace-nowrap text-gray-300">
                                         {setting.is_active ? (
                                             <span className="text-green-500">Active</span>
                                         ) : (
@@ -194,7 +194,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                         )}
                                     </td>
 
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                                    <td className="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-0">
                                         <div className="flex items-center space-x-2">
                                             <Link
                                                 className="rounded-md bg-green-500 px-4 py-1 text-white"
@@ -244,7 +244,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                         <div className="relative flex items-center justify-between">
                             <div className="absolute left-1/2 -translate-x-1/2">
                                 <span className="mr-4 text-gray-400">.ssh</span>
-                                <span className="text-xl font-bold uppercase text-white">VPS connection</span>
+                                <span className="text-xl font-bold text-white uppercase">VPS connection</span>
                             </div>
 
                             <div className="flex space-x-2 p-2">
@@ -294,7 +294,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                 </div>
 
                 {/* Another options */}
-                <div className="fixed bottom-10 right-10">
+                <div className="fixed right-10 bottom-10">
                     <Dropdown>
                         <Dropdown.Trigger>
                             <div className="flex items-center space-x-2">
@@ -303,7 +303,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                                         type="button"
                                         className="rounded-md px-6 py-3 focus:outline-none"
                                     >
-                                        <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                        <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                             Další možnosti
                                         </span>
                                     </button>
@@ -315,7 +315,7 @@ export default function Edit({ auth, repository, hostings, clients }) {
                             direction="up"
                             width="64"
                         >
-                            <h3 className="px mb-2 w-64 border-b border-zinc-800 p-2 text-center font-bold uppercase text-white">
+                            <h3 className="px mb-2 w-64 border-b border-zinc-800 p-2 text-center font-bold text-white uppercase">
                                 Odeslání emailu
                             </h3>
 

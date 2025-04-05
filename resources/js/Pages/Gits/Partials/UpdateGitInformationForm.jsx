@@ -3,7 +3,7 @@ import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
-import { BackButton, EditButton } from '@/Components/Buttons/ActionButtons'
+import { BackButton, EditButton, ActionButton } from '@/Components/Buttons/ActionButtons'
 
 export default function ({ git, className = '' }) {
     const { data, setData, put, errors, processing, recentlySuccessful } = useForm({
@@ -26,18 +26,16 @@ export default function ({ git, className = '' }) {
     return (
         <section className={className}>
             <header>
-                <h1 className="text-center text-2xl font-bold text-zinc-200">{git.name}</h1>
-
-                <h2 className="text-lg font-medium text-zinc-100">Git edit</h2>
+                <h2 className="text-lg font-medium text-zinc-100">{git.name}</h2>
 
                 <p className="mt-1 text-sm text-zinc-400">Update your git information.</p>
             </header>
 
             <form
                 onSubmit={submit}
-                className="mt-6 grid grid-cols-12 items-start gap-5"
+                className="mt-6 grid grid-cols-1 items-start gap-5"
             >
-                <div className="col-span-12 mr-auto w-5/12">
+                <div className="col-span-full xl:mr-auto xl:w-5/12">
                     <InputLabel
                         htmlFor="name"
                         value="Name"
@@ -58,7 +56,7 @@ export default function ({ git, className = '' }) {
                     />
                 </div>
 
-                <div className="col-span-12 mr-auto w-5/12">
+                <div className="col-span-full xl:mr-auto xl:w-5/12">
                     <InputLabel
                         htmlFor="api_token"
                         value="API Token"
@@ -79,7 +77,7 @@ export default function ({ git, className = '' }) {
                     />
                 </div>
 
-                <div className="col-span-12 mr-auto w-5/12">
+                <div className="col-span-full xl:mr-auto xl:w-5/12">
                     <InputLabel
                         htmlFor="username"
                         value="Username"
@@ -100,7 +98,7 @@ export default function ({ git, className = '' }) {
                     />
                 </div>
 
-                <div className="col-span-12 mr-auto w-5/12">
+                <div className="col-span-full xl:mr-auto xl:w-5/12">
                     <InputLabel
                         htmlFor="user_id"
                         value="User ID"
@@ -121,27 +119,45 @@ export default function ({ git, className = '' }) {
                     />
                 </div>
 
-                <div className="col-span-12 flex items-center space-x-4">
-                    <div>
-                        <BackButton
-                            href={route('gits.index')}
-                            className="w-full"
-                        >
-                            Zpátky
-                        </BackButton>
-                    </div>
+                <div className="col-span-full xl:mr-auto xl:w-5/12">
+                    <InputLabel
+                        htmlFor="user_avatar_url"
+                        value="User Avatar URL"
+                    />
 
-                    <div>
-                        <PrimaryButton
-                            typeOfButton="submit"
-                            className="w-full"
-                            disabled={processing}
-                        >
-                            Update
-                        </PrimaryButton>
-                    </div>
+                    <TextInput
+                        id="user_avatar_url"
+                        className="mt-1 block w-full"
+                        placeholder="User Avatar URL"
+                        value={data.user_avatar_url}
+                        onChange={(e) => setData('user_avatar_url', e.target.value)}
+                    />
 
-                    {recentlySuccessful && <p className="text-green-500">Repository information has been updated!</p>}
+                    <InputError
+                        className="mt-2"
+                        message={errors.user_avatar_url}
+                    />
+                </div>
+
+                <div className="flex items-center space-x-2">
+                    <ActionButton
+                        elementType="link"
+                        elementAction="back"
+                        href={route('gits.index')}
+                    >
+                        Zpátky
+                    </ActionButton>
+
+                    <ActionButton
+                        elementType="button"
+                        elementAction="update"
+                        type="submit"
+                        disabled={processing}
+                    >
+                        Uložit
+                    </ActionButton>
+
+                    {recentlySuccessful && <p className="text-green-500">Git information has been updated!</p>}
                 </div>
             </form>
         </section>

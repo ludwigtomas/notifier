@@ -27,7 +27,7 @@ export default function Edit({ auth, repository, option_keys, option_values }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -38,7 +38,7 @@ export default function Edit({ auth, repository, option_keys, option_values }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('repositories.index')}
                     >
                         Repozitáře
@@ -49,7 +49,7 @@ export default function Edit({ auth, repository, option_keys, option_values }) {
                     </span>
 
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('repositories.edit', repository.repository_id)}
                     >
                         {repository.name}
@@ -61,13 +61,13 @@ export default function Edit({ auth, repository, option_keys, option_values }) {
 
                     <div className="group relative">
                         <Link
-                            className="text-lg font-semibold leading-tight text-sky-500"
+                            className="text-lg leading-tight font-semibold text-sky-500"
                             href={route('repository-settings.create', repository.repository_id)}
                         >
                             Repository settings
                         </Link>
 
-                        <div className="invisible absolute left-0 top-full z-30 flex flex-col pt-6 group-hover:visible">
+                        <div className="invisible absolute top-full left-0 z-30 flex flex-col pt-6 group-hover:visible">
                             <div className="grid gap-y-2 rounded-xl border-2 border-zinc-700 bg-zinc-900 p-2 shadow-xl shadow-black">
                                 <Link
                                     className="flex items-center justify-center space-x-4 rounded-md border border-transparent bg-zinc-800 px-4 py-2 hover:border-sky-500"

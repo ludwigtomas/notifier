@@ -97,7 +97,7 @@ class GitlabService
 
                 $repository = Repository::find($repository_api->id);
 
-                self::getRepositorylastCommit($repository);
+                self::getRepositoryLastCommit($repository);
                 self::getRepositoryAvatar($repository, $repository_api, $gitlab);
             }
         } catch (Throwable $th) {
@@ -105,7 +105,7 @@ class GitlabService
         }
     }
 
-    public static function getRepositorylastCommit(Repository $repository): void
+    public static function getRepositoryLastCommit(Repository $repository): void
     {
         $client = new GuzzleClient([
             'base_uri' => 'https://gitlab.com/api/v4/',
@@ -141,10 +141,10 @@ class GitlabService
 
     public static function syncRepositoriesWithGitlab(): void
     {
-        $repositories = Repository::all();
+        $repositories = Repository::lazy();
 
         foreach ($repositories as $repository) {
-            self::getRepositorylastCommit($repository);
+            self::getRepositoryLastCommit($repository);
             self::getRepositoryAvatar($repository);
         }
     }

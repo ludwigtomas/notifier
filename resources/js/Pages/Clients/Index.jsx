@@ -1,6 +1,6 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link, router } from '@inertiajs/react'
-import { ChevronRightIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import debounce from 'lodash/debounce'
 import Dropdown from '@/Components/Dropdown'
@@ -8,6 +8,7 @@ import ResetFilters from '@/Components/ResetFilters'
 import TextInput from '@/Components/TextInput'
 import InputLabel from '@/Components/InputLabel'
 import ClientsTable from '@/Pages/Clients/Partials/ClientsTable'
+import { ClientIcon } from '@/Components/Icons/Models'
 
 export default function Index({ auth, clients, filters }) {
     const [search, setSearch] = useState(filters.search ?? '')
@@ -33,7 +34,7 @@ export default function Index({ auth, clients, filters }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -44,7 +45,7 @@ export default function Index({ auth, clients, filters }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('clients.index')}
                     >
                         Klienti
@@ -84,7 +85,7 @@ export default function Index({ auth, clients, filters }) {
                                     href={route('clients.index')}
                                     className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
                                 >
-                                    <UserGroupIcon className="size-10 text-sky-500" />
+                                    <ClientIcon className="size-10 text-sky-500" />
                                 </Link>
                             </div>
 
@@ -107,7 +108,7 @@ export default function Index({ auth, clients, filters }) {
             </div>
 
             {/* Another options */}
-            <div className="fixed bottom-10 right-10">
+            <div className="fixed right-10 bottom-10">
                 <Dropdown>
                     <Dropdown.Trigger>
                         <div className="flex items-center space-x-2">
@@ -116,7 +117,7 @@ export default function Index({ auth, clients, filters }) {
                                     type="button"
                                     className="rounded-md px-6 py-3 focus:outline-none"
                                 >
-                                    <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                    <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                         Další možnosti
                                     </span>
                                 </button>
@@ -128,7 +129,7 @@ export default function Index({ auth, clients, filters }) {
                         direction="up"
                         width="64"
                     >
-                        <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold uppercase text-white">Možnosti</h3>
+                        <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold text-white uppercase">Možnosti</h3>
 
                         <Dropdown.Link
                             href={route('clients.create')}
