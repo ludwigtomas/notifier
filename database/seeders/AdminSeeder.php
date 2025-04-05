@@ -12,7 +12,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+
         if (app()->isLocal()) {
+            if (User::where('email', 'admin@admin.com')->exists()) {
+                return;
+            }
+
             User::create([
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
@@ -22,6 +27,10 @@ class AdminSeeder extends Seeder
         }
 
         if (app()->isProduction()) {
+            if (User::where('email', 'info@ludwigtomas.cz')->exists()) {
+                return;
+            }
+
             User::create([
                 'name' => 'Ludwig Tomas',
                 'email' => 'info@ludwigtomas.cz',

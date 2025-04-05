@@ -8,6 +8,25 @@ export default function Pagination({ links }) {
             : 'px-4 py-3 text-sm leading-4 text-gray-400 rounded bg-zinc-800 ring-2 ring ring-zinc-700 hover:text-sky-500 hover:ring-sky-500'
     }
 
+    function preserveQueryParams(url) {
+        if (!url) return url
+
+        const relation_param = route().params?.relation
+
+        if (!relation_param) {
+            return url
+        }
+
+        // Parse the target URL
+        const targetUrl = new URL(url, window.location.origin)
+
+        // Add relation parameter to the target URL
+        targetUrl.searchParams.set('relation', relation_param)
+
+        // Return the combined URL
+        return targetUrl.toString()
+    }
+
     return (
         <section className="flex flex-col items-center justify-center">
             <div className="card">
@@ -26,7 +45,9 @@ export default function Pagination({ links }) {
                         <Link
                             key={key}
                             className={getClassName(link.active)}
-                            href={link.url}
+                            href={preserveQueryParams(link.url)}
+                            preserveState
+                            preserveScroll
                             dangerouslySetInnerHTML={{
                                 __html:
                                     link.label === 'pagination.next'

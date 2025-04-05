@@ -3,9 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class GitGroupNotification extends Notification
+class GitGroupNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

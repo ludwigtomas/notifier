@@ -36,7 +36,7 @@ export default function HostingsTable({ hostings }) {
         <>
             <section className="card">
                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                    <thead className="text-nowrap bg-zinc-800">
+                    <thead className="bg-zinc-800 text-nowrap">
                         <tr>
                             <th
                                 scope="col"
@@ -116,14 +116,14 @@ export default function HostingsTable({ hostings }) {
                                         <div className="flex items-center space-x-2">
                                             <Link
                                                 href={route('hostings.edit', hosting.id)}
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                             >
                                                 <PencilSquareIcon className="size-6 text-green-500" />
                                             </Link>
 
                                             <button
                                                 onClick={() => toggleModal(hosting)}
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                             >
                                                 <TrashIcon className="size-6 text-red-500" />
                                             </button>

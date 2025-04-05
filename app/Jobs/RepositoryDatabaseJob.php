@@ -47,7 +47,7 @@ class RepositoryDatabaseJob implements ShouldQueue
     public function tags(): array
     {
         return [
-            'database',
+            'backups',
             'repository:'.$this->repository->repository_id,
         ];
     }

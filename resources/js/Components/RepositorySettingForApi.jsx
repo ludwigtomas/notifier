@@ -1,13 +1,12 @@
 import React from 'react'
-import { EyeIcon, EyeSlashIcon, ClipboardIcon } from '@heroicons/react/24/outline'
+import { EyeIcon, EyeSlashIcon, CommandLineIcon, DocumentIcon, ClipboardIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 
 const RepositorySettingForApi = ({ repository }) => {
     const [showCode, setShowCode] = useState(false)
-    const [selectFile, setSelectFile] = useState('ssh')
+    const [selectFile, setSelectFile] = useState('env')
 
-    // Function to toggle the database_verification_code
     function toggleShowCode() {
         setShowCode(!showCode)
     }
@@ -21,7 +20,7 @@ const RepositorySettingForApi = ({ repository }) => {
     // Function to copy the code to clipboard
     const copyEnvToClipboard = () => {
         let backup_code = '"' + repository.database_verification_code + '"'
-        let backup_url = '"' + import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.slug + '"'
+        let backup_url = '"' + import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.repository_id + '"'
         let BACKUP_ZIP_PASSWORD = '"' + repository.slug.slice(0, 1) + '_secret123' + '"'
 
         let env_code =
@@ -53,10 +52,20 @@ const RepositorySettingForApi = ({ repository }) => {
     return (
         <div className="col-span-12 mb-10 h-56">
             <div className="flex items-center justify-center">
-                <div className="overflow-hidden rounded-xl bg-stone-900 p-1 drop-shadow-2xl lg:w-8/12">
+                <div className="overflow-hidden rounded-xl bg-stone-900 p-1 drop-shadow-2xl lg:w-9/12">
                     <div className="relative flex items-center justify-between">
                         <div className="flex space-x-2 p-2">
                             <div className="space-x-2">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={handleSelectTab('env')}
+                                    className={'inline-flex rounded-lg border border-zinc-600 bg-zinc-800 p-2 text-white'}
+                                >
+                                    .ENV
+                                    <DocumentIcon className="ml-2 size-6" />
+                                </motion.button>
+
                                 <motion.button
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
@@ -66,17 +75,7 @@ const RepositorySettingForApi = ({ repository }) => {
                                     }
                                 >
                                     SSH Connection
-                                    <ClipboardIcon className="ml-2 size-6" />
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={handleSelectTab('env')}
-                                    className={'inline-flex rounded-lg border border-zinc-600 bg-zinc-800 p-2 text-white'}
-                                >
-                                    .ENV
-                                    <ClipboardIcon className="ml-2 size-6" />
+                                    <CommandLineIcon className="ml-2 size-6" />
                                 </motion.button>
                             </div>
                         </div>
@@ -90,7 +89,7 @@ const RepositorySettingForApi = ({ repository }) => {
 
                     {selectFile === 'ssh' ? (
                         <div className="relative col-span-12 grid w-full p-1">
-                            <div className="absolute right-2 top-1/2 z-50 -translate-y-1/2">
+                            <div className="absolute top-1/2 right-2 z-50 -translate-y-1/2">
                                 <div className="flex space-x-2 p-2">
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
@@ -137,7 +136,7 @@ const RepositorySettingForApi = ({ repository }) => {
                         </div>
                     ) : (
                         <div className="relative col-span-12 grid w-full p-1">
-                            <div className="absolute right-2 top-1/2 z-50 -translate-y-1/2">
+                            <div className="absolute top-1/2 right-2 z-50 -translate-y-1/2">
                                 <div className="flex space-x-2 p-2">
                                     <motion.button
                                         whileHover={{ scale: 1.1 }}
@@ -169,7 +168,7 @@ const RepositorySettingForApi = ({ repository }) => {
                                             id="code-area"
                                             className="space-y-3 p-5"
                                         >
-                                            <div className="text-base">
+                                            <div className="text-base mb-1">
                                                 <span className="text-yellow-300">BACKUP_CODE</span>
 
                                                 <span className="text-green-400">=</span>
@@ -185,21 +184,21 @@ const RepositorySettingForApi = ({ repository }) => {
                                                 <span className="text-blue-400">"</span>
                                             </div>
 
-                                            <div className="text-base">
+                                            <div className="text-base mb-1">
                                                 <span className="text-yellow-300">BACKUP_URL</span>
                                                 <span className="text-green-400">=</span>
                                                 <span className="text-blue-400">"</span>
 
                                                 <span className="text-purple-400">
                                                     {showCode
-                                                        ? import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.slug
+                                                        ? import.meta.env.VITE_APP_URL + '/api/v1/repositories/' + repository.repository_id
                                                         : import.meta.env.VITE_APP_URL + '/api/v1/repositories/xxxxx-xxxxx'}
                                                 </span>
 
                                                 <span className="text-blue-400">"</span>
                                             </div>
 
-                                            <div className="text-base">
+                                            <div className="text-base mb-1">
                                                 <span className="text-yellow-300">BACKUP_ZIP_PASSWORD</span>
                                                 <span className="text-green-400">=</span>
                                                 <span className="text-blue-400">"</span>

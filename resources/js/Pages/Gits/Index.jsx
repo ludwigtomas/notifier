@@ -1,17 +1,19 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link } from '@inertiajs/react'
-import { ChevronRightIcon, GlobeAltIcon } from '@heroicons/react/24/outline'
+import { ChevronRightIcon } from '@heroicons/react/24/outline'
 import { EditButton } from '@/Components/Buttons/ActionButtons'
 import Dropdown from '@/Components/Dropdown'
+import { isImage } from '@/Utils/IsImage'
+import { GitIcon } from '@/Components/Icons/Models'
 
 export default function Index({ auth, gits }) {
     return (
         <AdminLayout
             user={auth.user}
             header={
-                <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
+                <div className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -22,40 +24,38 @@ export default function Index({ auth, gits }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('gits.index')}
                     >
                         Gits
                     </Link>
-                </header>
+                </div>
             }
         >
-            <Head title="Gity" />
+            <Head title="Git" />
 
             <div className="mx-auto max-w-[100rem] sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1">
-                    <div className="card">
-                        <div className="flex space-x-4">
-                            <div className="flex items-center justify-center">
-                                <Link
-                                    href={route('gits.index')}
-                                    className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
-                                >
-                                    <GlobeAltIcon className="size-10 text-sky-500" />
-                                </Link>
-                            </div>
+                <div className="card">
+                    <div className="flex space-x-4">
+                        <div className="flex items-center justify-center">
+                            <Link
+                                href={route('gits.index')}
+                                className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
+                            >
+                                <GitIcon className="size-10 text-sky-500" />
+                            </Link>
+                        </div>
 
-                            <div>
-                                <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">Gity</h1>
+                        <div>
+                            <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">Gity</h1>
 
-                                <p className="text-zinc-400">Seznam všech dostupných gitových služeb.</p>
-                            </div>
+                            <p className="text-zinc-400">Seznam všech dostupných gitových služeb.</p>
                         </div>
                     </div>
 
                     <section className="card mt-2">
                         <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                            <thead className="text-nowrap bg-zinc-800">
+                            <thead className="bg-zinc-800 text-nowrap">
                                 <tr>
                                     <th className="px-4 py-3.5 text-left text-sm font-normal text-zinc-400">Avatar</th>
 
@@ -87,7 +87,7 @@ export default function Index({ auth, gits }) {
                                                 <td className="px-4 py-4">
                                                     <img
                                                         className="h-10 w-10 rounded-lg"
-                                                        src={'/storage/avatars/' + git.username + '.png'}
+                                                        src={isImage('/storage/avatars/' + git.username + '.png')}
                                                         alt={git.name}
                                                     />
                                                 </td>
@@ -105,7 +105,7 @@ export default function Index({ auth, gits }) {
                                                 </td>
 
                                                 <td className="px-4 py-4">
-                                                    <span className="text-sm font-medium text-zinc-400 blur hover:blur-0">
+                                                    <span className="hover:blur-0 text-sm font-medium text-zinc-400 blur">
                                                         {git.api_token}
                                                     </span>
                                                 </td>
@@ -138,7 +138,7 @@ export default function Index({ auth, gits }) {
                 </div>
 
                 {/* Another options */}
-                <div className="fixed bottom-10 right-10">
+                <div className="fixed right-10 bottom-10">
                     <Dropdown maxWidth="md">
                         <Dropdown.Trigger>
                             <div className="flex items-center space-x-2">
@@ -147,7 +147,7 @@ export default function Index({ auth, gits }) {
                                         type="button"
                                         className="rounded-md px-6 py-3 focus:outline-none"
                                     >
-                                        <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                        <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                             Další možnosti
                                         </span>
                                     </button>
@@ -159,7 +159,7 @@ export default function Index({ auth, gits }) {
                             direction="up"
                             width="72"
                         >
-                            <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold uppercase text-white">Settings</h3>
+                            <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold text-white uppercase">Settings</h3>
 
                             <Link
                                 href={route('gits.sync', 'gitlab')}

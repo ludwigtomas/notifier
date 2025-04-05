@@ -5,6 +5,7 @@ import Modal from '@/Components/Modal'
 import DangerButton from '@/Components/DangerButton'
 import SecondaryButton from '@/Components/SecondaryButton'
 import { useState } from 'react'
+import Pagination from '@/Components/Pagination'
 
 export default function RepositoryDatabaseTable({ repository, backups }) {
     const [selectedDatabases, setSelectedDatabases] = useState([])
@@ -75,7 +76,7 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
 
     return (
         <>
-            <div className="mb-5 mt-10 grid grid-cols-12 gap-2">
+            <div className="mt-10 mb-5 grid grid-cols-12 gap-2">
                 <div className="col-span-1 flex items-center justify-center rounded-xl bg-sky-500 text-center">
                     <Link
                         className="flex h-full w-full items-center justify-center p-2"
@@ -98,9 +99,9 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                 </div>
             </div>
 
-            <div className="mb-5 mt-10 divide-y divide-zinc-800 rounded-lg border-4 border-zinc-900">
+            <div className="mt-10 mb-5 divide-y divide-zinc-800 rounded-lg border-4 border-zinc-900">
                 {selectedDatabases.length > 0 && (
-                    <div className="fixed bottom-10 right-10">
+                    <div className="fixed right-10 bottom-10">
                         <Dropdown>
                             <Dropdown.Trigger>
                                 <div className="flex items-center space-x-2">
@@ -110,7 +111,7 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                                             type="button"
                                             className="rounded-md px-6 py-3 focus:outline-none"
                                         >
-                                            <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                            <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                                 Vybráno
                                             </span>
                                         </button>
@@ -132,7 +133,7 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                                 <a
                                     className="flex w-full items-center border-l-4 border-transparent px-4 py-2 text-start text-sm leading-5 text-zinc-400 transition duration-150 ease-in-out hover:border-green-500 hover:bg-zinc-800 hover:text-green-500 focus:bg-gray-100 focus:outline-none"
                                     href={route('repository-files.download', {
-                                        repository_file: selectedDatabases,
+                                        repository_files: selectedDatabases,
                                     })}
                                 >
                                     <span className="mr-2">
@@ -208,17 +209,23 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                                 <tr
                                     key={database.id}
                                     className="group hover:bg-zinc-800"
+                                    onClick={(e) => {
+                                        const isSelected = selectedDatabases.includes(database.id)
+
+                                        isSelected
+                                            ? setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id))
+                                            : setSelectedDatabases([...selectedDatabases, database.id])
+                                    }}
                                 >
                                     <td className="px-4 py-4">
                                         <input
                                             type="checkbox"
-                                            className="rounded-md p-3"
+                                            className="size-5 overflow-hidden rounded-full"
+                                            checked={selectedDatabases.includes(database.id)}
                                             onChange={(e) => {
-                                                if (e.target.checked) {
-                                                    setSelectedDatabases([...selectedDatabases, database.id])
-                                                } else {
-                                                    setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id))
-                                                }
+                                                e.target.checked
+                                                    ? setSelectedDatabases([...selectedDatabases, database.id])
+                                                    : setSelectedDatabases(selectedDatabases.filter((id) => id !== database.id))
                                             }}
                                         />
                                     </td>
@@ -236,13 +243,13 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                                     </td>
 
                                     <td className="px-4 py-4">
-                                        <span className="text-sm font-medium text-zinc-400">{database.created_at_human}</span>
+                                        <span className="text-sm font-medium text-zinc-400">{database.created_at}</span>
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         <div className="flex items-center space-x-2">
                                             <a
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                                 href={route('repository-files.download', {
                                                     repository_file: [database.id],
                                                 })}
@@ -251,7 +258,7 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                                             </a>
 
                                             <button
-                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                                 onClick={() => toggleModal(database)}
                                             >
                                                 <TrashIcon className="h-6 w-6 text-red-500" />
@@ -264,7 +271,7 @@ export default function RepositoryDatabaseTable({ repository, backups }) {
                 </table>
             </div>
 
-            {/* <Pagination links={backups.meta} /> */}
+            {backups && backups.data.length !== 0 && <Pagination links={backups} />}
 
             {/* toggleDeleteModal */}
             <Modal

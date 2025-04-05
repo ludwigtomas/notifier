@@ -91,9 +91,10 @@ export default function Login({ status }) {
                 <div className="mt-4 flex items-center justify-end">
                     <PrimaryButton
                         className="ms-4"
+                        typeOfButton="submit"
                         disabled={processing}
                     >
-                        Log in
+                        Přihlásit se
                     </PrimaryButton>
                 </div>
             </form>

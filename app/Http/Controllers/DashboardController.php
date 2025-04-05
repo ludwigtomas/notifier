@@ -12,12 +12,12 @@ class DashboardController extends Controller
 {
     public function index(Request $request): Response
     {
-        $request->model
-            ? $requsted_models = array_map(fn ($model) => 'App\\Models\\'.$model, $request->model)
-            : $requsted_models = [];
+        $requsted_models = $request->model
+            ? array_map(fn ($model) => 'App\\Models\\'.$model, $request->model)
+            : [];
 
         $notifications = Notification::query()
-            ->whereNull('read_at')
+            ->where('read_at', null)
             ->when($requsted_models, function ($query, $requsted_models): void {
                 $query->whereIn('notifiable_type', $requsted_models);
             })

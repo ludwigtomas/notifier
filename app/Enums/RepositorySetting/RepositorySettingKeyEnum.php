@@ -6,4 +6,5 @@ enum RepositorySettingKeyEnum: string
 {
     case BACKUP_DATABASE = 'backup_database';
     case BACKUP_STORAGE = 'backup_storage';
+    case BACKUP_CONTAINER = 'backup_container';
 }

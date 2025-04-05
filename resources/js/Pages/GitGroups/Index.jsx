@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link, router } from '@inertiajs/react'
-import { PencilSquareIcon, ChevronRightIcon, FireIcon, RocketLaunchIcon, FolderOpenIcon, EyeIcon } from '@heroicons/react/24/outline'
+import { PencilSquareIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { ChildrensTable, RepositoriesTable } from '@/Pages/GitGroups/Partials/GroupRelationshipsTable'
 import TextInput from '@/Components/TextInput'
 import InputLabel from '@/Components/InputLabel'
 import debounce from 'lodash/debounce'
 import ResetFilters from '@/Components/ResetFilters'
+import { GitGroupIcon, RepositoryIcon } from '@/Components/Icons/Models'
+import GitGroupTable from '@/Components/Tables/GitGroupTable'
 
 export default function ({ auth, git_groups, group_details, filters }) {
     const [search, setSearch] = useState(filters.search || '')
@@ -33,7 +35,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -44,7 +46,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('git-groups.index')}
                     >
                         Git groups
@@ -55,8 +57,8 @@ export default function ({ auth, git_groups, group_details, filters }) {
             <Head title="Gits Index" />
 
             <div className="mx-auto max-w-[100rem] sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1">
-                    <section className="card mb-10">
+                <main className="space-y-1">
+                    <section className="card">
                         <div className="grid grid-cols-5 items-center gap-2">
                             <div>
                                 <InputLabel
@@ -84,7 +86,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                     href={route('git-groups.index')}
                                     className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
                                 >
-                                    <FolderOpenIcon className="size-10 text-sky-500" />
+                                    <GitGroupIcon className="size-10 text-sky-500" />
                                 </Link>
                             </div>
 
@@ -96,123 +98,17 @@ export default function ({ auth, git_groups, group_details, filters }) {
                         </div>
                     </section>
 
-                    <section className="mt-2">
-                        <div className="card">
-                            {git_groups && git_groups.length > 0 ? (
-                                <div className="grid grid-cols-3 gap-2">
-                                    {git_groups.map((group) => {
-                                        return (
-                                            <div
-                                                key={group.group_id}
-                                                className="group relative space-y-10 rounded-lg border-2 border-zinc-700 bg-zinc-800 p-8 pb-20 hover:border-zinc-600"
-                                            >
-                                                <div className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-lg border-x-2 border-b-2 border-zinc-700 bg-zinc-700">
-                                                    <span className="px-2 text-zinc-400">{group.group_id}</span>
-                                                </div>
-
-                                                <div className="flex items-center justify-center space-x-4">
-                                                    <span className="inline-block">
-                                                        <FireIcon className="size-8 text-sky-500" />
-                                                    </span>
-
-                                                    <h2 className="text-3xl font-semibold capitalize text-white">{group.name}</h2>
-                                                </div>
-
-                                                <div className="overflow-hidden rounded-xl bg-white/5 py-2">
-                                                    <div className="grid grid-cols-2 place-items-center">
-                                                        <div className="text-center">
-                                                            <p className="text-lg font-bold text-zinc-200">{group.childrens_count}</p>
-
-                                                            <p className="text-xs text-zinc-400">Podkategorie</p>
-                                                        </div>
-
-                                                        <div className="text-center">
-                                                            <p className="text-lg font-bold text-zinc-200">
-                                                                {group.all_repositories_count}
-                                                            </p>
-
-                                                            <p className="text-xs text-zinc-400">Repozitáře</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="absolute bottom-0 right-0 grid w-full grid-cols-2 place-items-center overflow-hidden rounded-b-[0.65rem]">
-                                                    <div className="grid h-full w-full grid-cols-2 place-items-center">
-                                                        <Link
-                                                            className={
-                                                                'flex h-full w-full items-center justify-center ' +
-                                                                (filters?.relationship == 'childrens' && filters?.group_id == group.group_id
-                                                                    ? 'bg-sky-950 hover:bg-sky-900'
-                                                                    : 'bg-red-950 hover:bg-red-900')
-                                                            }
-                                                            preserveScroll
-                                                            href={route('git-groups.index', {
-                                                                group_id: group.group_id,
-                                                                relationship: 'childrens',
-                                                            })}
-                                                        >
-                                                            <FolderOpenIcon
-                                                                className={
-                                                                    'size-8 ' +
-                                                                    (filters?.relationship == 'childrens' &&
-                                                                    filters?.group_id == group.group_id
-                                                                        ? 'text-sky-500'
-                                                                        : 'text-red-500')
-                                                                }
-                                                            />
-                                                        </Link>
-
-                                                        <Link
-                                                            className={
-                                                                'flex h-full w-full items-center justify-center ' +
-                                                                (filters?.relationship == 'repositories' &&
-                                                                filters?.group_id == group.group_id
-                                                                    ? 'bg-sky-950 hover:bg-sky-900'
-                                                                    : 'bg-red-950 hover:bg-red-900')
-                                                            }
-                                                            href={route('git-groups.index', {
-                                                                group_id: group.group_id,
-                                                                relationship: 'repositories',
-                                                            })}
-                                                            preserveScroll
-                                                        >
-                                                            <RocketLaunchIcon
-                                                                className={
-                                                                    'size-8 ' +
-                                                                    (filters?.relationship == 'repositories' &&
-                                                                    filters?.group_id == group.group_id
-                                                                        ? 'text-sky-500'
-                                                                        : 'text-red-500')
-                                                                }
-                                                            />
-                                                        </Link>
-                                                    </div>
-
-                                                    <Link
-                                                        className="flex w-full justify-center bg-green-950 p-2 hover:bg-green-900"
-                                                        preserveScroll
-                                                        href={route('git-groups.edit', group.group_id)}
-                                                    >
-                                                        <PencilSquareIcon className="size-8 text-green-500" />
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            ) : (
-                                <ResetFilters
-                                    className="col-span-3"
-                                    href={route('git-groups.index')}
-                                >
-                                    Nebyly nalezeny žádné skupiny.
-                                </ResetFilters>
-                            )}
-                        </div>
+                    <section className="card grid grid-cols-3 gap-2">
+                        <GitGroupTable
+                            data={git_groups}
+                            filters={filters}
+                            clearUrl={route('dashboard.index')}
+                        />
                     </section>
 
-                    <section className="card mt-2">
-                        {group_details && group_details.length > 0 ? (
+                    <section className="card mt-2 text-center font-mono text-white">
+                        in progress
+                        {/* {group_details && group_details.length > 0 ? (
                             <div>
                                 <div className="px-6 pt-6 text-center">
                                     <h1 className="text-2xl font-semibold capitalize lg:text-3xl dark:text-white">
@@ -236,9 +132,7 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                             Selected <u>{filters.relationship}</u> is empty
                                         </div>
                                     ) : (
-                                        <div className="col-span-3 p-4 text-center text-zinc-400">
-                                            <EyeIcon className="mx-auto size-8" />
-
+                                        <div className="col-span-3 animate-pulse p-4 text-center text-red-400">
                                             <p className="text-lg font-semibold">
                                                 Need to select a <u>relationship</u>
                                             </p>
@@ -246,9 +140,9 @@ export default function ({ auth, git_groups, group_details, filters }) {
                                     )}
                                 </h3>
                             </div>
-                        )}
+                        )} */}
                     </section>
-                </div>
+                </main>
             </div>
         </AdminLayout>
     )

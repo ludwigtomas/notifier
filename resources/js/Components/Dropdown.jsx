@@ -78,7 +78,7 @@ const Content = ({
                     className={`absolute z-50 rounded-md shadow-lg ${alignmentClasses} ${widthClasses} ${directionClasses}`}
                     onClick={() => setOpen(false)}
                 >
-                    <div className={`overflow-hidden rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={`ring-opacity-5 overflow-hidden rounded-md ring-1 ring-black ` + contentClasses}>{children}</div>
                 </div>
             </Transition>
         </>

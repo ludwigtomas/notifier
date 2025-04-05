@@ -2,7 +2,7 @@ import Modal from '@/Components/Modal'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { router } from '@inertiajs/react'
-import { EditButton, ShowButton } from '@/Components/Buttons/ActionButtons'
+import { EditButton, ShowButton, ActionButton } from '@/Components/Buttons/ActionButtons'
 import { PencilSquareIcon, EyeIcon, TrashIcon } from '@heroicons/react/24/outline'
 
 export default function ({ className = '', git_groups, repositories }) {
@@ -96,7 +96,7 @@ export default function ({ className = '', git_groups, repositories }) {
                         <div className="divide-y divide-zinc-800">
                             {git_groups ? (
                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                    <thead className="text-nowrap bg-zinc-950">
+                                    <thead className="bg-zinc-950 text-nowrap">
                                         <tr>
                                             <th
                                                 scope="col"
@@ -169,18 +169,12 @@ export default function ({ className = '', git_groups, repositories }) {
 
                                                 <td className="px-4 py-4">
                                                     <div className="space-x-2">
-                                                        <button
-                                                            className="inline-flex items-center rounded-md border border-transparent bg-blue-100 p-1.5 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-blue-200"
-                                                            onClick={() => handleToggle(group, true)}
-                                                        >
-                                                            <EyeIcon className="size-6 text-blue-500" />
-                                                        </button>
-
-                                                        <EditButton href={route('git-groups.edit', group.group_id)} />
-
-                                                        <button className="inline-flex cursor-not-allowed items-center rounded-md border border-transparent bg-red-100 p-1.5 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-red-200">
-                                                            <TrashIcon className="size-6 text-red-500" />
-                                                        </button>
+                                                        <ActionButton
+                                                            href={route('git-groups.edit', group.group_id)}
+                                                            elementAction="edit"
+                                                            elementType="link"
+                                                            className="!p-3"
+                                                        />
                                                     </div>
                                                 </td>
                                             </tr>
@@ -217,22 +211,22 @@ export default function ({ className = '', git_groups, repositories }) {
 
                                         <div>
                                             <p className="text-sm text-zinc-400">Name</p>
-                                            <p className="text-md font-bold uppercase text-zinc-200">{gitInformations.name}</p>
+                                            <p className="text-md font-bold text-zinc-200 uppercase">{gitInformations.name}</p>
                                         </div>
 
                                         <div>
                                             <p className="text-sm text-zinc-400">Path</p>
-                                            <p className="text-md font-bold uppercase text-zinc-200">{gitInformations.path}</p>
+                                            <p className="text-md font-bold text-zinc-200 uppercase">{gitInformations.path}</p>
                                         </div>
 
                                         <div>
                                             <p className="text-sm text-zinc-400">Full Path</p>
-                                            <p className="text-md font-bold uppercase text-zinc-200">{gitInformations.full_path}</p>
+                                            <p className="text-md font-bold text-zinc-200 uppercase">{gitInformations.full_path}</p>
                                         </div>
 
                                         <div>
                                             <p className="text-sm text-zinc-400">Web Url</p>
-                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                            <p className="text-md font-bold text-zinc-200 uppercase">
                                                 <a
                                                     href={gitInformations.web_url}
                                                     target="_blank"
@@ -246,7 +240,7 @@ export default function ({ className = '', git_groups, repositories }) {
 
                                         <div>
                                             <p className="text-sm text-zinc-400">Parent Id</p>
-                                            <p className="text-md font-bold uppercase text-zinc-200">
+                                            <p className="text-md font-bold text-zinc-200 uppercase">
                                                 {gitInformations.parent_id ? gitInformations.parent_id : 'N/A'}
                                             </p>
                                         </div>
@@ -262,7 +256,7 @@ export default function ({ className = '', git_groups, repositories }) {
 
                                             {gitInformations.projects && gitInformations.projects.length > 0 ? (
                                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                                    <thead className="text-nowrap bg-stone-800">
+                                                    <thead className="bg-stone-800 text-nowrap">
                                                         <tr>
                                                             <th
                                                                 scope="col"
@@ -361,7 +355,7 @@ export default function ({ className = '', git_groups, repositories }) {
 
                                             {subgroups && subgroups.length > 0 ? (
                                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                                    <thead className="text-nowrap bg-stone-800">
+                                                    <thead className="bg-stone-800 text-nowrap">
                                                         <tr>
                                                             <th
                                                                 scope="col"

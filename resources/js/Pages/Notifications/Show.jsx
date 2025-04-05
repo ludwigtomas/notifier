@@ -18,7 +18,7 @@ export default function Edit({ auth, notification }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -29,7 +29,7 @@ export default function Edit({ auth, notification }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('notifications.index')}
                     >
                         Notifikace
@@ -119,12 +119,12 @@ export default function Edit({ auth, notification }) {
                             <tr className="mx-2 space-x-4">
                                 {notification.data && notification.data.old_data && (
                                     <>
-                                        <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400">Stará data</td>
+                                        <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-400">Stará data</td>
 
                                         {Object.values(notification.data.old_data).map((value, index) => (
                                             <td
                                                 key={index}
-                                                className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400"
+                                                className="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-400"
                                             >
                                                 {notification.data.new_data &&
                                                 notification.data.new_data[Object.keys(notification.data.old_data)[index]] !== value ? (
@@ -141,11 +141,11 @@ export default function Edit({ auth, notification }) {
                             <tr className="mx-2 space-x-4">
                                 {notification.data && notification.data.new_data && (
                                     <>
-                                        <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400">Nová data</td>
+                                        <td className="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-400">Nová data</td>
                                         {Object.values(notification.data.new_data).map((value, index) => (
                                             <td
                                                 key={index}
-                                                className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-400"
+                                                className="px-4 py-4 text-sm font-medium whitespace-nowrap text-gray-400"
                                             >
                                                 {notification.data.old_data &&
                                                 notification.data.old_data[Object.keys(notification.data.new_data)[index]] !== value ? (

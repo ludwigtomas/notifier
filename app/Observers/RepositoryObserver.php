@@ -29,6 +29,8 @@ class RepositoryObserver
 
     public function updated(Repository $repository): void
     {
+        Cache::forget('repositories_count');
+
         $repository->notify(new RepositoryNotification('updated'));
     }
 
@@ -48,6 +50,8 @@ class RepositoryObserver
 
     public function forceDeleted(Repository $repository): void
     {
+        Cache::forget('repositories_count');
+
         $repository->notify(new RepositoryNotification('forceDeleted'));
     }
 }

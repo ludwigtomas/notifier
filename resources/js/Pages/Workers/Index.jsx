@@ -1,27 +1,14 @@
 import AdminLayout from '@/Layouts/AdminLayout'
 import { Head, Link, router } from '@inertiajs/react'
-import {
-    PencilSquareIcon,
-    TrashIcon,
-    EyeIcon,
-    PlusIcon,
-    CheckIcon,
-    XMarkIcon,
-    ChevronRightIcon,
-    LinkIcon,
-    ServerStackIcon,
-    ArchiveBoxArrowDownIcon,
-} from '@heroicons/react/24/outline'
+import { PencilSquareIcon, TrashIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import Modal from '@/Components/Modal'
-import DangerButton from '@/Components/DangerButton'
 import TextInput from '@/Components/TextInput'
 import InputLabel from '@/Components/InputLabel'
-import SecondaryButton from '@/Components/SecondaryButton'
-import Pagination from '@/Components/Pagination'
 import debounce from 'lodash/debounce'
 import Dropdown from '@/Components/Dropdown'
 import ResetFilters from '@/Components/ResetFilters'
+import React from 'react'
+import { WorkerIcon } from '@/Components/Icons/Models'
 
 export default function Index({ auth, workers, filters }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
@@ -67,7 +54,7 @@ export default function Index({ auth, workers, filters }) {
             header={
                 <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                     <Link
-                        className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                        className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                         href={route('dashboard.index')}
                     >
                         Dashboard
@@ -78,7 +65,7 @@ export default function Index({ auth, workers, filters }) {
                     </span>
 
                     <Link
-                        className="text-lg font-semibold leading-tight text-sky-500"
+                        className="text-lg leading-tight font-semibold text-sky-500"
                         href={route('workers.index')}
                     >
                         Workers
@@ -118,7 +105,7 @@ export default function Index({ auth, workers, filters }) {
                                     href={route('hostings.index')}
                                     className="faster-animation rounded-md border border-zinc-700 bg-zinc-800 p-2 hover:border-zinc-600"
                                 >
-                                    <ServerStackIcon className="size-10 text-sky-500" />
+                                    <WorkerIcon className="size-10 text-sky-500" />
                                 </Link>
                             </div>
 
@@ -134,7 +121,7 @@ export default function Index({ auth, workers, filters }) {
                         {workers && workers.length >= 1 ? (
                             <section className="card">
                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                                    <thead className="text-nowrap bg-zinc-800">
+                                    <thead className="bg-zinc-800 text-nowrap">
                                         <tr>
                                             <th
                                                 scope="col"
@@ -221,14 +208,14 @@ export default function Index({ auth, workers, filters }) {
                                                         <div className="flex items-center space-x-2">
                                                             <Link
                                                                 href={route('workers.edit', worker.id)}
-                                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                                             >
                                                                 <PencilSquareIcon className="size-6 text-green-500" />
                                                             </Link>
 
                                                             <button
                                                                 onClick={() => toggleModal(worker)}
-                                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                                className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                                             >
                                                                 <TrashIcon className="size-6 text-red-500" />
                                                             </button>
@@ -248,7 +235,7 @@ export default function Index({ auth, workers, filters }) {
             </div>
 
             {/* Another options */}
-            <div className="fixed bottom-10 right-10">
+            <div className="fixed right-10 bottom-10">
                 <Dropdown width="72">
                     <Dropdown.Trigger>
                         <div className="flex items-center space-x-2">
@@ -257,7 +244,7 @@ export default function Index({ auth, workers, filters }) {
                                     type="button"
                                     className="rounded-md px-6 py-3 focus:outline-none"
                                 >
-                                    <span className="text-lg font-medium leading-4 text-white transition duration-150 ease-in-out group-hover:text-sky-100">
+                                    <span className="text-lg leading-4 font-medium text-white transition duration-150 ease-in-out group-hover:text-sky-100">
                                         Další možnosti
                                     </span>
                                 </button>
@@ -269,7 +256,7 @@ export default function Index({ auth, workers, filters }) {
                         direction="up"
                         width="64"
                     >
-                        <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold uppercase text-white">Možnosti</h3>
+                        <h3 className="mb-2 border-b border-zinc-800 py-2 text-center font-bold text-white uppercase">Možnosti</h3>
 
                         <Dropdown.Link
                             href={route('workers.create')}

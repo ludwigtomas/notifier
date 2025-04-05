@@ -2,7 +2,7 @@ import Modal from '@/Components/Modal'
 import React, { useState, useEffect } from 'react'
 import { ArrowPathIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
-import { EditButton } from '@/Components/Buttons/ActionButtons'
+import { EditButton, ActionButton } from '@/Components/Buttons/ActionButtons'
 import { router } from '@inertiajs/react'
 import GitPlaceholderTable from '@/Pages/Gits/Partials/GitPlaceholderTable'
 
@@ -66,13 +66,6 @@ export default function ({ git_groups, className = '' }) {
                     >
                         <ArrowPathIcon className="size-6" />
                     </button>
-
-                    <button
-                        className="rounded-md bg-sky-500 px-4 py-2 text-zinc-100 hover:bg-sky-600"
-                        onClick={() => setToggleDeleteModal(true)}
-                    >
-                        Přidat ručně
-                    </button>
                 </div>
             </header>
 
@@ -82,13 +75,13 @@ export default function ({ git_groups, className = '' }) {
                         <div className="divide-y divide-zinc-800">
                             {isLoading ? (
                                 <div className="space-y-10">
-                                    <GitPlaceholderTable />
-                                    <GitPlaceholderTable />
-                                    <GitPlaceholderTable />
+                                    {[...Array(3)].map((_, index) => (
+                                        <GitPlaceholderTable key={index} />
+                                    ))}
                                 </div>
                             ) : gitGroups && gitGroups.data ? (
                                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-md">
-                                    <thead className="text-nowrap bg-zinc-950">
+                                    <thead className="bg-zinc-950 text-nowrap">
                                         <tr>
                                             <th
                                                 scope="col"
@@ -156,24 +149,31 @@ export default function ({ git_groups, className = '' }) {
                                                     <div className="flex items-center justify-center space-x-2 text-sm font-medium text-zinc-200">
                                                         {git_groups.find((git_group) => git_group.group_id === group.id) ? (
                                                             <>
-                                                                <button
-                                                                    className="rounded-md bg-stone-700 px-4 py-2 text-zinc-100 group-hover:bg-stone-800"
+                                                                <ActionButton
+                                                                    elementAction="back"
+                                                                    elementType="button"
                                                                     disabled
                                                                 >
-                                                                    Already attached
-                                                                </button>
+                                                                    attached
+                                                                </ActionButton>
 
-                                                                <EditButton href={route('git-groups.edit', group.id)} />
+                                                                <ActionButton
+                                                                    elementAction="edit"
+                                                                    elementType="link"
+                                                                    href={route('git-groups.edit', group.id)}
+                                                                />
                                                             </>
                                                         ) : (
-                                                            <button
-                                                                className="rounded-md bg-green-500 px-4 py-2 text-zinc-100 hover:bg-green-600"
+                                                            <ActionButton
+                                                                elementAction="edit"
+                                                                elementType="button"
+                                                                showIcon={false}
                                                                 onClick={() => {
                                                                     setSelectedGroup(group)
                                                                 }}
                                                             >
                                                                 Attach
-                                                            </button>
+                                                            </ActionButton>
                                                         )}
                                                     </div>
                                                 </td>

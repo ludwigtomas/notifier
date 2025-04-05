@@ -2,42 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
-use App\Http\Requests\StoreRepositoryRequest;
-use App\Http\Requests\UpdateRepositoryRequest;
-use App\Http\Resources\ClientResource;
-use App\Http\Resources\HostingResource;
-use App\Http\Resources\RepositoryFileResource;
-use App\Http\Resources\RepositoryIndexResource;
-use App\Http\Resources\RepositoryResource;
-use App\Jobs\GoogleAnalyticsJob;
-use App\Jobs\RepositoriesJob;
+use Carbon\Carbon;
+use Inertia\Inertia;
+use Inertia\Response;
 use App\Models\Client;
 use App\Models\Hosting;
 use App\Models\Repository;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Jobs\RepositoriesJob;
 use App\Services\GitlabService;
 use App\Services\WorkerService;
-use Carbon\Carbon;
+use App\Jobs\GoogleAnalyticsJob;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
-use Inertia\Response;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\HostingResource;
+use App\Http\Resources\RepositoryResource;
+use App\Http\Requests\StoreRepositoryRequest;
+use App\Http\Requests\UpdateRepositoryRequest;
+use App\Http\Resources\RepositoryFileResource;
+use App\Http\Resources\RepositoryIndexResource;
+use App\Enums\RepositoryFile\RepositoryFileTypeEnum;
 
 class RepositoryController extends Controller
 {
     public function index(Request $request): Response
     {
-        $md5 = md5($request->fullUrl());
-
-        $repositories = Cache::remember('repositories'.$md5, 60, fn () => Repository::query()
+        $repositories = Repository::query()
             ->with(['hostingRepository', 'hosting', 'hosting.worker'])
             ->withCount('clients', 'repositorySettings', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
             ->search($request->search)
             ->trashed($request->trashed)
             ->orderBy('last_commit_at', 'desc')
             ->paginate(20)
-            ->withQueryString());
+            ->withQueryString();
 
         return inertia('Repositories/Index', [
             'repositories' => RepositoryIndexResource::collection($repositories),
@@ -45,26 +43,27 @@ class RepositoryController extends Controller
         ]);
     }
 
-    public function show(Repository $repository): Response
+    public function show(Request $request, Repository $repository): Response
     {
-        $repository->loadCount('clients', 'repositoryDatabaseBackups', 'repositoryStorageBackups')
-            ->load('hosting', 'hostingRepository', 'notifications', 'repositorySettings');
+        $repository->loadCount('clients', 'notifications', 'repositoryDatabaseBackups', 'repositoryStorageBackups', 'repositorySettings');
 
-        $clients = $repository->clients()->paginate(10);
+        $relation = match ($request->get('relation')) {
+            'databases' => $repository->repositoryFilesFor(RepositoryFileTypeEnum::DATABASE_BACKUP),
+            'storages' => $repository->repositoryFilesFor(RepositoryFileTypeEnum::STORAGE_BACKUP),
+            'clients' => $repository->clients(),
+            'settings' => $repository->repositorySettings(),
+            'notifications' => $repository->notifications(),
+            'hosting' => $repository->hostingRepository,
+            default => null,
+        };
 
-        $repository_storages = $repository
-            ->repositoryFilesFor(RepositoryFileTypeEnum::STORAGE_BACKUP)
-            ->paginate(20);
-
-        $repository_databases = $repository
-            ->repositoryFilesFor(RepositoryFileTypeEnum::DATABASE_BACKUP)
-            ->paginate(20);
+        if ($relation) {
+            $relation = $relation->paginate(20);
+        }
 
         return inertia('Repositories/Show', [
-            'repository' => new RepositoryResource($repository),
-            'clients' => ClientResource::collection($clients),
-            'repository_storages' => fn () => RepositoryFileResource::collection($repository_storages),
-            'repository_databases' => fn () => RepositoryFileResource::collection($repository_databases),
+            'repository' => fn() => new RepositoryResource($repository),
+            'relation' =>fn () => $relation,
         ]);
     }
 
@@ -157,7 +156,7 @@ class RepositoryController extends Controller
 
     public function lastCommit(Repository $repository): RedirectResponse
     {
-        GitlabService::getRepositorylastCommit($repository);
+        GitlabService::getRepositoryLastCommit($repository);
 
         return to_route('repositories.edit', $repository);
     }

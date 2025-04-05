@@ -50,6 +50,7 @@ class RepositoryResource extends JsonResource
                 'repository_database_backups_count' => $this->repository_database_backups_count ?? 0,
                 'repository_storage_backups_count' => $this->repository_storage_backups_count ?? 0,
                 'notifications_count' => $this->notifications_count ?? 0,
+                'repository_settings_count' => $this->repository_settings_count ?? 0,
 
                 'git' => new GitResource($this->whenLoaded('git')),
                 'clients' => ClientResource::collection($this->whenLoaded('clients')),

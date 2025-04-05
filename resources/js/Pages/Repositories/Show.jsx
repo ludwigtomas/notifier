@@ -1,5 +1,5 @@
 import AdminLayout from '@/Layouts/AdminLayout'
-import { Head, Link } from '@inertiajs/react'
+import { Head, Link, router } from '@inertiajs/react'
 import {
     PencilSquareIcon,
     ChevronRightIcon,
@@ -12,7 +12,7 @@ import {
     ComputerDesktopIcon,
     BellAlertIcon,
 } from '@heroicons/react/24/outline'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RepositoryClientsTable from '@/Pages/Repositories/Partials/RepositoryClientsTable'
 import RepositoryNotificationsTable from '@/Pages/Repositories/Partials/RepositoryNotificationsTable'
 import RepositoryDatabasesTable from '@/Pages/Repositories/Partials/RepositoryDatabasesTable'
@@ -21,12 +21,40 @@ import RepositoryHostingTable from '@/Pages/Repositories/Partials/RepositoryHost
 import RepositorySettingsTable from '@/Pages/Repositories/Partials/RepositorySettingsTable'
 import RepositorySettingForApi from '@/Components/RepositorySettingForApi'
 
-export default function Show({ auth, repository, clients, repository_storages, repository_databases }) {
+export default function Show({ auth, repository, relation }) {
     const [showRelationship, setShowRelationship] = useState('databases')
+
+    useEffect(() => {
+        const currentParams = new URLSearchParams(window.location.search)
+        const relationParam = currentParams.get('relation')
+
+        if (relationParam) {
+            setShowRelationship(relationParam)
+        } else {
+            setShowRelationship('databases')
+
+            currentParams.set('relation', 'databases')
+
+            router.visit(route('repositories.show', repository.repository_id) + '?' + currentParams.toString(), {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['relation'],
+            })
+        }
+    }, [])
 
     const handleShowRepositoryRelation = (relation) => {
         return () => {
             setShowRelationship(relation)
+
+            const currentParams = new URLSearchParams(window.location.search)
+            currentParams.set('relation', relation)
+
+            router.visit(route('repositories.show', repository.repository_id) + '?' + currentParams.toString(), {
+                preserveState: true,
+                preserveScroll: true,
+                only: ['relation'],
+            })
         }
     }
 
@@ -37,7 +65,7 @@ export default function Show({ auth, repository, clients, repository_storages, r
                 header={
                     <header className="flex flex-row items-center justify-start space-x-4 text-zinc-500">
                         <Link
-                            className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                            className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                             href={route('dashboard.index')}
                         >
                             Dashboard
@@ -48,7 +76,7 @@ export default function Show({ auth, repository, clients, repository_storages, r
                         </span>
 
                         <Link
-                            className="slower-animation text-lg font-semibold leading-tight hover:text-sky-500"
+                            className="slower-animation text-lg leading-tight font-semibold hover:text-sky-500"
                             href={route('repositories.index')}
                         >
                             Repozitáře
@@ -59,7 +87,7 @@ export default function Show({ auth, repository, clients, repository_storages, r
                         </span>
 
                         <Link
-                            className="text-lg font-semibold leading-tight text-sky-500"
+                            className="text-lg leading-tight font-semibold text-sky-500"
                             href={route('repositories.show', repository.repository_id)}
                         >
                             {repository.name}
@@ -71,13 +99,13 @@ export default function Show({ auth, repository, clients, repository_storages, r
 
                         <div className="group relative">
                             <Link
-                                className="text-lg font-semibold leading-tight text-sky-500"
+                                className="text-lg leading-tight font-semibold text-sky-500"
                                 href={route('repositories.show', repository.repository_id)}
                             >
                                 Zobrazit
                             </Link>
 
-                            <div className="invisible absolute left-0 top-full z-30 flex flex-col pt-6 group-hover:visible">
+                            <div className="invisible absolute top-full left-0 z-30 flex flex-col pt-6 group-hover:visible">
                                 <div className="grid gap-y-2 rounded-xl border-2 border-zinc-700 bg-zinc-900 p-2 shadow-xl shadow-black">
                                     <Link
                                         className="flex items-center justify-center space-x-4 rounded-md border border-transparent bg-zinc-800 px-4 py-2 hover:border-green-500"
@@ -250,7 +278,7 @@ export default function Show({ auth, repository, clients, repository_storages, r
 
                             <div className="space-x-4 text-center">
                                 <span className="text-xl font-bold text-gray-200">
-                                    {repository.relationships.repository_settings.length}
+                                    {repository.relationships.repository_settings_count}
                                 </span>
 
                                 <span className="text-xs text-gray-400">nastavení</span>
@@ -278,7 +306,7 @@ export default function Show({ auth, repository, clients, repository_storages, r
                             <BellAlertIcon className="m-auto h-28 w-14 stroke-1 text-sky-500" />
 
                             <div className="space-x-4 text-center">
-                                <span className="text-xl font-bold text-gray-200">{repository.relationships.notifications.length}</span>
+                                <span className="text-xl font-bold text-gray-200">{repository.relationships.notifications_count}</span>
 
                                 <span className="text-xs text-gray-400">notifikací</span>
                             </div>
@@ -318,25 +346,25 @@ export default function Show({ auth, repository, clients, repository_storages, r
                         {showRelationship === 'databases' ? (
                             <RepositoryDatabasesTable
                                 repository={repository}
-                                backups={repository_databases}
+                                backups={relation}
                             />
                         ) : showRelationship === 'storages' ? (
                             <RepositoryStoragesTable
                                 repository={repository}
-                                backups={repository_storages}
+                                backups={relation}
                             />
                         ) : showRelationship === 'clients' ? (
-                            <RepositoryClientsTable clients={clients} />
+                            <RepositoryClientsTable clients={relation} />
                         ) : showRelationship === 'settings' ? (
                             <RepositorySettingsTable
                                 repository={repository}
-                                settings={repository.relationships.repository_settings}
+                                settings={relation}
                             />
                         ) : showRelationship === 'notifications' ? (
-                            <RepositoryNotificationsTable notifications={repository.relationships.notifications} />
+                            <RepositoryNotificationsTable notifications={relation} />
                         ) : (
                             showRelationship === 'hosting' &&
-                            repository.relationships.hosting && <RepositoryHostingTable hosting={repository.relationships.hosting} />
+                            repository.relationships.hosting && <RepositoryHostingTable hosting={relation} />
                         )}
                     </div>
                 </div>

@@ -1,9 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 * {
     scroll-behavior: smooth;
+}
+
+a,
+button {
+    cursor: pointer;
+}
+
+select,
+input,
+textarea {
+    @apply border-2 border-zinc-500 bg-zinc-700 px-2 py-2 text-zinc-200 shadow-sm focus:border-sky-500 focus:ring-sky-500;
 }
 
 /* .xterm-screen {

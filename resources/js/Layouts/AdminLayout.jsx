@@ -1,24 +1,27 @@
-import Breadcrumbs from '@/Components/Breadcrumbs'
-import Sidebar from '@/Components/Sidebar'
+import Sidebar from '@/Layouts/Partials/Sidebar'
+import { Head } from '@inertiajs/react'
 
-export default function Authenticated({ user, header, children }) {
+export default function Authenticated({ title, user, header, children }) {
     return (
-        <main className="flex min-h-screen flex-row items-start justify-start">
+        <>
+            <Head title={title ? title : 'Dashboard'} />
             <Sidebar user={user} />
 
-            <section className="w-full">
-                {header && (
-                    <header className="fixed right-0 top-0 z-50 w-full pl-[6.6rem] lg:pl-[14rem]">
-                        <div className='className="grid border-b border-neutral-700 bg-zinc-900/50 p-6 backdrop-blur-md'>
-                            <div className="flex items-center space-x-4 text-neutral-400">{header}</div>
-                        </div>
-                    </header>
-                )}
+            <div className="lg:pl-60">
+                <div className="sticky top-0 right-0 z-10 border-b border-neutral-700 bg-zinc-900/50 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+                    {header && (
+                        <header className="z-50 w-full">
+                            <div className="grid py-6">
+                                <div className="flex items-center space-x-4 text-neutral-400">{header}</div>
+                            </div>
+                        </header>
+                    )}
+                </div>
 
-                {/* <Breadcrumbs/> */}
-
-                <div className="mx-auto mt-28 max-w-[100rem] pb-10">{children}</div>
-            </section>
-        </main>
+                <main className="py-10">
+                    <div className="px-4 sm:px-6 lg:px-8">{children}</div>
+                </main>
+            </div>
+        </>
     )
 }

@@ -9,7 +9,7 @@ const EditButton = ({ className = '', disabled, typeOfButton, ...props }) => {
         <Link
             {...props}
             className={
-                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out ${
+                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${
                     disabled && 'opacity-25'
                 } ` + className
             }
@@ -27,7 +27,7 @@ const BackButton = ({ className = '', disabled, typeOfButton, children, ...props
         <Link
             {...props}
             className={
-                `${buttonColor} inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out ${
+                `${buttonColor} inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${
                     disabled && 'opacity-25'
                 } ` + className
             }
@@ -45,7 +45,7 @@ const ShowButton = ({ className = '', disabled, typeOfButton, ...props }) => {
         <Link
             {...props}
             className={
-                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out ${
+                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${
                     disabled && 'opacity-25'
                 } ` + className
             }
@@ -63,7 +63,7 @@ const DeleteButton = ({ className = '', disabled, typeOfButton, ...props }) => {
         <Link
             {...props}
             className={
-                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out ${
+                `${buttonColor} inline-flex items-center rounded-md border border-transparent p-1.5 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${
                     disabled && 'opacity-25'
                 } ` + className
             }
@@ -74,38 +74,87 @@ const DeleteButton = ({ className = '', disabled, typeOfButton, ...props }) => {
     )
 }
 
-const ActionButton = ({ className = '', disabled, typeOfButton, children, ...props }) => {
+const ActionButton = ({
+    className = '',
+    elementType = 'button',
+    elementAction = 'show',
+    showIcon = true,
+    disabled = false,
+    children,
+    ...props
+}) => {
     let buttonColor = 'bg-gray-800 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900'
 
-    if (typeOfButton === 'show') {
-        buttonColor = 'bg-blue-500 hover:bg-blue-600 focus:bg-blue-600 active:bg-blue-700'
-    }
+    switch (elementAction) {
+        case 'show':
+            buttonColor = 'bg-sky-500 hover:bg-sky-600'
+            break
 
-    if (typeOfButton === 'delete') {
-        buttonColor = 'bg-red-500 hover:bg-red-600 focus:bg-red-600 active:bg-red-700'
-    }
+        case 'delete':
+            buttonColor = 'bg-red-500 hover:bg-red-600 focus:bg-red-600 active:bg-red-700'
+            break
 
-    if (typeOfButton === 'edit') {
-        buttonColor = 'bg-green-500 hover:bg-green-600 focus:bg-green-600 active:bg-green-700'
+        case 'edit':
+            buttonColor = 'bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-700'
+            break
+
+        case 'update':
+            buttonColor = 'bg-green-700 hover:bg-green-600 focus:bg-green-600 active:bg-green-700'
+            break
+
+        case 'back':
+            buttonColor = 'bg-gray-700 hover:bg-gray-600 focus:bg-gray-600 active:bg-gray-800'
+            break
+        default:
+            buttonColor = 'bg-gray-800 hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900'
     }
 
     return (
-        <button
-            {...props}
-            className={
-                `${buttonColor} inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out ${
-                    disabled && 'opacity-25'
-                } ` + className
-            }
-            disabled={disabled}
-        >
-            {/* icons depending on typeOfButton */}
-            {typeOfButton === 'show' && <EyeIcon className="h-6 w-6 text-white" />}
-            {typeOfButton === 'delete' && <TrashIcon className="h-6 w-6 text-white" />}
-            {typeOfButton === 'edit' && <PencilSquareIcon className="h-6 w-6 text-white" />}
+        <>
+            {elementType === 'link' && (
+                <Link
+                    {...props}
+                    className={
+                        `${buttonColor} inline-flex items-center rounded-md px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${disabled && 'opacity-25'} ` +
+                        className
+                    }
+                    disabled={disabled}
+                >
+                    {showIcon && (
+                        <>
+                            {elementAction === 'show' && <EyeIcon className="size-4 text-white" />}
+                            {elementAction === 'delete' && <TrashIcon className="size-4 text-white" />}
+                            {elementAction === 'edit' && <PencilSquareIcon className="size-4 text-white" />}
+                            {elementAction === 'update' && <PencilSquareIcon className="size-4 text-white" />}
+                        </>
+                    )}
 
-            {children}
-        </button>
+                    {children}
+                </Link>
+            )}
+
+            {elementType === 'button' && (
+                <button
+                    {...props}
+                    className={
+                        `${buttonColor} inline-flex items-center rounded-md border border-transparent px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out ${disabled && 'opacity-25'} ` +
+                        className
+                    }
+                    disabled={disabled}
+                >
+                    {showIcon && (
+                        <>
+                            {elementAction === 'show' && <EyeIcon className="size-4 text-white" />}
+                            {elementAction === 'delete' && <TrashIcon className="size-4 text-white" />}
+                            {elementAction === 'edit' && <PencilSquareIcon className="size-4 text-white" />}
+                            {elementAction === 'update' && <PencilSquareIcon className="size-4 text-white" />}
+                        </>
+                    )}
+
+                    <span className={children && showIcon ? 'ml-2' : ''}>{children}</span>
+                </button>
+            )}
+        </>
     )
 }
 

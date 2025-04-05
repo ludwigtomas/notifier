@@ -4,7 +4,7 @@ import { EditButton, ShowButton } from '@/Components/Buttons/ActionButtons'
 const ChildrensTable = (childrens) => {
     return (
         <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-            <thead className="text-nowrap bg-zinc-800">
+            <thead className="bg-zinc-800 text-nowrap">
                 <tr>
                     <th
                         scope="col"
@@ -95,7 +95,7 @@ const ChildrensTable = (childrens) => {
 const RepositoriesTable = (repositories) => {
     return (
         <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-            <thead className="text-nowrap bg-zinc-800">
+            <thead className="bg-zinc-800 text-nowrap">
                 <tr>
                     <th
                         scope="col"

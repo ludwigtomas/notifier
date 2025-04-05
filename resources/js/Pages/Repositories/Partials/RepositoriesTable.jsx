@@ -18,7 +18,7 @@ import DangerButton from '@/Components/DangerButton'
 import SecondaryButton from '@/Components/SecondaryButton'
 import { useState, useCallback } from 'react'
 import Pagination from '@/Components/Pagination'
-import { isImages } from '@/Utils/IsImage'
+import { isImage } from '@/Utils/IsImage'
 
 export default function RepositoriesTable({ repositories }) {
     const [toggleDeleteModal, setToggleDeleteModal] = useState(false)
@@ -63,7 +63,7 @@ export default function RepositoriesTable({ repositories }) {
         <>
             <section className="card">
                 <table className="min-w-full divide-y divide-zinc-700 overflow-hidden rounded-lg">
-                    <thead className="text-nowrap bg-zinc-800">
+                    <thead className="bg-zinc-800 text-nowrap">
                         <tr>
                             <th
                                 scope="col"
@@ -167,11 +167,11 @@ export default function RepositoriesTable({ repositories }) {
                                     </td>
 
                                     <td className="px-4 py-4">
-                                        <span className="text-nowrap text-sm font-medium text-zinc-400">{repository.name}</span>
+                                        <span className="text-sm font-medium text-nowrap text-zinc-400">{repository.name}</span>
                                     </td>
 
                                     <td className="px-4 py-4">
-                                        <span className="text-nowrap text-sm font-medium text-zinc-400">{repository.slug}</span>
+                                        <span className="text-sm font-medium text-nowrap text-zinc-400">{repository.slug}</span>
                                     </td>
 
                                     <td className="-mr-[1px] border-x border-zinc-800 py-3.5 group-hover:border-zinc-700">
@@ -276,11 +276,11 @@ export default function RepositoriesTable({ repositories }) {
                                         <span className="text-sm font-medium text-zinc-400">{repository.last_commit_at_human ?? '-'}</span>
                                     </td>
 
-                                    <td className="whitespace-nowrap px-4 py-4 text-sm">
+                                    <td className="px-4 py-4 text-sm whitespace-nowrap">
                                         <div className="flex items-center justify-end space-x-2">
                                             {repository.relationships.hosting?.relationships.worker && (
                                                 <button
-                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-orange-500 group-hover:bg-zinc-900"
+                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-orange-500"
                                                     onClick={() => deployToHosting(repository)}
                                                 >
                                                     <RocketLaunchIcon className="size-6 text-orange-400" />
@@ -292,7 +292,7 @@ export default function RepositoriesTable({ repositories }) {
                                                         'hosting-repository.vps-connect',
                                                         repository.relationships.hosting_repository.id
                                                     )}
-                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-orange-500 group-hover:bg-zinc-900"
+                                                    className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-orange-500"
                                                 >
                                                     <CommandLineIcon className="size-6 text-orange-400" />
                                                 </Link>
@@ -304,13 +304,13 @@ export default function RepositoriesTable({ repositories }) {
                                                         method="PATCH"
                                                         as="button"
                                                         href={route('repositories.restore', repository.repository_id)}
-                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                                     >
                                                         <ArrowPathIcon className="size-6 text-sky-500" />
                                                     </Link>
 
                                                     <button
-                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                                         onClick={() => toggleModal(repository)}
                                                     >
                                                         <BackspaceIcon className="size-6 text-red-500" />
@@ -327,20 +327,20 @@ export default function RepositoriesTable({ repositories }) {
 
                                                     <Link
                                                         href={route('repositories.edit', repository.repository_id)}
-                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-green-500 group-hover:bg-zinc-900"
+                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-green-500"
                                                     >
                                                         <PencilSquareIcon className="size-6 text-green-500" />
                                                     </Link>
 
                                                     <Link
                                                         href={route('repositories.show', repository.repository_id)}
-                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-sky-500 group-hover:bg-zinc-900"
+                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-sky-500"
                                                     >
                                                         <EyeIcon className="size-6 text-sky-500" />
                                                     </Link>
 
                                                     <button
-                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 hover:border-red-500 group-hover:bg-zinc-900"
+                                                        className="faster-animation rounded-lg border border-transparent bg-zinc-800 p-1 group-hover:bg-zinc-900 hover:border-red-500"
                                                         onClick={() => toggleModal(repository)}
                                                     >
                                                         <TrashIcon className="size-6 text-red-500" />
@@ -382,7 +382,7 @@ export default function RepositoriesTable({ repositories }) {
                                         as="button"
                                         method="DELETE"
                                         href={route('repositories.force-delete', selectedRepository.repository_id)}
-                                        className="inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 active:bg-red-700"
+                                        className="inline-flex items-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out hover:bg-red-500 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:outline-none active:bg-red-700"
                                     >
                                         <TrashIcon className="mr-2 size-6" />
                                         Smazat trvale

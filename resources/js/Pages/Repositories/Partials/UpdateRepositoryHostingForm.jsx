@@ -167,7 +167,7 @@ export default function Show({ hostings, hosting, hosting_repository, className 
                         method="DELETE"
                         preserveScroll
                         href={route('hosting-repository.destroy', hosting_repository.id)}
-                        className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition duration-150 ease-in-out hover:bg-red-500 focus:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 active:bg-red-900"
+                        className="flex items-center justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-xs font-bold tracking-widest text-white uppercase transition duration-150 ease-in-out hover:bg-red-500 focus:bg-red-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none active:bg-red-900"
                     >
                         <TrashIcon className="mr-2 size-5 text-white" />
                         Smazat

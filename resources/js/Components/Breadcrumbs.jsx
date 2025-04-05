@@ -18,7 +18,7 @@ const Breadcrumbs = () => {
     })
 
     return (
-        <header className="fixed right-0 top-0 z-50 w-full pl-[6.6rem] lg:pl-[14rem]">
+        <header className="fixed top-0 right-0 z-50 w-full pl-[6.6rem] lg:pl-[14rem]">
             <div className='className="grid border-b border-neutral-700 bg-zinc-900/50 p-6 backdrop-blur-md'>
                 <div className="flex items-center space-x-4 text-neutral-400">
                     {breadcrumbs.map((item, index) => (
@@ -26,7 +26,7 @@ const Breadcrumbs = () => {
                             <Link
                                 href={item.href}
                                 className={
-                                    'text-lg font-semibold leading-tight ' +
+                                    'text-lg leading-tight font-semibold ' +
                                     (item.active ? 'text-sky-500' : 'faster-animation hover:text-sky-500')
                                 }
                             >
