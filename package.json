@@ -1,6 +1,8 @@
 {
+    "name": "notifier",
     "private": true,
     "type": "module",
+    "version": "1.0.1",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
@@ -13,6 +15,7 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.2.0",
+        "@sentry/react": "^9.15.0",
         "@tailwindcss/postcss": "^4.0.9",
         "@tailwindcss/vite": "^4.0.9",
         "@xterm/xterm": "^5.5.0",

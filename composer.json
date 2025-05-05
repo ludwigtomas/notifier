@@ -1,11 +1,6 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": [
-        "laravel",
-        "framework"
-    ],
     "license": "MIT",
     "require": {
         "php": "^8.3",
@@ -23,6 +18,7 @@
         "nativephp/electron": "^1.0@beta",
         "opcodesio/log-viewer": "v3.15.0",
         "predis/predis": "^2.3",
+        "sentry/sentry-laravel": "^4.13",
         "tightenco/ziggy": "v2.5.2"
     },
     "require-dev": {
